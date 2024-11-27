@@ -31,16 +31,16 @@ const string sample_path = "C:/Users/user/Documents/Programming/Contest/AutoChec
 int exec_mode;
 #include "Mode/a.hpp"
 
-#include "../../../Utility/Set/a.hpp"
-#include "../../../Utility/Tuple/a.hpp"
-#include "../../../Utility/Vector/a.hpp"
-#include "../../../Utility/Set/Map/a.hpp"
+#include "../../../Mathematics/Utility/Set/a.hpp"
+#include "../../../Mathematics/Utility/Tuple/a.hpp"
+#include "../../../Mathematics/Utility/Vector/a.hpp"
+#include "../../../Mathematics/Utility/Set/Map/a.hpp"
 #include "../../../Utility/StdStream/a.hpp"
 #include "../../../Utility/String/a.hpp"
 #include "../../../Utility/String/ToArray/a.hpp"
-#include "../../../Utility/BinarySearch/Debug/a.hpp"
-#include "../../../Utility/TwoPointerApproach/Debug/a.hpp"
-
+x
+#include "../../../Mathematics/Utility/BinarySearch/Debug/a.hpp"
+#include "../../../Mathematics/Utility/TwoPointerApproach/Debug/a.hpp"
 #include "../../../Mathematics/Algebra/Monoid/Group/Module/a.hpp"
 #include "../../../Mathematics/Geometry/Graph/Grid/a.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a.hpp"
