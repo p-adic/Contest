@@ -38,7 +38,7 @@ int exec_mode;
 #include "../../../Utility/StdStream/a.hpp"
 #include "../../../Utility/String/a.hpp"
 #include "../../../Utility/String/ToArray/a.hpp"
-x
+
 #include "../../../Mathematics/Utility/BinarySearch/Debug/a.hpp"
 #include "../../../Mathematics/Utility/TwoPointerApproach/Debug/a.hpp"
 #include "../../../Mathematics/Algebra/Monoid/Group/Module/a.hpp"
