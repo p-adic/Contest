@@ -4,7 +4,7 @@
 #include "a_Body.hpp"
 
 #include "../WriteInSamples/a_Body.hpp"
-#include "../../../Utility/Random/a_Body.hpp"
+#include "../../../Mathematics/Utility/Random/a_Body.hpp"
 
 void GenerateSamples( const string& directory_name )
 {
