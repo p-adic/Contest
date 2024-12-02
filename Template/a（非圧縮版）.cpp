@@ -27,7 +27,7 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Naive( int N , int M , int K , const bool& debug_output = true )
+MP Naive( ll N , ll M , ll K , const bool& debug_output = true )
 {
   MP answer{};
   return answer;
