@@ -64,18 +64,18 @@
 
 #define FINISH_MAIN                                                    \
     if constexpr( test_case_num_bound > 1 ){             \
-      CERR( "テストケースの個数を入力してください。" );               \
-      CIN_ASSERT( test_case_num , 1 , test_case_num_bound );          \
-      REPEAT( test_case_num ){                                        \
-        CERR( "testcase" , VARIABLE_FOR_REPEAT_test_case_num , ":" ); \
-        Solve();                                                      \
-        CERR( "" );                                                   \
-      }                                                               \
-    } else {                                              \
-      Solve();                                                        \
-      CERR( "" );                                                     \
-    }                                                                 \
-  }                                                                 \
+      CERR( "テストケースの個数を入力してください。" );         \
+      CIN_ASSERT( test_case_num , 1 , test_case_num_bound );    \
+      FOR( test_case , 0 , test_case_num ){                       \
+        CERR( "testcase" , test_case , ":" );                    \
+        Solve();                                                \
+        CERR( "" );                                             \
+      }                                                         \
+                } else {                                        \
+      Solve();                                                  \
+      CERR( "" );                                               \
+    }                                                           \
+  }                                                           \
 
 #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE2 )
 
