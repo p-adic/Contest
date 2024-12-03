@@ -166,7 +166,7 @@ using namespace std;
 #define ITR( ARRAY ) auto begin_ ## ARRAY = ARRAY .BE() , itr_ ## ARRAY = begin_ ## ARRAY , end_ ## ARRAY = ARRAY .EN()
 #define FOR_ITR( ARRAY ) for( ITR( ARRAY ) , itr = itr_ ## ARRAY ; itr_ ## ARRAY != end_ ## ARRAY ; itr_ ## ARRAY ++ , itr++ )
 #define RUN( ARRAY , ... ) for( auto&& __VA_ARGS__ : ARRAY )
-#define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT_ ## HOW_MANY_TIMES , 0 , HOW_MANY_TIMES )
+#define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT , 0 , HOW_MANY_TIMES )
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS ); cerr << fixed << setprecision( DECIMAL_DIGITS )
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
 #define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , false ); auto answer = Answer( __VA_ARGS__ , false ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
