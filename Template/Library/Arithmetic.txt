@@ -1,0 +1,30 @@
+/*
+- PrimeEnumeation: ‘f”—ñ‹“ (2KB)
+  Arithmetic/Prime/Enumeration/compress.txt
+  Arithmetic/Prime/Enumeration/Heap/compress.txt
+  - Counting: ‘f”—ñ‹“, ‘f”Œv” (3KB)
+    Arithmetic/Prime/Enumeration/Counting/compress.txt
+    Arithmetic/Prime/Enumeration/Counting/Heap/compress.txt
+  - Factorisation: ‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ (6KB)
+    Arithmetic/Prime/Factorisation/compress.txt
+    - Divisor: ‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ,–ñ”Œv”,–ñ”—ñ‹“ (7KB)
+      Arithmetic/Divisor/Enumeration/compress.txt
+- EulerFunction: ‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ,ƒIƒCƒ‰[ŠÖ” (6KB)
+  Arithmetic/Mod/Function/Euler/compress.txt
+- MoeviusFunction: ‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ,ƒƒrƒEƒXŠÖ” (6KB)
+  Arithmetic/Divisor/Moevius/compress.txt
+- GCD: Å‘åŒö–ñ”,Å¬Œö”{” (1KB)
+  Arithmetic/Divisor/GCD/compress.txt
+- Power: ã°æ (1KB)
+  Arithmetic/Power/compress.txt
+  - GeometricProgressionSum: ™pæ,“™”ä”—ñ‚Ì˜a (1KB)
+    Arithmetic/Power/GeometricProgressionSum/compress.txt
+  - DivisorSum: ™pæ,–ñ”‚Ì™pæ˜a (1KB)
+    Arithmetic/Divisor/Sum/compress.txt
+- Sqrt: •½•ûª (1KB)
+  Arithmetic/Sqrt/compress.txt
+- DynamicMod: “®“Imod (10KB)
+  Arithmetic/Mod/DynamicModulo/compress.txt
+  - ShifedMod: K–¢–‚ÍˆÛ‚·‚é“®“Imod (6KB)
+    Arithmetic/Mod/DynamicModulo/Shifted/compress.txt
+*/
