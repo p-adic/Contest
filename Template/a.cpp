@@ -85,13 +85,13 @@ IN VO RandomTest( const int& test_case_num )
 #ifdef INCLUDE_LIBRARY
 
 /* VVV íİ‚Å‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB*/
+/* // Arithmetic ../Contest/Template/Library/Arithmetic.txt */
 /* // BFS ../Contest/Template/Library/BFS.txt */
 /* // BIT ../Contest/Template/Library/BIT.txt */
 /* // CoordinateCompress ../Contest/Template/Library/CoordinateCompress.txt */
 /* // DFS ../Contest/Template/Library/DFS.txt */
 /* // DifferenceSequence ../Contest/Template/Library/DifferenceSequence.txt */
 /* // Dijkstra ../Contest/Template/Library/Dijkstra.txt */
-/* // Divisor ../Contest/Template/Library/Divisor.txt */
 /* // Knapsack ../Contest/Template/Library/Knapsack.txt */
 /* // Matrix ../Contest/Template/Library/Matrix.txt */
 /* // Set ../Contest/Template/Library/Set.txt */
