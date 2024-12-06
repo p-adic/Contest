@@ -16,7 +16,7 @@ AC( LibrarySearch )
 	     "ゲーム問題" ,
 	     "真偽判定問題" ,
 	     "構築問題" ,
-	     "推定問題"
+	     "質問による推定問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpression );
@@ -94,7 +94,7 @@ AC( ExplicitExpression )
 AC( ExplicitExpressionArraySum )
 {
   ASK_NUMBER(
-	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
+	     "１つの配列（の成分を受け取る関数）の総和の計算問題" ,
 	     "２つの配列の内積の計算問題" ,
 	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
 	     "配列を受け取る関数の配列をわたる総和の計算問題"
@@ -143,6 +143,15 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "  - jに関する和は平方分割" );
   CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
   CERR( "- Nが大きい場合と小さい場合で解法の折衷" );
+  CERR( "  - 1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i floor(M/a_i)" );
+  CERR( "    などを考える。(a_i)_{i=0}^{N-1}はソートしてよく、Bをfloor(M/整数)の形で" );
+  CERR( "    固定してa_i<=Bの範囲では愚直計算、a_i>Bの範囲ではfloor(M/a_i)=jと置いて" );
+  CERR( "    各1<=j<floor(M/B)に対し(iの個数)*jの総和を求める分割統治法" );
+  CERR( "  - 1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i M%a_iなどを" );
+  CERR( "    考える。(a_i)_{i=0}^{N-1}はソートしてよく、M%a_i=M-floor(M/a_i)*a_i" );
+  CERR( "    を用いてsum_i floor(M/a_i)*a_iに帰着させる。Bをfloor(M/整数)の形で" );
+  CERR( "    固定してa_i<=Bの範囲では愚直計算、a_i>Bの範囲ではfloor(M/a_i)=jと置いて" );
+  CERR( "    各1<=j<floor(M/B)に対し(a_iの総和)*jの総和を求める分割統治法" );
   CERR( "を検討しましょう。" );
   CERR( "" );
 }
@@ -581,6 +590,7 @@ AC( ExplicitExpressionProbability )
   CERR( "      p(x_0)を考える場合、Sを排他的に分割して(T_i)_iと置き、各T_iにおいて" );
   CERR( "      Xの値がK_i種類で等確率となる時、求める確率はK_i種類にx_0が入るような" );
   CERR( "      i全体をわたる#T_i/(K_i #S)の総和" );
+  CERR( "  - 確率を保つ全射で簡単な事象に帰着" );
   CERR( "  - ベイズの定理" );
   CERR( "- 期待値計算は" );
   CERR( "  - 確率を用いた愚直な計算" );
@@ -2077,6 +2087,10 @@ AC( Counting )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
   }
+  ASK_YES_NO( "答えが明示式で表せましたか？" );
+  if( reply == "y" ){
+    CALL_AC( ExplicitExpression );
+  }
   ASK_YES_NO( "サンプルを解析しますか？" );
   if( reply == "y" ){
     CALL_AC( SampleAnalyser );
@@ -3451,7 +3465,7 @@ AC( Decision )
 	     "描画可能性問題" ,
 	     "存在判定問題" ,
 	     "充足可能性問題" ,
-	     "一致判定問題" ,
+	     "一致／同型性判定問題" ,
 	     "表示可能性問題"
 	     );
   if( num == num_temp++ ){
@@ -3757,6 +3771,13 @@ AC( DecisionCoincidence )
   CERR( "- 配列の並び換えによる一致判定は" );
   CERR( "  - 各前処理O(長さlog長さ)が間に合いそうならばソートからの文字列一致判定に帰着" );
   CERR( "  - 各前処理O(長さlog文字種類数)が間に合いそうならば多重集合の一致判定に帰着" );
+  CERR( "- グラフの同型性判定は十分多くの不変量（例えば|V|+|E|個くらい）を" );
+  CERR( "  GNNで畳み込み" );
+  CERR( "  - 同型の構成は畳み込んだ頂点の不変量をソートして最小要素を対応させ、" );
+  CERR( "    選んだ頂点の情報を伝播させてループ。お誕生日攻撃を受けるので法を大きく。" );
+  CERR( "  - 根付き木の場合は葉から順に畳み込むと根に十分大きな不変量が得られる。" );
+  CERR( "    https://hcpc-hokudai.github.io/archive/rupc/2017/rupc2017_F.pdf" );
+  CERR( "  - 木の場合は根を全探策して根付き木に帰着。中心など個数の少ない点に根を絞る。" );
   CERR( "を検討しましょう。" );
 }
 
@@ -3970,6 +3991,10 @@ AC( Deduction )
   CERR( "- 何らかの順序における極大元に触れる聞き方" );
   CERR( "- なるべく多くの数値に依存する情報に触れる聞き方" );
   CERR( "- N^2個の数値に対するO(N)回の質問では対角線に触れる聞き方" );
+  CERR( "- 既存のアルゴリズムを分解する聞き方" );
+  CERR( "  - 単調関数の最大／最小化問題や零点探索なら二分探索" );
+  CERR( "  - 凸関数の最大／最小化問題なら三分探索" );
+  CERR( "  - 順序集合の最大／最小要素計算ならトーナメントや勝ち抜き戦" );
   CERR( "を検討しましょう。" );
 }
 
