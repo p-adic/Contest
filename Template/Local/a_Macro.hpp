@@ -37,6 +37,9 @@
 #define DERR( ... ) if( exec_mode == sample_check_mode ){ DERR1( __VA_ARGS__ ); } else { DERR2( __VA_ARGS__ ); }
 #define DERRNS( ... ) if( exec_mode == sample_check_mode ){ DERRNS1( __VA_ARGS__ ); } else { DERRNS2( __VA_ARGS__ ); }
 #define DERR_A( I , N , A ) if( exec_mode == sample_check_mode ){ DERR_A1; } else { DERR_A2; }
+#define TLE( CONDITION ) assert( CONDITION )
+#define MLE( CONDITION ) assert( CONDITION )
+#define OLE( CONDITION ) assert( CONDITION )
 
 #define REPEAT_MAIN( BOUND )                                    \
   START_MAIN;                                                   \
