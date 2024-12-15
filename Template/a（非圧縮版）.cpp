@@ -77,7 +77,8 @@ inline void RandomTest( const int& test_case_num )
   /* // 多種クエリ ../Contest/Template/RandomTest/MultiTypeQuery.txt */
   REPEAT( test_case_num ){
 
-  }  
+  }
+  CERR( "全ての出力が一致しました。" );
 }
 
 #define INCLUDE_MAIN
@@ -172,7 +173,7 @@ using namespace std;
 #define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT , 0 , HOW_MANY_TIMES )
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS ); cerr << fixed << setprecision( DECIMAL_DIGITS )
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
-#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , false ); auto answer = Answer( __VA_ARGS__ , false ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ CERR( "解の不一致が検出されました。" ); RE; }
+#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , false ); auto answer = Answer( __VA_ARGS__ , false ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ CERR( "出力の不一致が検出されました。" ); RE; }
 
 /* 型のエイリアス */
 #define decldecay_t( VAR ) decay_t<decltype( VAR )>
