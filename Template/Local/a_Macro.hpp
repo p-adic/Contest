@@ -105,7 +105,7 @@
     ASSERT( A , MIN , MAX );                            \
   } else if( exec_mode == random_test_mode ){           \
     A = GetRand( MIN , MAX );                           \
-    DERR( #A , " = " , A );                             \
+    DERR( #A , "=" , A );                             \
   } else { AS( false ); }                               \
 
 #define SOLVE_ONLY static_assert( __FUNCTION__[0] == 'S' )
