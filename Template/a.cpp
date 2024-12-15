@@ -65,15 +65,15 @@ IN VO SmallTest()
 /* 圧縮時は中身だけ削除する。*/
 IN VO RandomTest( const int& test_case_num )
 {
-  /* // 数 ../Contest/Template/SmallTest/Number.txt */
-  /* // 配列 ../Contest/Template/SmallTest/Array.txt */
-  /* // 順列 ../Contest/Template/SmallTest/Permutation.txt */
-  /* // 文字列 ../Contest/Template/SmallTest/String.txt */
-  /* // グリッド ../Contest/Template/SmallTest/Grid.txt */
-  /* // グラフ ../Contest/Template/SmallTest/Graph.txt */
-  /* // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt  */
-  /* // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt  */
-  /* // 多種クエリ ../Contest/Template/SmallTest/MultiTypeQuery.txt */
+  /* // 数 ../Contest/Template/RandomTest/Number.txt */
+  /* // 配列 ../Contest/Template/RandomTest/Array.txt */
+  /* // 順列 ../Contest/Template/RandomTest/Permutation.txt */
+  /* // 文字列 ../Contest/Template/RandomTest/String.txt */
+  /* // グリッド ../Contest/Template/RandomTest/Grid.txt */
+  /* // グラフ ../Contest/Template/RandomTest/Graph.txt */
+  /* // 重み付きグラフ ../Contest/Template/RandomTest/WeightedGraph.txt  */
+  /* // 区間クエリ ../Contest/Template/RandomTest/IntervalQuery.txt  */
+  /* // 多種クエリ ../Contest/Template/RandomTest/MultiTypeQuery.txt */
   REPEAT( test_case_num ){
 
   }  
@@ -134,6 +134,9 @@ IN VO RandomTest( const int& test_case_num )
   #define CERRNS( ... ) 
   #define COUT_A( I , N , A ) CoutArray( cout , I , N , A ) << ENDL
   #define CERR_A( I , N , A ) 
+  #define TLE( CONDITION ) if( !( CONDITION ) ){ ll TLE_VAR = 1; while( TLE_VAR != 0 ){ ( TLE_VAR += 2 ) %= int( 1e9 ); } COUT( TLE_VAR ); }
+  #define MLE( CONDITION ) if( !( CONDITION ) ){ vector<vector<ll>> MLE_VAR{}; REPEAT( 1e6 ){ MLE_VAR.push_back( vector<ll>( 1e6 ) ); } COUT( MLE_VAR ); }
+  #define OLE( CONDITION ) if( !( CONDITION ) ){ REPEAT( 1e8 ){ COUT( "OLE" ); } }
 #endif
 #ifdef REACTIVE
   #ifdef DEBUG
