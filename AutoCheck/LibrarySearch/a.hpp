@@ -177,6 +177,7 @@ AC( QueryTimeSeriesChange );
 AC( QueryTimeSeriesChangeMax );
 AC( QueryTimeSeriesRangeChangeMax );
 AC( QueryTimeSeriesChangeAddition );
+AC( Simulation );
 AC( Game );
 AC( Decision );
 AC( DecisionGame );

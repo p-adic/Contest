@@ -13,10 +13,11 @@ AC( LibrarySearch )
 	     "数え上げ問題" ,
 	     "求解問題" ,
 	     "クエリ処理問題" ,
+             "シミュレーション問題" ,
 	     "ゲーム問題" ,
 	     "真偽判定問題" ,
 	     "構築問題" ,
-	     "質問による推定問題"
+	     "質問による推定"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpression );
@@ -28,6 +29,8 @@ AC( LibrarySearch )
     CALL_AC( Solving );
   } else if( num == num_temp++ ){
     CALL_AC( Query );
+  } else if( num == num_temp++ ){
+    CALL_AC( Simulation );
   } else if( num == num_temp++ ){
     CALL_AC( Game );
   } else if( num == num_temp++ ){
@@ -349,6 +352,9 @@ AC( ExplicitExpressionUnaryOther )
   CERR( "- 定義にp進法が使われていれば、各種探索アルゴリズム" );
   CERR( "- 入力が素数に近い場合に規則性があれば、p進付値、p進法、" );
   CERR( "  オイラー関数、約数の個数など" );
+  CERR( "- 鳩の巣原理による周期性" );
+  CERR( "  - mod Bフィボナッチ数列やその累積和の周期は短い。" );
+  CERR( "  - mod(プロス素数-1)では偶数倍の周期が短い。" );
   CERR( "を検討しましょう。" );
   CERR( "" );
   CERR( "そして前計算を試みましょう。候補としては" );
@@ -621,6 +627,11 @@ AC( ExplicitExpressionCountingOperation )
   CERR( "- 操作対象が操作優先度つきで複数ある場合は、各操作対象の操作回数に関する動的計画法" );
   CERR( "- 操作がいくつかの対象群に同時に行われるならば、各対象群ごとに回数計算" );
   CERR( "- 操作が辺の削除ならば、逆向きに処理して各連結成分ごとに操作回数を記録" );
+  CERR( "- 操作が配列の成分の書き換えならば、" );
+  CERR( "  - dp[i] = 第i成分までで打ち切った時の操作回数" );
+  CERR( "    としてiに関する動的計画法" );
+  CERR( "  - dp[l,r) = 第l成分から第r-1成分まで切り出した時の操作回数などのデータ" );
+  CERR( "    区間を中間で分割してマージする分割統治（更新クエリはセグメント木で処理）" );
   CERR( "を検討しましょう。" );
 }
 
@@ -760,7 +771,7 @@ AC( Maximisation )
 	     "ナップサック問題" ,
 	     "配列上の関数に関する最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
-	     "低次元アフィン空間上の関数の最大／最小化問題" ,
+	     "固定長多変数関数の最大／最小化問題" ,
 	     "集合の部分集合に関する最大／最小化問題" ,
 	     "グラフの経路に関する最大／最小化問題" ,
 	     "木上の関数に関する最大／最小化問題" ,
@@ -1610,18 +1621,38 @@ AC( MaximisationArrayLength )
 AC( MaximisationFunctionOnAffineSpace )
 {
   ASK_NUMBER(
-	     "凸関数の最小／最大化問題" ,
-	     "可微分関数の最小／最大化問題" ,
+	     "１変数関数の最小／最大化問題" ,
+	     "１変数関数の族の最小／最大値計算" ,
+	     "２変数関数の１次元への制限で得られる１変数関数の最小／最大化問題" ,
 	     "距離の最小／最大化問題" ,
 	     "被覆半径の最小化問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 三分探索" );
+    CERR( "- 単調関数の絶対値は端点の値計算と元の関数の符号に関する二分探索" );
+    CERR( "- 凸関数の最小／最大化問題は三分探索または差分の正負に関する二分探索" );
     CERR( "  \\Utility\\BinarySearch\\TernarySearch" );
-    CERR( "- 差分の正負に関する二分探索" );
+    CERR( "- 可微分関数の最小／最大化問題はニュートン法" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
-    CERR( "ニュートン法を検討しましょう。" );
+    CERR( "- 一次関数の族や良い交差性を持つ関数の族はConvexHullTrick" );
+    CERR( "  \\Function\\ConvexHullTrick" );
+    CERR( "- グラフの上下関係の変更点を管理するイベントソート" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "- f(i,j)のiを止めた最小／最大化を達成する座標jに単調性がある場合は" );
+    CERR( "  iのクエリをQ個、jの候補をM個として" );
+    CERR( "  - O(Q+M log Q)が間に合いそうならばMonotoneMinima" );
+    CERR( "    \\Function\\MonotoneMinima" );
+    CERR( "  - totally monotone性（直積で表せる部分集合への単調性の遺伝）があり" );
+    CERR( "    O(Q+M)が間に合いそうならばSMAWK algorithm" );
+    CERR( "    https://en.wikipedia.org/wiki/SMAWK_algorithm" );
+    CERR( "- monge性を持つ行列Aの行iにおける最小化min_j A_{i,j}は単調性があるので" );
+    CERR( "  上のケースに帰着" );
+    CERR( "  - monge性を持つ行列に小行列として埋め込み可能な行列はmonge性を持つ。" );
+    CERR( "  - kごとにmin_{i+j=k} f(i)+g(j)を求める問題でgに凸性がある場合は" );
+    CERR( "    行列(f(i)+g(k-i))_{i,k}がmonge性を持つ。ただしgの定義域が" );
+    CERR( "    限られている場合は凸性を保ったまま定義域を拡張する必要がある。" );
+    CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
     CERR( "- 単調な式に帰着できる場合、二分探索" );
@@ -2930,7 +2961,7 @@ AC( Query )
 	     "範囲更新／数え上げクエリ問題" ,
 	     "範囲更新／部分列をわたる総和クエリ問題" ,
 	     "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
-	     "時系列変化のクエリ問題（時刻に関する関数の一点取得など）"
+	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）"
 	     );
   if( num == num_temp++ ){
     ASK_NUMBER(
@@ -3388,6 +3419,9 @@ AC( QueryTwoAryFunction )
 
 AC( QueryTimeSeriesChange )
 {
+  CERR( "時系列更新が配列の一点更新で与えられる場合は更新イベントがO(Q)個しかないので、" );
+  CERR( "各成分ごとに変化時刻で区切った区間をセグメント木の要領で管理することで" );
+  CERR( "O(Q)個のノードに合計O((N+Q)log Q)個の区間を分割統治することが可能です。" );
   ASK_NUMBER(
 	     "maxによる時系列更新" ,
 	     "加算による時系列更新"
@@ -3438,6 +3472,19 @@ AC( QueryTimeSeriesChangeAddition )
   CERR( "- グラフが合計O(Q)個の曲線と傾き0の部分に分かれ曲線の両端s,tでの値の差が" );
   CERR( "  成分に依存しない関数fを用いてf(t)-f(s)で表せるならば、fの前計算" );
   CERR( "  参考：https://yukicoder.me/problems/no/2462/editorial" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( Simulation )
+{
+  CERR( "愚直なシミュレーションで間に合うか否かを判定し、間に合うならばそのまま" );
+  CERR( "実装しましょう。間に合わないならば、" );
+  CERR( "- 操作／遷移の纏め上げによる高速化" );
+  CERR( "- 最終結果に影響するイベントのみを管理" );
+  CERR( "  - イベントを重複して解決するならば座標圧縮" );
+  CERR( "  - イベントを重複して解決しないならばsetやmapで管理してイベント処理時に削除" );
+  CERR( "- 優先度付きキューなどによるイベントソート" );
+  CERR( "- イベント群を区間更新クエリに翻訳して双対セグメント木などによる高速化" );
   CERR( "を検討しましょう。" );
 }
 
@@ -3612,8 +3659,23 @@ AC( DecisionAccessibility )
     if( reply == "y" ){
       CALL_AC( QueryGraph );
     } else {
-      CERR( "グラフ上の最小コスト移動問題に帰着させましょう。" );
-      CALL_AC( MinimisationMovingCost );
+      ASK_NUMBER(
+                 "歩数固定の歩道での到達可能性" ,
+                 "歩数固定の経路での到達可能性" ,
+                 "一般の歩道での到達可能性" ,
+                 );
+      if( num == num_temp++ ){
+        CERR( "K歩で到達可能か否かを考えます。" );
+        CERR( "dp[i][k] = 「k歩で頂点iに到達可能か否か」" );
+        CERR( "を管理するkに関する動的計画法O(|E|K)を検討しましょう。" );
+      } else if( num == num_temp++ ){
+        CERR( "K歩で到達可能か否かを考えます。" );
+        CERR( "dp[S][i] = 「これまで通った頂点集合がSで頂点iに到達可能か否か」" );
+        CERR( "を管理するSに関するbitDP O(|V|^2 2^{|V|})を検討しましょう。" );
+      } else if( num == num_temp++ ){
+        CERR( "グラフ上の最小コスト移動問題に帰着させましょう。" );
+        CALL_AC( MinimisationMovingCost );
+      }
     }
   } else if( num == num_temp++ ){
     CERR( "移動の前後で変化しない値がある場合、その値が等しい点に絞って考えましょう。" );
