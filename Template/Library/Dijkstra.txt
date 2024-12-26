@@ -1,6 +1,6 @@
 /*
 - Dijkstra (6KB)
-  Geometry/Graph/Algorithm/Dijkstra/compress.tx
+  Geometry/Graph/Algorithm/Dijkstra/compress.txt
   - Double: グラフのグラフ上の分割統治 (10KB)
     Geometry/Graph/Algorithm/Dijkstra/Double/compress.txt
     - Errand: サブゴール付き最短経路 (14KB)

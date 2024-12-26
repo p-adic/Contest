@@ -2,14 +2,23 @@
   // CIN( int , N ); int M = N - 1;
   vector<vector<path>> e( N );
   // CEXPR( ll , infty , 1e18 );
-  // vector w( N , vector( N , infty ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
+  // vector weight( N , vector( N , infty ) ); FOR( i , 0 , N ){ weight[i][i] = 0; }
   REPEAT( M ){
-    CIN( ll , u , v , w ); --u; --v;
-    e[u].push_back( { v , w } );
-    e[v].push_back( { u , w } );
-    // w[u][v] = w[v][u] = w;
+    CIN( ll , i , j , w ); --i; --j;
+    e[i].push_back( { j , w } );
+    e[j].push_back( { i , w } );
+    // weight[i][j] = weight[j][i] = w;
   }
-  Graph graph{ N , Get( e ) };
+  auto edge = Get( e );
+  // CIN_AA( ll , 0 , N , 0 , N , weight );;
+  // auto edge = [&]( const int& i ){
+  //   vector<path> answer{};
+  //   FOR( j , 0 , N ){
+  //     answer.push_back( { j , w } );
+  //   }
+  //   return answer;
+  // };
+  Graph graph{ N , edge };
   Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
-  // FloydWarshall fw{ infty , w }; vector<vector<decltype(infty)>> d = fw.GetDistance();
+  // FloydWarshall fw{ infty , weight }; vector<vector<decltype(infty)>> d = fw.GetDistance();

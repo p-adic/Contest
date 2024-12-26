@@ -1,16 +1,39 @@
   CIN( int , N );
   CIN( string , S );
   // RollingHash<MP,int> rh{};
-  // /* ../Utility/String/RollingHash/compress.txt */
+  // /* code = {ハッシュ,r^長さ,長さ} */
+  // /* S全体のコード */
+  // tuple<MP,MP,int> code = rh.Encode( S , false );
+  // /* (s[:i]のコード)_i */
+  // auto ccode = rh.CumulativeEncode( S , false );
+  // /* (s[i]のコード)_i */
+  // auto pcode = rh.PointwiseEncode( S , false );
+  // /* (s[i:i+L]のコード)_i */
+  // int L = 3;
+  // auto flcode = rh.FixedLengthEncode( S , L , false );
+  // /* S[i]をcに置き換えた時のコード */
+  // char c = 'a';
+  // auto rcode = rh.Replace( code , i , S[i] , c ); S[i] = c;
+  // /* Sの先頭を削除した時のコード */
+  // int start = 0;
+  // auto pfcode = rh.PopFront( code , S[start] ); start++;
+  // /* Sの末尾を削除した時のコード */
+  // auto pbcode = rh.PopBack( code , S.back() ); S.pop_back();
+  // /* codeにSが連続部分列として含まれる個数 */
+  // int count = rh.CountContain( S , code , false );
+  // /* code0とcode1の和 */
+  // auto ccode = rh.Concatenate( code0 , code1 );
+  // /* codeのn倍 */
+  // int n = 4;
+  // auto fcode = rh.Fold( code , n );
+  // /* Utility/String/RollingHash/compress.txt */
 
   // /* pal[r] = S[0,r]が回文か否か */
   // vector<bool> pal = Palindrome( S , false );
-  // /* ../Utility/String/Palindrome/compress.txt */
-
   // /* pal[r][l] = S[l,r]が回文か否か */
   // vector<vector<bool>> pal = TotalPalindrome( S , false );
-  // /* ../Utility/String/Palindrome/compress.txt */
+  // /* Utility/String/Palindrome/compress.txt */
 
   // /* lcp[i] = max_j(S[i,N)とS[i+j,N)の始切片が一致する長さ) */
   // vector<int> lcp = LCP( S );
-  // /* ../Utility/String/Z-Algorithm/compress.txt */
+  // /* Utility/String/Z-Algorithm/compress.txt */

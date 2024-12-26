@@ -2,11 +2,12 @@
   // CIN( int , N ); int M = N - 1;
   vector<vector<int>> e( N );
   REPEAT( M ){
-    CIN( int , u , v ); --u; --v;
-    e[u].push_back( v );
-    e[v].push_back( u );
+    CIN( int , i , j ); --i; --j;
+    e[i].push_back( j );
+    e[j].push_back( i );
   }
-  Graph graph{ N , Get( e ) };
+  auto edge = Get( e );
+  Graph graph{ N , edge };
   BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = bfs.GetDistance();
   // DepthFirstSearchOnTree dfst{ graph , 0 };
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
