@@ -4,10 +4,22 @@
   // grid = vector( H , string( W , '.' ) );
   // GridGraph graph{ WEdgeOnGrid }; // 上下左右の移動を許容
   // AcyclicGridGraph graph{ WEdgeOnGrid }; // 下左右の移動を許容
-  
+
+  /* xy_axis = true: 右と上を正軸方向とする座標 */
+  /* (0,1)  -> U */
+  /* (1,0)  -> R */
+  /* (0,-1) -> D */
+  /* (-1,0) -> L */
+  /* xy_axis = false: 下と右を正軸方向とする座標 */
+  /* (-1,0) -> U */
+  /* (0,1)  -> R */
+  /* (1,0)  -> D */
+  /* (0,-1) -> L */
   /* {i,j}へデコード: EnumHW( v )                                         */
   /* {i,j}をコード: EnumHW_inv( { i , j } );                              */
   /* 方向の文字列：direction="URDL";                                       */
-  /* (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h ); */
-  /* v->wの方向番号を取得: DirectionNumberOnGrid( v , w );                 */
+  /* (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h , false ); */
+  /* v->wの方向番号を取得: DirectionNumberOnGrid( v , w , false );         */
+  /* 文字cの方向番号を取得: DirectionNumberOnGrid( c );                     */
   /* 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );        */
+  /* 方向番号nの方向ベクトルを取得: DirectionVectorOnGrid( n , false );      */
