@@ -322,7 +322,7 @@ void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vect
 
 void InputPolynomialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous )
 {
-  for( int skip_span = 1 ; skip_span <= ( continuous ? sample_repetition_num / 3 : 1 ) ; skip_span++ ){
+  for( int skip_span = 1 ; skip_span <= ( continuous ? ( sample_repetition_num + 2 ) / 3 : 1 ) ; skip_span++ ){
     for( int residue = 0 ; residue < skip_span ; residue++ ){
       vector<DynamicMod> input_copy{};
       vector<DynamicMod> output_copy{};
@@ -651,14 +651,10 @@ void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const 
 {
   CEXPR( int , size , 3 );
   CEXPR( int , length , size + 2 );
-  for( int skip_span = 1 ; skip_span <= ( continuous ? sample_repetition_num / 3 : 1 ) ; skip_span++ ){
+  for( int skip_span = 1 ; skip_span <= ( continuous ? ( sample_repetition_num + length - 1 ) / length : 1 ) ; skip_span++ ){
     for( int residue = 0 ; residue < skip_span ; residue++ ){
-      vector<DynamicMod> input_copy{};
-      vector<DynamicMod> output_copy{};
       int sample_size = 0;
       for( int sample_num = residue ; sample_num < sample_repetition_num ; sample_num += skip_span ){
-        input_copy.push_back( ( input[sample_num][0] - residue ) / skip_span );
-        output_copy.push_back( output[sample_num] );
         sample_size++;
       }
       CERR( "入力を" , residue , "番目から" , skip_span , "置きに選んで指数関数の一次結合による補間を試みます。" );
@@ -683,7 +679,8 @@ void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const 
             if( dx1 != 0 ){
               base = "(" + base + ( dx1 > 0 ? "+" : "" ) + to_string( dx1 ) + ")";
             }
-            CERRNS( "(" , index[length-1] , ") + " , "(" , index[length-2] , ") * " , base , " +\n" );
+            CERRNS( "(" , index[length-1] , ") +\n" );
+            CERRNS( "(" , index[length-2] , ") * " , base , " +\n" );
             FOR( d , 0 , size ){
               int i = d , dx2 = d - 1;
               CERRNS( "(" , index[i] , ") * " , base , "^{(引数1)" , ( dx2 > 0 ? "+" : "" ) , ( dx2 == 0 ? "" : to_string( dx2 ) ) , ( d == size - 1 ? ")}\n" : ")} +\n" ) );
@@ -693,7 +690,8 @@ void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const 
             if( dx1 != 0 ){
               base = "(" + base + ( dx1 > 0 ? "+" : "" ) + to_string( dx1 ) + ")";
             }
-            CERRNS( "(" , index[length-1] , ") + " , "(" , index[length-2] , ") * " , base , " +\n" );
+            CERRNS( "(" , index[length-1] , ") +\n" );
+            CERRNS( "(" , index[length-2] , ") * " , base , " +\n" );
             FOR( d , 0 , size ){
               int i = d , dx2 = d - 1;
               CERRNS( "(" , index[i] , ") * " , base , "^{ceil((引数1)/" , skip_span , ( dx2 > 0 ? "+" : "" ) , ( dx2 == 0 ? "" : to_string( dx2 ) ) , ( d == size - 1 ? ")}\n" : ")} +\n" ) );
