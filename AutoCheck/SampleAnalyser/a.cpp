@@ -120,6 +120,17 @@ AC( SampleAnalyser )
       output = move( A );
     }
   }
+  bool continuous = true;
+  for( int sample_num = 1 ; sample_num < sample_repetition_num ; sample_num++ ){
+    continuous &= input[sample_num][0] - input[sample_num-1][0];
+  }
+  if( var == 1 ){
+    if( continuous ){
+      CERR( "入力が連続した数値なので入力の一部をスキップした時の補間も行います。" );
+    } else {
+      CERR( "入力が連続した数値でないので入力の一部をスキップした時の補間は行いません。" );
+    }
+  }
   const string P_str = to_string( P );
   int scale = 1;
   while( true ){
@@ -140,7 +151,7 @@ AC( SampleAnalyser )
 	if( sample_repetition_num < 4 || ! prime ){
 	  InputPolynomialAnalysis1_few( sample_repetition_num , input , output , scale , P , P_str );
 	} else {
-	  InputPolynomialAnalysis1_enough( sample_repetition_num , input , output , scale , P , P_str );
+	  InputPolynomialAnalysis1_enough( sample_repetition_num , input , output , scale , P , P_str , continuous );
 	}
       } else if( var == 2 ){
 	if( sample_repetition_num < 9 || !prime ){
@@ -164,7 +175,7 @@ AC( SampleAnalyser )
 	  if( sample_repetition_num < 5 || ! prime ){
 	    InputExponentialAnalysis1_few( sample_repetition_num , input , output , scale , P , P_str );
 	  } else {
-	    InputExponentialAnalysis1_enough( sample_repetition_num , input , output , scale , P , P_str );
+	    InputExponentialAnalysis1_enough( sample_repetition_num , input , output , scale , P , P_str , continuous );
 	  }
 	} else {
 	  assert( var == 2 );
@@ -309,26 +320,43 @@ void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vect
   CERR( "" );
 }
 
-void InputPolynomialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputPolynomialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous )
 {
-  vector<DynamicMod> input_copy( sample_repetition_num );
-  for( int sample_num = 0 ; sample_num < sample_repetition_num ; sample_num++ ){
-    input_copy[sample_num] = input[sample_num][0];
+  for( int skip_span = 1 ; skip_span <= ( continuous ? sample_repetition_num / 3 : 1 ) ; skip_span++ ){
+    for( int residue = 0 ; residue < skip_span ; residue++ ){
+      vector<DynamicMod> input_copy{};
+      vector<DynamicMod> output_copy{};
+      int sample_size = 0;
+      for( int sample_num = residue ; sample_num < sample_repetition_num ; sample_num += skip_span ){
+        input_copy.push_back( ( input[sample_num][0] - residue ) / skip_span );
+        output_copy.push_back( output[sample_num] );
+        sample_size++;
+      }
+      if( continuous ){
+        CERR( "入力を" , residue , "番目から" , skip_span , "置きに選んで多項式補間を試みます。" );
+      }
+      auto answer = LagrangeInterpolation( input_copy , output_copy );
+      answer.RemoveRedundantZero();
+      int size = answer.size();
+      if( size < sample_size ){
+        CERR( "補間成功（次数が小さいため信頼度は高い）:" );
+      } else if( size < 5 ) {
+        CERR( "補間成功（サンプルが少なすぎるため信頼度は低い）:" );
+      } else {
+        CERR( "補間成功（次数が高すぎるため信頼度はほとんどなし）:" );
+      }
+      if( skip_span == 1 ){
+        FOR( i , 0 , size ){
+          CERRNS( "(" , answer[i] , ") * (引数1)^" , i , ( i == size - 1 ? "\n" : " +\n" ) );
+        }
+      } else {
+        FOR( i , 0 , size ){
+          CERRNS( "(" , answer[i] , ") * floor(((引数1)" , residue == 0 ? "" : to_string( -residue ),  ")/" , skip_span , ")^" , i , ( i == size - 1 ? "\n" : " +\n" ) );
+        }
+      }
+      CERR( "" );
+    }
   }
-  auto answer = LagrangeInterpolation( input_copy , output );
-  answer.RemoveRedundantZero();
-  int size = answer.size();
-  if( size < sample_repetition_num ){
-    CERR( "補間成功（次数が小さいため信頼度は高い）:" );
-  } else if( size < 5 ) {
-    CERR( "補間成功（サンプルが少なすぎるため信頼度は低い）:" );
-  } else {
-    CERR( "補間成功（次数が高すぎるため信頼度はほとんどなし）:" );
-  }
-  FOR( i , 0 , size ){
-    CERRNS( "(" , answer[i] , ") * (引数1)^" , i , ( i == size - 1 ? "\n" : " +\n" ) );
-  }
-  CERR( "" );
 }
 
 void InputPolynomialAnalysis2_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
@@ -619,33 +647,65 @@ void InputExponentialAnalysis1_few( const int& sample_repetition_num , const vec
   CERR( "" );
 }
 
-void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous )
 {
   CEXPR( int , size , 3 );
   CEXPR( int , length , size + 2 );
-  vector M( sample_repetition_num , vector<DynamicMod>( length + 1 ) );
-  FOR( sample_num , 0 , sample_repetition_num ){  
-    DynamicMod x{ input[sample_num][0] } , x_power = Power( x , input[sample_num][0] - 1 );
-    FOR( d , 0 , size ){
-      M[sample_num][d] = x_power;
-      x_power *= x;
+  for( int skip_span = 1 ; skip_span <= ( continuous ? sample_repetition_num / 3 : 1 ) ; skip_span++ ){
+    for( int residue = 0 ; residue < skip_span ; residue++ ){
+      vector<DynamicMod> input_copy{};
+      vector<DynamicMod> output_copy{};
+      int sample_size = 0;
+      for( int sample_num = residue ; sample_num < sample_repetition_num ; sample_num += skip_span ){
+        input_copy.push_back( ( input[sample_num][0] - residue ) / skip_span );
+        output_copy.push_back( output[sample_num] );
+        sample_size++;
+      }
+      CERR( "入力を" , residue , "番目から" , skip_span , "置きに選んで指数関数の一次結合による補間を試みます。" );
+      FOREQ( dx1 , -1 , 1 ){
+        vector M( sample_size , vector<DynamicMod>( length + 1 ) );
+        for( int sample_num = residue ; sample_num < sample_repetition_num ; sample_num += skip_span ){
+          DynamicMod x{ ( input[sample_num][0] + skip_span - 1 ) / skip_span + dx1 };
+          DynamicMod x_power = Power( x , ( input[sample_num][0] + skip_span - 1 ) / skip_span - 1 );
+          FOR( d , 0 , size ){
+            M[sample_num / skip_span][d] = x_power;
+            x_power *= x;
+          }
+          M[sample_num / skip_span][size] = x;
+          M[sample_num / skip_span][size+1] = 1;
+          M[sample_num / skip_span][length] = output[sample_num];
+        }
+        auto [rank,index] = ExtendedReducedRowEchelonForm( M );
+        if( rank == length ){
+          CERR( "補間成功:" );
+          if( skip_span == 1 ){
+            string base = "(引数1)";
+            if( dx1 != 0 ){
+              base = "(" + base + ( dx1 > 0 ? "+" : "" ) + to_string( dx1 ) + ")";
+            }
+            CERRNS( "(" , index[length-1] , ") + " , "(" , index[length-2] , ") * " , base , " +\n" );
+            FOR( d , 0 , size ){
+              int i = d , dx2 = d - 1;
+              CERRNS( "(" , index[i] , ") * " , base , "^{(引数1)" , ( dx2 > 0 ? "+" : "" ) , ( dx2 == 0 ? "" : to_string( dx2 ) ) , ( d == size - 1 ? ")}\n" : ")} +\n" ) );
+            }
+          } else {
+            string base = "ceil((引数1)/" + to_string( skip_span ) + ")";
+            if( dx1 != 0 ){
+              base = "(" + base + ( dx1 > 0 ? "+" : "" ) + to_string( dx1 ) + ")";
+            }
+            CERRNS( "(" , index[length-1] , ") + " , "(" , index[length-2] , ") * " , base , " +\n" );
+            FOR( d , 0 , size ){
+              int i = d , dx2 = d - 1;
+              CERRNS( "(" , index[i] , ") * " , base , "^{ceil((引数1)/" , skip_span , ( dx2 > 0 ? "+" : "" ) , ( dx2 == 0 ? "" : to_string( dx2 ) ) , ( d == size - 1 ? ")}\n" : ")} +\n" ) );
+            }
+          }
+        } else {
+          CERR( "補間失敗。" );
+        }
+        CERR( "" );
+      }
     }
-    M[sample_num][size] = x;
-    M[sample_num][size+1] = 1;
-    M[sample_num][length] = output[sample_num];
   }
-  auto [rank,index] = ExtendedReducedRowEchelonForm( M );
-  if( rank == length ){
-    CERR( "補間成功:" );
-    CERRNS( "(" , index[length-1] , ") + " , "(" , index[length-2] , ") (引数1) + " );
-    FOR( d , 0 , size ){
-      int i = d , dx = d - 1;
-      CERRNS( "(" , index[i] , ") * (引数1)^{(引数1)" , ( dx > 0 ? "+" : "" ) , ( dx == 0 ? "" : to_string( dx ) ) , ( d == size - 1 ? "}\n" : "} +\n" ) );
-    }
-  } else {
-    CERR( "補間失敗。" );
-  }
-  CERR( "" );
 }
 
 void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )

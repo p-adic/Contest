@@ -11,13 +11,13 @@
 AC( SampleAnalyser );
 void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output , const int& scale , const int& P );
 void InputPolynomialAnalysis1_few( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
-void InputPolynomialAnalysis1_enough( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
+void InputPolynomialAnalysis1_enough( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous );
 void InputPolynomialAnalysis2_few( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
 void InputPolynomialAnalysis2_enough( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
 void InputPolynomialAnalysis3_few( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
 void InputPolynomialAnalysis3_enough( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
 void InputLinearAnalysis4( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
 void InputExponentialAnalysis1_few( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
-void InputExponentialAnalysis1_enough( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
+void InputExponentialAnalysis1_enough( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous );
 void InputExponentialAnalysis2_few( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
 void InputExponentialAnalysis2_enough( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str );
