@@ -1,6 +1,7 @@
 // 作問用
-#include "../Header.hpp"
 #include "a_Body.hpp"
+// stdstream系のライブラリのためにinclude順を後にする。
+#include "../Header.hpp"
 
 #include "../Random/a_Body.hpp"
 
