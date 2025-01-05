@@ -22,6 +22,7 @@
 #include "../../Mathematics/Geometry/Graph/Grid/a.hpp"
 #include "../../Mathematics/Arithmetic/Mod/ConstexprModulo/a.hpp"
 #include "../../Mathematics/Combinatorial/Loop/a.hpp"
+#include "../../../Mathematics/Arithmetic/Sum/a.hpp"
 
 CEXPR( uint , P , 998244353 );
 using MP = Mod<P>;
