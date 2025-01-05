@@ -1,7 +1,7 @@
 //interactive
 rep(3){//サンプル確認用
 
-
+#define MD 998244353
 ll@N,@M,@A[N],x=0;wt(x+max(A(N)));
 
 
