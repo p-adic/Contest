@@ -8,7 +8,8 @@
   }
   auto edge = Get( e );
   Graph graph{ N , edge };
-  BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = bfs.GetDistance();
+  BreadthFirstSearch bfs{ graph , -1 , list<int>{0} }; vector<int> d = bfs.GetDistance();
+  // BreadthFirstSearch bfs{ graph , -1 }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
   // DepthFirstSearchOnTree dfst{ graph , 0 };
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
   // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );

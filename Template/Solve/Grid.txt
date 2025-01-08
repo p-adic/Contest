@@ -6,8 +6,11 @@
   // grid_edge_j_plus = false; // 第２成分正（xy_axis?上:右）方向の許容性。
   // grid_edge_i_minus = false; // 第１成分負（xy_axis?左:上）方向の許容性。
   // grid_edge_j_minus = false; // 第２成分負（xy_axis?下:左）方向の許容性。
+  // walkable = '#'; // 床と壁を反転。
   GridGraph graph{ EdgeOnGrid }; // 重みなし。
   // GridGraph graph{ WEdgeOnGrid }; // 重み付き。
+  BreadthFirstSearch bfs{ graph , T2<int>{-1,-1} , list<T2<int>>{{0,0}} }; vector<int> d = bfs.GetDistance();
+  // BreadthFirstSearch bfs{ graph , T2<int>{-1,-1} }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent(); int cc_num = colour_ulim; FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } }
 
   /* xy_axis = true: 右と上を正軸方向とする座標（非デフォルト） */
   /* (0,1)  -> U */
