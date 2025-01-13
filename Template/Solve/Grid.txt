@@ -1,5 +1,5 @@
   CIN_HW;
-  // SET_HW( N , M );
+  // CIN( int , N , M ); SET_HW( N , M );
   SetWallStringOnGrid(); // 入力からgrid[i][j]に'.'や'#'を格納
   // grid = vector( H , string( W , '.' ) ); // EdgeOnGridなどに使用。
   // grid_edge_i_plus = false; // 第１成分正（xy_axis?右:下）方向の許容性。
