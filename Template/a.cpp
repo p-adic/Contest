@@ -233,14 +233,14 @@ US path = pair<int,ll>;
 /* BinarySearch (2KB)*/
 /* EXPRESSIONÇ™ANSWERÇÃçLã`íPí≤ä÷êîÇÃéûÅAEXPRESSION >= CONST_TARGETÇÃêÆêîâÇäiî[ÅB*/
 #define BS(AN,MINIMUM,MAXIMUM,EXPRESSION,DESIRED_INEQUALITY,CO_TARGET,INEQUALITY_FOR_CHECK,UPDATE_U,UPDATE_L,UPDATE_AN)ST_AS(! is_same<decldecay_t(CO_TARGET),uint>::value && ! is_same<decldecay_t(CO_TARGET),ull>::value);ll AN = MINIMUM;{ll AN ## _L = MINIMUM;ll AN ## _R = MAXIMUM;AN = UPDATE_AN;ll EXPRESSION_BS;CO ll CO_TARGET_BS =(CO_TARGET);ll DIFFERENCE_BS;WH(AN ## _L < AN ## _R){DIFFERENCE_BS =(EXPRESSION_BS =(EXPRESSION))- CO_TARGET_BS;if(DIFFERENCE_BS INEQUALITY_FOR_CHECK 0){AN ## _R = UPDATE_U;}else{AN ## _L = UPDATE_L;}AN = UPDATE_AN;}if(AN ## _L > AN ## _R || !((EXPRESSION)DESIRED_INEQUALITY CO_TARGET_BS)){AN = MAXIMUM + 1;}}
-/* íPí≤ëùâ¡ÇÃéûÇ…EXPRESSION >= CONST_TARGETÇÃç≈è¨âÇäiî[ÅB*/
-#define BS1(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,>=,AN,AN + 1,(AN ## _L + AN ## _R)/ 2)
-/* íPí≤ëùâ¡ÇÃéûÇ…EXPRESSION <= CONST_TARGETÇÃç≈ëÂâÇäiî[ÅB*/
-#define BS2(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,>,AN - 1,AN,(AN ## _L + 1 + AN ## _R)/ 2)
-/* íPí≤å∏è≠ÇÃéûÇ…EXPRESSION >= CONST_TARGETÇÃç≈ëÂâÇäiî[ÅB*/
-#define BS3(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,<,AN - 1,AN,(AN ## _L + 1 + AN ## _R)/ 2)
-/* íPí≤å∏è≠ÇÃéûÇ…EXPRESSION <= CONST_TARGETÇÃç≈è¨âÇäiî[ÅB*/
-#define BS4(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,<=,AN,AN + 1,(AN ## _L + AN ## _R)/ 2)
+/* íPí≤ëùâ¡ÇÃéûÇ…EXPRESSION >= CO_TARGETÇÃç≈è¨âÇäiî[ÅB*/
+#define MIN_GEQ(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,>=,AN,AN + 1,(AN ## _L + AN ## _R)>> 1)
+/* íPí≤ëùâ¡ÇÃéûÇ…EXPRESSION <= CO_TARGETÇÃç≈ëÂâÇäiî[ÅB*/
+#define MAX_LEQ(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,>,AN - 1,AN,(AN ## _L + 1 + AN ## _R)>> 1)
+/* íPí≤å∏è≠ÇÃéûÇ…EXPRESSION >= CO_TARGETÇÃç≈ëÂâÇäiî[ÅB*/
+#define MAX_GEQ(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,<,AN - 1,AN,(AN ## _L + 1 + AN ## _R)>> 1)
+/* íPí≤å∏è≠ÇÃéûÇ…EXPRESSION <= CO_TARGETÇÃç≈è¨âÇäiî[ÅB*/
+#define MIN_LEQ(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,<=,AN,AN + 1,(AN ## _L + AN ## _R)>> 1)
 
 /* TwoPoitnterApproach (2KB)*/
 /* VAR_TPAÇÕé⁄éÊÇËñ@ópÇÃïœêîñºÇÃê⁄ì™é´Ç≈ÅAé¿ç€ÇÃïœêîñºÇ≈ÇÕÇ»Ç≠ÅA_LÇ∆_RÇ∆_infoÇ™Ç¬Ç≠ÅB
@@ -269,7 +269,8 @@ ll GetRand(CRI Rand_min,CRI Rand_max){AS(Rand_min <= Rand_max);ll AN = time(NULL
 CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};
 TE <TY T>US Set = conditional_t<is_COructible_v<unordered_set<T>>,unordered_set<T>,conditional_t<is_ordered::value<T>,set<T>,VO>>;
 
-TE <TY SET,TY T> IN TY SET::const_iterator MaximumLeq(CO SET& S,CO T& t){auto IT = S.upper_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY SET,TY T> IN TY SET::const_iterator MaximumLt(CO SET& S,CO T& t){auto IT = S.lower_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY SET,TY T> IN TY SET::const_iterator MinimumGeq(CO SET& S,CO T& t){RE S.lower_bound(t);}TE <TY SET,TY T> IN TY SET::const_iterator MinimumGt(CO SET& S,CO T& t){RE S.upper_bound(t);}TE <TY SET,TY ITERATOR> IN VO EraseBack(SET& S,ITERATOR& IT){IT = S.erase(IT);}TE <TY SET,TY ITERATOR> IN VO EraseFront(SET& S,ITERATOR& IT){IT = S.erase(IT);IT == S.BE()?IT = S.EN():--IT;}TE <TY SET,TY T> IN bool In(CO SET& S,CO T& t){RE S.count(t)== 1;}
+#define DF_OF_POP_FOR_SET(SET)TE <TY T> IN T pop_max(SET& S){AS(!S.empty());auto IT = --S.EN();CO T AN = MO(*IT);S.erase(IT);RE AN;}TE <TY T> IN T pop_min(SET& S){AS(!S.empty());auto IT = S.BE();CO T AN = MO(*IT);S.erase(IT);RE AN;}TE <TY T> IN SET& OP+=(SET& S,T t){S.insert(MO(t));RE S;}TE <TY T> IN SET& OP-=(SET& S,CO T& t){S.erase(t);RE S;}
+TE <TY SET,TY T> IN TY SET::const_iterator MaximumLeq(CO SET& S,CO T& t){auto IT = S.upper_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY SET,TY T> IN TY SET::const_iterator MaximumLt(CO SET& S,CO T& t){auto IT = S.lower_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY SET,TY T> IN TY SET::const_iterator MinimumGeq(CO SET& S,CO T& t){RE S.lower_bound(t);}TE <TY SET,TY T> IN TY SET::const_iterator MinimumGt(CO SET& S,CO T& t){RE S.upper_bound(t);}TE <TY SET,TY ITERATOR> IN VO EraseBack(SET& S,ITERATOR& IT){IT = S.erase(IT);}TE <TY SET,TY ITERATOR> IN VO EraseFront(SET& S,ITERATOR& IT){IT = S.erase(IT);IT == S.BE()?IT = S.EN():--IT;}TE <TY SET,TY T> IN bool In(CO SET& S,CO T& t){RE S.count(t)== 1;}DF_OF_POP_FOR_SET(set<T>);DF_OF_POP_FOR_SET(unordered_set<T>);DF_OF_POP_FOR_SET(multiset<T>);DF_OF_POP_FOR_SET(unordered_multiset<T>);
 
 /* Tuple (5KB)*/
 #define DF_OF_AR_FOR_TUPLE(OPR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO V<T,U>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);RE t0;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);RE t0;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO tuple<T,U,V,W>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);get<3>(t0)OPR ## = get<3>(t1);RE t0;}TE <TY ARG,TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO ARG& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO ARG& t1){get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO ARG& t1){get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;get<3>(t0)OPR ## = t1;RE t0;}TE <TE <TY...> TY V,TY...ARGS,TY ARG> IN auto OP OPR(CO V<ARGS...>& t0,CO ARG& t1)-> decldecay_t((get<0>(t0),t0)){auto t = t0;RE MO(t OPR ## = t1);}
