@@ -353,8 +353,9 @@ TE <TY T> DC_OF_HASH(tuple<T>);TE <TY T,TY U> DC_OF_HASH(pair<T,U>);TE <TY T,TY 
 TE <TY T> IN size_t hash<tuple<T>>::OP()(CO tuple<T>& n)CO{ST CO hash<T> h;RE h(get<0>(n));}DF_OF_HASH_FOR_TUPLE(pair);DF_OF_HASH_FOR_TUPLE(tuple);TE <TY T,TY U,TY V> IN size_t hash<tuple<T,U,V>>::OP()(CO tuple<T,U,V>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<pair<T,U>> h01;ST CO hash<V> h2;RE(h01({get<0>(n),get<1>(n)})* seed)^ h2(get<2>(n));}TE <TY T,TY U,TY V,TY W> IN size_t hash<tuple<T,U,V,W>>::OP()(CO tuple<T,U,V,W>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<pair<T,U>> h01;ST CO hash<pair<V,W>> h23;RE(h01({get<0>(n),get<1>(n)})* seed)^ h23({get<2>(n),get<3>(n)});}
 
 /* Vector (3KB)*/
+#define DC_OF_COUT_FOR_VE(V)TE <CL Traits,TY Arg> IN OS& OP<<(OS& os,CO V<Arg>& arg)
 #define DF_OF_COUT_FOR_VE(V)TE <CL Traits,TY Arg> IN OS& OP<<(OS& os,CO V<Arg>& arg){auto BE = arg.BE(),EN = arg.EN();auto IT = BE;WH(IT != EN){(IT == BE?os:os << " ")<< *IT;IT++;}RE os;}
-DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);
+DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_COUT_FOR_VE(multiset);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}
 
 #define DF_OF_SCALAR_ACTION_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a,CO T& t){for(auto& s:a){a OPR ## = t;}RE a;}
 #define DF_OF_AR_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a0,CO V<T>& a1){AS(a0.SZ()<= a1.SZ());auto IT0 = a0.BE(),EN0 = a0.EN();auto IT1 = a1.BE();WH(IT0 != EN0){*(IT0++)OPR ## = *(IT1++);}RE a0;}TE <TY T,TY U> IN V<T> OP OPR(V<T> a,CO U& u){RE MO(a OPR ## = u);}
