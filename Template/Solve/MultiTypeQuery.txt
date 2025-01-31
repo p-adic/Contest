@@ -8,10 +8,11 @@
   FOR( q , 0 , Q ){
     CIN( int , type );
     if( type == 1 ){
-      CIN( ll , l , r , x ); --l; --r;
+      CIN( int , l , r ); --l; --r;
+      CIN( ll , x );
       // query[q] = {type,l,r,x};
     } else if( type == 2 ){
-      CIN( ll , l , r ); --l; --r;
+      CIN( int , l , r ); --l; --r;
       // query[q] = {type,l,r};
     }
   }

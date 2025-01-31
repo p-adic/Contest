@@ -1,5 +1,6 @@
   CIN( int , N , M );
   // CIN( int , N ); int M = N - 1;
+  using path = Pair<int,ll>;
   vector<vector<path>> e( N );
   // CEXPR( ll , infty , 1e18 );
   // vector weight( N , vector( N , infty ) ); FOR( i , 0 , N ){ weight[i][i] = 0; }

@@ -1,5 +1,7 @@
   CIN( int , N );
   CIN( string , S );
+  // int N = S.size();
+  
   // RollingHash<MP,int> rh{};
   // /* code = {ハッシュ,r^長さ,長さ} */
   // /* S全体のコード */
