@@ -772,7 +772,7 @@ AC( Maximisation )
 	     "配列上の関数に関する最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
 	     "固定長多変数関数の最大／最小化問題" ,
-	     "集合の部分集合に関する最大／最小化問題" ,
+	     "集合やグラフの部分集合に関する最大／最小化問題" ,
 	     "グラフの経路に関する最大／最小化問題" ,
 	     "木上の関数に関する最大／最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
@@ -1668,10 +1668,19 @@ AC( MaximisationFunctionOnAffineSpace )
 AC( MaximisationSubsetSize )
 {
   ASK_NUMBER(
-	     "部分集合の価値最大化問題" ,
+             "最大二部マッチング" ,
+             "非空有限集合族の選択関数の像の最大化" ,
+	     "その他の部分集合の価値最大化問題" ,
 	     "部分集合への分割に関する最小化問題"
 	     );
   if( num == num_temp++ ){
+    CALL_AC( MaximumBipartite );
+  } else if( num == num_temp++ ){
+    CERR( "選択関数を添字集合から和集合への写像とみなすことで" );
+    CERR( "最大二部マッチングに帰着されます。" );
+    CERR( "" );
+    CALL_AC( MaximumBipartite );
+  } else if( num == num_temp++ ){
     ASK_YES_NO( "各要素の価値は1ですか？" );
     if( reply == "y" ){
       CALL_AC( SubsetExhusiveSearch );
@@ -1700,6 +1709,16 @@ AC( MaximisationSubsetSize )
   } else {
     CALL_AC( MinimisationPartitionOfSet );
   }
+}
+
+AC( MaximumBipartite )
+{
+  CERR( "二部グラフの最大二部マッチングは" );
+  CERR( "- 出次数2ならば、連結成分ごとのmin(|V|,|E|)の総和" );
+  CERR( "- そうでないならば、ホップクロフトカープ法や容量1の最大流求解アルゴリズム" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( SubsetExhusiveSearch )
@@ -3485,6 +3504,10 @@ AC( Simulation )
   CERR( "  - イベントを重複して解決しないならばsetやmapで管理して" );
   CERR( "    イベント処理時に削除" );
   CERR( "- 優先度付きキューなどによるイベントソート" );
+  CERR( "  - グリッド内のO(Q)個の縱線と横線の和集合の要素数は、x軸を小さい方から" );
+  CERR( "    走査してx軸方向の線分の本数をイベントソートで管理、y軸方向の和集合を" );
+  CERR( "    区間代入更新で管理" );
+  CERR( "  - 特にグリッド上の経路は線分の集まりとみなして処理可能" );
   CERR( "- イベント群を区間更新クエリに翻訳して双対セグメント木などによる高速化" );
   CERR( "を検討しましょう。" );
 }
@@ -3814,11 +3837,9 @@ AC( DecisionSatisfiability )
     CERR( "区間処理による真理値更新は各種代数的データ構造を用いましょう。" );
     AC( QueryArray );
   } else if( num == num_temp++ ){
-    CERR( "完全二部マッチング判定は最大二部マッチングに帰着させて" );
-    CERR( "ホップクロフトカープ法や最大流" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
-    CERR( "を検討しましょう。" );
+    CERR( "完全二部マッチング判定は最大二部マッチングに帰着させます。" );
+    CERR( "" );
+    CALL_AC( MaximumBipartite );
   }
 }
 

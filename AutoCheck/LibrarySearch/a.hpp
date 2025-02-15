@@ -77,6 +77,7 @@ AC( MaximisationArrayFunctionGeneralOperation );
 AC( MaximisationArrayLength );
 AC( MaximisationFunctionOnAffineSpace );
 AC( MaximisationSubsetSize );
+AC( MaximumBipartite );
 AC( SubsetExhusiveSearch );
 AC( MinimisationGraph );
 AC( MinimisationGraphCost );
