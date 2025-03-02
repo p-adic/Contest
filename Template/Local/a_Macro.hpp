@@ -41,45 +41,6 @@
 #define MLE( CONDITION ) assert( CONDITION )
 #define OLE( CONDITION ) assert( CONDITION )
 
-#define REPEAT_MAIN( BOUND )                                    \
-  START_MAIN;                                                   \
-    signal( SIGABRT , &AlertAbort );                              \
-    if constexpr( !submit_only ){                                 \
-      AutoCheck( use_getline , sample_check , problem_order );    \
-    }                                                             \
-    CEXPR( int , test_case_num_bound , BOUND );                   \
-    if( exec_mode != solve_mode ){                                \
-      if( exec_mode == sample_check_mode ){                         \
-        SampleCheck( sample_path , input_path , output_path , problem_order , test_case_num_bound , ifs , ofs ); \
-      } else if( exec_mode == experiment_mode ){                  \
-        Experiment();                                             \
-      } else if( exec_mode == small_test_mode ){                  \
-        SmallTest();                                              \
-      } else if( exec_mode == random_test_mode ){                 \
-        CERR( "ランダムテストを行う回数を指定してください。" );          \
-        CIN( int , test_case_num );                                     \
-        RandomTest( test_case_num );                              \
-      }                                                           \
-      RE 0;                                                       \
-    }                                                             \
-  FINISH_MAIN                                                   \
-
-
-#define FINISH_MAIN                                                    \
-    if constexpr( test_case_num_bound > 1 ){             \
-      CERR( "テストケースの個数を入力してください。" );         \
-      CIN_ASSERT( test_case_num , 1 , test_case_num_bound );    \
-      FOR( test_case , 0 , test_case_num ){                       \
-        CERR( "testcase" , test_case , ":" );                    \
-        Solve();                                                \
-        CERR( "" );                                             \
-      }                                                         \
-                } else {                                        \
-      Solve();                                                  \
-      CERR( "" );                                               \
-    }                                                           \
-  }                                                           \
-
 #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE2 )
 
 #define ASSERT( A , MIN , MAX )                                         \
@@ -91,12 +52,93 @@
   #define SET( ... ) SET_SEPARATE( '\n' , __VA_ARGS__ )
   #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; SET_SEPARATE( SEPARATOR , __VA_ARGS__ )
   #define GETLINE( ... ) GETLINE_SEPARATE( '\n' , __VA_ARGS__ )
+
+  #define REPEAT_MAIN( BOUND )                                    \
+    START_MAIN;                                                   \
+      signal( SIGABRT , &AlertAbort );                              \
+      if constexpr( !submit_only ){                                 \
+        AutoCheck( use_getline , sample_check , problem_order );    \
+      }                                                             \
+      CEXPR( int , test_case_num_bound , BOUND );                   \
+      if( exec_mode != solve_mode ){                                \
+        if( exec_mode == sample_check_mode ){                         \
+          SampleCheck( sample_path , input_path , output_path , problem_order , test_case_num_bound , ifs , ofs ); \
+        } else if( exec_mode == experiment_mode ){                  \
+          Experiment();                                             \
+        } else if( exec_mode == small_test_mode ){                  \
+          SmallTest();                                              \
+        } else if( exec_mode == random_test_mode ){                 \
+          CERR( "ランダムテストを行う回数を指定してください。" );          \
+          GETLINE( test_case_num_str ); int test_case_num = stoi( test_case_num_str ); \
+          RandomTest( test_case_num );                              \
+        }                                                           \
+        RE 0;                                                       \
+      }                                                             \
+    FINISH_MAIN                                                   \
+
+
+  #define FINISH_MAIN                                                    \
+      if constexpr( test_case_num_bound > 1 ){             \
+        CERR( "テストケースの個数を入力してください。" );         \
+        GETLINE( test_case_num_str ); int test_case_num = stoi( test_case_num_str ); \
+        ASSERT( test_case_num , 1 , test_case_num_bound );    \
+        FOR( test_case , 0 , test_case_num ){                       \
+          CERR( "testcase" , test_case , ":" );                    \
+          Solve();                                                \
+          CERR( "" );                                             \
+        }                                                         \
+      } else {                                        \
+        Solve();                                                  \
+        CERR( "" );                                               \
+      }                                                           \
+    }                                                           \
+
 #else
   #define SET( ... ) if( exec_mode == sample_check_mode ){ VariadicCin( ifs , __VA_ARGS__ ); } else { VariadicCin( cin , __VA_ARGS__ ); }
   #define CIN( LL , ... ) LL __VA_ARGS__; SET( __VA_ARGS__ )
   #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ if( exec_mode == sample_check_mode ){ VariadicSet( ifs , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); } else { VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); } }
   #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
   #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
+
+  #define REPEAT_MAIN( BOUND )                                    \
+    START_MAIN;                                                   \
+      signal( SIGABRT , &AlertAbort );                              \
+      if constexpr( !submit_only ){                                 \
+        AutoCheck( use_getline , sample_check , problem_order );    \
+      }                                                             \
+      CEXPR( int , test_case_num_bound , BOUND );                   \
+      if( exec_mode != solve_mode ){                                \
+        if( exec_mode == sample_check_mode ){                         \
+          SampleCheck( sample_path , input_path , output_path , problem_order , test_case_num_bound , ifs , ofs ); \
+        } else if( exec_mode == experiment_mode ){                  \
+          Experiment();                                             \
+        } else if( exec_mode == small_test_mode ){                  \
+          SmallTest();                                              \
+        } else if( exec_mode == random_test_mode ){                 \
+          CERR( "ランダムテストを行う回数を指定してください。" );          \
+          CIN( int , test_case_num );                                     \
+          RandomTest( test_case_num );                              \
+        }                                                           \
+        RE 0;                                                       \
+      }                                                             \
+    FINISH_MAIN                                                   \
+
+
+  #define FINISH_MAIN                                                    \
+      if constexpr( test_case_num_bound > 1 ){             \
+        CERR( "テストケースの個数を入力してください。" );         \
+        CIN_ASSERT( test_case_num , 1 , test_case_num_bound );    \
+        FOR( test_case , 0 , test_case_num ){                       \
+          CERR( "testcase" , test_case , ":" );                    \
+          Solve();                                                \
+          CERR( "" );                                             \
+        }                                                         \
+      } else {                                        \
+        Solve();                                                  \
+        CERR( "" );                                               \
+      }                                                           \
+    }                                                           \
+
 #endif
 
 #define SET_ASSERT( A , MIN , MAX )                     \
