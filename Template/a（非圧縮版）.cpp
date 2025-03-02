@@ -27,14 +27,16 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Naive( ll N , ll M , ll K , const bool& debug_output = true )
+MP Naive( const ll& N , const ll& M , const ll& K , const bool& debug_output = true )
+// MP Naive( ll N , ll M , ll K , const bool& debug_output = true )
 {
   MP answer{};
   return answer;
 }
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Answer( ll N , ll M , ll K , const bool& debug_output = true )
+MP Answer( const ll& N , const ll& M , const ll& K , const bool& debug_output = true )
+// MP Answer( ll N , ll M , ll K , const bool& debug_output = true )
 {
   MP answer{};
   return answer;
@@ -137,9 +139,9 @@ inline void RandomTest( const int& test_case_num )
   #define CERRNS( ... ) 
   #define COUT_A( I , N , A ) CoutArray( cout , I , N , A ) << ENDL
   #define CERR_A( I , N , A ) 
-  #define TLE( CONDITION ) if( !( CONDITION ) ){ ll TLE_VAR = 1; while( TLE_VAR != 0 ){ ( TLE_VAR += 2 ) %= int( 1e9 ); } COUT( TLE_VAR ); }
-  #define MLE( CONDITION ) if( !( CONDITION ) ){ vector<vector<ll>> MLE_VAR{}; REPEAT( 1e6 ){ MLE_VAR.push_back( vector<ll>( 1e6 ) ); } COUT( MLE_VAR ); }
-  #define OLE( CONDITION ) if( !( CONDITION ) ){ REPEAT( 1e8 ){ COUT( "OLE" ); } }
+  #define TLE( CONDITION ) if( !( CONDITION ) ){ ll TLE_VAR = 1; while( TLE_VAR != 0 ){ ( TLE_VAR += 2 ) %= int( 1e9 ); } cerr << TLE_VAR << endl; }
+  #define MLE( CONDITION ) if( !( CONDITION ) ){ vector<vector<ll>> MLE_VAR{}; REPEAT( 1e6 ){ MLE_VAR.push_back( vector<ll>( 1e6 ) ); } cerr << MLE_VAR << endl; }
+  #define OLE( CONDITION ) if( !( CONDITION ) ){ REPEAT( 1e8 ){ cerr << "OLE\n"; } }
 #endif
 #ifdef REACTIVE
   #ifdef DEBUG

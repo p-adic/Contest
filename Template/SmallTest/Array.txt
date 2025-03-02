@@ -6,6 +6,7 @@
     bool b = Ai_min <= Ai_max;
     while( b ){
       COMPARE( N , A );
+      // COUT( N , A , Answer( N , A ) );
       b = NextLoopEq( N , A_min , A_max , A );
     }
   }

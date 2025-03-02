@@ -1,21 +1,23 @@
-  int Q_max = 3;
-  int N2 = N * ( N + 1 ) / 2;
-  int power = 1;
-  FOR ( Q , 1 , Q_max ){
-    assert( power <= ( 1 << 30 ) / N2 );
-    power *= N2;
-    FOR( p , 0 , power ){
-      int p_copy = p;
-      vector<T2<int>> query( Q );
-      FOR( q , 0 , Q ){
-        int l = 0 , r = p_copy % N2;
-        while( r >= N - l ){
-          r -= N - l++;
-        }
-        r += l;
-        query[q] = {l+1,r+1};
-        p_copy /= N2;
+  int base = N * ( N + 1 ) / 2;
+  int Q = 3;
+  int base_power = 1;
+  REPEAT( Q ){
+    assert( base_power <= ( 1 << 30 ) / base );
+    base_power *= base;
+  }
+  // クエリをbase進法でコード化
+  FOR( query_code , 0 , base_power ){
+    int query_code_copy = query_code;
+    vector<T2<int>> query( Q );
+    FOR( q , 0 , Q ){
+      int l = 0 , r = query_code_copy % base;
+      while( r >= N - l ){
+        r -= N - l++;
       }
-      COMPARE( N , ... , Q , query );
+      r += l;
+      query[q] = {l+1,r+1};
+      query_code_copy /= base;
     }
+    COMPARE( N , ... , Q , query );
+    // COUT( N , ... , Q , query , Answer( N , ... , Q , query ) );
   }

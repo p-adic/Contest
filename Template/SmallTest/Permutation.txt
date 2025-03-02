@@ -5,6 +5,7 @@
     bool b = true;
     while( b ){
       COMPARE( N , P );
+      // COUT( N , P , Answer( N , P ) );
       b = next_permutation( P.begin() , P.end() );
     }
   }

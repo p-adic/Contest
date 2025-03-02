@@ -8,6 +8,7 @@
       int K_min = 1 , K_max = bound;
       FOREQ( K , K_min , K_max ){
         COMPARE( N , M , K );
+        // COUT( N , M , K , Answer( N , M , K ) );
       }
     }
   }
