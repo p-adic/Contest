@@ -4,4 +4,4 @@
       int i = GetRand( 0 , N - 1 ) , j = GetRand( 0 , N - 1 ); swap( P[i] , P[j] );
     }
     COMPARE( N , P );
-    // COUT( N , P , Answer( N , P ) );
+    // CHECK( N , P );

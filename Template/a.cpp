@@ -63,6 +63,7 @@ IN VO SmallTest()
   /* // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt */
   /* // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt */
   
+  CERR( "全ての出力が一致しました。" );
 }
 
 /* 圧縮時は中身だけ削除する。*/
@@ -177,6 +178,7 @@ using namespace std;
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS ); cerr << fixed << setprecision( DECIMAL_DIGITS )
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
 #define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , false ); auto answer = Answer( __VA_ARGS__ , false ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ CERR( "出力の不一致が検出されました。" ); RE; }
+#define CHECK( ... ) auto answer = Answer( __VA_ARGS__ , false ); CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Answer == " , answer )
 
 /* 圧縮用 */
 #define TE template

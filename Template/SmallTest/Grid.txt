@@ -10,7 +10,7 @@
           }
         }
         COMPARE( H , W , S );
-        // COUT( H , W , S , Answer( H , W , S ) );
+        // CHECK( H , W , S );
       }
     }
   }

@@ -2,4 +2,4 @@
     CEXPR( int , letter_num , 26 );  CIN_A_ASSERT( 0 , N , A , 0 , letter_num - 1 );
     string S = ArrayToString( A );
     COMPARE( N , S );
-    // COUT( N , S , Answer( N , S ) );
+    // CHECK( N , S );

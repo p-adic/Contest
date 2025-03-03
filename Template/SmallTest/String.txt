@@ -8,7 +8,7 @@
     while( b ){
       string S = ArrayToString( A );
       COMPARE( N , S );
-      // COUT( N , S , Answer( N , S ) );
+      // CHECK( N , S );
       b = NextLoop( N , A_min , A_ulim , A );
     }
   }

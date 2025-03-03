@@ -19,5 +19,5 @@
       query_code_copy /= base;
     }
     COMPARE( N , ... , Q , query );
-    // COUT( N , ... , Q , query , Answer( N , ... , Q , query ) );
+    // CHECK( N , ... , Q , query );
   }

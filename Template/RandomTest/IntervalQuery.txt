@@ -6,4 +6,4 @@
       query[q] = {l,r};
     }
     COMPARE( N , Q , ... , query );
-    // COUT( N , Q , ... , query , Answer( N , Q , ... , query ) );
+    // CHECK( N , Q , ... , query );
