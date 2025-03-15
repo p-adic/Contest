@@ -15,10 +15,8 @@
   Arithmetic/Divisor/Moevius/compress.txt
 - GCD: Å‘åŒö–ñ”,Å¬Œö”{” (1KB)
   Arithmetic/Divisor/GCD/compress.txt
-- Power: ã°æ (1KB)
-  Arithmetic/Power/compress.txt
-  - GeometricProgressionSum: ™pæ,“™”ä”—ñ‚Ì˜a (1KB)
-    Arithmetic/Power/GeometricProgressionSum/compress.txt
+- Sum: ‘˜a,‘æ,™pæ,“™·”—ñ‚Ì˜a,“™”ä”—ñ‚Ì˜a,“™”ä”—ñ‚ÌüŒ`Œ‹‡ (2KB)
+  Arithmetic/Sum/compress.txt
   - DivisorSum: ™pæ,–ñ”‚Ì™pæ˜a (1KB)
     Arithmetic/Divisor/Sum/compress.txt
 - Sqrt: •½•ûª (1KB)

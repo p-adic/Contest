@@ -26,16 +26,16 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Naive( const ll& N , const ll& M , const ll& K , const bool& debug_output = true )
-// MP Naive( ll N , ll M , ll K , const bool& debug_output = true )
+MP Naive( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
+// MP Naive( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
 {
   MP answer{};
   return answer;
 }
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Answer( const ll& N , const ll& M , const ll& K , const bool& debug_output = true )
-// MP Answer( ll N , ll M , ll K , const bool& debug_output = true )
+MP Answer( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
+// MP Answer( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
 {
   MP answer{};
   return answer;
@@ -62,7 +62,7 @@ IN VO SmallTest()
   /* // グラフ ../Contest/Template/SmallTest/Graph.txt */
   /* // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt */
   /* // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt */
-  
+
   CERR( "全ての出力が一致しました。" );
 }
 
@@ -116,21 +116,22 @@ IN VO RandomTest( const int& test_case_num )
   #pragma GCC optimize ( "O3" )
   #pragma GCC optimize ( "unroll-loops" )
   #pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
-  #define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if CE( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
-  #define FINISH_MAIN REPEAT( test_case_num ){ if CE( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
   #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE1 )
   #define ASSERT( A , MIN , MAX ) AS( ( MIN ) <= A && A <= ( MAX ) )
+  #define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , test_case_num_bound , BOUND ); int test_case_num = 1; if CE( test_case_num_bound > 1 ){ FINISH_MAIN
   #ifdef USE_GETLINE
     #define SET_SEPARATE( SEPARATOR , ... ) VariadicGetline( cin , SEPARATOR , __VA_ARGS__ )
     #define SET( ... ) SET_SEPARATE( '\n' , __VA_ARGS__ )
     #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; SET_SEPARATE( SEPARATOR , __VA_ARGS__ )
     #define GETLINE( ... ) GETLINE_SEPARATE( '\n' , __VA_ARGS__ )
+    #define FINISH_MAIN GETLINE( test_case_num_str ); test_case_num = stoi( test_case_num_str ); ASSERT( test_case_num , 1 , test_case_num_bound ); } REPEAT( test_case_num ){ Solve(); } }
   #else
     #define SET( ... ) VariadicCin( cin , __VA_ARGS__ )
     #define CIN( LL , ... ) LL __VA_ARGS__; SET( __VA_ARGS__ )
     #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); }
     #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
     #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
+    #define FINISH_MAIN SET_ASSERT( test_case_num , 1 , test_case_num_bound ); } REPEAT( test_case_num ){ Solve(); } }
   #endif
   #define SET_ASSERT( A , MIN , MAX ) SET( A ); ASSERT( A , MIN , MAX )
   #define SOLVE_ONLY 
@@ -265,17 +266,13 @@ VAR_TPA ## _infoもintervalにコピーされるので、setやvectorなどのコピーのコストが
 ll GetRand(CRI Rand_min,CRI Rand_max){AS(Rand_min <= Rand_max);ll AN = time(NULL);RE AN * rand()%(Rand_max + 1 - Rand_min)+ Rand_min;}
 
 /* Set (2KB)*/
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Mathematics/Utility/Set/a_Body.hpp"
-#else
 #define DC_OF_HASH(...)struct hash<__VA_ARGS__>{IN size_t OP()(CO __VA_ARGS__& n)CO;};
 CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};
 TE <TY T>US Set = conditional_t<is_COructible_v<unordered_set<T>>,unordered_set<T>,conditional_t<is_ordered::value<T>,set<T>,VO>>;
 
-#define DF_OF_POP_FOR_SET(SET)TE <TY T> IN T pop_max(SET& S){AS(!S.empty());auto IT = --S.EN();CO T AN = MO(*IT);S.erase(IT);RE AN;}TE <TY T> IN T pop_min(SET& S){AS(!S.empty());auto IT = S.BE();CO T AN = MO(*IT);S.erase(IT);RE AN;}TE <TY T> IN SET& OP+=(SET& S,T t){S.insert(MO(t));RE S;}TE <TY T> IN SET& OP-=(SET& S,CO T& t){S.erase(t);RE S;}TE <TY T> IN CO T& Get(CO SET& S,int i){auto BE = S.BE(),EN = S.EN();auto& IT = i < 0?(++i,--EN):BE;WH(i > 0 && IT != EN){--i;++IT;}WH(i < 0 && IT != BE){++i;--IT;}AS(i == 0);RE *IT;}
+#define DF_OF_POP_FOR_SET(SET)TE <TY T> IN T pop_max(SET& S){AS(!S.empty());auto IT = --S.EN();T AN = *IT;S.erase(IT);RE AN;}TE <TY T> IN T pop_min(SET& S){AS(!S.empty());auto IT = S.BE();T AN = *IT;S.erase(IT);RE AN;}TE <TY T,TY U> IN SET& OP+=(SET& S,U u){S.insert(MO(u));RE S;}TE <TY T,TY U> IN SET& OP-=(SET& S,CO U& u){S.erase(u);RE S;}TE <TY T> IN CO T& Get(CO SET& S,int i){auto BE = S.BE(),EN = S.EN();auto& IT = i < 0?(++i,--EN):BE;WH(i > 0 && IT != EN){--i;++IT;}WH(i < 0 && IT != BE){++i;--IT;}AS(i == 0);RE *IT;}
 #define DF_OF_UNION_FOR_SET(SET)TE <TY T> IN SET& OP|=(SET& a0,CO SET& a1){for(auto& t:a1){a0 += t;}RE a0;}TE <TY T> IN SET OP|(SET a0,CO SET& a1){RE MO(a0 |= a1);}
 TE <TY SET,TY T> IN TY SET::const_iterator MaximumLeq(CO SET& S,CO T& t){auto IT = S.upper_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY SET,TY T> IN TY SET::const_iterator MaximumLt(CO SET& S,CO T& t){auto IT = S.lower_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY SET,TY T> IN TY SET::const_iterator MinimumGeq(CO SET& S,CO T& t){RE S.lower_bound(t);}TE <TY SET,TY T> IN TY SET::const_iterator MinimumGt(CO SET& S,CO T& t){RE S.upper_bound(t);}TE <TY SET,TY ITERATOR> IN VO EraseBack(SET& S,ITERATOR& IT){IT = S.erase(IT);}TE <TY SET,TY ITERATOR> IN VO EraseFront(SET& S,ITERATOR& IT){IT = S.erase(IT);IT == S.BE()?IT = S.EN():--IT;}TE <TE <TY...> TY SET,TY T,TY...Args> IN bool In(CO SET<T,Args...>& S,CO T& t){RE S.count(t)== 1;}DF_OF_POP_FOR_SET(set<T>);DF_OF_POP_FOR_SET(unordered_set<T>);DF_OF_POP_FOR_SET(multiset<T>);DF_OF_POP_FOR_SET(unordered_multiset<T>);DF_OF_UNION_FOR_SET(set<T>);DF_OF_UNION_FOR_SET(unordered_set<T>);DF_OF_UNION_FOR_SET(multiset<T>);DF_OF_UNION_FOR_SET(unordered_multiset<T>);DF_OF_UNION_FOR_SET(VE<T>);DF_OF_UNION_FOR_SET(LI<T>);
-#endif
 
 /* Tuple (6KB)*/
 #define DF_OF_AR_FOR_TUPLE(OPR)TE <TY T,TY U,TE <TY...> TY PAIR> IN auto OP OPR ## =(PAIR<T,U>& t0,CO PAIR<T,U>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);RE t0;}TE <TY T,TY U,TY V,TE <TY...> TY TUPLE> IN auto OP OPR ## =(TUPLE<T,U,V>& t0,CO TUPLE<T,U,V>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);RE t0;}TE <TY T,TY U,TY V,TY W,TE <TY...> TY TUPLE> IN auto OP OPR ## =(TUPLE<T,U,V,W>& t0,CO TUPLE<T,U,V,W>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);get<3>(t0)OPR ## = get<3>(t1);RE t0;}TE <TY ARG,TY T,TY U,TE <TY...> TY PAIR> IN auto OP OPR ## =(PAIR<T,U>& t0,CO ARG& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V,TE <TY...> TY TUPLE> IN auto OP OPR ## =(TUPLE<T,U,V>& t0,CO ARG& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V,TY W,TE <TY...> TY TUPLE> IN auto OP OPR ## =(TUPLE<T,U,V,W>& t0,CO ARG& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;get<3>(t0)OPR ## = t1;RE t0;}TE <TE <TY...> TY TUPLE,TY...ARGS,TY ARG> IN auto OP OPR(CO TUPLE<ARGS...>& t0,CO ARG& t1)-> decldecay_t((get<0>(t0),t0)){auto t = t0;RE MO(t OPR ## = t1);}
@@ -299,7 +296,7 @@ DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FO
 #define DF_OF_SCALAR_ACTION_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a,CO T& t){for(auto& s:a){s OPR ## = t;}RE a;}
 #define DF_OF_AR_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a0,CO V<T>& a1){AS(a0.SZ()<= a1.SZ());auto IT0 = a0.BE(),EN0 = a0.EN();auto IT1 = a1.BE();WH(IT0 != EN0){*(IT0++)OPR ## = *(IT1++);}RE a0;}TE <TY T,TY U> IN V<T> OP OPR(V<T> a,CO U& u){RE MO(a OPR ## = u);}
 #define DF_OF_INCREMENT_FOR_VE(V,INCR)TE <TY T> IN V<T>& OP INCR(V<T>& a){for(auto& i:a){INCR i;}RE a;}
-#define DF_OF_ARS_FOR_VE(V)TE <TY T> IN V<T>& OP+=(V<T>& a,CO T& t){a.push_back(t);RE a;}TE <TY T> IN V<T>& OP<<=(V<T>& a,CO T& t){RE a += t;}TE <TY T> IN V<T> OP<<(V<T> a,CO T& t){RE MO(a +~ t);}DF_OF_SCALAR_ACTION_FOR_VE(V,*);DF_OF_SCALAR_ACTION_FOR_VE(V,/);DF_OF_SCALAR_ACTION_FOR_VE(V,%);DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--);TE <TY T> IN V<T> OP*(CO T& scalar,V<T> v){for(auto& t:v){t *= scalar;}RE MO(v);}TE <TY T> IN T pop(V<T>& a){AS(!a.empty());T AN = MO(a.back());a.pop_back();RE AN;}
+#define DF_OF_ARS_FOR_VE(V)TE <TY T,TY U> IN V<T>& OP<<=(V<T>& a,U u){a.push_back(MO(u));RE a;}TE <TY T,TY U> IN V<T> OP<<(V<T> a,U u){RE MO(a <<= MO(u));}DF_OF_SCALAR_ACTION_FOR_VE(V,*);DF_OF_SCALAR_ACTION_FOR_VE(V,/);DF_OF_SCALAR_ACTION_FOR_VE(V,%);DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--);TE <TY T> IN V<T> OP*(CO T& scalar,V<T> v){for(auto& t:v){t *= scalar;}RE MO(v);}TE <TY T> IN T pop(V<T>& a){AS(!a.empty());T AN = MO(a.back());a.pop_back();RE AN;}
 DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T> IN VE<T> id(CRI SZ){VE<T> AN(SZ);for(int i = 0;i < SZ;i++){AN[i]= i;}RE AN;}TE <TY T> IN VO Sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY T0,TY T1> IN VO Sort(VE<T0>& a,VE<T1>& b,CO bool& reversed = false){CO int SZ = a.SZ();AS(SZ == int(b.SZ()));VE<pair<T0,T1>> v(SZ);for(int i = 0;i < SZ;i++){v[i]={MO(a[i]),MO(b[i])};}Sort(v,reversed);for(int i = 0;i < SZ;i++){a[i]= MO(v[i].first);b[i]= MO(v[i].second);}}TE <TY T> IN VE<int> IndexSort(CO VE<T>& a,CO bool& reversed = false){auto index = id<int>(a.SZ());if(reversed){sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[j]< a[i];});}else{sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[i]< a[j];});}RE index;}TE <TY V> IN int len(CO V& a){RE a.SZ();}
 
 /* Map (1KB)*/
@@ -358,7 +355,7 @@ TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE
 TE <uint M> DC_OF_HASH(Mod<M>); TE <uint M> DF_OF_HASH_FOR_MOD(Mod<M>);
 
 /* Sum (2KB) */
-TE <TY T,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(CO V<T>& f,OPR opr){AS(!f.empty());auto IT = f.BE(),EN = f.EN();T AN = *(IT++);WH(IT != EN){AN = opr(MO(AN),*(IT++));}RE AN;}TE <TY T,TE <TY...> TY V> IN T Sum(CO V<T>& f){RE LeftConnectiveProd(f,[](T t0,CO T& t1){RE MO(t0 += t1);});}TE <TY T,TE <TY...> TY V> IN T Prod(CO V<T>& f){RE LeftConnectiveProd(f,[](T t0,CO T& t1){RE MO(t0 *= t1);});}TE <TY T,TE <TY...> TY V> IN T Max(CO V<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TE <TY...> TY V> IN T Min(CO V<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TY U> IN T SetMax(T& n,CO U& m){RE n < m?n = m:n;}TE <TY T,TY U> IN T SetMin(T& n,CO U& m){RE n > m?n = m:n;}TE <TY T,TY UINT>T Power(T t,UINT EX,T init = 1){(EX & 1)== 1?init *= t:init;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?init *= t:init;EX >>= 1;}RE MO(init);}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& l,INT r,CO INT& d = 1){AS(l <= r);CO INT c =(r - l)/ d;RE(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& r){RE ArithmeticProgressionSum(INT{},r);}TE <TY T,TY UINT> IN T GeometricProgressionSum(T rate,UINT EX_max,CO T& init = 1){T rate_minus = rate - 1;RE rate_minus == 0?init * ++EX_max:(Power(MO(rate),MO(++EX_max))- 1)/ MO(rate_minus)* init;}TE <TY T,TY UINT>T GeometricProgressionLinearCombinationSum(VE<T> rate,VE<UINT> EX_max,CO VE<T>& init){CO int SZ = init.SZ();AS(int(rate.SZ())== SZ && int(EX_max.SZ())== SZ);T AN{};for(int i = 0;i < SZ;i++){AN += GeometricProgressionSum(MO(rate[i]),MO(EX_max[i]),init[i]);}RE AN;}
+TE <TY T,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(CO V<T>& f,OPR opr){AS(!f.empty());auto IT = f.BE(),EN = f.EN();T AN = *(IT++);WH(IT != EN){AN = opr(MO(AN),*(IT++));}RE AN;}TE <TY T,TE <TY...> TY V> IN T Sum(CO V<T>& f){RE f.empty()?T{}:LeftConnectiveProd(f,[](T t0,CO T& t1){RE MO(t0 += t1);});}TE <TY T,TE <TY...> TY V> IN T Prod(CO V<T>& f){RE f.empty()?T{1}:LeftConnectiveProd(f,[](T t0,CO T& t1){RE MO(t0 *= t1);});}TE <TY T,TE <TY...> TY V> IN T Max(CO V<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TE <TY...> TY V> IN T Min(CO V<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TY U> IN T SetMax(T& n,CO U& m){RE n < m?n = m:n;}TE <TY T,TY U> IN T SetMin(T& n,CO U& m){RE n > m?n = m:n;}TE <TY T,TY UINT>T Power(T t,UINT EX,T init = 1){(EX & 1)== 1?init *= t:init;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?init *= t:init;EX >>= 1;}RE MO(init);}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& l,INT r,CO INT& d = 1){AS(l <= r);CO INT c =(r - l)/ d;RE(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& r){RE ArithmeticProgressionSum(INT{},r);}TE <TY T,TY UINT> IN T GeometricProgressionSum(T rate,UINT EX_max,CO T& init = 1){T rate_minus = rate - 1;RE rate_minus == 0?init * ++EX_max:(Power(MO(rate),MO(++EX_max))- 1)/ MO(rate_minus)* init;}TE <TY T,TY UINT>T GeometricProgressionLinearCombinationSum(VE<T> rate,VE<UINT> EX_max,CO VE<T>& init){CO int SZ = init.SZ();AS(int(rate.SZ())== SZ && int(EX_max.SZ())== SZ);T AN{};for(int i = 0;i < SZ;i++){AN += GeometricProgressionSum(MO(rate[i]),MO(EX_max[i]),init[i]);}RE AN;}
 
 /* Loop (1KB)*/
 TE <TY INT> bool NextLoop(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoop(CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){RE NextLoop(index.SZ(),lower_bound,upper_limit,index);}TE <TY INT> bool NextLoopEq(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]<= upper_bound[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoopEq(CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){RE NextLoopEq(index.SZ(),lower_bound,upper_bound,index);}

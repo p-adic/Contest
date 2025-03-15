@@ -2,13 +2,17 @@
 - Knapsack (8KB)
   Combinatorial/KnapsackProblem/compress.txt
   - Costfree: コストなし線形版 (3KB)
-    Combinatorial/KnapsackProblem/Cosfree/compress.txt
+    Combinatorial/KnapsackProblem/Costfree/compress.txt
     - Difference (7KB)
-      Combinatorial/KnapsackProblem/Cosfree/Difference/Compress.txt
+      Combinatorial/KnapsackProblem/Costfree/Difference/compress.txt
     - InitialSegment (3KB)
-      Combinatorial/KnapsackProblem/Cosfree/InitialSegment/Compress.txt
+      Combinatorial/KnapsackProblem/Costfree/InitialSegment/compress.txt
+    - FixedSize (1KB)
+      Combinatorial/KnapsackProblem/Costfree/FixedSize/compress.txt
     - Valuewise (1KB)
-      Combinatorial/KnapsackProblem/Cosfree/Valuewise/tcompress.txt
+      Combinatorial/KnapsackProblem/Costfree/Valuewise/tcompress.txt
+  - CostOne: コスト1 (3KB)
+    Combinatorial/KnapsackProblem/CostOne/compress.txt
   - Interval: 区間和 (4KB)
     Combinatorial/KnapsackProblem/Interval/compress.txt
     - Costfree: コストなし線形版 (4KB)
