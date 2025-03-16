@@ -12,6 +12,7 @@ VO Solve()
 {
   // 数 ../Contest/Template/Solve/Number.txt
   // 配列 ../Contest/Template/Solve/Array.txt
+  // 順列 ../Contest/Template/Solve/Permutaion.txt
   // 文字列 ../Contest/Template/Solve/String.txt
   // グリッド ../Contest/Template/Solve/Grid.txt
   // グラフ ../Contest/Template/Solve/Graph.txt
