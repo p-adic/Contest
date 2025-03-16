@@ -1,0 +1,72 @@
+  CIN( int , N );
+  CIN_A( int , 0 , N , P ); --P;
+  vector<int> P_inv( N ); FOR( i , 0 , N ){ P_inv[P[i]] = i; }
+
+  // /* Mathematics/Combinatorial/Permutation/compress.txt */
+  // /* 順列とは限らない配列Pの転倒数計算O(N log N) */
+  // ll inv_num = InversionNumber( P );
+
+  // /* 順列Pの巡回置換表示O(N) */
+  // vector<vector<int>> cyc_rep = CyclicPermutationRepresentation( P );
+
+  // /* 順列Pの極小互換表示O(N) */
+  // vector<pair<int,int>> swap_rep = MinimalTranspositionRepresentation( P );
+
+  // /* 順列Pの極小基本互換表示O(N^2) */
+  // vector<pair<int,int>> a_swap_rep = MinimalAdjacentTranspositionRepresentation( P );
+
+  // /* 順列Pの位数計算O(N) */
+  // ll ord = PermutationOrder( P );
+
+  // /* 順列Pの極小互換表示の濃度計算O(N) */
+  // int count = LeastSwapCount( P );
+
+  // /* 順列Pの極小基本互換表示の濃度計算O(N log N) */
+  // ll a_count = LeastAdjacentSwapCount( P );
+
+  // /* 順列Pの符号計算O(N log N) */
+  // int sign = Signature( P );
+
+  // // /* unit     : ((),())    */
+  // // /* swap(i,j): ((i,j),()) */
+  // // /* P        : (P,P_inv)  */
+  // using Perm = T2<vector<int>>;
+  // const Perm unit{};
+  // auto comp = [&]( Perm P0 , const Perm& P1 ){
+  //   auto& [P0L,P0R] = P0
+  //   if( P0L.empty() ){
+  //     return P1;
+  //   }
+  //   auto& [P1L,P1R] = P1
+  //   if( P1L.empty() ){
+  //     return move( P0 );
+  //   }
+  //   if( P0R.empty() ){
+  //     assert( P0L.size() == 2 );
+  //     int i = P0L[0] , j = P0L[1];
+  //     assert( i != j );
+  //     P0 = P1;
+  //     swap( P0L[P0R[i]] , P0L[P0R[j]] );
+  //     swap( P0R[i] , P0R[j] );
+  //     return move( P0 );
+  //   }
+  //   if( P1R.empty() ){
+  //     assert( P1L.size() == 2 );
+  //     auto& i = P1L[0] , j = P1L[1];
+  //     assert( i != j );
+  //     swap( P0R[P0L[i]] , P0R[P0L[j]] );
+  //     swap( P0L[i] , P0L[j] );
+  //     return move( P0 );
+  //   }
+  //   Perm P = P0;
+  //   auto& [PL,PR] = P;
+  //   FOR( i , 0 , N ){
+  //     PR[PL[i] = P0L[P1L[i]]] = i;
+  //   }
+  //   return P;
+  // };
+  // auto inv = [&]( const Perm& P ){
+  //   return P[I].empty() ? P : Perm{ P[I] , P[O] };
+  // };
+  // AbstractGroup sym_group{ comp , unit , inv };
+
