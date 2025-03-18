@@ -3,6 +3,7 @@
   // CIN_A( ll , 0 , N , A );
   // CIN_A( MP , 0 , N , A );
   // Sort( A );
+  // --A;
 
   // /* •p“x•\ */
   // vector<int> A_hind( N );
