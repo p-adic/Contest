@@ -1,18 +1,19 @@
 /*
-- PrimeEnumeation: 素数列挙 (2KB)
+- PrimeEnumeation: 静的素数列挙 (2KB)
   Arithmetic/Prime/Enumeration/compress.txt
   Arithmetic/Prime/Enumeration/Heap/compress.txt
-  - Counting: 素数列挙, 素数計数 (3KB)
+  - Counting: 静的素数列挙, 素数計数 (3KB)
     Arithmetic/Prime/Enumeration/Counting/compress.txt
     Arithmetic/Prime/Enumeration/Counting/Heap/compress.txt
-  - Factorisation: 素数列挙,最小素因子,素因数分解 (6KB)
+  - Factorisation: 静的素数列挙,最小素因子,素因数分解 (6KB)
     Arithmetic/Prime/Factorisation/compress.txt
-    - Divisor: 素数列挙,最小素因子,素因数分解,約数計数,約数列挙 (7KB)
+    - Divisor: 静的素数列挙,最小素因子,素因数分解,約数計数,約数列挙 (7KB)
       Arithmetic/Divisor/Enumeration/compress.txt
-- EulerFunction: 素数列挙,最小素因子,素因数分解,オイラー関数 (6KB)
+- EulerFunction: 静的素数列挙,最小素因子,素因数分解,オイラー関数 (6KB)
   Arithmetic/Mod/Function/Euler/compress.txt
-- MoeviusFunction: 素数列挙,最小素因子,素因数分解,メビウス関数 (6KB)
+- MoeviusFunction: 静的素数列挙,最小素因子,素因数分解,メビウス関数 (6KB)
   Arithmetic/Divisor/Moevius/compress.txt
+- GetPrime: 動的素数列挙,ミラーラビン素数判定法 (1KB)
 - GCD: 最大公約数,最小公倍数 (1KB)
   Arithmetic/Divisor/GCD/compress.txt
 - Sum: 総和,総乗,冪乗,等差数列の和,等比数列の和,等比数列の線形結合 (2KB)
