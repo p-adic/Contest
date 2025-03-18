@@ -9,7 +9,7 @@
   // FOR( i , 0 , N ){
   //   A_hind[A[i]]++;
   // }
-  
+
   // /* ‹t‘œ */
   // vector<vector<int>> A_inv( N );
   // FOR( i , 0 , N ){
@@ -29,3 +29,8 @@
   // DisjointSparseTable dst( A ); // Å‘å’l‚ÌŠÇ—
   // // AbstractDisjointSparseTable dst( MinSemilattice<decltype(A[0])>( 1e9 ) , A );
   // // AbstractDisjointSparseTable dst( MultiplicativeMonoid<decltype(A[0])>( 1 ) , A );
+
+  // /* “]“|” */
+  // /* Combinatorial/Permutation/compress.txt */
+  // ll inv_num = InversionNumber( A );
+
