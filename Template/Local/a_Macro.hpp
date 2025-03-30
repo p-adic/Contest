@@ -7,7 +7,7 @@
 // デバッグ出力時: CIN -> cin, COUT -> cout, CERR -> cerr, DERR -> cerr
 // 非デバッグ出力時: CIN -> cin, COUT -> cout, CERR -> cerr, DERR -> 出力なし
 #ifdef DEBUG_OUTPUT
-  #define COUT_TARGET cout << "出力 " << __LINE__ << ": "
+#define COUT_TARGET ( searched_br ? cout << "出力 " << __LINE__ << ": " : cout )
   #define DERR2( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
   #define DERRNS2( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
   #define DERR_A2 CoutArray( cerr , I , N , A ) << flush
@@ -28,8 +28,8 @@
   #define DERR_A1
 #endif
 
-#define COUT( ... ) if( exec_mode == sample_check_mode ){ VariadicCout( ofs , __VA_ARGS__ ) << endl; } else { VariadicCout( COUT_TARGET , __VA_ARGS__ ) << endl; }
-#define COUTNS( ... ) if( exec_mode == sample_check_mode ){ VariadicCoutNonSep( ofs , __VA_ARGS__ ) << flush; } else { VariadicCoutNonSep( COUT_TARGET , __VA_ARGS__ ) << flush; }
+#define COUT( ... ) if( exec_mode == sample_check_mode ){ VariadicCout( ofs , __VA_ARGS__ ) << endl; } else { searched_br = true; VariadicCout( COUT_TARGET , __VA_ARGS__ ) << endl; }
+#define COUTNS( ... ) if( exec_mode == sample_check_mode ){ VariadicCoutNonSep( ofs , __VA_ARGS__ ) << flush; } else { VariadicCoutNonSep( COUT_TARGET , __VA_ARGS__ ) << flush; searched_br = HasBr( __VA_ARGS__ ); }
 #define COUT_A( I , N , A ) if( exec_mode == sample_check_mode ){ CoutArray( ofs , I , N , A ) << endl; } else { CoutArray( COUT_TARGET , I , N , A ) << endl; }
 #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
 #define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush

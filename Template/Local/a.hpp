@@ -37,7 +37,7 @@ int exec_mode;
 #include "../../../Mathematics/Utility/Set/Map/a.hpp"
 #include "../../../Utility/StdStream/a.hpp"
 #include "../../../Utility/String/a.hpp"
-#include "../../../Utility/String/ToArray/a.hpp"
+#include "../../../Utility/String/Encode/a.hpp"
 
 #include "../../../Mathematics/Utility/BinarySearch/Debug/a.hpp"
 #include "../../../Mathematics/Utility/TwoPointerApproach/Debug/a.hpp"
@@ -64,3 +64,9 @@ using MP = Mod<P>;
   const string output_path = "dummy.txt";
 #endif
 
+inline bool HasBr();
+template <typename Arg> inline bool HasBr( const Arg& arg );
+inline bool HasBr( const char& c );
+bool HasBr( const string& s );
+template <typename Arg0 , typename Arg1 , typename...Args> inline bool HasBr( const Arg0& arg0 , const Arg1& arg1 , const Args&... args );
+bool searched_br = false;
