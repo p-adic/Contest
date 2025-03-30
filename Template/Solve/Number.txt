@@ -1,4 +1,5 @@
-  CIN( ll , N , M , K );
+  CIN( int , N , M , K );
+  // CIN( ll , N , M , K );
   // /* PrimeEnumeration:                          */
   // /* val_limit = 316 à sqrt(1e5) -> length = 65 */
   // /* val_limit = 448 à sqrt(2e5) -> length = 86 */

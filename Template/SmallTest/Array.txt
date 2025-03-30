@@ -1,12 +1,24 @@
-  CEXPR( int , bound , 10 );
+  CEXPR( int , bound , 4 );
   int N_min = 1 , N_max = bound;
   FOREQ( N , N_min , N_max ){
     int Ai_min = 1 , Ai_max = bound;
     vector<int> A_min( N , Ai_min ) , A_max( N , Ai_max ) , A = A_min;
-    bool b = Ai_min <= Ai_max;
-    while( b ){
+    bool bA = Ai_min <= Ai_max;
+    while( bA ){
       COMPARE( N , A );
       // CHECK( N , A );
-      b = NextLoopEq( N , A_min , A_max , A );
+      bA = NextLoopEq( N , A_min , A_max , A );
+
+      // int M_min = 1 , M_max = bound;
+      // FOREQ( M , M_min , M_max ){
+      //   int Bi_min = 1 , Bi_max = bound;
+      //   vector<int> B_min( M , Bi_min ) , B_max( M , Bi_max ) , B = B_min;
+      //   bool bB = Bi_min <= Bi_max;
+      //   while( bB ){
+      //     COMPARE( N , M , A , B );
+      //     // CHECK( N , M , A , B );
+      //     bB = NextLoopEq( M , B_min , B_max , B );
+      //   }
+      }
     }
   }

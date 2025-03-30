@@ -1,5 +1,11 @@
     CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
-    CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
-    FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
+    CEXPR( int , bound_A , 10 ); vector<int> A( N );
+    FOR( i , 0 , N ){ CIN_ASSERT( Ai , 0 , bound_A ); A[i] = Ai; }
     COMPARE( N , A );
     // CHECK( N , A );
+
+    // CEXPR( int , bound_M , 10 ); CIN_ASSERT( M , 1 , bound_M );
+    // CEXPR( int , bound_B , 10 ); vector<int> B( M );
+    // FOR( i , 0 , M ){ CIN_ASSERT( Bi , 0 , bound_B ); B[i] = Bi; }
+    // COMPARE( N , M , A , B );
+    // // CHECK( N , M , A , B );
