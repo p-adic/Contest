@@ -45,7 +45,7 @@ int exec_mode;
 #include "../../../Mathematics/Geometry/Graph/Grid/a.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a.hpp"
 #include "../../../Mathematics/Combinatorial/Loop/a.hpp"
-#include "../../../Mathematics/Arithmetic/Sum/a.hpp"
+#include "../../../Mathematics/Arithmetic/IteratedArithmetic/a.hpp"
 
 CEXPR( uint , P , 998244353 );
 using MP = Mod<P>;
