@@ -637,6 +637,8 @@ AC( ExplicitExpressionCountingOperation )
 
 AC( ReducingOperation )
 {
+  CERR( "ソートしても操作回数が変わらないならばソートしましょう。" );
+  CERR( "" );
   CERR( "操作対象を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
   CERR( "なるべく簡単な問題に帰着させましょう。" );
   CERR( "- 操作で階差数列の総和が0で不変ならば、l^1ノルムに注目" );
@@ -1248,12 +1250,7 @@ AC( Knapsack )
   } else if( num == num_temp++ ){
     CALL_AC( KnapsackBoundedIntervalLength );
   } else {
-    ASK_YES_NO( "ナップサックは１つですか？" );
-    if( reply == "y" ){
-      CALL_AC( SingleKnapsack );
-    } else {
-      CALL_AC( MultipleKnapsack );
-    }
+    CALL_AC( KnapsackSubset );
   }
 }
 
@@ -1332,6 +1329,16 @@ AC( KnapsackBoundedIntervalLength )
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
   CERR( "- O(N log L)が間に合いそうならば、map<値,個数>による直近L個の管理" );
   CERR( "で高速化することでiに関する動的計画法を処理しましょう。" );
+}
+
+AC( KnapsackSubset )
+{
+  ASK_YES_NO( "ナップサックは１つですか？" );
+  if( reply == "y" ){
+    CALL_AC( SingleKnapsack );
+  } else {
+    CALL_AC( MultipleKnapsack );
+  }
 }
 
 AC( SingleKnapsack )
@@ -1423,8 +1430,14 @@ AC( SingleKnapsackBoundedChoiceCostfree )
 
 AC( SingleKnapsackSingleChoice )
 {
-  ASK_YES_NO( "コストがありますか？" );
-  if( reply == "y" ){
+  ASK_NUMBER(
+             "コストが1である問題" ,
+             "1とは限らないコストがある問題" ,
+             "コストがない問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( SingleKnapsackCostOne );
+  } else if( num == num_temp++ ){
     ASK_YES_NO( "選ぶ順番に意味がありますか？" );
     if( reply == "y" ){
       CERR( "各選択をそれぞれ別のナップサックとみなすことで、項を１つだけ格納できる" );
@@ -1436,6 +1449,14 @@ AC( SingleKnapsackSingleChoice )
   } else {
     CALL_AC( SingleKnapsackCostfree );
   }
+}
+
+AC( SingleKnapsackCostOne )
+{
+  CERR( "i番目の項目選択時のコスト上限をC_iと置き、C_iの上限をCと置きます。" );
+  CERR( "O(N log min(N,C))が間に合いそうならば、iの小さい順にi番目までの正の価値を" );
+  CERR( "上からC_i個まで優先度付きキューで管理して総和を取れば良いです。" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\CostOne" );
 }
 
 AC( SingleKnapsackUnordered )
@@ -1479,6 +1500,7 @@ AC( SingleKnapsackCostfree )
 {
   ASK_YES_NO( "各項が独立に選択でき、かつ選択方法に罰金や報酬がないですか？" );
   if( reply == "y" ){
+    ASK_YES_NO( "各項が独立に選択でき、かつ選択方法に罰金や報酬がないですか？" );
     CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
     CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
     CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
@@ -1487,6 +1509,9 @@ AC( SingleKnapsackCostfree )
     CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
     CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
     CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+    CERR( "- 各始切片ごとに要素数Kの部分集合の価値の最大化をするとして" );
+    CERR( "  O(N log_2 K)が通りそうならば優先度付きキューでK番目までの要素管理" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\FixedSize" );
   } else {
     CERR( "報酬は全部得た上で、実際にはもらえない報酬を差し引く罰金形式に" );
     CERR( "翻訳し、その上で価値や依存関係や罰金を非負容量の有向辺に翻訳し、" );
@@ -1563,6 +1588,7 @@ AC( MaximisationArrayFunction )
   CERR( "最小化問題は-1倍すれば良いです。" );
   CERR( "" );
   CERR( "AのサイズNが小さい場合、操作の全探策を検討しましょう。" );
+  CERR( "適宜累積和や階差数列に翻訳し直しましょう。" );
   CERR( "" );
   CERR( "Fの終域Mの有限順序半群構造(|,R)が" );
   CERR( "(1) Rは<を含意しかつ<に関する最大元がRに関する最大元でもある。" );
@@ -1572,18 +1598,44 @@ AC( MaximisationArrayFunction )
   CERR( "    Rに関して狭義単調増加するようにBを構成できる" );
   CERR( "を満たすならば、N>=Lの場合に求める<に関する最大値が<に関する最大元と" );
   CERR( "一致するので、N<Lの場合に帰着されます。" );
-  ASK_YES_NO( "操作は成分を成分の一次結合で置き換えるものですか？" );
-  if( reply == "y" ){
+  ASK_NUMBER(
+             "部分列を取り出す操作" ,
+             "成分を成分の一次結合で置き換える操作" ,
+             "その他の操作"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( MaximisationArrayFunctionSubsequence );
+  } else if( num == num_temp++ ){
     CALL_AC( MaximisationArrayFunctionLinearCombination );
-  } else {
+  } else if( num == num_temp++ ){
     CALL_AC( MaximisationArrayFunctionGeneralOperation );
   }
 }
 
+AC( MaximisationArrayFunctionSubsequence )
+{
+  CERR( "- 長さK固定の連続区間の最大値を求める問題ならば、スライド最大化" );
+  CERR( "  \\Mathematics\\Combinatorial\\SlidingMinimalisation" );
+  CERR( "- 始切片の要素数K固定の部分集合の総和の最大値を求める問題ならば、" );
+  CERR( "  優先度付きキューによるK番目までの集合管理" );
+  CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\FixedSize" );
+  CERR( "- 各長さの部分列においてソート後の隣接項の差がD以上となる個数の最小値を求める" );
+  CERR( "  問題ならば、全体をソートして隣接項の差がD以上の箇所で区切り、それらの長さを" );
+  CERR( "  ソートして大きい方から貪欲に選択" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CALL_AC( MaximisationArrayFunctionGeneralOperation );
+}
+
 AC( MaximisationArrayFunctionLinearCombination )
 {
-  CERR( "成分の生成するイデアルや成分の差が生成するイデアルに注目して" );
-  CERR( "gcdを計算しましょう。" );
+  CERR( "- 成分の絶対値の最小値を求める問題ならば、成分の生成するイデアルや" );
+  CERR( "  成分の差が生成するイデアルに注目してgcd計算" );
+  CERR( "  \\Mathematics\\Arithmetic\\Divisor\\GCD" );
+  CERR( "- 隣接項の定数係数一次結合ならば、累積和に翻訳" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CALL_AC( MaximisationArrayFunctionGeneralOperation );
 }
 
 AC( MaximisationArrayFunctionGeneralOperation )
@@ -1887,12 +1939,13 @@ AC( MinimisationOperationCost )
     CERR( "最短経路問題に帰着させることが可能です。" );
     CALL_AC( MinimisationMovingCost );
   } else {
-    CERR( "各操作を実行する回数を決定すれば良いので、" );
-    CERR( "- 合計回数kを決め打った時の最小コストc(k)の決定" );
+    CERR( "コスト正の各操作を実行する回数を決定すれば良いので、" );
+    CERR( "- コスト0の操作のみで処理できる必要十分条件の決定" );
+    CERR( "- コスト正の操作回数の合計kを決め打った時の最小コストc(k)の決定" );
     CERR( "  - c(k)が単調ならばc(k)の最小値を二分探索" );
     CERR( "  - c(k)が凸ならばc(k)の最小値を三分探索" );
     CERR( "  - 一般にはc(k)の最小値を全探策" );
-    CERR( "- 回数の組み合わせの全探策" );
+    CERR( "- コスト正の操作回数の組み合わせの全探策" );
     CERR( "を検討しましょう。" );
   }
 }
@@ -2351,19 +2404,24 @@ AC( CountingArrayBoundedSub )
 
 AC( CountingArrayOtherRelation )
 {
-  ASK_YES_NO( "配列への格納順が関係ありますか？" );
+  ASK_YES_NO( "順列の数え上げですか？" );
   if( reply == "y" ){
-    ASK_YES_NO( "総和が0で左端からの始端和が非負な±1列ですか？" );
+    CERR( "1やNの位置の候補を絞り込み、昇順または降順に残りの位置を確定させましょう。" );
+  } else {  
+    ASK_YES_NO( "配列への格納順が関係ありますか？" );
     if( reply == "y" ){
-      CERR( "長さ2Nの閉じたカッコ列に対応します。" );
-      CALL_AC( CountingParenthesisSequence );
+      ASK_YES_NO( "総和が0で左端からの始端和が非負な±1列ですか？" );
+      if( reply == "y" ){
+        CERR( "長さ2Nの閉じたカッコ列に対応します。" );
+        CALL_AC( CountingParenthesisSequence );
+      } else {
+        CERR( "添字に半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
+        CALL_AC( CountingGraph );
+      }
     } else {
-      CERR( "添字に半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
-      CALL_AC( CountingGraph );
+      CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
+      CALL_AC( CountingSubset );
     }
-  } else {
-    CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
-    CALL_AC( CountingSubset );
   }
 }
 
@@ -2974,12 +3032,15 @@ AC( SolvingBinaryEquations )
 
 AC( Query )
 {
+  CERR( "区間取得クエリの区間が全体に限られる場合に解けるならば、" );
+  CERR( "配列をセグメント木の要領で2羃長に分解して解きましょう。" );
   ASK_NUMBER(
 	     "範囲更新／取得クエリ問題" ,
 	     "範囲更新／比較クエリ問題" ,
 	     "範囲更新／数え上げクエリ問題" ,
-	     "範囲更新／部分列をわたる総和クエリ問題" ,
+	     "範囲更新／区間の部分列をわたる総和クエリ問題" ,
 	     "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
+	     "3変数関数の計算クエリ問題（範囲更新なしf(A[i],x)の区間和計算など）" ,
 	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）"
 	     );
   if( num == num_temp++ ){
@@ -3014,6 +3075,12 @@ AC( Query )
     CALL_AC( QuerySubsequenceSum );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTwoAryFunction );
+  } else if( num == num_temp++ ){
+    CERR( "各クエリで区間[l,r]とパラメータtが与えられ、２変数関数fを用いて" );
+    CERR( "sum(i=l;i<=r;i++) f(A[i],t)と表される値を答えるとします。" );
+    CERR( "g(t) = (f(A[i],t))_iと定めることで時系列変化に帰着されます。" );
+    CERR( "" );
+    CALL_AC( QueryTimeSeriesChange );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChange );
   }
@@ -3109,6 +3176,8 @@ AC( QueryArrayTotalOrder )
   CERR( "max／minは可換羃等モノイド構造に一般化されます。" );  
   CERR( "- 区間乗算O(log N)／更新後の一点取得O(1)が必要ならば" );
   CERR( "  区間をソートして集合管理の差分計算を行うイベントソート" );
+  CERR( "- 長さKの区間取得合計O(N)が必要ならばスライド最大／最小化" );
+  CERR( "  \\Mathematics\\Combinatorial\\SlidingMinimalisation" );
   CALL_AC( QueryArrayCommutativeIdempotentMonoid );
   CERR( "" );
   CERR( "またq個目のクエリを時刻qのイベントとみなすことで、max／minによる時系列更新と" );
@@ -3124,6 +3193,11 @@ AC( QueryArrayCommutativeIdempotentMonoid )
   CERR( "- 一点乗算O(1)／区間乗算O(√N)／一点代入O(√N)／一点取得O(1)が必要ならば" );
   CERR( "  可換双対平方分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual\\Commutative" );
+  CERR( "- 一点乗算O(1)／区間乗算O(log N)／一点代入O(log N)／一点取得O(log N)" );
+  CERR( "  が必要ならば可換双対セグメント木" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree\\Dual\\Commutative" );
+  CERR( "- 区間取得O(1)が必要ならばSparse TableやDisjoint Sparse Table" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DisjointSparseTable" );
   CERR( "を検討しましょう。" );
 }
 
@@ -3131,7 +3205,8 @@ AC( QueryArrayMonoid )
 {
   CERR( "- 一点代入O((log N)^2)／区間取得O(log N)が必要ならばモノイドBIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Monoid" );
-  CERR( "- 区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば区間代入モノイド平方分割" );
+  CERR( "- 区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば" );
+  CERR( "  区間代入モノイド平方分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\IntervalSet" );
   CERR( "- 一点乗算O(1)／一点代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば" );
   CERR( "  可換モノイド平方分割" );
@@ -3141,6 +3216,8 @@ AC( QueryArrayMonoid )
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\Commutative\\IntervalMultiply" );
   CERR( "- 一点代入O(log N)／区間取得O(log N)が必要ならばセグメント木" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
+  CERR( "- 区間取得O(1)が必要ならばDisjoint Sparse Table" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DisjointSparseTable" );
   CERR( "を検討しましょう。" );
 }
 
@@ -3168,6 +3245,9 @@ AC( QueryArrayCommutativeMagmaSet )
   CERR( "- 一点作用O(1)／区間作用O(√N)／一点代入O(√N)／一点取得O(1)が必要ならば" );
   CERR( "  可換双対平方分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual\\Commutative" );
+  CERR( "- 一点作用O(1)／区間作用O(log N)／一点代入O(log N)／一点取得O(log N)" );
+  CERR( "  が必要ならば可換双対セグメント木" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree\\Dual\\Commutative" );
   CERR( "を検討しましょう。" );
 }
 
@@ -3402,11 +3482,23 @@ AC( QuerySet )
 
 AC( QueryCounting )
 {
-  CERR( "配列に関する条件Pが与えられているとします。" );
-  CERR( "配列Aの区間[l,r]の部分列BであってPを満たすものの数え上げは、" );
-  CERR( "関数P?1:0の総和計算に帰着されます。" );
-  CERR( "" );
-  CALL_AC( QuerySubsequenceSum );
+  ASK_NUMBER(
+             "条件を満たす部分列の数え上げ" ,
+             "関数の値である多重集合の要素の数え上げ"
+             );
+  if( num == num_temp++ ){
+    CERR( "配列に関する条件Pが与えられているとします。" );
+    CERR( "配列Aの区間[l,r]の部分列BであってPを満たすものの数え上げは、" );
+    CERR( "関数P?1:0の総和計算に帰着されます。" );
+    CERR( "" );
+    CALL_AC( QuerySubsequenceSum );
+  } else {
+    CERR( "配列を多重集合へ送る写像fが与えられているとします。" );
+    CERR( "配列Aの区間[l,r]のfによる像における要素iの数え上げは、" );
+    CERR( "区間の分割に関するfの再帰構造に注目し、" );
+    CERR( "データ構造で処理しましょう。" );
+    CALL_AC( QueryArray );
+  }
 }
 
 AC( QuerySubsequenceSum )
@@ -3443,12 +3535,15 @@ AC( QueryTimeSeriesChange )
   CERR( "O(Q)個のノードに合計O((N+Q)log Q)個の区間を分割統治することが可能です。" );
   ASK_NUMBER(
 	     "maxによる時系列更新" ,
-	     "加算による時系列更新"
+	     "加算による時系列更新" ,
+	     "差の絶対値による時系列更新"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChangeMax );
-  } else {
+  } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChangeAddition );
+  } else {
+    CALL_AC( QueryTimeSeriesChangeDifference );
   }
 }
 
@@ -3459,13 +3554,18 @@ AC( QueryTimeSeriesChangeMax )
 	     "範囲max更新／一点取得"
 	     );
   if( num == num_temp++ ){
-    CERR( "全体max更新クエリと区間和取得クエリを時系列順に並べ番号を振ります。" );
-    CERR( "これにより配列の特定時刻での区間和を求める問題に帰着され、" );
-    CERR( "合計O((N + Q)log N + Q log Q)で処理できます。" );
-    CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\TimeSeriesSetMax" );
+    CALL_AC( QueryTimeSeriesTotalChangeMax );
   } else {
-    AC( QueryTimeSeriesRangeChangeMax );
+    CALL_AC( QueryTimeSeriesRangeChangeMax );
   }
+}
+
+AC( QueryTimeSeriesTotalChangeMax )
+{
+  CERR( "全体max更新クエリと区間和取得クエリを時系列順に並べ番号を振ります。" );
+  CERR( "これにより配列の特定時刻での区間和を求める問題に帰着され、" );
+  CERR( "合計O((N + Q)log N + Q log Q)で処理できます。" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\TimeSeriesSetMax" );
 }
 
 AC( QueryTimeSeriesRangeChangeMax )
@@ -3492,6 +3592,16 @@ AC( QueryTimeSeriesChangeAddition )
   CERR( "  成分に依存しない関数fを用いてf(t)-f(s)で表せるならば、fの前計算" );
   CERR( "  参考：https://yukicoder.me/problems/no/2462/editorial" );
   CERR( "を検討しましょう。" );
+}
+
+AC( QueryTimeSeriesChangeDifference )
+{
+  CERR( "時刻tにおける第i成分が|A[i]-t|で与えられるとします。" );
+  CERR( "BITをAと(-1)_qで初期化したものをBとCと置きます。" );
+  CERR( "(A[i],i)と(t[q],q)を優先度付きキューで管理して、" );
+  CERR( "(A[i],i)のイベントではB[i]とC[i]を-1倍に置き換えることで更新し、" );
+  CERR( "(t[q],q)のイベントではB[i]+C[i]*tの区間和をq個目のクエリへの回答とする、" );
+  CERR( "というイベントソートで処理しましょう。" );
 }
 
 AC( Simulation )
@@ -3914,7 +4024,7 @@ AC( Construction )
 	     "配列や文字列に関する構築" ,
 	     "行列に関する構築" ,
 	     "写像の構築" ,
-             "グラフ上の操作の構築" ,
+             "グラフに関する構築" ,
 	     "戦略の構築" ,
              "集合に関する構築" ,
 	     "ソースコードの構築"
@@ -3928,7 +4038,7 @@ AC( Construction )
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMap );
   } else if( num == num_temp++ ){
-    CALL_AC( ConstructionOperationOnGraph );
+    CALL_AC( ConstructionGraph );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionStrategy );
   } else if( num == num_temp++ ){
@@ -3983,6 +4093,47 @@ AC( ConstructionMap )
   CERR( "  https://ja.wikipedia.org/wiki/ベルンシュタインの定理#証明" );
   CERR( "- 全射の構築には部分集合を制限して全単射の構築の反復" );
   CERR( "を検討しましょう。" );
+}
+
+AC( ConstructionGraph )
+{
+  ASK_NUMBER(
+	     "グラフの構築" ,
+	     "彩色の構築" ,
+	     "グラフ上の操作の構築"
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( ConstructionEdge );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionColouring );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionOperationOnGraph );
+  }
+}
+
+AC( ConstructionEdge )
+{
+  CERR( "- 2頂点が非連結なグラフの構築は、2頂点を隔てる壁の構築、例えば" );
+  CERR( "  - グリッドなら8方向移動で端を結ぶ壁の構築" );
+  CERR( "  - その他のグラフなら1頂点の近傍点を境界とする壁の構築" );
+  CERR( "- 木の構築は、" );
+  CERR( "  - 直線や二分木やウニなど、シンプルなものに制限した構築" );
+  CERR( "  - 二分木なら括弧列やグリッド上の対角線を跨がない経路の構築" );
+  CERR( "に帰着させましょう。" );
+}
+
+AC( ConstructionColouring )
+{
+  ASK_NUMBER( "色ごとに分けた部分グラフの性質が指定された問題ですか？" );
+  if( reply == "y" ){
+    CERR( "グラフの構築に帰着させましょう。グラフの構築は" );
+    CALL_AC( ConstructionEdge );
+  } else {
+    CERR( "- 木や有向非輪状グラフの彩色は、端点から確定" );
+    CERR( "- 一般の彩色は、満たすべき条件をスコア付けして貪欲に決めていき、" );
+    CERR( "  その後で焼き鈍し法などで最適化するヒューリスティック解法" );
+    CERR( "を検討しましょう。" );
+  }
 }
 
 AC( ConstructionOperationOnGraph )
