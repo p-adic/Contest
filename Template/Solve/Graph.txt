@@ -1,10 +1,12 @@
   CIN( int , N , M );
   // CIN( int , N ); int M = N - 1;
   vector<vector<int>> e( N );
-  REPEAT( M ){
+  // vector<T2<int>> edge_enum( M );
+  FOR( m , 0 , M ){
     CIN( int , i , j ); --i; --j;
     e[i].push_back( j );
     e[j].push_back( i );
+    // edge_enum[m] = {i,j};
   }
   auto edge = Get( e );
   Graph graph{ N , edge };
