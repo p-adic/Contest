@@ -70,6 +70,8 @@ AC( ExplicitExpression )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnary );
   } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionMultivariable );
+  } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionFunctionOnPermutation );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionFunctionOnTree );
@@ -729,9 +731,11 @@ AC( ExplicitExpressionConvolution )
 AC( ExplicitExpressionArea )
 {
   CERR( "- 三角形の面積は外積" );
-  CERR( "  Mathematics\\Geometry\\AffineSpace" );
+  CERR( "  Mathematics\\Geometry\\AffineSpace\\Area" );
   CERR( "- 格子点を頂点に持つ多角形の面積はピックの定理" );
   CERR( "  https://en.wikipedia.org/wiki/Pick%27s_theorem" );
+  CERR( "- 凸多角形の面積は１頂点と１辺を用いた三角形分割で三角形に帰着" );
+  CERR( "  Mathematics\\Geometry\\AffineSpace\\Area" );
   CERR( "- 関数のグラフで囲まれた領域の面積は積分" );
   CERR( "  - 原始関数による計算" );
   CERR( "  - 区分求積法" );
@@ -741,14 +745,14 @@ AC( ExplicitExpressionArea )
 
 AC( ExplicitExpressionLimit )
 {
-  CERR( "- lim_{T->infty} \frac{1}{T} sum_{t=1}^{T} a_tの形の計算は" );
+  CERR( "- lim_{T->infty} \\frac{1}{T} sum_{t=1}^{T} a_tの形の計算は" );
   CERR( "  - a_tが収束するならばその値の計算" );
   CERR( "  - a_tが収束しないが周期的ならば周期をPとして" );
-  CERR( "    lim_{T->infty} \frac{1}{P} sum_{t=T+1}^{T+P} a_tの計算" );
+  CERR( "    lim_{T->infty} \\frac{1}{P} sum_{t=T+1}^{T+P} a_tの計算" );
   CERR( "    - 周期が短い場合は実際にシミュレーションにより計算" );
   CERR( "    - 鳩の巣原理などで周期的であることは分かってもその具体的な振る舞いが" );
   CERR( "      分からない場合は小さいケースで実験" );
-  CERR( "- lim_{N->infty} \frac{1}{N} sum_{i=1}^{N} f(i/N)の形の計算は" );
+  CERR( "- lim_{N->infty} \\frac{1}{N} sum_{i=1}^{N} f(i/N)の形の計算は" );
   CERR( "  区分求積法" );
   CERR( "  - 法P計算ならば微積分学の基本定理を用いて原始関数の計算に帰着" );
   CERR( "  - 誤差問題ならばモンテカルロ法を用いて近似計算" );
@@ -3036,9 +3040,9 @@ AC( Query )
   CERR( "配列をセグメント木の要領で2羃長に分解して解きましょう。" );
   ASK_NUMBER(
 	     "範囲更新／取得クエリ問題" ,
-	     "範囲更新／比較クエリ問題" ,
 	     "範囲更新／数え上げクエリ問題" ,
 	     "範囲更新／区間の部分列をわたる総和クエリ問題" ,
+	     "範囲更新／比較クエリ問題" ,
 	     "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
 	     "3変数関数の計算クエリ問題（範囲更新なしf(A[i],x)の区間和計算など）" ,
 	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）"
@@ -3060,6 +3064,10 @@ AC( Query )
       CALL_AC( QueryGraph );
     }
   } else if( num == num_temp++ ){
+    CALL_AC( QueryCounting );
+  } else if( num == num_temp++ ){
+    CALL_AC( QuerySubsequenceSum );
+  } else if( num == num_temp++ ){
     ASK_NUMBER(
                "文字列クエリ" ,
                "集合クエリ"
@@ -3069,10 +3077,6 @@ AC( Query )
     } else if( num == num_temp++ ){
       CALL_AC( QuerySet );
     }
-  } else if( num == num_temp++ ){
-    CALL_AC( QueryCounting );
-  } else if( num == num_temp++ ){
-    CALL_AC( QuerySubsequenceSum );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTwoAryFunction );
   } else if( num == num_temp++ ){
@@ -3428,6 +3432,46 @@ AC( QueryGraph )
   CERR( "を検討しましょう。" );  
 }
 
+AC( QueryCounting )
+{
+  ASK_NUMBER(
+             "条件を満たす部分列の数え上げ" ,
+             "最小元である成分の数え上げ" ,
+             "関数の値である多重集合の要素の数え上げ"
+             );
+  if( num == num_temp++ ){
+    CERR( "配列に関する条件Pが与えられているとします。" );
+    CERR( "配列Aの区間[l,r]の部分列BであってPを満たすものの数え上げは、" );
+    CERR( "関数P?1:0の総和計算に帰着されます。" );
+    CERR( "" );
+    CALL_AC( QuerySubsequenceSum );
+  } else if( num == num_temp++ ){
+    CERR( "(最小値,その個数)を管理する可換モノイドで区間取得をし、" );
+    CERR( "最小値が最小元であれば個数部分、そうでなければ0を返しましょう。" );
+    CALL_AC( QueryArrayMagmaMonoid );
+  } else {
+    CERR( "配列を多重集合へ送る写像fが与えられているとします。" );
+    CERR( "配列Aの区間[l,r]のfによる像における要素iの数え上げは、" );
+    CERR( "区間の分割に関するfの再帰構造に注目し、" );
+    CERR( "データ構造で処理しましょう。" );
+    CALL_AC( QueryArray );
+  }
+}
+
+AC( QuerySubsequenceSum )
+{
+  CERR( "配列を受け取る関数fが与えられているとします。" );
+  CERR( "配列Aの区間[l,r]の部分列Bをわたるf(B)の総和を考えます。" );
+  CERR( "- まずBを２つの区間に分割してfを2変数関数に翻訳することでfから新たな関数を" );
+  CERR( "  得ることを再帰的に繰り返します。" );
+  CERR( "- 次にこうして得られた各関数ごとに、" );
+  CERR( "  「dp[i] = 第i成分のみからなる区間に対する関数の値」" );
+  CERR( "  を考えます。" );
+  CERR( "- 最後に、関数の再帰的翻訳を遡って区間のマージに対応する演算を定義し、" );
+  CERR( "  データ構造に格納します。" );
+  CALL_AC( QueryArray );
+}
+  
 AC( QueryString )
 {
   CERR( "文字列の一点更新（一文字更新）／結合／比較はローリングハッシュ" );
@@ -3480,41 +3524,6 @@ AC( QuerySet )
   CERR( "ともに加算更新に対応するデータ構造との併用を検討しましょう。" );
 }
 
-AC( QueryCounting )
-{
-  ASK_NUMBER(
-             "条件を満たす部分列の数え上げ" ,
-             "関数の値である多重集合の要素の数え上げ"
-             );
-  if( num == num_temp++ ){
-    CERR( "配列に関する条件Pが与えられているとします。" );
-    CERR( "配列Aの区間[l,r]の部分列BであってPを満たすものの数え上げは、" );
-    CERR( "関数P?1:0の総和計算に帰着されます。" );
-    CERR( "" );
-    CALL_AC( QuerySubsequenceSum );
-  } else {
-    CERR( "配列を多重集合へ送る写像fが与えられているとします。" );
-    CERR( "配列Aの区間[l,r]のfによる像における要素iの数え上げは、" );
-    CERR( "区間の分割に関するfの再帰構造に注目し、" );
-    CERR( "データ構造で処理しましょう。" );
-    CALL_AC( QueryArray );
-  }
-}
-
-AC( QuerySubsequenceSum )
-{
-  CERR( "配列を受け取る関数fが与えられているとします。" );
-  CERR( "配列Aの区間[l,r]の部分列Bをわたるf(B)の総和を考えます。" );
-  CERR( "- まずBを２つの区間に分割してfを2変数関数に翻訳することでfから新たな関数を" );
-  CERR( "  得ることを再帰的に繰り返します。" );
-  CERR( "- 次にこうして得られた各関数ごとに、" );
-  CERR( "  「dp[i] = 第i成分のみからなる区間に対する関数の値」" );
-  CERR( "  を考えます。" );
-  CERR( "- 最後に、関数の再帰的翻訳を遡って区間のマージに対応する演算を定義し、" );
-  CERR( "  データ構造に格納します。" );
-  CALL_AC( QueryArray );
-}
-  
 AC( QueryTwoAryFunction )
 {
   CERR( "区間取得は" );
