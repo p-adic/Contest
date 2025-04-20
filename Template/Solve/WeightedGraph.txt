@@ -9,7 +9,8 @@
   // CEXPR( ll , infty , 1e18 );
   // vector weight( N , vector( N , infty ) ); FOR( i , 0 , N ){ weight[i][i] = 0; }
   FOR( m , 0 , M ){
-    CIN( ll , i , j , w ); --i; --j;
+    CIN( int , i , j ); --i; --j;
+    CIN( ll , w );
     e[i].push_back( {j,w} );
     e[j].push_back( {i,w} );
     // wedge_enum[m] = {i,j,w};

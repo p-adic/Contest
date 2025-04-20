@@ -4,7 +4,7 @@
   // CIN_A( ll , 0 , N , A );
   // CIN( string , S );
   CIN( int , Q );
-  // vector<vector<ll>> query( q );
+  // vector<vector<ll>> query( Q );
   FOR( q , 0 , Q ){
     CIN( int , type );
     if( type == 1 ){
@@ -61,18 +61,19 @@
   // // LazySqrtDecomposition lsd{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP> , move( A ) }; // 区間乗算更新と区間和取得を処理する場合
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/compress.txt */
   // // IntervalMultiplyLazySqrtDecomposition lsd{ RegularRSet( MultiplicativeMonoid<MP>( 1 ) ) , Module<MP,MP>() , move( a ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
+  // // GeometricProgressionMinDualSqrtDecomposition sd{ Module<int,int>() , int( 1e9 ) , {1,-1} , move( a ) }; // 区間一次式min更新と一点取得を処理する場合
 
   // FOR( q , 0 , Q ){
   //   auto& query_q = query[q];
-  //   int& type = query_q[0];
+  //   auto& type = query_q[0];
   //   if( type == 1 ){
-  //     int& l = query_q[1];
-  //     int& r = query_q[2];
-  //     int& x = query_q[3];
+  //     auto& l = query_q[1];
+  //     auto& r = query_q[2];
+  //     auto& x = query_q[3];
 
   //   } else if( type == 2 ){
-  //     int& l = query_q[1];
-  //     int& r = query_q[2];
+  //     auto& l = query_q[1];
+  //     auto& r = query_q[2];
   //   }
     
   // }

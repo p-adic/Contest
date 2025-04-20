@@ -56,6 +56,7 @@
   // // LazySqrtDecomposition lsd{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP> , move( A ) }; // 区間乗算更新と区間和取得を処理する場合
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/compress.txt */
   // // IntervalMultiplyLazySqrtDecomposition lsd{ RegularRSet( MultiplicativeMonoid<MP>( 1 ) ) , Module<MP,MP>() , move( a ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
+  // // GeometricProgressionMinDualSqrtDecomposition sd{ Module<int,int>() , int( 1e9 ) , {1,-1} , move( a ) }; // 区間一次式min更新と一点取得を処理する場合
 
   // RUN( query , [l,r,q] ){
   

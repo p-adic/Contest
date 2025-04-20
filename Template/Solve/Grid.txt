@@ -10,7 +10,7 @@
   GridGraph graph{ EdgeOnGrid }; // 重みなし。
   // GridGraph graph{ WEdgeOnGrid }; // 重み付き。
   BreadthFirstSearch bfs{ graph , T2<int>{-1,-1} , list<T2<int>>{{0,0}} }; vector<int> d = bfs.GetDistance();
-  // BreadthFirstSearch bfs{ graph , T2<int>{-1,-1} }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent(); int cc_num = colour_ulim; FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } }
+  // BreadthFirstSearch bfs{ graph , T2<int>{-1,-1} }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent(); int cc_num = colour_ulim; FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } } // 連結成分取得
 
   /* xy_axis = true: 右と上を正軸方向とする座標（非デフォルト） */
   /* (0,1)  -> U */
