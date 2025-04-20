@@ -1,6 +1,6 @@
-wait = True
-#wait = False
-contest_num = None
+#wait = True
+wait = False
+contest_num = "534"
 
 import datetime
 now = datetime.datetime.now()
@@ -15,8 +15,8 @@ two_byte_message.close()
 
 import requests
 from bs4 import BeautifulSoup
+contest_list_page_url = "https://yukicoder.me/contests"
 if wait:
-	contest_list_page_url = "https://yukicoder.me/contests"
 	contest_list_page = BeautifulSoup(requests.get(contest_list_page_url).text,'html.parser')
 	for a_tag in contest_list_page.find_all("a"):
 		temp = str(a_tag)
@@ -56,6 +56,7 @@ contest_table_page_url = contest_list_page_url + "/" + contest_num + "/table"
 contest_table_page = BeautifulSoup(requests.get(contest_table_page_url).text,'html.parser')
 problem_order_list = []
 register_log = open("Sample/register_log.txt",'w')
+register_err = open("register_err.txt",'w')
 for a_tag in contest_table_page.find_all("a"):
 	temp = str(a_tag)
 	if temp[:22] != "<a href=\"/problems/no/":continue
@@ -75,8 +76,11 @@ for a_tag in contest_table_page.find_all("a"):
 		registered &= len(temp) == 3
 		if len(temp) < 3:
 			print(problem_order,message_list[7],str(count%100),message_list[8])
+			register_err.write(problem_order+message_list[7]+str(count%100)+message_list[8]+"\n")
 		else:
-			if len(temp) != 3:print(problem_order,message_list[7],str(count%100),message_list[9])
+			if len(temp) != 3:
+				print(problem_order,message_list[7],str(count%100),message_list[9])
+				register_err.write(problem_order+message_list[7]+str(count%100)+message_list[9]+"\n")
 			for i,file in zip([1,2],[input_file,output_file]):
 				temp[i] = temp[i].split("</pre>")[0]
 				temp[i] = temp[i].split("<code>")[-1]
@@ -97,6 +101,8 @@ problem_order_file = open("Sample/problem_order.txt",'w')
 problem_order_file.write(str(len(problem_order_list)) + '\n')
 for valid_problem_order in problem_order_list:problem_order_file.write(valid_problem_order)
 problem_order_file.close()
+register_log.close()
+register_err.close()
 print(message_list[12])
 while True:
 	print(message_list[13])
