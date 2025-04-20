@@ -362,6 +362,10 @@ SPECIALSATION_OF_AR_PROGRESSION_SUM(ll);
 SPECIALSATION_OF_AR_PROGRESSION_SUM(ull);
 TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& r){RE ArithmeticProgressionSum(INT{},r);}TE <TY T,TY UINT> IN T GeometricProgressionSum(T rate,UINT EX_max,CO T& init = 1){T rate_minus = rate - 1;RE rate_minus == 0?init * ++EX_max:(Power(MO(rate),MO(++EX_max))- 1)/ MO(rate_minus)* init;}TE <TY T,TY UINT>T GeometricProgressionLinearCombinationSum(VE<T> rate,VE<UINT> EX_max,CO VE<T>& init){CO int SZ = init.SZ();AS(int(rate.SZ())== SZ && int(EX_max.SZ())== SZ);T AN{};for(int i = 0;i < SZ;i++){AN += GeometricProgressionSum(MO(rate[i]),MO(EX_max[i]),init[i]);}RE AN;}
 
+/* Power (1KB)*/
+TE <TY INT>CL PowerMemoriser{PU:INT m_base;VE<INT> m_val;IN PowerMemoriser(CO INT& base = 0);IN INT OP[](CRI EX)NE;};
+TE <TY INT> IN PowerMemoriser<INT>::PowerMemoriser(CO INT& base):m_base(base),m_val(1){}TE <TY INT> IN INT PowerMemoriser<INT>::OP[](CRI EX)NE{WH(int(m_val.SZ())<= EX){m_val.push_back(m_val.back()* m_base);}RE m_val[EX];}
+
 /* Loop (1KB)*/
 TE <TY INT> bool NextLoop(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoop(CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){RE NextLoop(index.SZ(),lower_bound,upper_limit,index);}TE <TY INT> bool NextLoopEq(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]<= upper_bound[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoopEq(CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){RE NextLoopEq(index.SZ(),lower_bound,upper_bound,index);}
 
