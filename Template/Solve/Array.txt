@@ -1,12 +1,14 @@
   CIN( int , N );
-  CIN_A( int , 0 , N , A );
-  // CIN_A( ll , 0 , N , A );
-  // CIN_A( MP , 0 , N , A );
+  using entry_type = int;
+  // using entry_type = ll;
+  // using entry_type = MP;
+  CIN_A( entry_type , 0 , N , A );
   // Sort( A );
   // --A;
 
   // /* •p“x•\ */
   // vector<int> A_hind( N );
+  // // map<entry_type,int> A_hind( N );
   // FOR( i , 0 , N ){
   //   A_hind[A[i]]++;
   // }
