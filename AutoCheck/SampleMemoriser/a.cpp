@@ -85,18 +85,20 @@ void CompareAnswer( const string& sample_path , const string& problem_order , co
   if( !prepared_answer.eof() ){
 
     CERR( "サンプル" , formatted_sample_num , "に対する出力は" , count - 1 , "行より多い想定で、不足しています。" );
+    CERR( "" );
 
   } else if( !submitted_answer.eof() ){
 
     CERR( "サンプル" , formatted_sample_num , "に対する出力は" , count - 1 , "行の想定で、余計な出力をしています。" );
+    CERR( "" );
 
   } else if( correct ){
 
     CERR( "サンプル" , formatted_sample_num , "は正解です。" );
+    CERR( "" );
 
   }
 
-  CERR( "" );
   return;
 
 }
