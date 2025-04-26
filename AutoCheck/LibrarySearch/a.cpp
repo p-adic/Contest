@@ -1308,15 +1308,25 @@ AC( KnapsackInitialSegmentDoubleKnapsack )
 
 AC( KnapsackInterval )
 {
-  ASK_YES_NO( "区間長は固定ですか？" );
-  if( reply == "y" ){
+  ASK_NUMBER(
+             "区間長が固定の問題" ,
+             "区間に属すべき点が与えられるクエリ処理" ,
+             "コストありの区間和最大化" ,
+             "コストなしの区間和最大化" ,
+             );
+  if( num == num_temp++ ){
     CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
-  } else {
-    CERR( "- 区間に属すべき点が与えられているならば、その点の両側で始切片和と終切片和の" );
-    CERR( "  最小値の総和を求め全体の総和から引けばよいので、始切片和の始切片最大値と" );
-    CERR( "  終切片和の終切片最大値を前計算しましょう。" );
-    CERR( "- そうでないならば、尺取り法で区間を伸ばし両端の更新値を用いて最大値を管理しましょう。" );
-    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
+  } else if( num == num_temp++ ){
+    CERR( "属すべき点の両側で始切片和と終切片和の最小値の総和を求め全体の総和から" );
+    CERR( "引けばよいので、始切片和の始切片最小値と終切片和の終切片最小値を" );
+    CERR( "前計算しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "尺取り法で区間を伸ばし両端の更新値を用いて最大値を管理しましょう。" );
+    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
+  } else if( num == num_temp++ ){
+    CERR( "区間の右端を固定した最大値を動的計画法で求めましょう。" );
+    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree" );
+    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree\\UnboundedValueSum" );
   }
 }
 
@@ -2087,12 +2097,15 @@ AC( MaximisationGame )
   if( reply == "y" ){
     ASK_NUMBER(
                "双方の総得点の差の最大化と最小化を目指すゲーム" ,
-               "双方の距離の最大値の最大化と最小化を目指すゲーム"
+               "双方の距離の最大値の最大化と最小化を目指すゲーム" ,
+               "１つの数列を交互に操作して最終的な要素の最大化と最小化を目指すゲーム"
                );
     if( num == num_temp++ ){
       CALL_AC( MaximisationGameWellFoundedTotalDifference );
-    } else {
+    } else if( num == num_temp++ ){
       CALL_AC( MaximisationGameWellFoundedEachDifference );
+    } else {
+      CALL_AC( MaximisationGameWellFoundedArrayOperation );
     }
   } else {
     CALL_AC( MaximisationGameIllFounded );
@@ -2121,6 +2134,17 @@ AC( MaximisationGameWellFoundedEachDifference )
   CERR( "削除したプレイヤーは位置A[i]に移動するとします。" );
   CERR( "2プレイヤー間距離の最大値は、最大化を目指す側が最善を目指す限り" );
   CERR( "最小化を目指すプレイヤーの選択によらず(max A)-(min A)です。" );
+}
+
+AC( MaximisationGameWellFoundedArrayOperation )
+{
+  CERR( "数列の成分を先手が選び、演算を後手が選び、それらを適用して得点を" );
+  CERR( "操作するゲームを考えます。" );
+  CERR( "数列を昇順にソートし、演算を強い順にソートし、それらを順に適用した" );
+  CERR( "結果Xを考えます。" );
+  CERR( "- 先手が確実に達成できる値の最大値は何か" );
+  CERR( "- 後手が確実に達成できる値の最小値は何か" );
+  CERR( "をXをヒントに算出しましょう。" );
 }
 
 AC( MaximisationGameIllFounded )
