@@ -4,10 +4,10 @@
   // CIN_A( ll , 0 , N , A );
   // CIN( string , S );
   CIN( int , Q );
-  // vector<T3<int>> query( Q );
+  vector<T3<int>> query( Q );
   FOR( q , 0 , Q ){
     CIN( int , l , r ); --l; --r;
-    // query[q] = {l,r,q};
+    query[q] = {l,r,q};
   }
   // Sort( query );
   // Mo mo{ query };
@@ -58,6 +58,6 @@
   // // IntervalMultiplyLazySqrtDecomposition lsd{ RegularRSet{ MultiplicativeMonoid<MP>{ 1 ) } , Module<MP,MP>{} , move( a ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
   // // GeometricProgressionMinDualSqrtDecomposition sd{ Module<int,int>{} , int( 1e9 ) , {1,-1} , move( a ) }; // 区間一次式min更新と一点取得を処理する場合
 
-  // RUN( query , [l,r,q] ){
+  RUN( query , [l,r,q] ){
   
-  // }
+  }
