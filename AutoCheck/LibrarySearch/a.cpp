@@ -501,7 +501,8 @@ AC( ExplicitExpressionOrder )
 {
   ASK_NUMBER(
 	     "与えられた順序集合に関する問題" ,
-	     "順序集合を更新する問題"
+	     "順序集合を更新する問題" ,
+             "与えられた01列の辞書順最小の部分列の計算問題"
 	     );
   if( num == num_temp++ ){
     CERR( "多重集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
@@ -520,6 +521,9 @@ AC( ExplicitExpressionOrder )
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayOrder );
+  } else if( num == num_temp++ ){
+    CERR( "0をL個、1をR個選ぶ際の辞書順最小の部分列は、" );
+    CERR( "0を左からL個、1を右からR個貪欲に選ぶことで求まります、" );
   }
 }
 
@@ -3066,10 +3070,11 @@ AC( Query )
 	     "範囲更新／取得クエリ問題" ,
 	     "範囲更新／数え上げクエリ問題" ,
 	     "範囲更新／区間の部分列をわたる総和クエリ問題" ,
-	     "範囲更新／比較クエリ問題" ,
+	     "範囲更新／部分列比較クエリ問題" ,
 	     "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
 	     "3変数関数の計算クエリ問題（範囲更新なしf(A[i],x)の区間和計算など）" ,
-	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）"
+	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）" ,
+             "集合のクエリ問題"
 	     );
   if( num == num_temp++ ){
     ASK_NUMBER(
@@ -3092,15 +3097,7 @@ AC( Query )
   } else if( num == num_temp++ ){
     CALL_AC( QuerySubsequenceSum );
   } else if( num == num_temp++ ){
-    ASK_NUMBER(
-               "文字列クエリ" ,
-               "集合クエリ"
-               );
-    if( num == num_temp++ ){
-      CALL_AC( QueryString );
-    } else if( num == num_temp++ ){
-      CALL_AC( QuerySet );
-    }
+    CALL_AC( QueryString );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTwoAryFunction );
   } else if( num == num_temp++ ){
@@ -3111,6 +3108,8 @@ AC( Query )
     CALL_AC( QueryTimeSeriesChange );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChange );
+  } else if( num == num_temp++ ){
+    CALL_AC( QuerySet );
   }
 }
 
@@ -3538,16 +3537,6 @@ AC( QueryString )
   CERR( "を検討しましょう。" );
 }
 
-AC( QuerySet )
-{
-  CERR( "集合の一点更新（一要素更新／対称差）／比較はゾブリストハッシュ" );
-  CERR( "\\Utility\\Set\\ZobristHash" );
-  CERR( "を検討しましょう。さらに集合の範囲更新が必要な場合は" );
-  CERR( "- 固定要素の有無の反転による一点更新" );
-  CERR( "- 対称差" );
-  CERR( "ともに加算更新に対応するデータ構造との併用を検討しましょう。" );
-}
-
 AC( QueryTwoAryFunction )
 {
   CERR( "区間取得は" );
@@ -3653,6 +3642,30 @@ AC( Simulation )
   CERR( "  - 特にグリッド上の経路は線分の集まりとみなして処理可能" );
   CERR( "- イベント群を区間更新クエリに翻訳して双対セグメント木などによる高速化" );
   CERR( "を検討しましょう。" );
+}
+
+AC( QuerySet )
+{
+  ASK_NUMBER(
+             "集合の一点更新（一要素更新／対称差）／比較" ,
+             "集合の範囲更新／範囲取得"
+             );
+  if( num == num_temp++ ){
+    CERR( "ゾブリストハッシュ" );
+    CERR( "\\Utility\\Set\\ZobristHash" );
+    CERR( "を検討しましょう。さらに集合の範囲更新が必要な場合は" );
+    CERR( "- 固定要素の有無の反転による一点更新" );
+    CERR( "- 対称差" );
+    CERR( "ともに加算更新に対応するデータ構造との併用を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "集合は{0,1}値配列、多重集合は非負整数値配列に翻訳し、" );
+    CERR( "BITなどのデータ構造で処理しましょう。" );
+    CERR( "\\Mathematics\\SetTheory\\Line\\Bounded" );
+    CERR( "昇順にmod Mでi番目の要素のみを集めた総和を求める際は" );
+    CERR( "{mod Mで0番目の要素の総和,...,mod MでM-1番目の要素の総和,要素数}" );
+    CERR( "を管理する非可換群に対応するデータ構造との併用を検討しましょう。" );
+  }
+  CALL_AC( QueryArray );
 }
 
 AC( Game )
