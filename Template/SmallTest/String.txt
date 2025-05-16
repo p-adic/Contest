@@ -7,6 +7,7 @@
     bool b = true;
     while( b ){
       string S = ArrayToString( A );
+      // string S = ArrayToParenthesisString( A );
       COMPARE( N , S );
       // CHECK( N , S );
       b = NextLoop( N , A_min , A_ulim , A );

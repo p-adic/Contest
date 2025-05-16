@@ -1,5 +1,6 @@
     CEXPR( int , bound_N , 5 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( int , letter_num , 26 );  CIN_A_ASSERT( 0 , N , A , 0 , letter_num - 1 );
     string S = ArrayToString( A );
+    // string S = ArrayToParenthesisString( A );
     COMPARE( N , S );
     // CHECK( N , S );
