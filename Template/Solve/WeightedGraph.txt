@@ -1,13 +1,14 @@
   CIN( int , N , M );
   // CIN( int , N ); int M = N - 1;
   using weight_type = ll;
-  using path = Tuple<int,weight_type>;
-  vector<vector<path>> e( N );
+  using path_type = Tuple<int,weight_type>;
+  vector<vector<path_type>> e( N );
   // vector<Tuple<int,int,weight_type>> wedge_enum( M );
   // vector<Tuple<int,int>> edge_enum( M );
   // vector<weight_type> weight_enum( M );
-  // CEXPR( ll , infty , 1e18 );
+  // CEXPR( weight_type , infty , 1e18 );
   // vector weight( N , vector( N , infty ) ); FOR( i , 0 , N ){ weight[i][i] = 0; }
+  // CIN_AA( weight_type , 0 , N , 0 , N , weight );
   FOR( m , 0 , M ){
     CIN( int , i , j ); --i; --j;
     CIN( ll , w );
@@ -19,11 +20,10 @@
     // weight[i][j] = weight[j][i] = w;
   }
   auto edge = Get( e );
-  // CIN_AA( ll , 0 , N , 0 , N , weight );
   // auto edge = [&]( const int& i ){
   //   vector<path> answer{};
   //   FOR( j , 0 , N ){
-  //     answer.push_back( { j , w } );
+  //     answer.push_back( { j , weight[i][j] } );
   //   }
   //   return answer;
   // };
@@ -31,5 +31,6 @@
   Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
   // auto [edge_num,cc_size] = Kruscal( graph , edge_enum );
-  // FloydWarshall fw{ infty , weight }; vector<vector<decltype(infty)>> d = fw.GetDistance();
+  // FloydWarshall fw{ infty , weight }; vector<vector<weight_type>> d = fw.GetDistance();
+  // HeldKarp hk{ graph }; vector<weight_type> d = hk.GetDistance( 0 , id<int>( N ) , true );
 
