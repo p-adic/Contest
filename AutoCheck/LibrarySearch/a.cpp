@@ -609,9 +609,14 @@ AC( ExplicitExpressionProbability )
   CERR( "  - 対象を和で表して線形性" );
   CERR( "    - 転倒数やグリッドの黒マスの個数など部分集合の要素数の期待値は" );
   CERR( "      各要素が部分集合に属す確率の和に帰着" );
-  CERR( "    - 単位時間に高々1回起こる事象の起きた回数は、各時刻tごとに" );
-  CERR( "      +1の起こる確率p(t)の総和" );
-  CERR( "    - 裏が出るまでのコイン投げ回数ならn回以上表が出る確率p(n)の総和" );
+  CERR( "    - 単位時間に高々1回起こる事象の起きた回数の期待値は、" );
+  CERR( "      各時刻tごとに+1の起こる確率p(t)の総和" );
+  CERR( "    - 裏が出るまでのコイン投げ回数の期待値は、n回以上表が出る確率p(n)の総和" );
+  CERR( "    - nを確率的に減らしてi以下にする試行回数の期待値E(n,i)は、" );
+  CERR( "      - 各i<j<=nに対してnから1回でjに行く確率をP(n,j)として" );
+  CERR( "        E(n,i)=sum_j P(n,j)(1+(i<j?E(j,i):0)" );
+  CERR( "      - 各i<j<=nに対してnから一度でもjに行く確率をQ(n,j)として" );
+  CERR( "        E(n,i)=sum_{j>i} Q(n,j)E(j,j-1)" );
   CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
   CERR( "    \\Mathematics\\LinearAlgebra" );
   CERR( "    \\Mathematics\\Polynomial\\BostanMori" );
