@@ -1554,17 +1554,18 @@ AC( SingleKnapsackCostfree )
 
 AC( MultipleKnapsack )
 {
+  CERR( "ナップサックの個数をKと置き、1 <= k <= K個目のナップサックの" );
+  CERR( "コスト上限をD_kとします。" );
   ASK_YES_NO( "各ナップサックに格納できる項は高々１個ですか？" );
   if( reply == "y" ){
     CALL_AC( MultipleKnapsackSingleItem );
   } else {
-    CERR( "ナップサックの個数をKと置きます。" );
-    CERR( "- O(K(N 2^N + K^N))が通りそうならば、高速ゼータ変換" );
-    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Subsetwise\\Multiknapsack" );
-    CERR( "- 各ナップサックの容量が非常に小さいならば、コストの大きさで項目を分けて" );
-    CERR( "  コストの大きい順にそれらの選択数を全探策または二分探索" );
-    CERR( "  参考：https://yukicoder.me/problems/no/2617/editorial" );
-    CERR( "を検討しましょう。" );
+    ASK_YES_NO( "項目ごとに許容するナップサックが違いますか？" );
+    if( reply == "y" ){
+      CALL_AC( MultipleKnapsackRestrictedMatching );
+    } else {
+      CALL_AC( MultipleKnapsackFreeMatching );
+    }
   }
 }
 
@@ -1580,32 +1581,57 @@ AC( MultipleKnapsackSingleItem )
 
 AC( MultipleKnapsackSingleItemUnstableCost )
 {
-  CERR( "|C|=∞とし、1 <= m <= M個目のナップサックのコスト上限をD_mとし、" );
-  CERR( "項iのコストが取りうる値をC_{i,1},C_{i,2}の2通りとし、" );
-  CERR( "m個目のナップサックに格納する際の項iのコストがiに依存しない数" );
-  CERR( "1 <= k_m <= Kを用いてC_{i,k_m}と表せるとします。つまり" );
-  CERR( "C_{i,k_m}<=D_mが項iの選択制約です。ただしk_1 = 1としても一般性を失いません。" );
+  CERR( "|C|=∞とし、項iのコストが取りうる値をC_{i,1},C_{i,2}の2通りとし、" );
+  CERR( "k個目のナップサックに格納する際の項iのコストがiに依存しない数" );
+  CERR( "1 <= m_k <= 2を用いてC_{i,m_k}と表せるとします。" );
+  CERR( "つまりC_{i,m_k} <= D_kが項iの選択制約です。ただし" );
+  CERR( "(C_{i,1})_i,(C_{i,2})_iを入れ替えm_1 = 1としても一般性を失いません。" );
   CERR( "" );
-  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_{i,k},i)_iの辞書順ソートを" );
-  CERR( "sC(k)と置き、(k_m,D_m,m)_mの辞書順ソートを(k_{m_j},D_{m_j},m_j)_jと置き、" );
-  CERR( "1 <= j <= Mを小さい順に探索し、sC(k_{m_j})を用いて選択可能な項iに対する" );
-  CERR( "{A_i,C_{i,2},i}をsetで管理し、その中で最大の要素を採用し、集合から削除することで" );
-  CERR( "m_j個目の選択を決定しましょう。" );
+  CERR( "O((N log_2 N)+K)が間に合いそうならば、(C_{i,m},i)_iの辞書順ソートを" );
+  CERR( "sC(m)、(m_k,D_k,k)_kの辞書順ソートを(m_{k_j},D_{k_j},k_j)_jと置き、" );
+  CERR( "1 <= j <= Kを小さい順に探索し、sC(m_{k_j})を用いて選択可能な項iに対する" );
+  CERR( "{A_i,C_{i,2},i}をsetで管理し、その中で最大の要素を採用し、" );
+  CERR( "集合から削除することでk_j個目の選択を決定しましょう。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
 }
 
 AC( MultipleKnapsackSingleItemStableCostUnstableCostBound )
 {
-  CERR( "1 <= m <= M個目のナップサックのコスト上限をD_mとし、" );
-  CERR( "項iのコストをC_iとします。つまりC_i<=D_mが項iの選択制約です。" );
+  CERR( "項iのコストをC_iとします。つまりC_i<=D_kが項iの選択制約です。" );
   CERR( "" );
-  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_i,i)_iの辞書順ソートをsC、" );
-  CERR( "(D_m)_mの辞書順ソートを(D_{m_j})_jと置き、" );
-  CERR( "1 <= j <= Mを小さい順に探索し、sCを用いて選択可能な項iに対する{A_i,i}を" );
+  CERR( "O((N log_2 N)+K)が間に合いそうならば、(C_i,i)_iの辞書順ソートをsC、" );
+  CERR( "(D_k)_kの辞書順ソートを(D_{k_j})_jと置き、" );
+  CERR( "1 <= j <= Kを小さい順に探索し、sCを用いて選択可能な項iに対する{A_i,i}を" );
   CERR( "setで管理し、その中で最大の要素を採用し、集合から削除することで" );
-  CERR( "m_j個目の選択を決定しましょう。" );
+  CERR( "k_j個目の選択を決定しましょう。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
   CERR( "参考：https://yukicoder.me/problems/no/2422/editorial" );
+}
+
+AC( MultipleKnapsackRestrictedMatching )
+{
+  CERR( "各項目の価値が1であるとし、項目iをn_i個選択できるとします。" );
+  CERR( "各項目が許容するナップサックの個数の総和をEと置きます。" );
+  CERR( "- n_i=1でO(√(N+K)*(N+K+E))が間に合いそうならば" );
+  CERR( "  項目とナップサックの最大二部マッチング" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
+  CERR( "- n_iが一般でO(√(N+K)*E)が間に合いそうならば" );
+  CERR( "  - 始点から項目iからに流量n_i" );
+  CERR( "  - 項目iから許容されるナップサックkに流量n_i" );
+  CERR( "  - ナップサックkから終点に流量D_k" );
+  CERR( "  を流す最大流" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MultipleKnapsackFreeMatching )
+{
+  CERR( "- O(K(N 2^N + K^N))が通りそうならば、高速ゼータ変換" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Subsetwise\\Multiknapsack" );
+  CERR( "- 各ナップサックの容量が非常に小さいならば、コストの大きさで項目を分けて" );
+  CERR( "  コストの大きい順にそれらの選択数を全探策または二分探索" );
+  CERR( "  参考：https://yukicoder.me/problems/no/2617/editorial" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( MaximisationArrayFunction )
@@ -1794,9 +1820,11 @@ AC( MaximumBipartite )
 {
   CERR( "二部グラフの最大二部マッチングは" );
   CERR( "- 出次数2ならば、連結成分ごとのmin(|V|,|E|)の総和" );
-  CERR( "- そうでないならば、ホップクロフトカープ法や容量1の最大流求解アルゴリズム" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
+  CERR( "- そうでなく辺の出入りが等しい頂点を纏められるならば纏めた個数を容量とする" );
+  CERR( "- 最大流計算アルゴリズム" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
+  CERR( "- そうでないならばホップクロフトカープ法（または容量1の上記アルゴリズム)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
   CERR( "を検討しましょう。" );
 }
 

@@ -73,6 +73,8 @@ AC( MultipleKnapsack );
 AC( MultipleKnapsackSingleItem );
 AC( MultipleKnapsackSingleItemUnstableCost );
 AC( MultipleKnapsackSingleItemStableCostUnstableCostBound );
+AC( MultipleKnapsackRestrictedMatching );
+AC( MultipleKnapsackFreeMatching );
 AC( MaximisationArrayFunction );
 AC( MaximisationArrayFunctionSubsequence );
 AC( MaximisationArrayFunctionLinearCombination );
