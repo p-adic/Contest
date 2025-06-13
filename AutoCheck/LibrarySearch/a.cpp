@@ -590,6 +590,93 @@ AC( ExplicitExpressionTotalAccess )
 
 AC( ExplicitExpressionProbability )
 {
+  vector<bool> type{};
+  ASK_YES_NO( "期待値の計算問題ですか？" );
+  if( reply == "y" ){
+    ASK_NUMBER(
+               "個数の期待値" ,
+               "回数の期待値" ,
+               "値の期待値"
+               );
+    if( num == num_temp++ ){
+      ASK_YES_NO( "部分集合の要素数の期待値ですか？" );
+      type <<= reply == "y";
+      ASK_YES_NO( "グリッドの黒マスの個数の期待値ですか？" );
+      type <<= reply == "y";
+      ASK_YES_NO( "転倒数の期待値ですか？" );
+      type <<= reply == "y";
+    } else if( num == num_temp++ ){
+      type.resize( 3 );
+      ASK_YES_NO( "単位時間に高々1回独立に起こる事象の起きた回数の期待値ですか？" );
+      type <<= reply == "y";
+      ASK_YES_NO( "裏が出るまでのコイン投げ回数の期待値ですか？" );
+      type <<= reply == "y";
+      ASK_YES_NO( "nを確率的に減らしてi以下にする試行回数の期待値ですか？" );
+      type <<= reply == "y";
+      if( type[3] || type[4] || type[5] ){
+        type <<= true;
+      } else {
+        ASK_YES_NO( "操作／遷移回数の期待値ですか？" );
+        type <<= reply == "y";
+      }
+    } else if( num == num_temp++ ){
+      type.resize( 7 );
+      ASK_YES_NO( "転倒数の期待値ですか？" );
+      type[2] = reply == "y";
+      ASK_YES_NO( "N個の確率変数X_1,...,X_Nのj番目の値の期待値ですか？" );
+      type <<= reply == "y";
+    }
+    type.resize( 8 );
+    CERR( "- 期待値計算は" );
+    CERR( "  - 確率を用いた愚直な計算" );
+    CERR( "  - 対象を和で表して線形性" );
+    if( type[0] || type[1] || type[2] ){
+      CERR( "    - 部分集合の要素数の期待値は各要素が部分集合に属す確率の和に帰着" );
+    }
+    if( type[1] ){
+      CERR( "      - グリッドのランダムな矩形塗り潰しの黒マスの個数は矩形に属す確率を" );
+      CERR( "        矩形ごとに包除原理で足し引き" );
+      CERR( "        - 矩形のサイズが固定ならば、ベルヌーイ数前計算による冪乗関数の" );
+      CERR( "          総和を用いた明示式" );
+      CERR( "          \\Mathematics\\Polynomial\\Cumulative\\GridStampCoveringExpectation" );
+    if( type[2] ){
+      CERR( "      - ランダムな順列Pの転倒数はP[i]>P[j]を満たす確率p(i,j)の総和" );
+    }
+    }
+    if( type[6] ){
+      CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
+      CERR( "    \\Mathematics\\LinearAlgebra" );
+      CERR( "    \\Mathematics\\Polynomial\\BostanMori" );
+    }
+    if( type[3] ){
+      CERR( "    - 単位時間に高々1回独立に起こる事象の起きた回数の期待値は" );
+      CERR( "      各時刻tごとに+1の起こる確率p(t)の総和" );
+    }
+    if( type[4] ){
+      CERR( "    - 裏が出るまでのコイン投げ回数の期待値は、n回以上表が出る確率p(n)の総和" );
+    }
+    if( type[5] ){
+      CERR( "    - nを確率的に減らしてi以下にする試行回数の期待値E(n,i)は、" );
+      CERR( "      - 各i<j<=nに対してnから1回でjに行く確率をP(n,j)として" );
+      CERR( "        E(n,i)=sum_{i<j<=n} P(n,j)(1+(i<j?E(j,i):0)" );
+      CERR( "        すなわち" );
+      CERR( "        E(n,i)=(P(n,n)+sum_{i<j<n} P(n,j)(1+(i<j?E(j,i):0))/(1-P(n,n))" );
+      CERR( "      - 各i<j<=nに対してnから一度でもjに行く確率をQ(n,j)として" );
+      CERR( "        E(n,i)=sum_{j>i} Q(n,j)E(j,j-1)" );
+      CERR( "        であり、Q(n,j)は以下の漸化式で求まります。" );
+      CERR( "        - Q(n,j)=sum_{j<m<=n} P(n,m)*Q(m,j)" );
+      CERR( "          すなわち" );
+      CERR( "          Q(n,j)=(sum_{j<m<n} P(n,m)*Q(m,j))/(1-P(n,n))" );
+      CERR( "        - Q(n,j)=sum_{j<m<=n} Q(n,m)*sum_k (1-P(m,m))^kP(m,j)" );
+      CERR( "          =(sum_{j<m<=n} Q(n,m)*P(m,j)/P(m,m)" );
+    }
+    if( type[7] ){
+      CERR( "  - N個の確率変数X_1,...,X_Nのj番目Y_jなら、Y_j<=yを#{i|X_i<=y}>=jに" );
+      CERR( "    読み替えることで、X_iの累積密度関数F_iを用いてY_jの累積密度関数G_j(y)を" );
+      CERR( "    prod_i(zF_i(y)+(1-F_i(y))のj次以上の係数和で表し、" );
+      CERR( "    E[Y_j] = int_{R} y G_j'(y) dyを求めましょう。" );
+    }
+  }
   CERR( "- 確率計算は" );
   CERR( "  - 事象を全探策してそれぞれの確率を計算" );;
   CERR( "  - 余事象や包除原理（高速ゼータ変換／メビウス変換）" );
@@ -604,28 +691,6 @@ AC( ExplicitExpressionProbability )
   CERR( "      i全体をわたる#T_i/(K_i #S)の総和" );
   CERR( "  - 確率を保つ全射で簡単な事象に帰着" );
   CERR( "  - ベイズの定理" );
-  CERR( "- 期待値計算は" );
-  CERR( "  - 確率を用いた愚直な計算" );
-  CERR( "  - 対象を和で表して線形性" );
-  CERR( "    - 転倒数やグリッドの黒マスの個数など部分集合の要素数の期待値は" );
-  CERR( "      各要素が部分集合に属す確率の和に帰着" );
-  CERR( "    - 単位時間に高々1回起こる事象の起きた回数の期待値は、" );
-  CERR( "      各時刻tごとに+1の起こる確率p(t)の総和" );
-  CERR( "    - 裏が出るまでのコイン投げ回数の期待値は、n回以上表が出る確率p(n)の総和" );
-  CERR( "    - nを確率的に減らしてi以下にする試行回数の期待値E(n,i)は、" );
-  CERR( "      - 各i<j<=nに対してnから1回でjに行く確率をP(n,j)として" );
-  CERR( "        E(n,i)=sum_j P(n,j)(1+(i<j?E(j,i):0)" );
-  CERR( "      - 各i<j<=nに対してnから一度でもjに行く確率をQ(n,j)として" );
-  CERR( "        E(n,i)=sum_{j>i} Q(n,j)E(j,j-1)" );
-  CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
-  CERR( "    \\Mathematics\\LinearAlgebra" );
-  CERR( "    \\Mathematics\\Polynomial\\BostanMori" );
-  CERR( "  - グリッドの塗り潰しならベルヌーイ数前計算による冪乗関数の総和を用いた明示式" );
-  CERR( "    \\Mathematics\\Polynomial\\Cumulative\\GridStampCoveringExpectation" );
-  CERR( "  - N個の確率変数X_1,...,X_Nのj番目Y_jなら、Y_j<=yを#{i|X_i<=y}>=jに" );
-  CERR( "    読み替えることで、X_iの累積密度関数F_iを用いてY_jの累積密度関数G_j(y)を" );
-  CERR( "    prod_i(zF_i(y)+(1-F_i(y))のj次以上の係数和で表し、" );
-  CERR( "    E[Y_j] = int_{R} y G_j'(y) dyを求めましょう。" );
   CERR( "を検討しましょう。" );
   ASK_YES_NO( "極限計算ですか？" );
   if( reply == "y" ){
