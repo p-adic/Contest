@@ -47,10 +47,7 @@ AC( LibrarySearch )
 AC( ExplicitExpression )
 {
   ASK_NUMBER(
-	     "一重和や一重積の計算問題" ,
-	     "二重和や二重積や積和の計算問題" ,
-	     "その他の１変数関数／数列の計算問題" ,
-	     "その他の多変数関数／配列を受け取る関数の計算問題" ,
+	     "格子点上の関数や配列の計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
@@ -64,13 +61,7 @@ AC( ExplicitExpression )
              "その他の数論的関数の計算問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionArraySum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionDoubleSum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionUnary );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionMultivariable );
+    CALL_AC( ExplicitExpressionArray );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionFunctionOnPermutation );
   } else if( num == num_temp++ ){
@@ -94,6 +85,161 @@ AC( ExplicitExpression )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArithmetic );
   }
+}
+
+AC( ExplicitExpressionArray )
+{
+  ASK_NUMBER(
+	     "線形漸化式の計算問題" ,
+	     "非線形漸化式の計算問題" ,
+	     "１変数関数の反復合成の計算問題" ,
+	     "bit関数と他の関数の合成の計算問題" ,
+	     "その他の１変数関数／配列の計算問題" ,
+             "その他の多変数関数／配列を受け取る関数の計算問題" ,
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionUnaryLinearRecursion );
+  } else if( num == num_temp++ ){
+    CERR( "漸化式に現れる各additive principalな項を成分に持つベクトル列を考え、" );
+    CERR( "それが満たす線形漸化式を考えましょう。" );
+    CERR( "" );
+    CALL_AC( ExplicitExpressionUnaryLinearRecursion );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionUnaryIteration );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionBitwiseFunction );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionUnaryOther );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionMultivariable );
+  }
+  ASK_YES_NO( "総和／総乗の計算問題ですか？" );
+  if( reply == "y" ){
+    ASK_NUMBER( 
+               "一重和や一重積の計算問題" ,
+               "二重和や二重積や積和の計算問題"
+                );
+    if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionArraySum );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionDoubleSum );
+    }
+  }
+}
+
+AC( ExplicitExpressionUnaryLinearRecursion )
+{
+  CERR( "L項間線形漸化式" );
+  CERR( "a_n = sum(i,0,L){c_i a_{n-L+i}} (n>=L)" );
+  CERR( "第N項a_Nを法Bで求めます。" );
+  CERR( "" );
+  CERR( "適宜Z/B Zの型" );
+  CERR( "\\Mathematics\\Arithmetic\\Mod\\ConstexprModulo" );
+  CERR( "\\Mathematics\\Arithmetic\\Mod\\QuotientRing" );
+  CERR( "を用いて" );
+  CERR( "- O(LN)が間に合いそうならば直近L+1項をメモ化する動的計画法" );
+  CERR( "- O(L^2 log N)が間に合いそうならば行列累乗" );
+  CERR( "  \\Mathematics\\LinearAlgebra" );
+  CERR( "- B=998244353かつ初項L項も漸化式を満たしかつO(N log N)が間に合いそうならば" );
+  CERR( "  1/(1-sum(i,0,L){c_i x^i})のN次係数の高速フーリエ変換による計算" );
+  CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  CERR( "- 係数列(c_i)_iが周期Pを持ちO(PN log N)が間に合いそうならばP個の区間加算BIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalAddo" );
+  CERR( "- 係数列(c_i)_iが単調でD階差分が定数列でO((N+L)D)が間に合いそうならば" );
+  CERR( "  「係数列のd階Δ^d(c_i)_i差分と(a_i)_{i=n-L+d+1}^{n}の内積dp[n][d]」" );
+  CERR( "  を管理する動的計画法" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionUnaryIteration )
+{
+  CERR( "定義域の要素数N、テストケース数T、反復回数の上限Kとします。" );
+  CERR( "- O((N + T)log_2 K)が通りそうならばダブリング" );
+  CERR( "  \\Mathematics\\Function\\Iteration\\Doubling" );
+  CERR( "- O(TN)が通りそうならばループ検出" );
+  CERR( "  \\Mathematics\\Function\\Iteration\\LoopDetection" );
+  CERR( "- O(N)すら通らなさそうならば関数の規則性を見付けるための実験" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionBitwiseFunction )
+{
+  CERR( "(M,*)を可換モノイドとします。写像f:N^n->(M,*)がbit準同型とは" );
+  CERR( "- (a&b)==0を満たす任意のa,bに対しf(a|b)=f(a)*f(b)" );
+  CERR( "を満たすということとします。" );
+  CERR( "" );
+  CERR( "例えば" );
+  CERR( "- 恒等写像:N->(N,+)" );
+  CERR( "- 恒等写像:N->(N,|)" );
+  CERR( "- 恒等写像:N->(N,^)" );
+  CERR( "- 固定の元との2項bit演算:N->(N,+)" );
+  CERR( "- 二進法表記:N->(N^{oplus N},+)" );
+  CERR( "- 二進法の桁和:N->(N,+)" );
+  CERR( "- 二進法表記と加法的準同型の合成:N->(Z,+)" );
+  CERR( "- 二進法表記と乗法的準同型の合成:N->(Z,*)" );
+  CERR( "- ２つのbit関数f,g:N->(M,*)の各点積fg:N->(M,*)" );
+  CERR( "- ２つのbit関数f,g:N->(M,*)の直積の積f*g:N^2->(M,*)" );
+  CERR( "- (M,*)が群である場合のbit関数f:N->(M,*)と逆元の合成" );
+  CERR( "などがbit準同型です。" );
+  ASK_NUMBER(
+	     "(Z,+)へのbit準同型" ,
+	     "(Z,*)へのbit準同型の線形和"
+	     );
+  if( num == num_temp++ ){
+    CERR( "ノード数nの根付き木上の関数tと引数2のbit演算otimesに対し、" );
+    CERR( "多引数化otimes:N^n->Nとbit準同型f:N->(Z,+)の合成に" );
+    CERR( "tを代入した値をf(t)と略記します。" );
+    CERR( "" );
+    CALL_AC( FunctionOnTree );
+    CERR( "" );
+    CALL_AC( ExplicitExpressionBitFunctionOnTree );
+  } else if( num == num_temp++ ){
+    CERR( "N^nの部分集合Sとbit準同型f:N^n->(Z,*)に対し、" );
+    CERR( "Sの要素aをわたるf(a)の総和は、aの各成分をbitに分解して" );
+    CERR( "f(a)を積で表示し、その途中までの積の総和を管理する" );
+    CERR( "桁DPを検討しましょう。" );
+  }
+}
+
+AC( ExplicitExpressionUnaryOther )
+{
+  CERR( "まずは小さい入力の場合を愚直に計算し、OEISで検索しましょう。" );
+  CERR( "https://oeis.org/?language=japanese" );
+  CERR( "" );
+  CERR( "次に出力の定義と等価な式を考察しましょう。" );
+  CERR( "- 単調ならば、冪乗や階乗" );
+  CERR( "- 定義にp進法が使われていれば、各種探索アルゴリズム" );
+  CERR( "- 入力が素数に近い場合に規則性があれば、p進付値、p進法、" );
+  CERR( "  オイラー関数、約数の個数など" );
+  CERR( "- 鳩の巣原理による周期性" );
+  CERR( "  - mod Bフィボナッチ数列やその累積和の周期は短い。" );
+  CERR( "  - mod(プロス素数-1)では偶数倍の周期が短い。" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "そして前計算を試みましょう。候補としては" );
+  CERR( "- 階乗／逆元／場合の数" );
+  CERR( "- 素数列挙" );
+  CERR( "- １つまたは複数の整数の約数列挙" );
+  CERR( "- オイラー関数の値の列挙" );
+  CERR( "- サブゴールとなる関係式を満たす解の列挙" );
+  CERR( "があります。特に漸化式による前計算が可能な場合、法または周期を" );
+  CERR( "バケット分割してソースコードに埋め込む高速化を検討しましょう。" );
+}
+
+AC( ExplicitExpressionMultivariable )
+{
+  CERR( "- 各引数に関して線形であるならば、標準基底に制限して計算" );
+  CERR( "- 累積和などの操作を繰り返すならば、" );
+  CERR( "  - 母関数の1/(1-x)倍などに翻訳" );
+  CERR( "    \\Mathematics\\Polynomial\\Cumulative" );
+  CERR( "  - 格子点上の経路数え上げに翻訳" );
+  CERR( "    https://en.wikipedia.org/wiki/Pascal%27s_triangle#Overall_patterns_and_properties" );
+  CERR( "    https://en.wikipedia.org/wiki/Catalan%27s_triangle" );
+  CERR( "- 交代和などの操作を繰り返すならば、２回纏めて累積和に帰着" );
+  CERR( "- 差分などの操作を繰り返すならば、母関数の1-x倍などに翻訳" );
+  CERR( "- 積分作用素を繰り返すならば、変数変換してint dxなどに帰着" );
+  CERR( "- 微分作用素を繰り返すならば、変数変換してd/dxなどに帰着" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionArraySum )
@@ -248,140 +394,6 @@ AC( ExplicitExpressionDoubleSum )
   CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
   CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( ExplicitExpressionUnary )
-{
-  ASK_NUMBER(
-	     "線形漸化式の計算問題" ,
-	     "１変数関数の反復合成の計算問題" ,
-	     "bit関数と他の関数の合成の計算問題" ,
-	     "その他の１変数関数の計算問題"
-	     );
-  if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionUnaryLinearRecursion );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionUnaryIteration );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionBitwiseFunction );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionUnaryOther );
-  }
-}
-
-AC( ExplicitExpressionUnaryLinearRecursion )
-{
-  CERR( "L項間線形漸化式" );
-  CERR( "a_n = sum(i,0,L){c_i a_{n-L+i}} (n>=L)" );
-  CERR( "第N項a_Nを法Bで求めます。" );
-  CERR( "" );
-  CERR( "適宜Z/B Zの型" );
-  CERR( "\\Mathematics\\Arithmetic\\Mod\\ConstexprModulo" );
-  CERR( "\\Mathematics\\Arithmetic\\Mod\\QuotientRing" );
-  CERR( "を用いて" );
-  CERR( "- O(LN)が間に合いそうならば直近L+1項をメモ化する動的計画法" );
-  CERR( "- O(L^2 log N)が間に合いそうならば行列累乗" );
-  CERR( "  \\Mathematics\\LinearAlgebra" );
-  CERR( "- B=998244353かつ初項L項も漸化式を満たしかつO(N log N)が間に合いそうならば" );
-  CERR( "  1/(1-sum(i,0,L){c_i x^i})のN次係数の高速フーリエ変換による計算" );
-  CERR( "  \\Mathematics\\Polynomial\\Truncate" );
-  CERR( "- 係数列(c_i)_iが周期Pを持ちO(PN log N)が間に合いそうならばP個の区間加算BIT" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalAddo" );
-  CERR( "- 係数列(c_i)_iが単調でD階差分が定数列でO((N+L)D)が間に合いそうならば" );
-  CERR( "  「係数列のd階Δ^d(c_i)_i差分と(a_i)_{i=n-L+d+1}^{n}の内積dp[n][d]」" );
-  CERR( "  を管理する動的計画法" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( ExplicitExpressionUnaryIteration )
-{
-  CERR( "定義域の要素数N、テストケース数T、反復回数の上限Kとします。" );
-  CERR( "- O((N + T)log_2 K)が通りそうならばダブリング" );
-  CERR( "  \\Mathematics\\Function\\Iteration\\Doubling" );
-  CERR( "- O(TN)が通りそうならばループ検出" );
-  CERR( "  \\Mathematics\\Function\\Iteration\\LoopDetection" );
-  CERR( "- O(N)すら通らなさそうならば関数の規則性を見付けるための実験" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( ExplicitExpressionBitwiseFunction )
-{
-  CERR( "(M,*)を可換モノイドとします。写像f:N^n->(M,*)がbit準同型とは" );
-  CERR( "- (a&b)==0を満たす任意のa,bに対しf(a|b)=f(a)*f(b)" );
-  CERR( "を満たすということとします。" );
-  CERR( "" );
-  CERR( "例えば" );
-  CERR( "- 恒等写像:N->(N,+)" );
-  CERR( "- 恒等写像:N->(N,|)" );
-  CERR( "- 恒等写像:N->(N,^)" );
-  CERR( "- 固定の元との2項bit演算:N->(N,+)" );
-  CERR( "- 二進法表記:N->(N^{oplus N},+)" );
-  CERR( "- 二進法の桁和:N->(N,+)" );
-  CERR( "- 二進法表記と加法的準同型の合成:N->(Z,+)" );
-  CERR( "- 二進法表記と乗法的準同型の合成:N->(Z,*)" );
-  CERR( "- ２つのbit関数f,g:N->(M,*)の各点積fg:N->(M,*)" );
-  CERR( "- ２つのbit関数f,g:N->(M,*)の直積の積f*g:N^2->(M,*)" );
-  CERR( "- (M,*)が群である場合のbit関数f:N->(M,*)と逆元の合成" );
-  CERR( "などがbit準同型です。" );
-  ASK_NUMBER(
-	     "(Z,+)へのbit準同型" ,
-	     "(Z,*)へのbit準同型の線形和"
-	     );
-  if( num == num_temp++ ){
-    CERR( "ノード数nの根付き木上の関数tと引数2のbit演算otimesに対し、" );
-    CERR( "多引数化otimes:N^n->Nとbit準同型f:N->(Z,+)の合成に" );
-    CERR( "tを代入した値をf(t)と略記します。" );
-    CERR( "" );
-    CALL_AC( FunctionOnTree );
-    CERR( "" );
-    CALL_AC( ExplicitExpressionBitFunctionOnTree );
-  } else if( num == num_temp++ ){
-    CERR( "N^nの部分集合Sとbit準同型f:N^n->(Z,*)に対し、" );
-    CERR( "Sの要素aをわたるf(a)の総和は、aの各成分をbitに分解して" );
-    CERR( "f(a)を積で表示し、その途中までの積の総和を管理する" );
-    CERR( "桁DPを検討しましょう。" );
-  }
-}
-
-AC( ExplicitExpressionUnaryOther )
-{
-  CERR( "まずは小さい入力の場合を愚直に計算し、OEISで検索しましょう。" );
-  CERR( "https://oeis.org/?language=japanese" );
-  CERR( "" );
-  CERR( "次に出力の定義と等価な式を考察しましょう。" );
-  CERR( "- 単調ならば、冪乗や階乗" );
-  CERR( "- 定義にp進法が使われていれば、各種探索アルゴリズム" );
-  CERR( "- 入力が素数に近い場合に規則性があれば、p進付値、p進法、" );
-  CERR( "  オイラー関数、約数の個数など" );
-  CERR( "- 鳩の巣原理による周期性" );
-  CERR( "  - mod Bフィボナッチ数列やその累積和の周期は短い。" );
-  CERR( "  - mod(プロス素数-1)では偶数倍の周期が短い。" );
-  CERR( "を検討しましょう。" );
-  CERR( "" );
-  CERR( "そして前計算を試みましょう。候補としては" );
-  CERR( "- 階乗／逆元／場合の数" );
-  CERR( "- 素数列挙" );
-  CERR( "- １つまたは複数の整数の約数列挙" );
-  CERR( "- オイラー関数の値の列挙" );
-  CERR( "- サブゴールとなる関係式を満たす解の列挙" );
-  CERR( "があります。特に漸化式による前計算が可能な場合、法または周期を" );
-  CERR( "バケット分割してソースコードに埋め込む高速化を検討しましょう。" );
-}
-
-AC( ExplicitExpressionMultivariable )
-{
-  CERR( "- 各引数に関して線形であるならば、標準基底に制限して計算" );
-  CERR( "- 累積和などの操作を繰り返すならば、" );
-  CERR( "  - 母関数の1/(1-x)倍などに翻訳" );
-  CERR( "    \\Mathematics\\Polynomial\\Cumulative" );
-  CERR( "  - 格子点上の経路数え上げに翻訳" );
-  CERR( "    https://en.wikipedia.org/wiki/Pascal%27s_triangle#Overall_patterns_and_properties" );
-  CERR( "    https://en.wikipedia.org/wiki/Catalan%27s_triangle" );
-  CERR( "- 交代和などの操作を繰り返すならば、２回纏めて累積和に帰着" );
-  CERR( "- 差分などの操作を繰り返すならば、母関数の1-x倍などに翻訳" );
-  CERR( "- 積分作用素を繰り返すならば、変数変換してint dxなどに帰着" );
-  CERR( "- 微分作用素を繰り返すならば、変数変換してd/dxなどに帰着" );
   CERR( "を検討しましょう。" );
 }
 

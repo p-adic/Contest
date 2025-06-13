@@ -5,17 +5,17 @@
 
 AC( LibrarySearch );
 AC( ExplicitExpression );
+AC( ExplicitExpressionArray );
+AC( ExplicitExpressionUnaryLinearRecursion );
+AC( ExplicitExpressionUnaryIteration );
+AC( ExplicitExpressionBitwiseFunction );
+AC( ExplicitExpressionUnaryOther );
 AC( ExplicitExpressionArraySum );
 AC( ExplicitExpressionOneArrayEntrySum );
 AC( ExplicitExpressionInnerProduct );
 AC( ExplicitExpressionOneArraySubArraySum );
 AC( ExplicitExpressionArrayCombinatorial );
 AC( ExplicitExpressionDoubleSum );
-AC( ExplicitExpressionUnary );
-AC( ExplicitExpressionUnaryLinearRecursion );
-AC( ExplicitExpressionUnaryIteration );
-AC( ExplicitExpressionBitwiseFunction );
-AC( ExplicitExpressionUnaryOther );
 AC( ExplicitExpressionMultivariable );
 AC( ExplicitExpressionFunctionOnPermutation );
 AC( ExplicitExpressionFunctionOnTree );
