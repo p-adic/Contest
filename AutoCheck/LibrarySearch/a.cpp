@@ -138,11 +138,12 @@ AC( ExplicitExpressionUnaryLinearRecursion )
   CERR( "\\Mathematics\\Arithmetic\\Mod\\QuotientRing" );
   CERR( "を用いて" );
   CERR( "- O(LN)が間に合いそうならば直近L+1項をメモ化する動的計画法" );
-  CERR( "- O(L^2 log N)が間に合いそうならば行列累乗" );
+  CERR( "- O(L^3 log N)が間に合いそうならば行列累乗" );
   CERR( "  \\Mathematics\\LinearAlgebra" );
-  CERR( "- B=998244353かつ初項L項も漸化式を満たしかつO(N log N)が間に合いそうならば" );
-  CERR( "  1/(1-sum(i,0,L){c_i x^i})のN次係数の高速フーリエ変換による計算" );
-  CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  CERR( "- O(L + log max{L,N} log N)が間に合いそうならば" );
+  CERR( "  sum_{i,0,L-1} a_i x^i/(1-sum(i,0,L){c_i x^i})" );
+  CERR( "  のN次係数のボスタン森法による計算" );
+  CERR( "  \\Mathematics\\Polynomial\\BostanMori" );
   CERR( "- 係数列(c_i)_iが周期Pを持ちO(PN log N)が間に合いそうならばP個の区間加算BIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalAddo" );
   CERR( "- 係数列(c_i)_iが単調でD階差分が定数列でO((N+L)D)が間に合いそうならば" );
