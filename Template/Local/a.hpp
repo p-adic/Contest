@@ -46,6 +46,7 @@ int exec_mode;
 #include "../../../Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a.hpp"
 #include "../../../Mathematics/Combinatorial/Loop/a.hpp"
 #include "../../../Mathematics/Arithmetic/Iteration/a.hpp"
+#include "../../../Mathematics/Arithmetic/Sqrt/a.hpp"
 
 CEXPR( uint , P , 998244353 );
 using MP = Mod<P>;

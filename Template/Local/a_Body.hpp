@@ -21,6 +21,7 @@
 #include "../../../Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a_Body.hpp"
 #include "../../../Mathematics/Combinatorial/Loop/a_Body.hpp"
 #include "../../../Mathematics/Arithmetic/Iteration/a_Body.hpp"
+#include "../../../Mathematics/Arithmetic/Sqrt/a_Body.hpp"
 
 inline void AlertAbort( int n ) { CERR( "abort関数が呼ばれました。assertマクロのメッセージが出力されていない場合はオーバーフローの有無を確認をしてください。" ); }
 
