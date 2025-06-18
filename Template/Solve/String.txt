@@ -5,48 +5,37 @@
   CIN( string , S );
   // int N = S.size();
 
-  // vector<MP> dp( N );
-  // dp[0] = 1;
-  // FOR( i , 0 , N ){
-  //   FOR( j , 0 , i ){
-  //     if( S[j] < S[i] ){
-  //       dp[i] += dp[j];
-  //     }
-  //   }
-  // }
-
-  // T dp( 26 );
-  // dp[CharToInt(S[0])] = 1;
-  // FOR( i , 0 , N ){
-  //   auto ndp = dp;
-  //   FOR( c , 'a' , 'z' ){
-  //     if( c != S[i] ){
-  //       ndp[CharToInt(S[i])] += dp[CharToInt(c)];
-  //     }
-  //   }
-  //   dp = move( ndp );
-  // }
-
-  // using T  MP;
-  // auto fltlt( const T& t , const int& i ){
-  //   return t * 26;
+  // /* 桁DP */
+  // CEXPR( int , base , 26 );
+  // using T = MP;
+  // /* {現在の桁でN未満確定の解,現在の桁でN以下確定の解} */
+  // /* base-1の約数の倍数判定をしたい場合は桁和mod(base-1)ごとに管理 */
+  // T2<T> dp{0,1};
+  // /* dp[O]からdp[O]への遷移をここに書く。*/
+  // auto fltlt = [&]( const T& t , const int& i ){
+  //   return t * base;
   // };
-  // auto feqlt( const T& t , const int& i ){
+  // /* dp[I]からdp[O]への遷移をここに書く。*/
+  // auto feqlt = [&]( const T& t , const int& i ){
   //   return t * CharToInt( S[i] );
   // };
-  // auto feqeq( const T& t , const int& i ){
+  // /* dp[I]からdp[I]への遷移をここに書く。*/
+  // auto feqeq = [&]( const T& t , const int& i ){
   //   return t;
   // };
-  // vector<T> dp( 2 );
+  // T2<T> dp{};
   // dp[0] = {0,1};
   // FOR( i , 0 , N ){
   //   dp = {fltlt(dp[0],i)+feqlt(dp[1],i),feqeq(dp[1],i)};
   // }
+  // T a = dp[O] + dp[I];
 
   // RollingHash<MP,int> rh{};
-  // /* code = {ハッシュ,r^長さ,長さ} */
+  // // DoubleRollingHash<998244353,1000000007,int> rh{};
+  // // using Code = decltype( rh.Encode( "" ) );
+  // /* tuple<MP,MP,int> code = {ハッシュ,r^長さ,長さ} */
   // /* S全体のコード */
-  // tuple<MP,MP,int> code = rh.Encode( S , false );
+  // auto code = rh.Encode( S , false );
   // /* (s[:i]のコード)_i */
   // auto ccode = rh.CumulativeEncode( S , false );
   // /* (s[i]のコード)_i */
