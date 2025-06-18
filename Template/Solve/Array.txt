@@ -2,6 +2,7 @@
   using entry_type = int;
   // using entry_type = ll;
   // using entry_type = MP;
+  // using entry_type = T2<int>;
   CIN_A( entry_type , 0 , N , A );
   // Sort( A );
   // --A;
