@@ -35,6 +35,7 @@ int exec_mode;
 #include "../../../Mathematics/Utility/Tuple/a.hpp"
 #include "../../../Mathematics/Utility/Vector/a.hpp"
 #include "../../../Mathematics/Utility/Set/Map/a.hpp"
+#include "../../../Utility/StdStream/__float128/a.hpp"
 #include "../../../Utility/StdStream/a.hpp"
 #include "../../../Utility/String/a.hpp"
 #include "../../../Utility/String/Encode/a.hpp"

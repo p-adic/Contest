@@ -10,6 +10,7 @@
 #include "../../../Mathematics/Utility/Tuple/a_Body.hpp"
 #include "../../../Mathematics/Utility/Vector/a_Body.hpp"
 #include "../../../Mathematics/Utility/Set/Map/a_Body.hpp"
+#include "../../../Utility/StdStream/__float128/a_Body.hpp"
 #include "../../../Utility/StdStream/a_Body.hpp"
 #include "../../../Utility/String/a_Body.hpp"
 #include "../../../Utility/String/Encode/a_Body.hpp"
