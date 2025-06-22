@@ -47,7 +47,7 @@ AC( LibrarySearch )
 AC( ExplicitExpression )
 {
   ASK_NUMBER(
-	     "格子点上の関数や配列の計算問題" ,
+	     "固定長引数関数や格子点上の関数や配列の計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
@@ -240,6 +240,13 @@ AC( ExplicitExpressionMultivariable )
   CERR( "- 差分などの操作を繰り返すならば、母関数の1-x倍などに翻訳" );
   CERR( "- 積分作用素を繰り返すならば、変数変換してint dxなどに帰着" );
   CERR( "- 微分作用素を繰り返すならば、変数変換してd/dxなどに帰着" );
+  CERR( "- AがB>1で割り切れる回数の計算は" );
+  CERR( "  - min_{p|B} floor(v_p(A)/v_p(B))" );
+  CERR( "    = floor(min_{p|B} v_p(A)/v_p(B))" );
+  CERR( "  - min_{p|B} (p^v_p(A)がp^v_p(B)で割り切れる回数)" );
+  CERR( "- A,B>1に対するmin_{p|B} (v_p(A)/v_p(B))の計算は" );
+  CERR( "  max_{X=1}^{floor(log_2(B))} min_{p|B} floor(v_p(A^X)/v_p(B))/X" );
+  CERR( "  = max_{X=1}^{floor(log_2(B))} (A^XがBで割り切れる回数)/X" );
   CERR( "を検討しましょう。" );
 }
 
@@ -278,7 +285,7 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "  - A-Eが正則とは限らずO(K^3 log N)が間に合いそうならば、vにf(a_i)の" );
   CERR( "    累積和を末尾挿入し、行列累乗" );
   CERR( "    \\Mathematics\\LinearAlgebra" );
-  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(1K)が間に合いそうならば" );
+  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(K)が間に合いそうならば" );
   CERR( "  条件分岐で総和を分割して総和の漸化式を求める分割統治法による再帰" );
   CERR( "- #im(f)が小さくf(a_)の各点逆像が計算しやすいならば" );
   CERR( "  fの各点逆像による纏め上げをする分割統治法" );
@@ -676,12 +683,23 @@ AC( ExplicitExpressionProbability )
       CERR( "        E(n,i)=(P(n,n)+sum_{i<j<n} P(n,j)(1+(i<j?E(j,i):0))/(1-P(n,n))" );
       CERR( "      - 各i<j<=nに対してnから一度でもjに行く確率をQ(n,j)として" );
       CERR( "        E(n,i)=sum_{j>i} Q(n,j)E(j,j-1)" );
-      CERR( "        であり、Q(n,j)は以下の漸化式で求まります。" );
+      CERR( "        であり、" );
       CERR( "        - Q(n,j)=sum_{j<m<=n} P(n,m)*Q(m,j)" );
       CERR( "          すなわち" );
       CERR( "          Q(n,j)=(sum_{j<m<n} P(n,m)*Q(m,j))/(1-P(n,n))" );
       CERR( "        - Q(n,j)=sum_{j<m<=n} Q(n,m)*sum_k (1-P(m,m))^kP(m,j)" );
       CERR( "          =(sum_{j<m<=n} Q(n,m)*P(m,j)/P(m,m)" );
+      CERR( "      - 写像f_n:[1,M_n]->[0,n]と一様ランダムなm in [1,M_n]を用いて" );
+      CERR( "        n->f_n(m)と遷移する場合、" );
+      CERR( "        E(n,i)=1+(sum_{m=1}^{M_n} E(f_n(m),i))/M_n" );
+      CERR( "        すなわち" );
+      CERR( "        E(n,i)=(1+(sum_{m=1}^{n-1} #(f_n^{-1}(m)) E(m,i))/M_n)" );
+      CERR( "               /(1-#(f_n^{-1}(n))/M_n)" );
+      CERR( "              =(M_n+sum_{m=1}^{n-1} #(f_n^{-1}(m)) E(m,i))" );
+      CERR( "               /(M_n-#(f_n^{-1}(n)))" );
+      CERR( "        と著せ、f_n次第でmをある程度纏めあげたE(f_n(m),i)や" );
+      CERR( "        #(f_n^{-1}(m)) E(m,i)の総和が累積和などを用いて" );
+      CERR( "        nに関して高速な差分計算が可能" );
     }
     if( type[7] ){
       CERR( "  - N個の確率変数X_1,...,X_Nのj番目Y_jなら、Y_j<=yを#{i|X_i<=y}>=jに" );
@@ -938,6 +956,7 @@ AC( MinimisationMovingCost )
 	     "１始点多経由点多終点コスト最小化（スタンプラリー）問題" ,
 	     "多始点１終点コスト最小化（競争）問題" ,
 	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
+	     "多始点多終点組み分けコスト最小化（完全二部マッチング）問題" ,
 	     "多プレイヤーコスト総和最小化（最小費用流）問題" ,
 	     "最近点問題"
 	     );
@@ -962,6 +981,11 @@ AC( MinimisationMovingCost )
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationCoveringSize );
+  } else if( num == num_temp++ ){
+    CERR( "数直線上の始点と終点の組み分けに関する距離の総和の最小化を考えます。" );
+    CERR( "始点と終点を合わせてソートして小さい順に走査し、余りの個数ごとに" );
+    CERR( "コストの最小値を管理する動的計画法を検討しましょう。" );
+    CERR( "\\Mathematics\\Geometry\\AffineSpace\\Distance\\L1\\CompleteBipartiteMatching" );
   } else if( num == num_temp++ ){
     CERR( "各終点tjをゴールとして良い人数の上限をNjと置いて" );
     CERR( "- 各辺の容量を∞に設定" );
@@ -1248,7 +1272,8 @@ AC( MaximisationFunctionOnOneArray )
              "f circ Aの部分和とg circ Aの補部分和の和の最大化問題" ,
              "Aの部分和と補部分和の差の最小化問題" ,
              "Aの非空部分和と補集合の非空部分和の差の最小化問題" ,
-             "配列の変更後に配列を受け取る関数に代入した値の最大／最小化問題"
+             "配列の変更後に配列を受け取る関数に代入した値の最大／最小化問題" ,
+             "Aの区間への分割全体をわたる区間和の絶対和の最大化問題"
              );
   if( num == num_temp++ ){
     CALL_AC( Knapsack );
@@ -1281,6 +1306,8 @@ AC( MaximisationFunctionOnOneArray )
     CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\Difference" );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationArrayFunction );
+  } else if( num == num_temp++ ){
+    CALL_AC( KnapsackIntervalSumAbsoluteSum );
   }
 }
 
@@ -1404,6 +1431,7 @@ AC( KnapsackInterval )
              "区間に属すべき点が与えられるクエリ処理" ,
              "コストありの区間和最大化" ,
              "コストなしの区間和最大化" ,
+             "コストなしの区間和の絶対和最大化"
              );
   if( num == num_temp++ ){
     CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
@@ -1415,10 +1443,20 @@ AC( KnapsackInterval )
     CERR( "尺取り法で区間を伸ばし両端の更新値を用いて最大値を管理しましょう。" );
     CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
   } else if( num == num_temp++ ){
-    CERR( "区間の右端を固定した最大値を動的計画法で求めましょう。" );
+    CERR( "区間和最大化は、区間の右端を固定した最大値を管理する動的計画法" );
+    CERR( "を検討しましょう。" );
     CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree" );
     CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree\\UnboundedValueSum" );
+  } else if( num == num_temp++ ){
+    CALL_AC( KnapsackIntervalSumAbsoluteSum );
   }
+}
+
+AC( KnapsackIntervalSumAbsoluteSum )
+{
+  CERR( "価値の配列全体をK個以下の区間に分割した時の区間和の絶対和の最大化は、" );
+  CERR( "絶対値を±1倍の最大値として処理しKに関する再帰を検討しましょう。" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree\\AbsolutePartition" );
 }
 
 AC( KnapsackBoundedIntervalLength )
@@ -2075,12 +2113,8 @@ AC( MinimisationOperationCost )
       CERR( "と仮定して良いです。その親子を圧縮した場合の答えとのズレを管理して、" );
       CERR( "小さい根付き木に帰着させましょう。" );
     } else {
-      ASK_YES_NO( "操作の種類やコストが状態に依存する問題ですか？" );
+      ASK_YES_NO( "コスト含めて全く同じである操作を反復できる問題ですか？" );
       if( reply == "y" ){
-        CERR( "操作コストの最小化は、操作による状態遷移を有向グラフ上の移動とみなすことで" );
-        CERR( "最短経路問題に帰着させることが可能です。" );
-        CALL_AC( MinimisationMovingCost );
-      } else {
         CERR( "コスト正の各操作を実行する回数を決定すれば良いので、" );
         CERR( "- コスト0の操作のみで処理できる必要十分条件の決定" );
         CERR( "- コスト正の操作回数の合計kを決め打った時の最小コストc(k)の決定" );
@@ -2089,6 +2123,10 @@ AC( MinimisationOperationCost )
         CERR( "  - 一般にはc(k)の最小値を全探策" );
         CERR( "- コスト正の操作回数の組み合わせの全探策" );
         CERR( "を検討しましょう。" );
+      } else {
+        CERR( "操作コストの最小化は、操作による状態遷移を有向グラフ上の移動とみなすことで" );
+        CERR( "最短経路問題に帰着させることが可能です。" );
+        CALL_AC( MinimisationMovingCost );
       }
     }
 }
@@ -2424,7 +2462,7 @@ AC( CountingArrayConditional )
 	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
 	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
 	     "辞書式順序などで固定長の部分列に上限が与えられた配列の数え上げ問題" ,
-             "閉じたカッコ列の数え上げ問題" ,
+             "閉じたカッコ列やその亜種の数え上げ問題" ,
 	     "その他の関係式を満たす配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
@@ -3120,7 +3158,57 @@ AC( CountingYoundDiagram )
 
 AC( CountingParenthesisSequence )
 {
-  CERR( "2N文字の閉じたカッコ列の個数は第Nカタラン数C(N)=(2N)!/((N+1)!N!)です。" );
+  ASK_YES_NO( "ワイルドカード*に関する問題ですか？" );
+  if( reply == "y" ){
+    CALL_AC( CountingWildCardedParenthesisSequence );
+  } else {
+    CALL_AC( CountingPlainParenthesisSequence );
+  }
+}
+
+AC( CountingWildCardedParenthesisSequence )
+{
+  CERR( "()*の列で*を()に変更して閉じたカッコ列を作れる必要十分条件は、" );
+  CERR( "*を前から(に、後ろから)に変えて(と)をN/2個ずつにした時に" );
+  CERR( "閉じたカッコになることです。" );
+  CERR( "" );
+  CERR( "従ってそのような()*の列は()[]の列であって" );
+  CERR( "(1) [を(、]を)に変更すると閉じたカッコ列になる。" );
+  CERR( "(2) ]より後に[が来ない。" );
+  CERR( "を満たすもの（閉じた()[]列）と等価です。" );
+  ASK_NUMBER(
+             "入力で長さNのみが与えられる数え上げ問題" ,
+             "入力で長さNのワイルドカード付き文字列が与えられる数え上げ問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "- 閉じたカッコ列に変更可能なワイルドカード付き文字列の個数は、" );
+    CERR( "  閉じた()[]の列の数え上げに翻訳して動的計画法（O(N^2)）" );
+    CERR( "- 閉じた()[]列に変更可能なワイルドカード付き文字列の個数は、" );
+    CERR( "  閉じた()[]の列の数え上げに翻訳して動的計画法（O(N^2)）" );
+    CERR( "を検討しましょう。" );
+  } else {
+    CERR( "- *を()に変更して閉じたカッコ列にする方法の個数は、" );
+    CERR( "  dp[i] = 「(の個数-)の個数==i」を満たす変更方法の個数" );
+    CERR( "  を管理するiに関する動的計画法（O(N^2)）" );
+    CERR( "- *を[]に変更して閉じた()[]列にする方法の個数は、" );
+    CERR( "  dp[i][b] = 「([の個数-)]の個数==i」かつ「]が出現済み<=>b」を" );
+    CERR( "              満たす変更方法の個数" );
+    CERR( "  を管理するiに関する動的計画法（O(N^2)）" );
+    CERR( "を検討しましょう。" );
+  }
+}
+
+AC( CountingPlainParenthesisSequence )
+{
+  CERR( "- 2N文字の閉じたカッコ列の個数は第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
+  CERR( "- 3N文字の閉じた(,)の列の個数はファス・カタラン数" );
+  CERR( "  A_N(3,1)=(3N)!/((2N+1)!N!)" );
+  CERR( "  https://en.wikipedia.org/wiki/Fuss%E2%80%93Catalan_number" );
+  CERR( "- (K+2)N文字の閉じた引数K+1関数適用のカッコ列の個数はファス・カタラン数" );
+  CERR( "  A_N(K+2,1)=((K+2)N)!/(((K+1)N+1)!N!)" );
+  CERR( "  https://en.wikipedia.org/wiki/Fuss%E2%80%93Catalan_number" );
+  CERR( "  https://yukicoder.me/problems/no/3145/editorial" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( Solving )
