@@ -487,6 +487,8 @@ AC( ExplicitExpressionBitFunctionOnTree )
 
 AC( FunctionOnTree )
 {
+  CERR( "木の２頂点間距離は1の和とみなすことで辺ごとの寄与に分解できます。" );
+  CERR( "" );
   CERR( "木Tの分割Pに対し、Pの各成分pを渡るf(p)の総和をF(P)と置きます。" );
   CERR( "Tに根を固定し、深さ優先探索でTの頂点にラベルづけをします。" );
   CERR( "" );
@@ -900,6 +902,7 @@ AC( Maximisation )
 	     "方程式の解の最大／最小化問題" ,
 	     "最小値の最大化問題" ,
 	     "部分和の最小化問題" ,
+	     "部分和の差の最大／最小化問題" ,
 	     "2人ゲームの最終的な不変量の最大／最小化問題"
 	     );
   if( num == num_temp++ ){
@@ -940,6 +943,8 @@ AC( Maximisation )
     CALL_AC( MaximisationMinimum );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationSubsetSum );
+  } else if( num == num_temp++ ){
+
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationGame );
   }
@@ -992,7 +997,7 @@ AC( MinimisationMovingCost )
     CERR( "- 各始点siへ容量1コスト0の辺を持つ頂点Sを追加" );
     CERR( "- 各終点tjから容量Njコスト0の辺を持つ頂点Tを追加" );
     CERR( "とすることで得られる有無向グラフに対しPrimal-Dual法を適用しましょう。" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised\\MinimumCostFlow" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\MinimumCostFlow" );
   } else if( num == num_temp++ ){
     CERR( "D次元ユークリッド空間内のN点を考えます。" );
     CERR( "- L^p距離に関する最近点対問題でかつexpected O(N log N)が間に合いそうならば" );
@@ -1264,51 +1269,23 @@ AC( MaximisationFunctionOnArray )
 
 AC( MaximisationFunctionOnOneArray )
 {
+  CALL_AC( SortingArray );
+  ASK_NUMBER(
+             "Aの分割（部分和、区間和、補集合）に関する問題" ,
+             "Aの変更後に配列を受け取る関数に代入した値の最大／最小化問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( MinimisationPartitionOfArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationArrayFunction );
+  }  
+}
+
+AC( SortingArray )
+{
   CERR( "ソートしても答えが変わらないならば適宜ソートしましょう。" );
   CERR( "成分を受け取る関数fを１つだけ考える際は予めAの各成分にfを" );
   CERR( "適用した配列f circ AでAを置き換えて考えます。" );
-  ASK_NUMBER(
-             "Aの部分和の最大化問題" ,
-             "f circ Aの部分和とg circ Aの補部分和の和の最大化問題" ,
-             "Aの部分和と補部分和の差の最小化問題" ,
-             "Aの非空部分和と補集合の非空部分和の差の最小化問題" ,
-             "配列の変更後に配列を受け取る関数に代入した値の最大／最小化問題" ,
-             "Aの区間への分割全体をわたる区間和の絶対和の最大化問題"
-             );
-  if( num == num_temp++ ){
-    CALL_AC( Knapsack );
-  } else if( num == num_temp++ ){
-    CERR( "f circ AをA_0、g circ AをA_1と置きます。" );
-    CALL_AC( MaximisationFunctionOnTwoArray );
-  } else if( num == num_temp++ ){
-    CERR( "「Aの部分和」と「Aの総和の半分」の差の最小化を行いましょう。これは" );
-    CERR( "２つの値のうち小さい方を考えることで上限付き部分和の最大化問題となります。" );
-    CALL_AC( Knapsack );
-  } else if( num == num_temp++ ){
-    CERR( "非空部分集合とその補集合の非空部分集合をそれぞれS,Tと置き、" );
-    CERR( "定数Cによる|#S - #T|<=Cという制約以外には制約がないとします。" );
-    CERR( "" );
-    CERR( "定義からSとTは交わりが空ですが、部分和の差を考える上では交わりを" );
-    CERR( "持たせても答えは変わらないため、結局|#S - #T| <= Cを守りつつ" );
-    CERR( "要素数が[floor(N/2),floor(N/2)+C]に属す相異なる非空部分集合" );
-    CERR( "の組全体に(S,T)を渡らせてAの部分和の差の最小化を" );
-    CERR( "する問題に帰着されます" );
-    CERR( "" );
-    CERR( "和を取る値の幅をv_maxと置き、集合の要素数をNと置くと、" );
-    CERR( "部分和の候補は高々v_max N通り、要素数floor(N/2)の部分集合の候補は" );
-    CERR( "約2^N/√N通りで、log_2(v_max N)の定数倍 < Nならば鳩の巣原理より" );
-    CERR( "答えは0です。" );
-    CERR( "" );
-    CERR( "以下N <= log_2(v_max N)の定数倍とします。" );
-    CERR( "排他的なS,Tを半分列挙することで答えをO(CN 3^{N/2})で求められ、" );
-    CERR( "結局O(N + C v_max^{(log_2 3)/2} log_2 v_max)で解く" );
-    CERR( "ことが可能です。" );
-    CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\Difference" );
-  } else if( num == num_temp++ ){
-    CALL_AC( MaximisationArrayFunction );
-  } else if( num == num_temp++ ){
-    CALL_AC( KnapsackIntervalSumAbsoluteSum );
-  }
 }
 
 AC( MaximisationFunctionOnMultipleArray )
@@ -1378,9 +1355,17 @@ AC( Knapsack )
 
 AC( KnapsackInitialSegment )
 {
-  CERR( "価値が非負ならば、先頭から何項選べるかだけが重要なのでコストのみ（コストを" );
-  CERR( "価値とするコストなし価値上限つきナップサック）を考えればよいです。" );
+  CERR( "コスト(W_i)_iの部分和で表せないコスト全体の集合の上限をLとします。" );
+  CERR( "- 例えばW_i=i^2ならば、L=128です。" );
+  CERR( "  https://oeis.org/A001422" );
+  CERR( "- 例えばW_i=p(i+n)ならば、LはKlove数列" );
+  CERR( "  (6,9,27,45,45,57,75,81,87,105,...)の第n項です。" );
+  CERR( "  \\Mathematics\\Arithmetic\\Prime\\KloveSequence" );
+  CERR( "  https://oeis.org/A007414" );
   ASK_YES_NO( "ナップサックは１つですか？" );
+  CERR( "価値が非負ならば、先頭から何項選べるかさえ分かれば価値が求まるので、" );
+  CERR( "価値をコストに置き換えたナップサック問題、すなわち" );
+  CERR( "コストを価値とするコストなし価値上限つきナップサックを考えます。" );
   if( reply == "y" ){
     CALL_AC( KnapsackInitialSegmentSingleKnapsack );
   } else {
@@ -1390,21 +1375,14 @@ AC( KnapsackInitialSegment )
 
 AC( KnapsackInitialSegmentSingleKnapsack )
 {
-  CERR( "- 累積和を愚直に計算していき、Lを超えない最大の項数を計算" );
-  CERR( "- 累積和を式変形で明示的に求め、Lを超えない最大の項数を二分探索" );
+  CERR( "- (W_i)_iの累積和を愚直に計算していき、Lを超えない最大の項数を計算" );
+  CERR( "- (W_i)_iの累積和を式変形で明示的に求め、Lを超えない最大の項数を二分探索" );
   CERR( "を検討しましょう。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\InitialSegment" );
 }
 
 AC( KnapsackInitialSegmentDoubleKnapsack )
 {
-  CERR( "コスト(W_i)_iの部分和で表せないコスト全体の集合の上限をLとします。" );
-  CERR( "- 例えばW_i=i^2ならば、L=128です。" );
-  CERR( "  https://oeis.org/A001422" );
-  CERR( "- 例えばW_i=p(i+n)ならば、LはKlove数列" );
-  CERR( "  (6,9,27,45,45,57,75,81,87,105,...)の第n項です。" );
-  CERR( "  \\Mathematics\\Arithmetic\\Prime\\KloveSequence" );
-  CERR( "  https://oeis.org/A007414" );
   CERR( "ナップサックが２つであるとし、それらのコスト上限をそれぞれC_1 <= C_2とし、" );
   CERR( "(W_i)_iが昇順であるとします。" );
   CERR( "- 各非負整数nに対しs_n := sum_{i=0}^{n} W_iと置き、" );
@@ -1662,8 +1640,8 @@ AC( SingleKnapsackCostfree )
     CERR( "対応するグラフの頂点数をN、辺の本数をM、流量上限をFと置きます。" );
     CERR( "- O(N 2^N)が通りそうならばbit全探索" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
-    CERR( "- O(min(N^2,F)M)が間に合いそうならば最大流計算" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
+    CERR( "- O(min(N^2,F)M)が間に合いそうならば最大流計算によるPSP" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow\\ProjectSelectionProblem" );
   }
   CERR( "を検討しましょう。" );
 }
@@ -2048,11 +2026,13 @@ AC( MaximisationStringMatching )
 AC( MaximisationPartition )
 {
   ASK_NUMBER(
-             "配列の連続部分列への分割に関する最大／最小化問題" ,
+             "配列Aの連続部分列への分割に関する最大／最小化問題" ,
              "集合の部分集合への分割に関する最大／最小化問題" ,
              "木の部分木への分割に関する最大／最小化問題"
              );
   if( num == num_temp++ ){
+    CALL_AC( SortingArray );
+    CERR( "" );
     CALL_AC( MinimisationPartitionOfArray );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationPartitionOfSet );
@@ -2063,10 +2043,63 @@ AC( MaximisationPartition )
 
 AC( MinimisationPartitionOfArray )
 {
-  CERR( "始切片の分割Pに関する関数f(P)が与えられているとし、[0,N)の分割Pを" );
-  CERR( "わたるf(P)の最大値を考えます。最小値は-fを考えれば良いです。" );
+  CERR( "一般に始切片の分割Pに関する関数f(P)が与えられているとし、[0,N)の分割Pを" );
+  CERR( "わたるf(P)の最大値（最小値は-fの最大値の-1倍）を考える際は、" );
   CERR( "dp[i] = 「[0,i)の分割Pをわたるf(P)の最大値」" );
   CERR( "を管理するiに関する動的計画法を検討しましょう。" );
+  ASK_NUMBER(
+             "Aの部分和の最大化問題" ,
+             "f circ Aの部分和とg circ Aの補部分和の和の最大化問題" ,
+             "Aの部分和と補部分和の差の最大／最小化問題" ,
+             "Aの非空部分和と補集合の非空部分和の差の最小化問題" ,
+             "Aの区間への分割全体をわたる区間和の絶対和の最大化問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( Knapsack );
+  } else if( num == num_temp++ ){
+    CERR( "f circ AをA_0、g circ AをA_1と置きます。" );
+    CALL_AC( MaximisationFunctionOnTwoArray );
+  } else if( num == num_temp++ ){
+    CERR( "「Aの補部分和」と「Aの総和」から「Aの部分和」を引いたものです。" );
+    CERR( "差が引き算の絶対値であることから、絶対値を取る前の値である" );
+    CERR( "2×「Aの部分和」-「Aの総和」" );
+    CERR( "に注目します。" );
+    ASK_NUMBER(
+               "Aの部分和と補部分和の差の最小化問題" ,
+               "Aの部分和と補部分和の差の最大化問題" ,
+               );
+    if( num == num_temp++ ){
+      CERR( "差の最小化は「Aの部分和」と「Aの総和の半分」の差の最小化に帰着しましょう。" );
+      CERR( "２つの値のうち小さい方を考えることで上限付き部分和の最大化問題となります。" );
+    } else if( num == num_temp++ ){
+      CERR( "差の最大化は「Aの部分和」が最大か最小である場合に達成されます。" );
+      CERR( "Aと-Aを考えることで、部分和の最大化問題となります。" );
+    }
+    CERR( "" );
+    CALL_AC( Knapsack );
+  } else if( num == num_temp++ ){
+    CERR( "非空部分集合とその補集合の非空部分集合をそれぞれS,Tと置き、" );
+    CERR( "定数Cによる|#S - #T|<=Cという制約以外には制約がないとします。" );
+    CERR( "" );
+    CERR( "定義からSとTは交わりが空ですが、部分和の差を考える上では交わりを" );
+    CERR( "持たせても答えは変わらないため、結局|#S - #T| <= Cを守りつつ" );
+    CERR( "要素数が[floor(N/2),floor(N/2)+C]に属す相異なる非空部分集合" );
+    CERR( "の組全体に(S,T)を渡らせてAの部分和の差の最小化を" );
+    CERR( "する問題に帰着されます" );
+    CERR( "" );
+    CERR( "和を取る値の幅をv_maxと置き、集合の要素数をNと置くと、" );
+    CERR( "部分和の候補は高々v_max N通り、要素数floor(N/2)の部分集合の候補は" );
+    CERR( "約2^N/√N通りで、log_2(v_max N)の定数倍 < Nならば鳩の巣原理より" );
+    CERR( "答えは0です。" );
+    CERR( "" );
+    CERR( "以下N <= log_2(v_max N)の定数倍とします。" );
+    CERR( "排他的なS,Tを半分列挙することで答えをO(CN 3^{N/2})で求められ、" );
+    CERR( "結局O(N + C v_max^{(log_2 3)/2} log_2 v_max)で解く" );
+    CERR( "ことが可能です。" );
+    CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\Difference" );
+  } else if( num == num_temp++ ){
+    CALL_AC( KnapsackIntervalSumAbsoluteSum );
+  }
 }
 
 AC( MinimisationPartitionOfSet )
