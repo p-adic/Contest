@@ -23,23 +23,27 @@
   // // vector<vector<int>> div = TotalEnumerateDivisor( N );
 
   // /* Œ…DP */
-  // using T  MP;
+  // using T = MP;
   // string S = to_string( N );
+  // // CEXPR( int , base , 10 );
+  // // vector<int> S = AdicExpansion( N , base );
   // int D = S.size();
   // /* {Œ»İ‚ÌŒ…‚ÅN–¢–Šm’è‚Ì‰ğ,Œ»İ‚ÌŒ…‚ÅNˆÈ‰ºŠm’è‚Ì‰ğ} */
+  // /* base-1‚Ì–ñ”‚Ì”{””»’è‚ğ‚µ‚½‚¢ê‡‚ÍŒ…˜amod(base-1)‚²‚Æ‚ÉŠÇ— */
   // T2<T> dp{0,1};
   // /* dp[O]‚©‚çdp[O]‚Ö‚Ì‘JˆÚ‚ğ‚±‚±‚É‘‚­B*/
-  // auto fltlt( const T& t , const int& i ){
-  //   return t * 10;
+  // auto fltlt = [&]( const T& t , const int& d ){
+  //   return t * base;
   // };
   // /* dp[I]‚©‚çdp[O]‚Ö‚Ì‘JˆÚ‚ğ‚±‚±‚É‘‚­B*/
-  // auto feqlt( const T& t , const int& i ){
-  //   return t * ( S[i] - '0' );
+  // auto feqlt = [&]( const T& t , const int& d ){
+  //   return t * ( S[d] - '0' );
   // };
   // /* dp[I]‚©‚çdp[I]‚Ö‚Ì‘JˆÚ‚ğ‚±‚±‚É‘‚­B*/
-  // auto feqeq( const T& t , const int& i ){
+  // auto feqeq = [&]( const T& t , const int& d ){
   //   return t;
   // };
-  // FOR( i , 0 , D ){
-  //   dp = { fltlt( dp[O] , i ) + feqlt( dp[I] , i ) , feqeq( dp[I] , i ) };
+  // FOR( d , 0 , D ){
+  //   dp = { fltlt( dp[O] , d ) + feqlt( dp[I] , d ) , feqeq( dp[I] , d ) };
   // }
+  // T a = dp[O] + dp[I];

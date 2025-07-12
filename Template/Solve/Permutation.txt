@@ -1,6 +1,14 @@
   CIN( int , N );
   CIN_A( int , 0 , N , P ); --P;
-  vector<int> P_inv( N ); FOR( i , 0 , N ){ P_inv[P[i]] = i; }
+
+  auto Inverse = [&]( const vector<int>& perm ){
+    const int size = perm.size();
+    vector<int> answer( size );
+    // Map<int,int> answer{};
+    FOR( i , 0 , size ){ answer[perm[i]] = i; }
+    return answer;
+  };
+  auto P_inv = Inverse( perm );
 
   // /* Mathematics/Combinatorial/Permutation/compress.txt */
   // /* ‡—ñ‚Æ‚ÍŒÀ‚ç‚È‚¢”z—ñP‚Ì“]“|”ŒvZO(N log N) */
