@@ -41,9 +41,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define REPEAT_MAIN( BOUND ) void ExecuteSolution_Body(){ signal( SIGABRT , &AlertAbort ); CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if constexpr( bound_test_case_num > 1 ){ CERR( "テストケースの個数を入力してください。" ); SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } REPEAT( test_case_num ){ if constexpr( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); } }
-#define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now()
-#define CURRENT_TIME static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 )
-#define CHECK_WATCH( TL_MS ) ( CURRENT_TIME < TL_MS - 100.0 )
+#define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now(); double loop_average_time = 0.0 , loop_start_time = loop_average_time , current_time = loop_start_time; int loop_count = current_time; assert( loop_count == 0 )
+#define CURRENT_TIME ( current_time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 ) )
+#define CHECK_WATCH( TL_MS ) ( CURRENT_TIME , loop_count == 0 ? loop_start_time = current_time : loop_average_time = ( current_time - loop_start_time ) / loop_count , ++loop_count , current_time < TL_MS - loop_average_time * 2 - 100.0 )
 #define TYPE_OF( VAR ) decay_t<decltype( VAR )>
 #define CEXPR( LL , BOUND , VALUE ) constexpr LL BOUND = VALUE
 #define SET_ASSERT( A , MIN , MAX ) SET_LL( A ); ASSERT( A , MIN , MAX )
@@ -53,9 +53,13 @@ using namespace std;
 #define CIN_A_ASSERT( I , N , A , MIN , MAX ) vector<decldecay_t( MAX )> A( N + I ); SET_A_ASSERT( I , N , A , MIN , MAX )
 #define CIN_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX ) vector A( N0 + I0 , vector<decldecay_t( MAX )>( N1 + I1 ) ); SET_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX )
 #define OUTPUT_ARRAY( C , I , N , A ) FOR( VARIABLE_FOR_OUTPUT_ARRAY , I , N ){ C << A[VARIABLE_FOR_OUTPUT_ARRAY] << " \n"[VARIABLE_FOR_OUTPUT_ARRAY==(N)-1]; }
-#define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( decldecay_t( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
-#define FOREQ( VAR , INITIAL , FINAL ) for( decldecay_t( FINAL ) VAR = INITIAL ; VAR <= FINAL ; VAR ++ )
-#define FOREQINV( VAR , INITIAL , FINAL ) for( decldecay_t( INITIAL ) VAR = INITIAL ; VAR + 1 > FINAL ; VAR -- )
+#define PR1( A1 , ... ) A1
+#define PR2( A1 , A2 , ... ) A2
+#define PR3( A1 , A2 , A3 , ... ) A3
+#define FOR_( VAR , INITIAL , FINAL , UPPER , COMP , INCR ) for( decldecay_t( UPPER ) VAR = INITIAL ; VAR COMP FINAL ; VAR INCR )
+#define FOR( VAR , INITIAL , ... ) FOR_( VAR , INITIAL , PR1( __VA_ARGS__ ) , PR1( __VA_ARGS__ ) , < , PR3( __VA_ARGS__ , += PR2( __VA_ARGS__ , ? ) , ++ ) )
+#define FOREQ( VAR , INITIAL , ... ) FOR_( VAR , INITIAL , PR1( __VA_ARGS__ ) , PR1( __VA_ARGS__ ) , <= , PR3( __VA_ARGS__ , += PR2( __VA_ARGS__ , ? ) , ++ ) )
+#define FOREQINV( VAR , INITIAL , ... ) FOR_( VAR , INITIAL , PR1( __VA_ARGS__ ) , INITIAL , + 1 > , PR3( __VA_ARGS__ , -= PR2( __VA_ARGS__ , ? ) , -- ) )
 // #define ITR( ARRAY ) auto begin_ ## ARRAY = ARRAY .BE() , itr_ ## ARRAY = begin_ ## ARRAY , end_ ## ARRAY = ARRAY .EN()
 // #define FOR_ITR( ARRAY ) for( ITR( ARRAY ) , itr = itr_ ## ARRAY ; itr_ ## ARRAY != end_ ## ARRAY ; itr_ ## ARRAY ++ , itr++ )
 #define RUN( ARRAY , ... ) for( auto&& __VA_ARGS__ : ARRAY )
@@ -72,10 +76,6 @@ using ll = long long;
 using ull = unsigned long long;
 using ld = long double;
 using lld = __float128;
-template <typename INT> using T2 = pair<INT,INT>;
-template <typename INT> using T3 = tuple<INT,INT,INT>;
-template <typename INT> using T4 = tuple<INT,INT,INT,INT>;
-using path = pair<int,ll>;
 
 // 圧縮用
 #define TE template
