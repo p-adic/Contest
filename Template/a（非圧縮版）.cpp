@@ -27,42 +27,42 @@ REPEAT_MAIN(1);
 #else /* INCLUDE_MAIN */
 #ifdef INCLUDE_SUB
 
-/* COMPAREに使用。圧縮時は削除する。*/
-MP Naive( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
-// MP Naive( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
-{
-  MP answer{};
-  return answer;
-}
+// /* COMPAREに使用。圧縮時は削除する。*/
+// MP Naive( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
+// // MP Naive( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
+// {
+//   MP answer{};
+//   return answer;
+// }
 
-/* COMPAREに使用。圧縮時は削除する。*/
-MP Answer( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
-// MP Answer( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
-{
-  MP answer{};
-  return answer;
-}
+// /* COMPAREに使用。圧縮時は削除する。*/
+// MP Answer( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
+// // MP Answer( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
+// {
+//   MP answer{};
+//   return answer;
+// }
 
 /* 圧縮時は中身だけ削除する。*/
 inline void Experiment()
 {
-  /* // 1変数 ../Contest/Template/Experiment/OneVariable.txt */
-  /* // 2変数 ../Contest/Template/Experiment/TwoVariable.txt */
-  /* // 3変数 ../Contest/Template/Experiment/ThreeVariable.txt */
+  // 1変数 ../Contest/Template/Experiment/OneVariable.txt
+  // 2変数 ../Contest/Template/Experiment/TwoVariable.txt
+  // 3変数 ../Contest/Template/Experiment/ThreeVariable.txt
 
 }
 
 /* 圧縮時は中身だけ削除する。*/
 inline void SmallTest()
 {
-  /* // 数 ../Contest/Template/SmallTest/Number.txt */
-  /* // 配列 ../Contest/Template/SmallTest/Array.txt */
-  /* // 順列 ../Contest/Template/SmallTest/Permutation.txt */
-  /* // 文字列 ../Contest/Template/SmallTest/String.txt */
-  /* // グリッド ../Contest/Template/SmallTest/Grid.txt */
-  /* // グラフ ../Contest/Template/SmallTest/Graph.txt */
-  /* // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt */
-  /* // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt */
+  // 数 ../Contest/Template/SmallTest/Number.txt
+  // 配列 ../Contest/Template/SmallTest/Array.txt
+  // 順列 ../Contest/Template/SmallTest/Permutation.txt
+  // 文字列 ../Contest/Template/SmallTest/String.txt
+  // グリッド ../Contest/Template/SmallTest/Grid.txt
+  // グラフ ../Contest/Template/SmallTest/Graph.txt
+  // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt
+  // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt
  
   CERR( "全ての出力が一致しました。" );
 }
@@ -70,15 +70,15 @@ inline void SmallTest()
 /* 圧縮時は中身だけ削除する。*/
 inline void RandomTest( const int& test_case_num )
 {
-  /* // 数 ../Contest/Template/RandomTest/Number.txt */
-  /* // 配列 ../Contest/Template/RandomTest/Array.txt */
-  /* // 順列 ../Contest/Template/RandomTest/Permutation.txt */
-  /* // 文字列 ../Contest/Template/RandomTest/String.txt */
-  /* // グリッド ../Contest/Template/RandomTest/Grid.txt */
-  /* // グラフ ../Contest/Template/RandomTest/Graph.txt */
-  /* // 重み付きグラフ ../Contest/Template/RandomTest/WeightedGraph.txt  */
-  /* // 区間クエリ ../Contest/Template/RandomTest/IntervalQuery.txt  */
-  /* // 多種クエリ ../Contest/Template/RandomTest/MultiTypeQuery.txt */
+  // 数 ../Contest/Template/RandomTest/Number.txt
+  // 配列 ../Contest/Template/RandomTest/Array.txt
+  // 順列 ../Contest/Template/RandomTest/Permutation.txt
+  // 文字列 ../Contest/Template/RandomTest/String.txt
+  // グリッド ../Contest/Template/RandomTest/Grid.txt
+  // グラフ ../Contest/Template/RandomTest/Graph.txt
+  // 重み付きグラフ ../Contest/Template/RandomTest/WeightedGraph.txt
+  // 区間クエリ ../Contest/Template/RandomTest/IntervalQuery.txt
+  // 多種クエリ ../Contest/Template/RandomTest/MultiTypeQuery.txt
   REPEAT( test_case_num ){
 
   }
@@ -91,20 +91,20 @@ inline void RandomTest( const int& test_case_num )
 #ifdef INCLUDE_LIBRARY
 
 /* VVV 常設でないライブラリは以下に挿入する。*/
-/* // AffineSpace ../Contest/Template/Library/AffineSpace.txt */
-/* // Arithmetic ../Contest/Template/Library/Arithmetic.txt */
-/* // BFS ../Contest/Template/Library/BFS.txt */
-/* // BIT ../Contest/Template/Library/BIT.txt */
-/* // CoordinateCompress SetTheory/DirectProduct/CoordinateCompress/compress.txt */
-/* // DFS ../Contest/Template/Library/DFS.txt */
-/* // DifferenceSequence ../Contest/Template/Library/DifferenceSequence.txt */
-/* // Dijkstra ../Contest/Template/Library/Dijkstra.txt */
-/* // Knapsack ../Contest/Template/Library/Knapsack.txt */
-/* // Matrix ../Contest/Template/Library/Matrix.txt */
-/* // Set ../Contest/Template/Library/Set.txt */
-/* // Polynomial ../Contest/Template/Library/Polynomial.txt */
-/* // SqrtDecomposition ../Contest/Template/Library/SqrtDecomposition.txt */
-/* // UnionFind ../Contest/Template/Library/UnionFind.txt */
+// AffineSpace ../Contest/Template/Library/AffineSpace.txt
+// Arithmetic ../Contest/Template/Library/Arithmetic.txt
+// BFS ../Contest/Template/Library/BFS.txt
+// BIT ../Contest/Template/Library/BIT.txt
+// CoordinateCompress SetTheory/DirectProduct/CoordinateCompress/compress.txt
+// DFS ../Contest/Template/Library/DFS.txt
+// DifferenceSequence ../Contest/Template/Library/DifferenceSequence.txt
+// Dijkstra ../Contest/Template/Library/Dijkstra.txt
+// Knapsack ../Contest/Template/Library/Knapsack.txt
+// Matrix ../Contest/Template/Library/Matrix.txt
+// Set ../Contest/Template/Library/Set.txt
+// Polynomial ../Contest/Template/Library/Polynomial.txt
+// SqrtDecomposition ../Contest/Template/Library/SqrtDecomposition.txt
+// UnionFind ../Contest/Template/Library/UnionFind.txt
 
 /* AAA 常設でないライブラリは以上に挿入する。*/
 
@@ -236,8 +236,8 @@ using lld = __float128;
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/Local/a_Body.hpp"
 #else
-/* BinarySearch */
-/* EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。*/
+/* BinarySearch (2KB)*/
+// EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。
 #define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
   static_assert( ! is_same<decldecay_t( CONST_TARGET ),uint>::value && ! is_same<decldecay_t( CONST_TARGET ),ull>::value ); \
   ll ANSWER = MINIMUM;							\
@@ -278,32 +278,32 @@ using lld = __float128;
     }									\
   }									\
 
-/* 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。*/
+// 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。
 #define MIN_GEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( ANSWER ## _L + ANSWER ## _R ) >> 1 )
-/* 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。*/
+// 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。
 #define MAX_LEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( ANSWER ## _L + 1 + ANSWER ## _R ) >> 1 )
-/* 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。*/
+// 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。
 #define MAX_GEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( ANSWER ## _L + 1 + ANSWER ## _R ) >> 1 )
-/* 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。*/
+// 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。
 #define MIN_LEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( ANSWER ## _L + ANSWER ## _R ) >> 1 )
 
 /* TwoPoitnterApproach (2KB)*/
-/* VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。
-ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を
-{INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。
-ANSWER ## _tempがCONTINUE_CONDITIONを満たす限り、ANSWER ## _tempが
-条件ON_CONDITIONを満たすか否かを判定し、それがtrueになるか
-VAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの
-更新操作UPDATE_Lを繰り返し、その後VAR_TPA ## _RとVPA_TPA ## _infoの
-更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）
-ON_CONDITIONがtrueとなる極大閉区間とその時点でのinfoをANSWERに格納する。
-例えば長さNの非負整数値配列Aで極大な正値区間とそこでの総和を取得したい場合
-auto update_L = [&]( int& i_L , auto& i_info ){ i_info -= A[i_L++]; };
-auto update_R = [&]( int& i_R , auto& i_info ){ if( ++i_R < N ){ i_info += A[i_R]; } };
-TPA( interval , i , 0 , i_R < N , update_L( i_L , i_info ) , update_R( i_R , i_info ) , A[i_L] > 0 && A[i_R] > 0 , ll( A[0] ) );
-とすればtuple<int,int,ll>値配列intervalに{左端,右端,総和}の列が格納される。
-VAR_TPA ## _infoもintervalにコピーされるので、setやvectorなどのコピーのコストが
-大きいデータを用いてon,off判定する時はTPAより前に宣言して使う。*/
+// VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。
+// ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を
+// {INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。
+// ANSWER ## _tempがCONTINUE_CONDITIONを満たす限り、ANSWER ## _tempが
+// 条件ON_CONDITIONを満たすか否かを判定し、それがtrueになるか
+// VAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの
+// 更新操作UPDATE_Lを繰り返し、その後VAR_TPA ## _RとVPA_TPA ## _infoの
+// 更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）
+// ON_CONDITIONがtrueとなる極大閉区間とその時点でのinfoをANSWERに格納する。
+// 例えば長さNの非負整数値配列Aで極大な正値区間とそこでの総和を取得したい場合
+// auto update_L = [&]( int& i_L , auto& i_info ){ i_info -= A[i_L++]; };
+// auto update_R = [&]( int& i_R , auto& i_info ){ if( ++i_R < N ){ i_info += A[i_R]; } };
+// TPA( interval , i , 0 , i_R < N , update_L( i_L , i_info ) , update_R( i_R , i_info ) , A[i_L] > 0 && A[i_R] > 0 , ll( A[0] ) );
+// とすればtuple<int,int,ll>値配列intervalに{左端,右端,総和}の列が格納される。
+// VAR_TPA ## _infoもintervalにコピーされるので、setやvectorなどのコピーのコストが
+// 大きいデータを用いてon,off判定する時はTPAより前に宣言して使う。
 #define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO_init ) \
   vector<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO_init )>> ANSWER{}; \
   {									\
@@ -337,7 +337,7 @@ VAR_TPA ## _infoもintervalにコピーされるので、setやvectorなどのコピーのコストが
   }									\
 
 /* Random (1KB)*/
-ll GetRand(CRI Rand_min,CRI Rand_max){AS(Rand_min <= Rand_max);ll AN = time(NULL);RE AN * rand()%(Rand_max + 1 - Rand_min)+ Rand_min;}
+ll GetRand(CRL Rand_min,CRL Rand_max){AS(Rand_min <= Rand_max);ll AN = time(NULL);RE AN * rand()%(Rand_max + 1 - Rand_min)+ Rand_min;}
 
 /* Set (2KB)*/
 #define DC_OF_HASH(...)struct hash<__VA_ARGS__>{IN size_t OP()(CO __VA_ARGS__& n)CO;};
@@ -371,7 +371,7 @@ DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FO
 #define DF_OF_SHIFT_FOR_VE(V)TE <TY T> IN V<T>& OP<<=(V<T>& a,T t){a.push_back(MO(t));RE a;}TE <TY T,TY U> IN V<T>& OP<<=(V<T>& a,U&& u){RE a <<= T{forward<U>(u)};}TE <TY T> IN T pop(V<T>& a){AS(!a.empty());T AN = MO(a.back());a.pop_back();RE AN;}
 #define DF_OF_ARS_FOR_VE(V)DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--);TE <TY T> IN V<T> OP-(V<T> a){RE MO(a *= T(-1));}TE <TY T> IN V<T> OP*(CO T& t,V<T> v){RE MO(v *= t);}DF_OF_SHIFT_FOR_VE(V);
 DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);DF_OF_SHIFT_FOR_VE(basic_string);
-TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T> IN VE<T> id(CRI SZ){VE<T> AN(SZ);for(int i = 0;i < SZ;i++){AN[i]= i;}RE AN;}TE <TY T> IN VO Sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY T0,TY T1> IN VO Sort(VE<T0>& a,VE<T1>& b,CO bool& reversed = false){CO int SZ = a.SZ();AS(SZ == int(b.SZ()));VE<pair<T0,T1>> v(SZ);for(int i = 0;i < SZ;i++){v[i]={MO(a[i]),MO(b[i])};}Sort(v,reversed);for(int i = 0;i < SZ;i++){a[i]= MO(v[i].first);b[i]= MO(v[i].second);}}TE <TY T> IN VE<int> IndexSort(CO VE<T>& a,CO bool& reversed = false){auto index = id<int>(a.SZ());if(reversed){sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[j]< a[i];});}else{sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[i]< a[j];});}RE index;}TE <TY V> IN int len(CO V& a){RE a.SZ();}TE <TY V> IN VO Reverse(V& a){CO int SZ = len(a),half = SZ / 2;for(int i = 0;i < half;i++){swap(a[i],a[SZ-1-i]);}};TE <TY V> IN V Reversed(V a){Reverse(a);RE MO(a);}
+TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T> IN VE<T> id(CRI SZ){VE<T> AN(SZ);for(int i = 0;i < SZ;i++){AN[i]= i;}RE AN;}TE <TY V> IN VO Sort(V& a,CO bool& reversed = false){US T = decltype(a[0]);if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY V0,TY V1> IN VO Sort(V0& a,V1& b,CO bool& reversed = false){CO int SZ = a.SZ();AS(SZ == int(b.SZ()));VE<pair<decltype(a[0]),decltype(b[0])>> v(SZ);for(int i = 0;i < SZ;i++){v[i]={MO(a[i]),MO(b[i])};}Sort(v,reversed);for(int i = 0;i < SZ;i++){a[i]= MO(v[i].first);b[i]= MO(v[i].second);}}TE <TY V> IN VE<int> IndexSort(CO V& a,CO bool& reversed = false){auto index = id<int>(a.SZ());sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE reversed?a[j]< a[i]:a[i]< a[j];});RE index;}TE <TY V> IN int len(CO V& a){RE a.SZ();}TE <TY V> IN VO Reverse(V& a){CO int SZ = len(a),half = SZ / 2;for(int i = 0;i < half;i++){swap(a[i],a[SZ-1-i]);}};TE <TY V> IN V Reversed(V a){Reverse(a);RE MO(a);}
 
 /* Map (1KB)*/
 #define DF_OF_AR_FOR_MAP(MAP,OPR)TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a,CO pair<T,U>& v){a[v.first]OPR ## = v.second;RE a;}TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a0,CO MAP<T,U>& a1){for(auto&[t,u]:a1){a0[t]OPR ## = u;}RE a0;}TE <TY T,TY U,TY ARG> IN MAP<T,U> OP OPR(MAP<T,U> a,CO ARG& arg){RE MO(a OPR ## = arg);}

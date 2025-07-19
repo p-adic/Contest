@@ -13,7 +13,7 @@
   list<int> start_points = {0};
   BreadthFirstSearch bfs{ graph , -1 , start_points }; vector<int> d = bfs.GetDistance();
   // BreadthFirstSearch bfs{ graph , -1 }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
-  // DepthFirstSearchOnTree dfst{ graph , 0 };
+  // DepthFirstSearchOnTree dfst{ graph , 0 };xk
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
   // // AbstractUnionFindForest uff{ N , AdditiveGroup<int>() };
   // // vector<int> weight( N ); // 各連結成分のサイズを根の添え字に格納
