@@ -31,6 +31,6 @@
   Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
   // auto [edge_num,cc_size] = Kruscal( graph , edge_enum );
-  // FloydWarshall fw{ infty , weight }; vector<vector<weight_type>> d = fw.GetDistance();
+  // FloydWarshall fw{ infty , weight }; FOR( i , 0 , N ){ FOR( j , 0 , N ){ auto& d = fw.Get( i , j ); COUTNS( d == infty ? -1 : infty , " \n"[j==N-1] ); } }
   // HeldKarp hk{ graph }; vector<weight_type> d = hk.GetDistance( 0 , id<int>( N ) , true );
 

@@ -1,11 +1,12 @@
   CIN( int , N , M );
   // CIN( int , N ); int M = N - 1;
   vector<vector<int>> e( N );
+  // vector<Set<int>> e( N );
   // vector<T2<int>> edge_enum( M );
   FOR( m , 0 , M ){
     CIN( int , i , j ); --i; --j;
-    e[i].push_back( j );
-    e[j].push_back( i );
+    e[i] <<= j;
+    e[j] <<= i;
     // edge_enum[m] = {i,j};
   }
   auto edge = Get( e );
@@ -13,7 +14,7 @@
   list<int> start_points = {0};
   BreadthFirstSearch bfs{ graph , -1 , start_points }; vector<int> d = bfs.GetDistance();
   // BreadthFirstSearch bfs{ graph , -1 }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
-  // DepthFirstSearchOnTree dfst{ graph , 0 };xk
+  // DepthFirstSearchOnTree dfst{ graph , 0 };
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
   // // AbstractUnionFindForest uff{ N , AdditiveGroup<int>() };
   // // vector<int> weight( N ); // 各連結成分のサイズを根の添え字に格納
