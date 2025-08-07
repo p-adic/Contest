@@ -115,6 +115,8 @@ using lld = __float128;
 #define OFS( ... ) VariadicCout( ofs_input_list , __VA_ARGS__ ) << endl
 #define OFSNS( ... ) VariadicCoutNonSep( ofs_input_list , __VA_ARGS__ ) << endl
 #define OFS_A( I , N , A ) CoutArray( ofs_input_list , I , N , A ) << endl
+#define OFS_AA( I , N , J , M , A ) FOR( i , I , N ){ OFS_A( J , M , A[i] ); }
 
 #define IFS( LL , ... ) LL __VA_ARGS__; VariadicCin( ifs_input_list , __VA_ARGS__ )
 #define IFS_A( LL , I , N , A ) VE<LL> A( N + I ); FOR( VARIABLE_FOR_IFS_A , 0 , N ){ ifs_input_list >> A[VARIABLE_FOR_IFS_A + I]; }
+#define IFS_AA( LL , I , N , J , M , A ) VE A( N + I , VE<LL>( M + J ) ); FOR( VARIABLE_FOR_IFS_A1 , 0 , N ){ FOR( VARIABLE_FOR_IFS_A2 , 0 , M ){ ifs_input_list >> A[VARIABLE_FOR_IFS_A1 + I][VARIABLE_FOR_IFS_A2 + J]; } }
