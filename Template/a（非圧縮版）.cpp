@@ -147,9 +147,8 @@ inline void RandomTest( const int& test_case_num )
   #define OLE( CONDITION ) if( !( CONDITION ) ){ REPEAT( 1e8 ){ cerr << "OLE\n"; } }
 #endif
 #ifdef REACTIVE
-  #ifdef DEBUG
-    #define RSET( A , ... ) A = __VA_ARGS__
-  #else
+  #ifndef DEBUG
+    #define LOCAL( ... ) 
     #define RSET( A , ... ) SET( A )
   #endif
   #define RCIN( LL , A , ... ) LL A; RSET( A , __VA_ARGS__ )
