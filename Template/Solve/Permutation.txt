@@ -10,34 +10,29 @@
   };
   auto P_inv = Inverse( perm );
 
+  // /* 置換 */
   // /* Mathematics/Combinatorial/Permutation/compress.txt */
-  // /* 順列とは限らない配列Pの転倒数計算O(N log N) */
+  // /* （順列とは限らない配列Pの）転倒数計算 O(N log N) */
   // ll inv_num = InversionNumber( P );
-
-  // /* 順列Pの巡回置換表示O(N) */
+  // /* 順列Pの巡回置換表示 O(N) */
   // vector<vector<int>> cyc_rep = CyclicPermutationRepresentation( P );
-
-  // /* 順列Pの極小互換表示O(N) */
+  // /* 順列Pの極小互換表示 O(N) */
   // vector<pair<int,int>> swap_rep = MinimalTranspositionRepresentation( P );
-
-  // /* 順列Pの極小基本互換表示O(N^2) */
+  // /* 順列Pの極小基本互換表示 O(N^2) */
   // vector<pair<int,int>> a_swap_rep = MinimalAdjacentTranspositionRepresentation( P );
-
-  // /* 順列Pの位数計算O(N) */
+  // /* 順列Pの位数計算 O(N) */
   // ll ord = PermutationOrder( P );
-
-  // /* 順列Pの極小互換表示の濃度計算O(N) */
+  // /* 順列Pの極小互換表示の濃度計算 O(N) */
   // int count = LeastSwapCount( P );
-
-  // /* 順列Pの極小基本互換表示の濃度計算O(N log N) */
+  // /* 順列Pの極小基本互換表示の濃度計算 O(N log N) */
   // ll a_count = LeastAdjacentSwapCount( P );
-
-  // /* 順列Pの符号計算O(N log N) */
+  // /* 順列Pの符号計算 O(N log N) */
   // int sign = Signature( P );
 
-  // // /* unit     : ((),())    */
-  // // /* swap(i,j): ((i,j),()) */
-  // // /* P        : (P,P_inv)  */
+  // /* 対称群 */
+  // /* unit     : ((),())    */
+  // /* swap(i,j): ((i,j),()) */
+  // /* P        : (P,P_inv)  */
   // using Perm = T2<vector<int>>;
   // const Perm unit{};
   // auto comp = [&]( Perm P0 , const Perm& P1 ){

@@ -30,42 +30,60 @@
   // }
   // T a = dp[O] + dp[I];
 
+  // /* ローリングハッシュ */
+  // /* Utility/String/RollingHash/compress.txt */
   // RollingHash<MP,int> rh{};
-  // // DoubleRollingHash<998244353,1000000007,int> rh{};
-  // // using Code = decltype( rh.Encode( "" ) );
   // /* tuple<MP,MP,int> code = {ハッシュ,r^長さ,長さ} */
-  // /* S全体のコード */
+  // // /* ローリングハッシュ２本 */
+  // // /* Utility/String/RollingHash/Double/compress.txt */
+  // // CEXPR( uint , P2 , int(1e9)+7 );
+  // // DoubleRollingHash<P,P2,int> rh{};
+  // // using MP2 = Mod<P2>
+  // /* Pair<tuple<MP,MP,int>,tuple<MP2,MP2,int>> code = {{ハッシュ,r^長さ,長さ},{,,}} */
+  // using Code = decltype( rh.Encode( "" ) );
+  // /* S全体のコード O(N) */
   // auto code = rh.Encode( S , false );
-  // /* (s[:i]のコード)_i */
+  // /* (s[:i]のコード)_i O(N) */
   // auto ccode = rh.CumulativeEncode( S , false );
-  // /* (s[i]のコード)_i */
+  // /* (s[i]のコード)_i O(N) */
   // auto pcode = rh.PointwiseEncode( S , false );
-  // /* (s[i:i+L]のコード)_i */
+  // /* (s[i:i+L]のコード)_i O(N)*/
   // int L = 3;
   // auto flcode = rh.FixedLengthEncode( S , L , false );
-  // /* S[i]をcに置き換えた時のコード */
+  // /* S[i]をcに置き換えた時のコード O(short:1,long:log i) */
   // char c = 'a';
   // auto rcode = rh.Replace( code , i , S[i] , c ); S[i] = c;
-  // /* Sの先頭を削除した時のコード */
+  // /* Sの先頭を削除した時のコード O(1) */
   // int start = 0;
   // auto pfcode = rh.PopFront( code , S[start] ); start++;
-  // /* Sの末尾を削除した時のコード */
+  // /* Sの末尾を削除した時のコード O(short:1,long:log N) */
   // auto pbcode = rh.PopBack( code , S.back() ); S.pop_back();
-  // /* codeにSが連続部分列として含まれる個数 */
+  // /* codeにSが連続部分列として含まれる個数 O(N) */
   // int count = rh.CountContain( S , code , false );
-  // /* code0とcode1の和 */
+  // /* code0とcode1の和 O(1) */
   // auto ccode = rh.Concatenate( code0 , code1 );
-  // /* codeのn倍 */
+  // /* codeのn倍 O(log n) */
   // int n = 4;
   // auto fcode = rh.Fold( code , n );
-  // /* Utility/String/RollingHash/compress.txt */
 
-  // /* pal[r] = S[0,r]が回文か否か */
-  // vector<bool> pal = Palindrome( S , false );
-  // /* pal[r][l] = S[l,r]が回文か否か */
-  // vector<vector<bool>> pal = TotalPalindrome( S , false );
+  // /* 回文判定 */
   // /* Utility/String/Palindrome/compress.txt */
+  // /* pal[r] = S[0,r]が回文か否か O(N) */
+  // vector<bool> pal = Palindrome( S , false );
+  // /* pal[r][l] = S[l,r]が回文か否か O(N^2) */
+  // vector<vector<bool>> pal = TotalPalindrome( S , false );
 
+  // /* 最長共通接頭辞計算 O(N) */
+  // /* Utility/String/Z-Algorithm/compress.txt */
   // /* lcp[i] = max_j(S[i,N)とS[i+j,N)の始切片が一致する長さ) */
   // vector<int> lcp = LCP( S );
-  // /* Utility/String/Z-Algorithm/compress.txt */
+
+  // /* 終切片の座標圧縮 O(N(log N)^2) */
+  // /* Utility/String/SuffixArray/compress.txt */
+  // /* sa[i] = S[i:N)が終切片全体で何番目か */
+  // vector<int> sa = ManberMyers( S );
+  // // /* 切片の座標圧縮 O(N(log N)^2)/O(N(log N)^2) */
+  // // /* Utility/String/SuffixArray/IntervalSort/compress.txt */
+  // // /* sa[i] = S[i:N)が終切片全体で何番目か */
+  // // /* lis[k] = 切片全体でk番目となる区間[l,r]
+  // // LexicographicIntervalSort lis{ S };

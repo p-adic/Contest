@@ -28,9 +28,23 @@
   //   return answer;
   // };
   Graph graph{ N , edge };
-  Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
+
+  // /* ダイクストラ法 O(min(V^2+E,(V+E)log E)) */
+  // /* Geometry/Graph/Algorithm/Dijkstra/compress.txt */
+  // Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
+  
+  // /* 最小全域森 O(Eα(V+log E)) */
+  // /* Geometry/Graph/Algorithm/UnionFindForest/Kruscal/compress.txt */
+  // /* chosen_edge_num={選択された辺の番号全体} */
+  // /* cc_size=連結成分数 */
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
-  // auto [edge_num,cc_size] = Kruscal( graph , edge_enum );
+  // auto [chosen_edge_num,cc_size] = Kruscal( graph );
+
+  // /* ワーシャルフロイド法 O(V^3) */
+  // /* Geometry/Graph/Algorithm/FloydWarshall/compress.txt */
   // FloydWarshall fw{ infty , weight }; FOR( i , 0 , N ){ FOR( j , 0 , N ){ auto& d = fw.Get( i , j ); COUTNS( d == infty ? -1 : infty , " \n"[j==N-1] ); } }
+
+  // /* ヘルドカープ法 O((V+E)2^{経由すべき点の個数}) */
+  // /* Geometry/Graph/Algorithm/HeldKarp/compress.txt */
   // HeldKarp hk{ graph }; vector<weight_type> d = hk.GetDistance( 0 , id<int>( N ) , true );
 

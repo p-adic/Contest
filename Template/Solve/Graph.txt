@@ -11,10 +11,20 @@
   }
   auto edge = Get( e );
   Graph graph{ N , edge };
-  list<int> start_points = {0};
-  BreadthFirstSearch bfs{ graph , -1 , start_points }; vector<int> d = bfs.GetDistance();
-  // BreadthFirstSearch bfs{ graph , -1 }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
+
+  // /* （多点）幅優先探索 O(V+E) */
+  // /* Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt */
+  // int external_point = -1;
+  // vector<int> start_points = {0};
+  // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance();
+  // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
+
+  // /* 木の深さ優先探索 O(V+E) */
+  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt */
   // DepthFirstSearchOnTree dfst{ graph , 0 };
+
+  // /* 素集合データ構造 O(V+Eα(V)) */
+  // /* Geometry/Graph/Algorithm/UnionFindForest/compress.txt */
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
   // // AbstractUnionFindForest uff{ N , AdditiveGroup<int>() };
   // // vector<int> weight( N ); // 各連結成分のサイズを根の添え字に格納
@@ -31,6 +41,14 @@
   // //     weight2 += 2 * ll( wi ) * wj;
   // //   }
   // // }
-  // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );
-  // Graph graph_dir{ N , Get( dir_edge ) }; // 無向木をトポロジカルソートで0が根の有向化
-  // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } };
+
+  // /* 無向木のトポロジカルソート O(V+E) */
+  // /* Geometry/Graph/Acyclic/Tree/compres.txt */
+  // /* ts[i]=トポロジカルソートでi番目のノードt */
+  // /* ts_inv[t]=ノードtがトポロジカルソートで何番目か */
+  // /* prev[i]=rootを根とする木のノードをts_invで数に翻訳して得られる根付き木におけるiのprev */
+  // /* dir_edge[i]={上記根付き木におけるiの子ノード番号全体}、つまり有向辺データ */
+  // int root=0;
+  // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , root );
+  // Graph graph_dir{ N , Get( dir_edge ) }; // トポロジカルソートされた根付き木の有向化
+  // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } }; // トポロジカルソートされた根付き木の有向化の辺を逆にした有向木

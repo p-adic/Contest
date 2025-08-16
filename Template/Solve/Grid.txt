@@ -26,25 +26,29 @@
   //   }
   //   return answer;
   // };
-  list<T2<int>> start_points = {{0,0}};
-  BreadthFirstSearch bfs{ graph , T2<int>{-1,-1} , start_points }; vector<int> d = bfs.GetDistance();
-  // BreadthFirstSearch bfs{ graph , T2<int>{-1,-1} }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent(); int cc_num = colour_ulim; FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } } // 連結成分取得
 
-  /* xy_axis = true: 右と上を正軸方向とする座標（非デフォルト） */
-  /* (0,1)  -> U */
-  /* (1,0)  -> R */
-  /* (0,-1) -> D */
-  /* (-1,0) -> L */
-  /* xy_axis = false: 下と右を正軸方向とする座標（デフォルト） */
-  /* (-1,0) -> U */
-  /* (0,1)  -> R */
-  /* (1,0)  -> D */
-  /* (0,-1) -> L */
-  /* {i,j}へデコード: EnumHW( v )                                         */
-  /* {i,j}をコード: EnumHW_inv( { i , j } );                              */
-  /* 方向の文字列：direction="URDL";                                       */
-  /* (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h , false ); */
-  /* v->wの方向番号を取得: DirectionNumberOnGrid( v , w , false );         */
-  /* 文字cの方向番号を取得: DirectionNumberOnGrid( c );                     */
-  /* 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );        */
-  /* 方向番号nの方向ベクトルを取得: DirectionVectorOnGrid( n , false );      */
+  // /* （多点）幅優先探索 O(HW) */
+  // /* Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt */
+  // T2<int> external_point{-1,-1};
+  // vector<T2<int>> start_points = {{0,0}};
+  // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance(); // 距離取得
+  // // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent(); int cc_num = colour_ulim; FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } } // 連結成分取得
+
+  // xy_axis = true: 右と上を正軸方向とする座標（非デフォルト）
+  // (0,1)  -> U
+  // (1,0)  -> R
+  // (0,-1) -> D
+  // (-1,0) -> L
+  // xy_axis = false: 下と右を正軸方向とする座標（デフォルト）
+  // (-1,0) -> U
+  // (0,1)  -> R
+  // (1,0)  -> D
+  // (0,-1) -> L
+  // {i,j}へデコード: EnumHW( v )
+  // {i,j}をコード: EnumHW_inv( { i , j } );
+  // 方向の文字列：direction="URDL";
+  // (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h , false );
+  // v->wの方向番号を取得: DirectionNumberOnGrid( v , w , false );
+  // 文字cの方向番号を取得: DirectionNumberOnGrid( c );
+  // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
+  // 方向番号nの方向ベクトルを取得: DirectionVectorOnGrid( n , false );
