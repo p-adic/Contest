@@ -47,6 +47,11 @@
   DERR( "ASSERTチェック:" , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); \
   assert( ( MIN ) <= A && A <= ( MAX ) )                                    \
 
+#ifdef REACTIVE
+  #define LOCAL( ... ) __VA_ARGS__
+  #define RSET( A , ... ) A = __VA_ARGS__
+#endif
+
 #ifdef USE_GETLINE
   #define SET_SEPARATE( SEPARATOR , ... ) if( exec_mode == sample_check_mode ){ VariadicGetline( ifs , SEPARATOR , __VA_ARGS__ ); } else { VariadicGetline( cin , SEPARATOR , __VA_ARGS__ ); }
   #define SET( ... ) SET_SEPARATE( '\n' , __VA_ARGS__ )
