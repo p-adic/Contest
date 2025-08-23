@@ -439,11 +439,14 @@ AC( ExplicitExpressionFunctionOnPermutation )
 AC( ExplicitExpressionFunctionOnTree )
 {
   ASK_NUMBER(
+	     "最短経路長総和の計算問題" ,
 	     "木を受け取る関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "構文木の計算問題"
 	     );
   if( num == num_temp++ ){
+    CALL_AC( TreeWeightSum );
+  } else if( num == num_temp++ ){
     CERR( "木を受け取る関数fが与えられているとします。" );
     CERR( "" );
     CALL_AC( FunctionOnTree );
@@ -475,6 +478,12 @@ AC( ExplicitExpressionFunctionOnTree )
   }
 }
 
+AC( TreeWeightSum )
+{
+  CERR( "木の最短経路長は、最短経路長総和の可換群を用いて木DPを検討しましょう。" );
+  CERR( "\\Mathematics\\Algebra\\Monoid\\Group\\TreeWeight" );
+}
+
 AC( ExplicitExpressionBitFunctionOnTree )
 {
   CERR( "「Tの各ノードvを根とする部分木でのj桁目のbit状態sの個数dp[v][s][j]」" );
@@ -501,22 +510,46 @@ AC( FunctionOnTree )
 
 AC( ExplicitExpressionFunctionOnNonTreeGraph )
 {
-  CERR( "- 部分集合上の関数の計算問題は" );
-  CERR( "  - O(N 2^N)が間に合いそうなら高速ゼータ変換／メビウス変換" );
-  CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform" );
-  CERR( "  - O(N^2)が間に合いそうで要素数にのみ依存するならマーラー変換" );
-  CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform\\MahlerTransform" );
-  CERR( "- その他の順序集合上の関数の計算問題はゼータ変換／メビウス変換" );
-  CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
-  CERR( "- 辺に重みが付けられたグラフ上の２点を結ぶ経路（もしくは頂点の重複のない経路）P" );
-  CERR( "  全体をわたってPに沿った辺の重みの総乗f(P)を考えf(P)の下限を計算する問題は" );
-  CERR( "  - 重みが「単位元が最小元である等号つき全順序モノイドM個の直積」に値を持ち" );
-  CERR( "    O(M(V+E)log V)が間に合いそうならば各直積成分に対するダイクストラ法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
-  CERR( "  - 重みが「単位元が最小元であるmeet半束モノイド」に値を持ち" );
-  CERR( "    O(V^3)が間に合いそうならばワーシャルフロイド法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
-  CERR( "を検討しましょう。" );
+  ASK_NUMBER(
+	     "ホモロジー群の計算問題" ,
+	     "最短経路長総和の計算問題" ,
+	     "ハッシュの計算問題" ,
+             "その他の計算問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "- 体係数ならば、掃き出し法により階数を計算しましょう。" );
+    CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Modint" );
+    CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Bitset" );
+    CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Real" );
+    CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Complex" );
+    CERR( "- 体でないPID係数ならば、スミス標準形を計算しましょう。" );
+    CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Int\\ElementaryDivisor" );
+  } else if( num == num_temp++ ){
+    CERR( "なもり先生グラフならば、非サイクル部の各連結成分の木の最短経路長総和" );
+    CERR( "を求め、内積を畳み込みで高速化しましょう。" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\WeightSum\\Namori" );
+    CALL_AC( TreeWeightSum );
+  } else if( num == num_temp++ ){
+    CERR( "各頂点の適当な不変量（次数など）をグラフ畳み込みしましょう。" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Convolution" );
+  } else if( num == num_temp++ ) {
+    CERR( "- 部分集合上の関数の計算問題は" );
+    CERR( "  - O(N 2^N)が間に合いそうなら高速ゼータ変換／メビウス変換" );
+    CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform" );
+    CERR( "  - O(N^2)が間に合いそうで要素数にのみ依存するならマーラー変換" );
+    CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform\\MahlerTransform" );
+    CERR( "- その他の順序集合上の関数の計算問題はゼータ変換／メビウス変換" );
+    CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
+    CERR( "- 辺に重みが付けられたグラフ上の２点を結ぶ経路（もしくは頂点の重複のない経路）P" );
+    CERR( "  全体をわたってPに沿った辺の重みの総乗f(P)を考えf(P)の下限を計算する問題は" );
+    CERR( "  - 重みが「単位元が最小元である等号つき全順序モノイドM個の直積」に値を持ち" );
+    CERR( "    O(M(V+E)log V)が間に合いそうならば各直積成分に対するダイクストラ法" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
+    CERR( "  - 重みが「単位元が最小元であるmeet半束モノイド」に値を持ち" );
+    CERR( "    O(V^3)が間に合いそうならばワーシャルフロイド法" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
+    CERR( "を検討しましょう。" );
+  }
 }
 
 AC( ExplicitExpressionOrder )
@@ -752,11 +785,15 @@ AC( ReducingOperation )
 {
   CERR( "ソートしても操作回数が変わらないならばソートしましょう。" );
   CERR( "" );
-  CERR( "操作対象を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
-  CERR( "なるべく簡単な問題に帰着させましょう。" );
-  CERR( "- 操作で階差数列の総和が0で不変ならば、l^1ノルムに注目" );
-  CERR( "- 操作で累積和の最大値と最小値の差が減るならば、その差に注目" );
-  CERR( "- 操作で隣接成分との大小が変わるならば、その大小関係を管理する01列に注目" );
+  CERR( "操作対象を何らかの不変量で分類し、操作が不変量にもwell-definedである" );
+  CERR( "ならば、不変量に注目して方法でなるべく簡単な問題に帰着させましょう。" );
+  CERR( "- 頻度表／像／逆像" );
+  CERR( "- 総和／最大値／最小値（もしくはその累積値）" );
+  CERR( "- 階差数列／最大値と最小値の差" );
+  CERR( "- 隣接成分の大小関係" );
+  CERR( "- 添字mod Bごとに取り出した部分列の不変量" );
+  CERR( "特に、操作回数を不変量の明示式や不変量を用いた貪欲法で計算できないか" );
+  CERR( "検討してみましょう。" );
 }
 
 AC( ExplicitExpressionTimeSeriesChange )
@@ -899,7 +936,7 @@ AC( Maximisation )
 	     "操作回数の最大化問題" ,
 	     "被覆半径の最小化問題" ,
 	     "描画サイズ／個数の最大／最小化問題" ,
-	     "方程式の解の最大／最小化問題" ,
+	     "条件（方程式など）を満たす数の最大／最小化問題" ,
 	     "最小値の最大化問題" ,
 	     "部分和の最小化問題" ,
 	     "部分和の差の最大／最小化問題" ,
@@ -1737,6 +1774,9 @@ AC( MaximisationArrayFunction )
   CERR( "AのサイズNが小さい場合、操作の全探策を検討しましょう。" );
   CERR( "適宜累積和や階差数列に翻訳し直しましょう。" );
   CERR( "" );
+  CERR( "操作可能な回数がNより小さい場合、操作されない成分が存在します。" );
+  CERR( "操作されない成分を決め打って最大化しましょう。" );
+  CERR( "" );
   CERR( "Fの終域Mの有限順序半群構造(|,R)が" );
   CERR( "(1) Rは<を含意しかつ<に関する最大元がRに関する最大元でもある。" );
   CERR( "(2) 任意のm,n in Mに対しm = m|nまたはm R m|nである。" );
@@ -2263,10 +2303,17 @@ AC( MaximisationDrawingImage )
 
 AC( MinimisationSolution )
 {
-  CERR( "- 解の候補が少ないならば、全探策" );
-  CERR( "- 増減の変化点が少ないならば、単調区間を左から順に調べ端点での値を計算し、" );
-  CERR( "  0を跨ぐ時のみその区間内で二分探索" );
-  CERR( "- 区間ごとに解の有無が計算できるならば、区間縮小法" );
+  CERR( "条件P(x)を満たすxを考えます。" );
+  CERR( "- xの属す集合Sが小さいならば、Sの要素を全探策" );
+  CERR( "- P(x)が方程式f(x)=0で与えられるならば、" );
+  CERR( "  - fの増減の変化点が少ないならば、単調区間を左から順に調べ端点での値を計算し、" );
+  CERR( "    0を跨ぐ時のみその区間内で二分探索" );
+  CERR( "  - fの区間ごとに解の有無が計算できるならば、区間縮小法" );
+  CERR( "- マルチテストケースでcが与えられP(x)が方程式f(x)=g(c)で与えられるならば、" );
+  CERR( "  - xを全探策してf(x)を前計算し、連想配列でyごとに" );
+  CERR( "    y=f(x)を満たすxの最大／最小値を管理" );
+  CERR( "- P(x)が方程式∃k[f(x)=g(k)]で与えられkの候補が少ないならば、" );
+  CERR( "  kごとにxの最大／最小値を計算" );
   CERR( "を検討しましょう。" );
 }
 
@@ -3241,6 +3288,10 @@ AC( CountingPlainParenthesisSequence )
   CERR( "  A_N(K+2,1)=((K+2)N)!/(((K+1)N+1)!N!)" );
   CERR( "  https://en.wikipedia.org/wiki/Fuss%E2%80%93Catalan_number" );
   CERR( "  https://yukicoder.me/problems/no/3145/editorial" );
+  CERR( "- O(N^2)が間に合いそうならば、" );
+  CERR( "  - 長さと右端の深さごとに答えを管理する括弧列DP" );
+  CERR( "  - (N+1)\times(N+1)のグリッド上の経路に翻訳" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Grid\\CountDirectedPath" );
   CERR( "を検討しましょう。" );
 }
 
