@@ -49,7 +49,7 @@ AC( ExplicitExpression )
   ASK_NUMBER(
 	     "固定長引数関数や格子点上の関数や配列の計算問題" ,
 	     "順列上の関数の計算問題" ,
-	     "木上の関数の総和の計算問題" ,
+	     "木上の関数の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
 	     "序数の計算問題" ,
 	     "確率／期待値の計算問題" ,
@@ -453,8 +453,10 @@ AC( ExplicitExpressionFunctionOnTree )
     CERR( "- 各ノード（またはその近傍）の寄与に分解できる時はノードごとの計算" );
     CERR( "- 部分木に関する良い遷移関係があれば（全方位）木DP" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\RootingDP" );
+    CERR( "  - 動的配列や集合や連想配列などを扱う際はデータ構造をマージする一般的なテク" );
     CERR( "を検討しましょう。" );
-    ASK_YES_NO( "fがbit演算の多引数化である問題ですか？" );
+    ASK_YES_NO( "fが何かしらのbitごとの和などで与えられる問題ですか？" );
     if( reply == "y" ){
       CALL_AC( ExplicitExpressionBitFunctionOnTree );
     }
@@ -486,11 +488,13 @@ AC( TreeWeightSum )
 
 AC( ExplicitExpressionBitFunctionOnTree )
 {
-  CERR( "「Tの各ノードvを根とする部分木でのj桁目のbit状態sの個数dp[v][s][j]」" );
-  CERR( "を管理するv,s,jに関する動的計画法を検討しましょう。" );
+  CERR( "Tの各頂点vごとに、vを根とする部分木の情報を用いてbit演算などで計算される値" );
+  CERR( "A[v]があるとします。" );
+  CERR( "dp[v][j][s]=「vを根とする部分木内でAの値のj桁目のbit状態sの個数」" );
+  CERR( "などを管理するv,j,sに関する木DPを検討しましょう。" );
   CERR( "" );
   CERR( "これはTが{0,1,...,N-1}に通常の順序の逆順序を入れたものである場合は" );
-  CERR( "「第i成分で切った部分列でのj桁目のbitがs（=0,1）である個数dp[i][s][j]」" );
+  CERR( "「第i成分で切った部分列でのj桁目のbitがs（=0,1）である個数dp[i][j][s]」" );
   CERR( "を管理することに他なりません。" );
 }
 
