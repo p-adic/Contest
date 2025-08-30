@@ -19,9 +19,34 @@
   // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance();
   // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
 
-  // /* –Ø‚Ì[‚³—Dæ’Tõ O(V+E) */
+  // /* –Ø‚Ì[‚³—Dæ’Tõ O(V) */
   // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt */
   // DepthFirstSearchOnTree dfst{ graph , 0 };
+
+  // /* –ØDP O(V) */
+  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/compress.txt */
+  // /* ƒm[ƒhi‚ÉUŒ^‚Ì’lA[i]‚ª’è‚Ü‚Á‚Ä‚¨‚è‚»‚Ì•”•ª–Ø˜a‚ğdp[i]‚ÉŠi”[‚·‚éê‡ */
+  //   auto f = [&]( vector<U> u , const int& i ){
+  //     U answer = A[i];
+  //     for( auto& x : u ){ answer += x; }
+  //     return answer;
+  //   };
+  // auto x = RecursionRootingDP( graph , f , 0 );
+  // /* ƒm[ƒhi‚ÉUŒ^‚Ì’lA[i]‚ª’è‚Ü‚Á‚Ä‚¨‚èŒ^U‚Ì”ñ‰ÂŠ·ƒ‚ƒmƒCƒh\‘¢M‚ª—^‚¦‚ç‚êƒm[ƒh”Ô†‚Ì‘S‡˜ord‚ª’è‹`‚³‚ê‚Ä‚¨‚èi‚Ìqƒm[ƒh‚ğ‚í‚½‚éƒm[ƒh”Ô†j‚Ìord¸‡‚ÌM‚ÉŠÖ‚·‚édp[j]‚Ì‘æ‚ğA[i]‚É‰E‚©‚çŠ|‚¯‚½‚à‚Ì‚ğdp[i]‚ÉŠi”[‚·‚éê‡ */
+  //   auto f = [&]( vector<pair<U,int>> u , const int& i ){
+  //     U answer = A[i];
+  //     sort( u.begin() , u.end() , [&]( const pair<U,int>& u0 , const pair<U,int>& u1 ){ return ord( get<1>( u0 ) , get<1>( u1 ) ); } );
+  //     for( auto& [x,j] : u ){ answer = M.Product( move( answer ) , x ); }
+  //     return pair{ move( answer ) , i };
+  //   };
+  // auto x = RecursionRootingDP( graph , f , 0 );
+  // /* val( i )‚Éprod‚Å‰E‚©‚çi‚Ìqƒm[ƒhj‚ğ‚í‚½‚édp[j]‚ğŠ|‚¯‚½’l‚ğdp[i]‚ÉŠi”[‚·‚éê‡ */
+  // auto val = [&]( const int& i ){ return A[i]; };
+  // auto prod = [&]( U u0 , U u1 , const int& i , const int& j ){
+  //   u0 *= u1;
+  //   return move( u0 );
+  // };
+  // auto x = BinaryRootingDP( graph , val , prod , 0 );
 
   // /* ‘fW‡ƒf[ƒ^\‘¢ O(V+Eƒ¿(V)) */
   // /* Geometry/Graph/Algorithm/UnionFindForest/compress.txt */
