@@ -11,11 +11,30 @@
   }
   auto edge = Get( e );
   Graph graph{ N , edge };
+  using T = decltype( graph )::type;
+
+  // /* ó‘Ô‚ğ1ŸŒ³•ª’Ç‰Á */
+  // using T = T2<int>;
+  // CIN( int , K );
+  // Set_HW( N , K );
+  // auto edge = [&]( const T& v ){
+  //   auto& [i,k] = v;
+  //   vector<T> a{};
+  //   RUN( e[i] , j ){
+  //     if( ){
+  //       a <<= {j,k+1};
+  //     } else {
+  //       a <<= {j,k};
+  //     }
+  //   }
+  //   return a;
+  // };
+  // GridGraph graph{ edge };
 
   // /* i‘½“_j•—Dæ’Tõ O(V+E) */
   // /* Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt */
-  // int external_point = -1;
-  // vector<int> start_points = {0};
+  // T external_point = -1;
+  // vector<T> start_points = {0};
   // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance();
   // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
 

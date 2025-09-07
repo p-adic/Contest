@@ -29,6 +29,24 @@
   // };
   Graph graph{ N , edge };
 
+  // /* 状態を1次元分追加 */
+  // using T = T2<int>;
+  // CIN( int , K );
+  // Set_HW( N , K );
+  // auto edge = [&]( const T& v ){
+  //   auto& [i,k] = v;
+  //   vector<Pair<T,weight_type>> a{};
+  //   RUN( e[i] , [j,w] ){
+  //     if( ){
+  //       a <<= {{j,k+1},w};
+  //     } else {
+  //       a <<= {{j,k},w};
+  //     }
+  //   }
+  //   return a;
+  // };
+  // GridGraph graph{ edge };
+
   // /* ダイクストラ法 O(min(V^2+E,(V+E)log E)) */
   // /* Geometry/Graph/Algorithm/Dijkstra/compress.txt */
   // Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );

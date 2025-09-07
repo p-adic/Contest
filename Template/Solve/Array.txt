@@ -13,6 +13,7 @@
   // FOR( i , 0 , N ){
   //   A_hind[A[i]]++;
   // }
+  // /* ‘œ‚ÍA_hind[k]>0‚âA_hind.count(k)>0‚Ì”»’è‚Å‘ã—p */
 
   // /* ‹t‘œ O(N) */
   // vector<vector<int>> A_inv( N );

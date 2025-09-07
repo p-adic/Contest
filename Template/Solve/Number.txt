@@ -24,7 +24,7 @@
   // auto [pf,e] = PrimeFactorisation( pe , N );
   // // auto [pf,e,q] = PrimePowerFactorisation( pe , N );
 
-  // /* 約数計数 O(pe:√n/log n,ld:log n) */
+  // /* 約数計数 O(pe:√N/log N,ld:log N) */
   // /* Arithmetic/Divisor/Count/compress.txt */
   // /* n <= 1e3 -> answer <= 32  */
   // /* n <= 1e4 -> answer <= 64  */
@@ -32,10 +32,15 @@
   // /* n <= 1e6 -> answer <= 256 */
   // int count = CountDivisor( pe , N );
 
-  // /* 約数列挙 O(pe:√n/log n,ld:d(n)=n^{log 2/log log n}) */
+  // /* 約数列挙 O(pe:√N/log N,ld:d(N)=N^{log 2/log log N}) */
   // /* Arithmetic/Divisor/Enumeration/compress.txt */
-  // // vector<int> div = EnumerateDivisor( pe , N ); Sort( div );
+  // vector<int> div = EnumerateDivisor( pe , N ); Sort( div );
   // // vector<vector<int>> div = TotalEnumerateDivisor( N ); // O(N log N)
+
+  // /* オイラー関数  O(√N/log N)/O(log N) */
+  // /* Arithmetic/Mod/Function/Euler/compress.txt" */
+  // int euler = EulerFunction( pe , N );
+  // // vector<int> euler = TotalEulerFunction( pe , N ); // O(n_max log n_max)
 
   // /* 桁DP */
   // using T = MP;
