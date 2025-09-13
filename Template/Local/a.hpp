@@ -67,8 +67,6 @@ using MP = Mod<P>;
 #endif
 
 inline bool HasBr();
-template <typename Arg> inline bool HasBr( const Arg& arg );
-inline bool HasBr( const char& c );
 bool HasBr( const string& s );
 template <typename Arg0 , typename Arg1 , typename...Args> inline bool HasBr( const Arg0& arg0 , const Arg1& arg1 , const Args&... args );
-bool searched_br = false;
+bool searched_br = true;

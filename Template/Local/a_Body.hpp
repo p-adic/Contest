@@ -27,9 +27,6 @@
 inline void AlertAbort( int n ) { CERR( "abort関数が呼ばれました。assertマクロのメッセージが出力されていない場合はオーバーフローの有無を確認をしてください。" ); }
 
 inline bool HasBr() { return false; }
-template <typename Arg> inline bool HasBr( const Arg& arg ) { return false; }
-inline bool HasBr( const char& c ) { return c == '\n'; }
-
 bool HasBr( const string& s )
 {
 
@@ -47,4 +44,4 @@ bool HasBr( const string& s )
   
 }
 
-template <typename Arg0 , typename Arg1 , typename...Args> inline bool HasBr( const Arg0& arg0 , const Arg1& arg1 , const Args&... args ) { return HasBr( arg0 ) || HasBr( arg1 ) || HasBr( args... ); }
+template <typename Arg0 , typename Arg1 , typename...Args> inline bool HasBr( const Arg0& arg0 , const Arg1& arg1 , const Args&... args ) { return HasBr( to_string( arg0 ) ) || HasBr( to_string( arg1 ) ) || HasBr( args... ); }
