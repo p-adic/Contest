@@ -36,7 +36,7 @@
 #define CERR( ... ) searched_br = true; VariadicCout( CERR_TARGET , __VA_ARGS__ ) << endl
 #define CERRNS( ... ) VariadicCoutNonSep( CERR_TARGET , __VA_ARGS__ ) << flush; searched_br = HasBr( __VA_ARGS__ )
 #define CERR_A( I , N , A ) CoutArray( CERR_TARGET , I , N , A ) << endl
-#define WHAT( ... ) CERRNS( #__VA_ARGS__ , " = " , __VA_ARGS__ , "\n" )
+#define WHAT( ... ) CERR( #__VA_ARGS__ , "=" , __VA_ARGS__ )
 #define DERR( ... ) if( exec_mode == sample_check_mode ){ DERR1( __VA_ARGS__ ); } else { DERR2( __VA_ARGS__ ); }
 #define DERRNS( ... ) if( exec_mode == sample_check_mode ){ DERRNS1( __VA_ARGS__ ); } else { DERRNS2( __VA_ARGS__ ); }
 #define DERR_A( I , N , A ) if( exec_mode == sample_check_mode ){ DERR_A1; } else { DERR_A2; }
