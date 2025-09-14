@@ -1,29 +1,36 @@
-// - PrimeEnumeation: Ã“I‘f”—ñ‹“ (2KB)
-//   Arithmetic/Prime/Enumeration/compress.txt
-//   Arithmetic/Prime/Enumeration/Heap/compress.txt
-//   - Counting: Ã“I‘f”—ñ‹“, ‘f”Œv” (3KB)
-//     Arithmetic/Prime/Enumeration/Counting/compress.txt
-//     Arithmetic/Prime/Enumeration/Counting/Heap/compress.txt
-//   - Factorisation: Ã“I‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ (6KB)
-//     Arithmetic/Prime/Factorisation/compress.txt
-//     - Divisor: Ã“I‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ,–ñ”Œv”,–ñ”—ñ‹“ (7KB)
-//       Arithmetic/Divisor/Enumeration/compress.txt
-// - EulerFunction: Ã“I‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ,ƒIƒCƒ‰[ŠÖ” (6KB)
-//   Arithmetic/Mod/Function/Euler/compress.txt
-// - MoeviusFunction: Ã“I‘f”—ñ‹“,Å¬‘fˆöq,‘fˆö”•ª‰ğ,ƒƒrƒEƒXŠÖ” (6KB)
-//   Arithmetic/Divisor/Moevius/compress.txt
-// - GetPrime: “®“I‘f”—ñ‹“,ƒ~ƒ‰[ƒ‰ƒrƒ“‘f””»’è–@ (1KB)
+// - PrimeEnumeation: ‘f”—ñ‹“ (2KB)
+//   Arithmetic/Prime/Enumeration/Heap/
+//   Arithmetic/Prime/Enumeration/ (—v‚‘¬‰»)
+//   - Counting: ‘f”Œv”(+‘f”—ñ‹“) (3KB)
+//     Arithmetic/Prime/Enumeration/Counting/
+//     Arithmetic/Prime/Enumeration/Counting/Heap/
+// - LeastDivisor: Å¬‘fˆöq
+//   Arithmetic/Divisor/Least/Heap/
+//   Arithmetic/Divisor/Least/ (—v‚‘¬‰»)
+// - Factorisation: ‘fˆö”•ª‰ğ(+‘f”—ñ‹“,Å¬‘fˆöq) (6KB)
+//   Arithmetic/Prime/Factorisation/
+//   - Divisor: –ñ”Œv”,–ñ”—ñ‹“(+‘fˆö”•ª‰ğ,‘f”—ñ‹“,Å¬‘fˆöq) (7KB)
+//     Arithmetic/Divisor/Enumeration/
+//   - EulerFunction: ƒIƒCƒ‰[ŠÖ”(+‘fˆö”•ª‰ğ,‘f”—ñ‹“,Å¬‘fˆöq) (6KB)
+//     Arithmetic/Mod/Function/Euler/
+//   - MoeviusFunction: ƒƒrƒEƒXŠÖ”(+‘fˆö”•ª‰ğ,‘f”—ñ‹“,Å¬‘fˆöq) (6KB)
+//     Arithmetic/Divisor/Moevius/
 // - GCD: Å‘åŒö–ñ”,Å¬Œö”{” (1KB)
-//   Arithmetic/Divisor/GCD/compress.txt
-// - Sum: ‘˜a,‘æ,™pæ,“™·”—ñ‚Ì˜a,“™”ä”—ñ‚Ì˜a,“™”ä”—ñ‚ÌüŒ`Œ‹‡ (2KB)
-//   Arithmetic/Sum/compress.txt
-//   - DivisorSum: ™pæ,–ñ”‚Ì™pæ˜a (1KB)
-//     Arithmetic/Divisor/Sum/compress.txt
+//   Arithmetic/Divisor/GCD/
+// - DivisorSum: –ñ”‚Ì™pæ˜a (1KB)
+//     Arithmetic/Divisor/Sum/
 // - Sqrt: •½•ûª (1KB)
-//   Arithmetic/Sqrt/compress.txt
+//   Arithmetic/Sqrt/
+//   - Truncated: ã°æ‘Å‚¿Ø‚è,ã°æª,ã°æ””»’è,ƒ‚ƒmƒCƒh—£U‘Î” (2KB)
+//     Arithmetic/Iteration/Truncated/xs
+//   - DiscreteLgarithm: ã°è—]—£U‘Î” (1KB)
+//     Arithmetic/Mod/Function/DiscreteLogaxrithm/xs
 // - DynamicMod: “®“Imod (10KB)
-//   Arithmetic/Mod/DynamicModulo/compress.txt
+//   Arithmetic/Mod/DynamicModulo/
 //   - ShifedMod: K–¢–‚ÍˆÛ‚·‚é“®“Imod (6KB)
-//     Arithmetic/Mod/DynamicModulo/Shifted/compress.txt
+//     Arithmetic/Mod/DynamicModulo/Shifted/
 // - AdicExpansion: ˆÊæ‚è‹L–@ (1KB)
-//     Arithmetic/AdicExpansion/compress.txt
+//   Arithmetic/AdicExpansion/
+// - PartitionOfUnity: ’†‘è—]’è— (2KB)
+//   Arithmetic/Mod/Function/CRT/
+

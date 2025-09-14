@@ -1,25 +1,25 @@
 // - Sign: 符号 (1KB)
-//   Geometry/Sign/compress.txt
+//   Geometry/Sign/
 // - Distance: 距離
 //   - L1: 符号, L^1距離, 45度回転 (2KB)
-//     Geometry/AffineSpace/Distance/L1/compress.txt
+//     Geometry/AffineSpace/Distance/L1/
 //     - L1/MultipointEvaluation: L^1距離多点評価 (2KB)
-//       Geometry/AffineSpace/Distance/L1/MultipointEvaluation/compress.txt
+//       Geometry/AffineSpace/Distance/L1/MultipointEvaluation/
 //   - L2: 符号, L^2距離 (2KB)
-//     Geometry/AffineSpace/Distance/L2/compress.txt
+//     Geometry/AffineSpace/Distance/L2/
 //   - Linfty: 符号, L^∞距離 (2KB)
-//     Geometry/AffineSpace/Distance/Linfty/compress.txt
+//     Geometry/AffineSpace/Distance/Linfty/
 //   - Linear: 数直線上の1点と点群の距離, その多点評価 (2KB)
-//     Geometry/AffineSpace/Distance/Linear/compress.txt
+//     Geometry/AffineSpace/Distance/Linear/
 //   - ANN: 最近点探索 (2KB)
-//     Geometry/AffineSpace/Distance/ANN/compress.txt
+//     Geometry/AffineSpace/Distance/ANN/
 // - Area: 外積, 符号付き面積 (1KB)
-//   Geometry/Area/compress.txt
+//   Geometry/Area/
 // - InnerProduct: 内積 (1KB)
-//   Geometry/InnerProduct/compress.txt
+//   Geometry/InnerProduct/
 // - Intersection: 線分上判定, 交差判定 (4KB)
-//   Geometry/Intersecion/compress.txt
+//   Geometry/Intersecion/
 // - PainSort: 平面の四分ソート (2KB)
-//   Geometry/PlainSort/compress.txt
+//   Geometry/PlainSort/
 // - RelativeDirection: xy軸と象限への分類 (1KB)
-//   Geometry/RlativeDirection/compress.txt
+//   Geometry/RlativeDirection/

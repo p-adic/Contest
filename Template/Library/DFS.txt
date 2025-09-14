@@ -1,8 +1,27 @@
 // - DFS (6KB)
-//   Geometry/Graph/Algorithm/DepthFirstSearch/compress.txt
-//   - Tree (13KB)
-//     Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt
-//     - HeavyLightDecomposition (15KB)
-//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/HeavyLightDecomposition/compress.txt
-//     - WeightedTree (18KB)
-//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/Weighted/compress.txt
+//   Geometry/Graph/Algorithm/DepthFirstSearch/
+//   - 木上のDFS (10KB)
+//     Geometry/Graph/Algorithm/DepthFirstSearch/Tree/
+//     - 半径 (1KB)（先に木上のDFSを貼る）
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/Diameter/
+//     - HeavyLightDecomposition (3KB)（先に木上のDFSを貼る）
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/HeavyLightDecomposition/
+//     - LCA (2KB)（先に木上のDFSを貼る）
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/LCA/
+//     - 最近傍探索 (1KB)（先に木上のDFSを貼る）
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/NearestNeighbour/
+//     - 木DP (2KB)（先に木上のDFSを貼る）
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/
+//       - 再帰木DP (2KB)
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/Recursion/
+//     - パスの距離の総和 (3KB)
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/WeightSum/
+//       - なもり先生バージョン (1KB)
+//         Mathematics/Polynomial/FPS/compress.txt
+//         Geometry/Graph/Algorithm/DepthFirstSearch/Tree/WeightSum/Namori/
+//     - 重み付き木上のDFS (13KB)
+//       Geometry/Graph/Algorithm/DepthFirstSearch/Tree/Weighted/
+//       - 半径 (1KB)（先に重み付き木上のDFSを貼る）
+//         Geometry/Graph/Algorithm/DepthFirstSearch/Tree/Weighted/Diameter/
+//       - LCA (3KB)（先に重み付き木上のDFSを貼る）
+//         Geometry/Graph/Algorithm/DepthFirstSearch/Tree/Weighted/LCA/

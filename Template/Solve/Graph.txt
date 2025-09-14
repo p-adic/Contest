@@ -32,18 +32,18 @@
   // GridGraph graph{ edge };
 
   // /* i‘½“_j•—Dæ’Tõ O(V+E) */
-  // /* Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt */
+  // /* Geometry/Graph/Algorithm/BreadthFirstSearch/ */
   // T external_point = -1;
   // vector<T> start_points = {0};
   // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance();
   // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
 
   // /* –Ø‚Ì[‚³—Dæ’Tõ O(V) */
-  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt */
+  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/ */
   // DepthFirstSearchOnTree dfst{ graph , 0 };
 
   // /* –ØDP O(V) */
-  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/compress.txt */
+  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/ */
   // /* ƒm[ƒhi‚ÉUŒ^‚Ì’lA[i]‚ª’è‚Ü‚Á‚Ä‚¨‚è‚»‚Ì•”•ª–Ø˜a‚ğdp[i]‚ÉŠi”[‚·‚éê‡ */
   //   auto f = [&]( vector<U> u , const int& i ){
   //     U answer = A[i];
@@ -68,7 +68,7 @@
   // auto x = BinaryRootingDP( graph , val , prod , 0 );
 
   // /* ‘fW‡ƒf[ƒ^\‘¢ O(V+Eƒ¿(V)) */
-  // /* Geometry/Graph/Algorithm/UnionFindForest/compress.txt */
+  // /* Geometry/Graph/Algorithm/UnionFindForest/ */
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
   // // AbstractUnionFindForest uff{ N , AdditiveGroup<int>() };
   // // vector<int> weight( N ); // Še˜AŒ‹¬•ª‚ÌƒTƒCƒY‚ğª‚Ì“Y‚¦š‚ÉŠi”[

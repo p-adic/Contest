@@ -20,51 +20,51 @@
   // vector<U> X_pre = move( A );
 
   // /* 累積和 O(N)/O(1) */
-  // /* SetTheory/DirectProduct/AffineSpace/CumulativeProduct/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/CumulativeProduct/ */
   // CumulativeSum X{ move( X_pre ) };
 
   // /* 階差数列 O(N)/O(1) */
-  // /* SetTheory/DirectProduct/AffineSpace/DifferenceSequence/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/DifferenceSequence/ */
   // DifferenceSequence X{ move( X_pre ) };
 
   // /* フェニック木 O(N)/O(log N) */
-  // /* SetTheory/DirectProduct/AffineSpace/BIT/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/BIT/ */
   // BIT bit{ A };
-  // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/compress.txt */
+  // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/ */
   // // IntervalAddBIT X{ A };
-  // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/compress.txt */
+  // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/ */
   // // IntervalMaxBIT X{ decltype(A[0])( 0 ) , A };
   // // IntervalMinBIT X{ decltype(A[0])( 1e9 ) , A };
 
   // /* 排他的スパーステーブル O(N log N)/O(__builtin_clzの計算量) */
-  // /* SetTheory/DirectProduct/AffineSpace/DisjointSparseTable/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/DisjointSparseTable/ */
   // DisjointSparseTable X{ A }; // 最大値の管理
   // // AbstractDisjointSparseTable X{ MinSemilattice<decltype(A[0])>( 1e9 ) , A };
   // // AbstractDisjointSparseTable X{ MultiplicativeMonoid<decltype(A[0])>( 1 ) , A };
 
   // /* セグメント木 O(N)/O(log N) */
-  // /* SetTheory/DirectProduct/AffineSpace/SegmentTree/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/SegmentTree/ */
   // SegmentTree X{ A }; // 最大値の管理
   // // AbstractSegmentTree X{ MinSemilattice<decltype(A[0])>( 1e9 ) , A };
   // // AbstractSegmentTree X{ MultiplicativeMonoid<decltype(A[0])>( 1 ) , A };
 
   // /* 平方分割 O(N)/O(√N) */
-  // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/ */
   // SqrtDecomposition X{ move( X_pre ) };
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/IntervalAdd/compress.txt */
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/IntervalAdd/ */
   // // IntervalAddSqrtDecomposition X{ move( X_pre ) };
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/compress.txt */
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/ */
   // // MultiplicativeMonoid<decltype(A[0])> monoid{1}; // 非可換な区間乗算更新を処理する場合
   // // DualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( X_pre ) };
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Comutative/compress.txt */
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Comutative/ */
   // // MultiplicativeMonoid<decltype(A[0])> monoid{1}; // 可換な区間乗算更新を処理する場合
   // // CommutativeDualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( X_pre ) };
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/compress.txt */
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/ */
   // // LazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP>{} , move( X_pre ) }; // 区間乗算更新と区間和取得を処理する場合
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/compress.txt */
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/ */
   // // IntervalMultiplyLazySqrtDecomposition X{ RegularRSet{ MultiplicativeMonoid<MP>{ 1 ) } , Module<MP,MP>{} , move( a ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
   // // GeometricProgressionMinDualSqrtDecomposition X{ Module<int,int>{} , int( 1e9 ) , {1,-1} , move( a ) }; // 区間一次式min更新と一点取得を処理する場合
-  // // /* Algebra/Monoid/Group/DirectSum/compress.txt */
+  // // /* Algebra/Monoid/Group/DirectSum/ */
   // // int index = -1 , dim = 26;
   // // DirectSumGroup dsg{ group , index , dim }; // 自由加群
   // // AbstractSqrtDecomposition X{ dsg , N };
@@ -79,7 +79,7 @@
   // Sort( query );
 
   // /* Moのアルゴリズム O(min(X+Q,Q log Q))/合計O((X+Q)√Y) */
-  // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Mo/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Mo/ */
   // Mo mo{ query };
   
   // RUN( query , [l,r,q] ){

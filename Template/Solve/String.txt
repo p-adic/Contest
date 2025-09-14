@@ -31,11 +31,11 @@
   // T a = dp[O] + dp[I];
 
   // /* ローリングハッシュ */
-  // /* Utility/String/RollingHash/compress.txt */
+  // /* Utility/String/RollingHash/ */
   // RollingHash<MP,int> rh{};
   // /* tuple<MP,MP,int> code = {ハッシュ,r^長さ,長さ} */
   // // /* ローリングハッシュ２本 */
-  // // /* Utility/String/RollingHash/Double/compress.txt */
+  // // /* Utility/String/RollingHash/Double/ */
   // // CEXPR( uint , P2 , int(1e9)+7 );
   // // DoubleRollingHash<P,P2,int> rh{};
   // // using MP2 = Mod<P2>
@@ -67,23 +67,23 @@
   // auto fcode = rh.Fold( code , n );
 
   // /* 回文判定 */
-  // /* Utility/String/Palindrome/compress.txt */
+  // /* Utility/String/Palindrome/ */
   // /* pal[r] = S[0,r]が回文か否か O(N) */
   // vector<bool> pal = Palindrome( S , false );
   // /* pal[r][l] = S[l,r]が回文か否か O(N^2) */
   // vector<vector<bool>> pal = TotalPalindrome( S , false );
 
   // /* 最長共通接頭辞計算 O(N) */
-  // /* Utility/String/Z-Algorithm/compress.txt */
+  // /* Utility/String/Z-Algorithm/ */
   // /* lcp[i] = max_j(S[i,N)とS[i+j,N)の始切片が一致する長さ) */
   // vector<int> lcp = LCP( S );
 
   // /* 終切片の座標圧縮 O(N(log N)^2) */
-  // /* Utility/String/SuffixArray/compress.txt */
+  // /* Utility/String/SuffixArray/ */
   // /* sa[i] = S[i:N)が終切片全体で何番目か */
   // vector<int> sa = ManberMyers( S );
   // // /* 切片の座標圧縮 O(N(log N)^2)/O(N(log N)^2) */
-  // // /* Utility/String/SuffixArray/IntervalSort/compress.txt */
+  // // /* Utility/String/SuffixArray/IntervalSort/ */
   // // /* sa[i] = S[i:N)が終切片全体で何番目か */
   // // /* lis[k] = 切片全体でk番目となる区間[l,r]
   // // LexicographicIntervalSort lis{ S };

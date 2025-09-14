@@ -1,31 +1,31 @@
 // - Knapsack (8KB)
-//   Combinatorial/KnapsackProblem/compress.txt
+//   Combinatorial/KnapsackProblem/
 //   - Costfree: コストなし線形版 (3KB)
-//     Combinatorial/KnapsackProblem/Costfree/compress.txt
+//     Combinatorial/KnapsackProblem/Costfree/
 //     - Difference (7KB)
-//       Combinatorial/KnapsackProblem/Costfree/Difference/compress.txt
+//       Combinatorial/KnapsackProblem/Costfree/Difference/
 //     - InitialSegment (3KB)
-//       Combinatorial/KnapsackProblem/Costfree/InitialSegment/compress.txt
+//       Combinatorial/KnapsackProblem/Costfree/InitialSegment/
 //     - FixedSize (1KB)
-//       Combinatorial/KnapsackProblem/Costfree/FixedSize/compress.txt
+//       Combinatorial/KnapsackProblem/Costfree/FixedSize/
 //     - Valuewise (1KB)
-//       Combinatorial/KnapsackProblem/Costfree/Valuewise/tcompress.txt
+//       Combinatorial/KnapsackProblem/Costfree/Valuewise/t
 //   - CostOne: コスト1 (3KB)
-//     Combinatorial/KnapsackProblem/CostOne/compress.txt
+//     Combinatorial/KnapsackProblem/CostOne/
 //   - Interval: 区間和 (4KB)
-//     Combinatorial/KnapsackProblem/Interval/compress.txt
+//     Combinatorial/KnapsackProblem/Interval/
 //     - Costfree: コストなし線形版 (4KB)
-//       Combinatorial/KnapsackProblem/Interval/Costfree/compress.txt
+//       Combinatorial/KnapsackProblem/Interval/Costfree/
 //       - UnboundedValueSum: 上限なし (1KB)
-//         Combinatorial/KnapsackProblem/Interval/Costfree/UnboudedValueSum/compress.txt
+//         Combinatorial/KnapsackProblem/Interval/Costfree/UnboudedValueSum/
 //         - Segmentwise (1KB)
-//           Combinatorial/KnapsackProblem/Interval/Costfree/UnboudedValueSum/compress.txt
+//           Combinatorial/KnapsackProblem/Interval/Costfree/UnboudedValueSum/
 //   - BoundedChoice (14KB)
-//     Combinatorial/KnapsackProblem/BoundedChoice/compress.txt
+//     Combinatorial/KnapsackProblem/BoundedChoice/
 //       - Costfree (14KB)
-//         Combinatorial/KnapsackProblem/BoundedChoice/Costfree/compress.txt
+//         Combinatorial/KnapsackProblem/BoundedChoice/Costfree/
 //         - NegativeValue (17KB)
-//           Combinatorial/KnapsackProblem/BoundedChoice/Costfree/NegativeValue/compress.txt
+//           Combinatorial/KnapsackProblem/BoundedChoice/Costfree/NegativeValue/
 //   :
 //   :
 //   https://p-adic.github.io/cpp/#:~:text=ナップサック問題

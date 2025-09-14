@@ -28,7 +28,7 @@
   // };
 
   // /* i‘½“_j•—Dæ’Tõ O(HW) */
-  // /* Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt */
+  // /* Geometry/Graph/Algorithm/BreadthFirstSearch/ */
   // T2<int> external_point{-1,-1};
   // vector<T2<int>> start_points = {{0,0}};
   // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance(); // ‹——£æ“¾

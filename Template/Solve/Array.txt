@@ -22,20 +22,20 @@
   // }
 
   // /* 累積和 O(N)/O(1) */
-  // /* SetTheory/DirectProduct/AffineSpace/CumulativeProduct/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/CumulativeProduct/ */
   // CumulativeSum cs( move( A ) );
 
   // /* 階差数列 O(N)/O(1) */
-  // /* SetTheory/DirectProduct/AffineSpace/DifferenceSequence/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/DifferenceSequence/ */
   // DifferenceSequence ds( move( A ) );
 
   // /* 排他的スパーステーブル O(N log N)/O(__builtin_clzの計算量) */
-  // /* SetTheory/DirectProduct/AffineSpace/DisjointSparseTable/compress.txt */
+  // /* SetTheory/DirectProduct/AffineSpace/DisjointSparseTable/ */
   // DisjointSparseTable dst( A ); // 最大値の管理
   // // AbstractDisjointSparseTable dst( MinSemilattice<decltype(A[0])>( 1e9 ) , A );
   // // AbstractDisjointSparseTable dst( MultiplicativeMonoid<decltype(A[0])>( 1 ) , A );
 
   // /* 転倒数 O(N log N) */
-  // /* Combinatorial/Permutation/compress.txt */
+  // /* Combinatorial/Permutation/ */
   // ll inv_num = InversionNumber( A );
 

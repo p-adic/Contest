@@ -1,12 +1,12 @@
 // - CumulativeProduct: 非可換に特化 (7KB)
-//   SetTheory/DirectProduct/AffineSpace/CumulativeProduct/compress.txt
+//   SetTheory/DirectProduct/AffineSpace/CumulativeProduct/
 //   - Offline: モノイドから群へのモノイド準同型の族 (2KB)
-//     SetTheory/DirectProduct/AffineSpace/CumulativeProduct/Offline/compress.txt
+//     SetTheory/DirectProduct/AffineSpace/CumulativeProduct/Offline/
 //   - TwoDimensional: 可換群, ファイルサイズ小 (3KB)
-//     SetTheory/DirectProduct/AffineSpace/CumulativeProduct/TwoDimensional/compress.txt
+//     SetTheory/DirectProduct/AffineSpace/CumulativeProduct/TwoDimensional/
 // - DifferenceSequence: 可換, 根→葉 (9KB)
-//   SetTheory/DirectProduct/AffineSpace/DifferenceSequence/compress.txt
+//   SetTheory/DirectProduct/AffineSpace/DifferenceSequence/
 //   - Reversed: 可換, 葉→根 (9KB)
-//     SetTheory/DirectProduct/AffineSpace/DifferenceSequence/Reversed/compress.txt
+//     SetTheory/DirectProduct/AffineSpace/DifferenceSequence/Reversed/
 //   - TwoDimensional: 可換群 (7KB)
-//     SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/compress.txt
+//     SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/

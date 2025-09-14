@@ -1,10 +1,10 @@
 // - Matrix (6KB)
-//   LinearAlgebra/compress.txt
+//   LinearAlgebra/
 //   - Determinant (2KB)
-//     LinearAlgebra/Determinant/compress.txt
+//     LinearAlgebra/Determinant/
 //   - TwoByTwo (6KB)
-//     LinearAlgebra/TwoByTwo/compress.txt
+//     LinearAlgebra/TwoByTwo/
 //   - TwoByOne (9KB)
-//     LinearAlgebra/TwoByOne/compress.txt
+//     LinearAlgebra/TwoByOne/
 //   - Rank (3KB)
-//     LinearAlgebra/Rank/Mod/compress.txt
+//     LinearAlgebra/Rank/Mod/

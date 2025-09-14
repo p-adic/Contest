@@ -11,7 +11,7 @@
   auto P_inv = Inverse( P );
 
   // /* 置換 */
-  // /* Combinatorial/Permutation/compress.txt */
+  // /* Combinatorial/Permutation/ */
   // /* （順列とは限らない配列Pの）転倒数計算 O(N log N) */
   // ll inv_num = InversionNumber( P );
   // /* 順列Pの巡回置換表示 O(N) */

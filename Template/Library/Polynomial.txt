@@ -1,26 +1,26 @@
 // - FFTなしPolynomial (8KB)
-//   Polynomial/compress.txt
+//   Polynomial/
 //   - FFT/FormalPowerSeries (20KB)
-//     Polynomial/FPS/compress.txt
+//     Polynomial/FPS/
 //     - NonProth (22KB)
-//       Polynomial/FFT/NonProth/compress.txt
+//       Polynomial/FFT/NonProth/
 //   - BostanMori: f/gの1係数のみ取得 (2KB)
-//     Polynomial/BostanMori/compress.txt
+//     Polynomial/BostanMori/
 //     - 並列BostanMori: f/gの多係数取得 (3KB)
-//       Polynomial/BostanMori/MultiCoefficientEvaluation/compress.txt
+//       Polynomial/BostanMori/MultiCoefficientEvaluation/
 //   - CoordinateChange: 平行移動,アフィン変換,メビウス変換 (2KB)
-//     Polynomial/CoordinateChange/compress.txt
+//     Polynomial/CoordinateChange/
 //     - Composition: 合成,メビウス変換,指数関数のメビウス変換を代入,メビウス変換の対数関数を合成 (5KB
-//     Polynomial/Composition/compress.txt
+//     Polynomial/Composition/
 //   - Cumulative: 総和,総乗,べき場,指数関数の線形結合,累積和多項式 (4KB)
-//     Polynomial/Cumulative/compress.txt
+//     Polynomial/Cumulative/
 //     - GridStampCoveringExpectation: スタンプで被覆する回数の期待値 (3KB)
-//       Polynomial/Cumulative/GridStampCoveringExpectation/compress.txt
+//       Polynomial/Cumulative/GridStampCoveringExpectation/
 //   - Mod: 合同式 (1KB)
-//     Polynomial/Mod/compress.txt
+//     Polynomial/Mod/
 //   - MultipointEvaluation: 一般の多点評価 (4KB)
-//     Polynomial/MultipointEvaluation/compress.txt
+//     Polynomial/MultipointEvaluation/
 //     - IntervalEvaluation: 評価点シフト,区間に特化した多点評価 (8KB)
-//       Polynomial/MultipointEvaluation/IntervalEvaluation/compress.txt
+//       Polynomial/MultipointEvaluation/IntervalEvaluation/
 //     - LagrangeInterpolation: ラグランジュ補間 (2KB)
-//       Polynomial/MultipointEvaluation/LagrangeInterpolation/compress.txt
+//       Polynomial/MultipointEvaluation/LagrangeInterpolation/

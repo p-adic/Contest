@@ -1,10 +1,10 @@
 // - BFS (6KB)
-//   Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt
+//   Geometry/Graph/Algorithm/BreadthFirstSearch/
 //   - AdicExhausiveSearch (11KB)
-//     Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/compress.txt
+//     Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/
 //   - BitExhausiveSearch (10KB)
-//     Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/compress.txt
+//     Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/
 //   - QuotientSet (3KB)
-//     Geometry/Graph/Algorithm/BreadthFirstSearch/QuotientSet/compress.txt
+//     Geometry/Graph/Algorithm/BreadthFirstSearch/QuotientSet/
 //   - ZeroOneBreadthFirstSearch (4KB)
-//     Geometry/Graph/Algorithm/BreadthFirstSearch/01/compress.txt
+//     Geometry/Graph/Algorithm/BreadthFirstSearch/01/

@@ -3,29 +3,31 @@
   // 以下、ライブラリは重複しうるので下に位置するライブラリを優先でC-x C-lする。
   
   // /* 素数列挙 O(N log log N) */
-  // /* Arithmetic/Prime/Enumeration/Constexpr/compress.txt */
+  // /* Arithmetic/Prime/Enumeration/Heap/ */
+  // /* Arithmetic/Prime/Enumeration/ (要高速化時) */
   // /* val_limit = 316 ≒ sqrt(1e5) -> length = 65 */
   // /* val_limit = 448 ≒ sqrt(2e5) -> length = 86 */
   // /* val_limit = 1e5 -> length = 9592           */
   // /* val_limit = 1e6 -> length = 78498          */
   // CEXPR( int , val_limit , 316 );
-  // static PrimeEnumeration<val_limit> pe{};
+  // HeapPrimeEnumeration<val_limit> pe{};
   // // constexpr PrimeEnumeration<val_limit> pe{};
   // // auto& length = pe.length();
 
   // /* 最小素因数 */
-  // /* Arithmetic/Divisor/Least/compress.txt */
+  // /* Arithmetic/Divisor/Least/Heap/ */
+  // /* Arithmetic/Divisor/Least/ (要高速化時) */
   // CEXPR( int , val_limit , 316 );
-  // static LeastDivisor<val_limit> ld{};
+  // HeapLeastDivisor<val_limit> ld{};
   // // constexpr LeastDivisor<val_limit> ld{};
 
   // /* 素因数分解 O(pe:√N/log N,ld:log N) */
-  // /* Arithmetic/Prime/Factrisation/compress.txt */
+  // /* Arithmetic/Prime/Factrisation/ */
   // auto [pf,e] = PrimeFactorisation( pe , N );
   // // auto [pf,e,q] = PrimePowerFactorisation( pe , N );
 
   // /* 約数計数 O(pe:√N/log N,ld:log N) */
-  // /* Arithmetic/Divisor/Count/compress.txt */
+  // /* Arithmetic/Divisor/Count/ */
   // /* n <= 1e3 -> answer <= 32  */
   // /* n <= 1e4 -> answer <= 64  */
   // /* n <= 1e5 -> answer <= 128 */
@@ -33,12 +35,12 @@
   // int count = CountDivisor( pe , N );
 
   // /* 約数列挙 O(pe:√N/log N,ld:d(N)=N^{log 2/log log N}) */
-  // /* Arithmetic/Divisor/Enumeration/compress.txt */
+  // /* Arithmetic/Divisor/Enumeration/ */
   // vector<int> div = EnumerateDivisor( pe , N ); Sort( div );
   // // vector<vector<int>> div = TotalEnumerateDivisor( N ); // O(N log N)
 
   // /* オイラー関数  O(√N/log N)/O(log N) */
-  // /* Arithmetic/Mod/Function/Euler/compress.txt" */
+  // /* Arithmetic/Mod/Function/Euler/" */
   // int euler = EulerFunction( pe , N );
   // // vector<int> euler = TotalEulerFunction( pe , N ); // O(n_max log n_max)
 
