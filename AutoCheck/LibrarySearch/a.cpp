@@ -225,6 +225,36 @@ AC( ExplicitExpressionUnaryOther )
   CERR( "- サブゴールとなる関係式を満たす解の列挙" );
   CERR( "があります。特に漸化式による前計算が可能な場合、法または周期を" );
   CERR( "バケット分割してソースコードに埋め込む高速化を検討しましょう。" );
+  ASK_YES_NO( "整数値単調関数の各値の計算問題ですか？" );
+  if( reply == "y" ){
+    CERR( "fを単調関数とし各i in [0,N)に対するf(i)を求める問題を考えます。" );
+    ASK_YES_NO( "fは非負単調減少であり、かつfは減少の早い優関数gを持ちますか？" );
+    if( reply == "y" ){
+      CERR( "fの各点での愚直な計算量の上界をKと置きます。" );
+      CERR( "閾値B in [0,N)を固定し、各i in [0,B)に対してf(i)を愚直に求める" );
+      CERR( "計算量はO(BK)です。各i in [B,N)に対してf(i) in [0,g(B)]であり" );
+      CERR( "各k in [0,g(B)]に対しf(i)<=kを満たす最大値を二分探索で求める" );
+      CERR( "計算量はO(g(B)K log_2 g(B))です。" );
+      CERR( "合わせて計算量がO(BK+g(B)K log_2 g(B))で抑えられたので、" );
+      CERR( "g(B)の形に従って相加相乗平均などで最適化しましょう。" );
+      ASK_YES_NO( "g(i) = N/(i+1)などと取れますか？" );
+      if( reply == "y" ){
+        CALL_AC( ExplicitExpressionMonotone );
+        CERR( "https://codeforces.com/blog/entry/134445" );
+      }
+    } else {
+      ASK_YES_NO( "f(i)を含む区間Iが与えられた時、f(i)をIの濃度の線形オーダーなどで求められますか？" );
+      if( reply == "y" ){
+        CALL_AC( ExplicitExpressionMonotone );
+      }
+    }
+  }
+}
+
+AC( ExplicitExpressionMonotone )
+{
+  CERR( "monotone minimaの要領で、fの定義域を再帰的に二等分していき、" );
+  CERR( "終域を分割していきましょう。" );
 }
 
 AC( ExplicitExpressionMultivariable )
@@ -253,7 +283,7 @@ AC( ExplicitExpressionMultivariable )
 AC( ExplicitExpressionArraySum )
 {
   ASK_NUMBER(
-	     "１つの配列（の成分を受け取る関数）の総和の計算問題" ,
+	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
 	     "２つの配列の内積の計算問題" ,
 	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
 	     "配列を受け取る関数の配列をわたる総和の計算問題"
@@ -296,11 +326,6 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
   CERR( "  (a_)の各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
-  CERR( "- i%j = i - floor(i/j)jを用いて剰余を商に帰着" );
-  CERR( "  - iに関する和はfloor_sum" );
-  CERR( "    \\Mathematics\\Combinatorial\\FloorSum" );
-  CERR( "  - jに関する和は平方分割" );
-  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
   CERR( "- Nが大きい場合と小さい場合で解法の折衷" );
   CERR( "  - 1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i floor(M/a_i)" );
   CERR( "    などを考える。(a_i)_{i=0}^{N-1}はソートしてよく、Bをfloor(M/整数)の形で" );
@@ -312,7 +337,6 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "    固定してa_i<=Bの範囲では愚直計算、a_i>Bの範囲ではfloor(M/a_i)=jと置いて" );
   CERR( "    各1<=j<floor(M/B)に対し(a_iの総和)*jの総和を求める分割統治法" );
   CERR( "を検討しましょう。" );
-  CERR( "" );
 }
 
 AC( ExplicitExpressionInnerProduct )
@@ -402,6 +426,14 @@ AC( ExplicitExpressionDoubleSum )
   CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
   CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
+  CERR( "- f(x,y)=h(floor(g_1(x,y)/g_2(x,y)))の場合、floorの値ごとに纏め上げて" );
+  CERR( "  バケット分割で高速化" );
+  CERR( "  - xに関するfloor(x/y)の和はfloor_sum" );
+  CERR( "    \\Mathematics\\Combinatorial\\FloorSum" );
+  CERR( "  - yに関するfloor(x/y)の和は平方分割" );
+  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
+  CERR( "- f(x,y)=h(g_1(x,y)%g_2(x,y))の場合、x%y = x - floor(x/y)yを用いて" );
+  CERR( "  剰余を商に帰着" );
   CERR( "を検討しましょう。" );
 }
 
@@ -698,9 +730,9 @@ AC( ExplicitExpressionProbability )
       CERR( "        - 矩形のサイズが固定ならば、ベルヌーイ数前計算による冪乗関数の" );
       CERR( "          総和を用いた明示式" );
       CERR( "          \\Mathematics\\Polynomial\\Cumulative\\GridStampCoveringExpectation" );
-    if( type[2] ){
-      CERR( "      - ランダムな順列Pの転倒数はP[i]>P[j]を満たす確率p(i,j)の総和" );
-    }
+      if( type[2] ){
+        CERR( "      - ランダムな順列Pの転倒数はP[i]>P[j]を満たす確率p(i,j)の総和" );
+      }
     }
     if( type[6] ){
       CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
@@ -771,18 +803,10 @@ AC( ExplicitExpressionProbability )
 AC( ExplicitExpressionCountingOperation )
 {
   CALL_AC( ReducingOperation );
-  CERR( "その上で選択の余地のない操作回数を求める際は、" );
-  CERR( "- 操作列をイベントとみなし時系列に並べ、「一斉に処理できる区間」いくつか" );
-  CERR( "  に分割し、それぞれの区間での処理をまとめて計算" );
-  CERR( "- 操作対象が操作優先度つきで複数ある場合は、各操作対象の操作回数に関する動的計画法" );
-  CERR( "- 操作がいくつかの対象群に同時に行われるならば、各対象群ごとに回数計算" );
-  CERR( "- 操作が辺の削除ならば、逆向きに処理して各連結成分ごとに操作回数を記録" );
-  CERR( "- 操作が配列の成分の書き換えならば、" );
-  CERR( "  - dp[i] = 第i成分までで打ち切った時の操作回数" );
-  CERR( "    としてiに関する動的計画法" );
-  CERR( "  - dp[l,r) = 第l成分から第r-1成分まで切り出した時の操作回数などのデータ" );
-  CERR( "    区間を中間で分割してマージする分割統治（更新クエリはセグメント木で処理）" );
-  CERR( "を検討しましょう。" );
+  CALL_AC( CountingOperation );
+  CERR( "" );
+  CERR( "シミュレーションも検討しましょう。" );
+  CALL_AC( SimulateOperation );
 }
 
 AC( ReducingOperation )
@@ -798,6 +822,22 @@ AC( ReducingOperation )
   CERR( "- 添字mod Bごとに取り出した部分列の不変量" );
   CERR( "特に、操作回数を不変量の明示式や不変量を用いた貪欲法で計算できないか" );
   CERR( "検討してみましょう。" );
+}
+
+AC( CountingOperation )
+{
+  CERR( "その上で選択の余地のない操作回数を求める際は、" );
+  CERR( "- 操作列をイベントとみなし時系列に並べ、「一斉に処理できる区間」いくつか" );
+  CERR( "  に分割し、それぞれの区間での処理をまとめて計算" );
+  CERR( "- 操作対象が操作優先度つきで複数ある場合は、各操作対象の操作回数に関する動的計画法" );
+  CERR( "- 操作がいくつかの対象群に同時に行われるならば、各対象群ごとに回数計算" );
+  CERR( "- 操作が辺の削除ならば、逆向きに処理して各連結成分ごとに操作回数を記録" );
+  CERR( "- 操作が配列の成分の書き換えならば、" );
+  CERR( "  - dp[i] = 第i成分までで打ち切った時の操作回数" );
+  CERR( "    としてiに関する動的計画法" );
+  CERR( "  - dp[l,r) = 第l成分から第r-1成分まで切り出した時の操作回数などのデータ" );
+  CERR( "    区間を中間で分割してマージする分割統治（更新クエリはセグメント木で処理）" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionTimeSeriesChange )
@@ -932,7 +972,7 @@ AC( Maximisation )
 	     "固定長多変数関数の最大／最小化問題" ,
 	     "集合やグラフの部分集合に関する最大／最小化問題" ,
 	     "グラフの経路に関する最大／最小化問題" ,
-	     "木上の関数に関する最大／最小化問題" ,
+	     "木に関する最大／最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
              "分割に関する最大／最小化問題" ,
 	     "確率／期待値の最大化問題" ,
@@ -963,7 +1003,7 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationGraph );
   } else if( num == num_temp++ ){
-    CALL_AC( MaximisationFunctionOnTree );
+    CALL_AC( MaximisationOnTree );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationStringMatching );
   } else if( num == num_temp++ ){
@@ -1592,21 +1632,23 @@ AC( SingleKnapsackBoundedChoiceCostfree )
 
 AC( SingleKnapsackSingleChoice )
 {
+  CERR( "i選択目の項目のコスト上限（存在しない場合∞）をC_iと置きます。" );
   ASK_NUMBER(
              "コストが1である問題" ,
-             "1とは限らないコストがある問題" ,
+             "コストが1とは限らない問題" ,
              "コストがない問題"
              );
   if( num == num_temp++ ){
     CALL_AC( SingleKnapsackCostOne );
   } else if( num == num_temp++ ){
-    ASK_YES_NO( "選ぶ順番に意味がありますか？" );
+    ASK_YES_NO( "C_iはiに依存しない値ですか？" );
     if( reply == "y" ){
+      CALL_AC( SingleKnapsackUnordered );
+    } else {
       CERR( "各選択をそれぞれ別のナップサックとみなすことで、項を１つだけ格納できる" );
       CERR( "ナップサックが複数ある場合に帰着されます。" );
+      CALL_AC( MultiKnapsackCostBoundSetting );
       CALL_AC( MultipleKnapsackSingleItem );
-    } else {
-      CALL_AC( SingleKnapsackUnordered );
     }
   } else {
     CALL_AC( SingleKnapsackCostfree );
@@ -1615,24 +1657,25 @@ AC( SingleKnapsackSingleChoice )
 
 AC( SingleKnapsackCostOne )
 {
-  CERR( "i番目の項目選択時のコスト上限をC_iと置き、C_iの上限をCと置きます。" );
-  CERR( "O(N log min(N,C))が間に合いそうならば、iの小さい順にi番目までの正の価値を" );
-  CERR( "上からC_i個まで優先度付きキューで管理して総和を取れば良いです。" );
+  CERR( "O(N log min(N,sup_i C_i))が間に合いそうならば、iの小さい順に" );
+  CERR( "i番目までの正の価値を上からC_i個まで優先度付きキューで管理して" );
+  CERR( "総和を取れば良いです。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\CostOne" );
 }
 
 AC( SingleKnapsackUnordered )
 {
+  CERR( "コストまたは価値でソートしても構いません。" );
   ASK_YES_NO( "コストが１次元ですか？" );
+  CERR( "- O(N 2^N)が通りそうかつコストの動く範囲が遷移途中も制限されているならば、" );
+  CERR( "  P(N)のハッセ図を幅優先探策" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Restrictive" );
   CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative" );
   CERR( "- O(N |C|)が通りそうかつコストが非負ならば、" );
-  CERR( "  「i番目の項まで使ってコストの総和がcの時の価値の最大値dp[i][c]」" );
+  CERR( "  dp[i][c]=「i番目の項まで使ってコスト総和がcの時の価値総和最大値」" );
   CERR( "  を管理するi,cに関する動的計画法" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Value" );
-  CERR( "- O(N 2^N)が通りそうかつコストの動く範囲が遷移途中も制限されているならば、" );
-  CERR( "  bit全探策" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Restrictive" );
   if( reply == "y" ){
     CALL_AC( SingleKnapsackWithLinearCost );
   } else {
@@ -1642,10 +1685,25 @@ AC( SingleKnapsackUnordered )
 
 AC( SingleKnapsackWithLinearCost )
 {
+  CERR( "  - |C|が大きい時はコスト降順にソートして" );
+  CERR( "    dp[i][c]=「i番目の項まで使ってコスト総和がc以下の時の価値総和最大値」" );
+  CERR( "    をcに関するmapで管理するiに関するnext DPで、keyの最大値から" );
+  CERR( "    残りのコスト総和を引いた値未満のkeyを枝刈り" );
+  CERR( "  - 特にコストが指数オーダーで変化するならば、" );
+  CERR( "    「ある項目を選ばないならば、適切な終切片が選択可能」" );
+  CERR( "    という考察による選択肢の絞り込み" );
   CERR( "- O(N V)が通りそうかつ価値が非負ならば、" );
-  CERR( "  「i番目の項まで使って価値の総和がvの時のコストの最小値dp[i][c]」" );
+  CERR( "  dp[i][c]=「i番目の項まで使って価値総和がvの時のコスト総和最小値」" );
   CERR( "  を管理するi,vに関する動的計画法" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Cost" );
+  CERR( "  - Vが大きい時は価値降順にソートして" );
+  CERR( "    dp[i][c]=「i番目の項まで使って価値総和がv以下の時のコスト総和最小値」" );
+  CERR( "    をvに関するmapで管理するiに関するnext DPで、keyの最大値から" );
+  CERR( "    残りの価値総和を引いた値未満のkeyを枝刈り" );
+  CERR( "  - 特に価値が指数オーダーで変化し良い漸化式を満たすならば、" );
+  CERR( "    「keyの最大値-keyの短い始切片の部分和の形のkeyのみ考えれば良い」" );
+  CERR( "    という考察による選択肢の絞り込み" );
+  CERR( "    https://yukicoder.me/problems/no/2167/editorial" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1689,8 +1747,7 @@ AC( SingleKnapsackCostfree )
 
 AC( MultipleKnapsack )
 {
-  CERR( "ナップサックの個数をKと置き、1 <= k <= K個目のナップサックの" );
-  CERR( "コスト上限をD_kとします。" );
+  CALL_AC( MultiKnapsackCostBoundSetting );
   ASK_YES_NO( "各ナップサックに格納できる項は高々１個ですか？" );
   if( reply == "y" ){
     CALL_AC( MultipleKnapsackSingleItem );
@@ -1702,6 +1759,12 @@ AC( MultipleKnapsack )
       CALL_AC( MultipleKnapsackFreeMatching );
     }
   }
+}
+
+AC( MultiKnapsackCostBoundSetting )
+{
+  CERR( "ナップサックの個数をKと置き、1 <= k <= K個目のナップサックの" );
+  CERR( "コスト上限をD_kとします。" );
 }
 
 AC( MultipleKnapsackSingleItem )
@@ -2034,17 +2097,42 @@ AC( MaximisationGraphValue )
   }
 }
 
-AC( MaximisationFunctionOnTree )
+AC( MaximisationOnTree )
 {
   ASK_NUMBER(
 	     "木上の関数の特定の部分集合上での最大／最小値計算問題" ,
-	     "木の分割ごとに定まる値の最大／最小化問題"
+	     "木の分割ごとに定まる値の最大／最小化問題" ,
+	     "木のパスの長さの最大化問題" ,
+	     "木の部分集合への最近傍探索問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryTree );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationPartitionOfTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationLengthOfPathOnTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( NearestNeighbourOnTree );
   }
+}
+
+AC( MaximisationLengthOfPathOnTree )
+{
+  CERR( "- 重みなし木であれば、" );
+  CERR( "  - 両端点が自由であれば直径" );
+  CERR( "  - 片端点を固定するごとであれば、中心をc0,c1（同じでも可）" );
+  CERR( "    としてc0を根としfloor(直径/2)をrと置いて" );
+  CERR( "    (iの深さ)+(iがc0よりc1に近い?r:直径-r)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Diameter" );
+  CERR( "- 重みつき木であれば、上位２位までを管理する木DP" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted\\Diameter" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( NearestNeighbourOnTree )
+{
+  CERR( "幅優先探索の要領で、集合をふくらませていきながら境界を管理しましょう。" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\NearestNeighbour" );
 }
 
 AC( MaximisationStringMatching )
@@ -2177,35 +2265,43 @@ AC( MaximisationProbability )
 AC( MinimisationOperationCost )
 {
   CALL_AC( ReducingOperation );
-  CERR( "最適な操作の候補がある時は、その候補を特徴付ける関係式を求め、" );
+  CERR( "損をしない変形方法がある時は、その変形で不変な操作方法のみに絞りましょう。" );
+  CERR( "- 羃等操作ならば、各操作を高々一度だけ適用する。" );
+  CERR( "- 可換操作ならば、各操作をソートして適用する。" );
+  CERR( "- 羃等な区間作用ならば、排他的区間族のみ考慮する。" );
+  CERR( "特に最適な操作の候補がある時は、その候補を特徴付ける関係式を求め、" );
   CERR( "任意の操作からコストを増加させずにその関係式を満たすように変形できるか" );
   CERR( "否かを確認しましょう。確認できればその候補のみ考えれば良く、" );
   CERR( "確認できなければその候補に執着せずに考察をしましょう。" );
+  CERR( "" );
+  CERR( "操作回数の上限がある場合は、操作回数ごとに最適状態を管理する" );
+  CERR( "動的計画法を検討しましょう。特に最適な操作が何らかの値を倍にする場合、" );
+  CERR( "その値の上限のlog_2で操作回数を抑えられることに注意しましょう。" );
   ASK_YES_NO( "有向森の葉を削除して空にする問題ですか？" );
+  if( reply == "y" ){
+    CERR( "適宜根を追加して、根付き木を根のみに変形する問題に帰着させます。" );
+    CERR( "親子関係にないノードの削除順を入れ替えられる必要十分条件を、" );
+    CERR( "ノードの不変量の大小で記述しましょう。不変量が最大または最小なノードの" );
+    CERR( "削除位置は後ろに自由に動かせるので、親子で連続削除される" );
+    CERR( "と仮定して良いです。その親子を圧縮した場合の答えとのズレを管理して、" );
+    CERR( "小さい根付き木に帰着させましょう。" );
+  } else {
+    ASK_YES_NO( "コストが1でない操作があり、かつ各操作が可換ですか？" );
     if( reply == "y" ){
-      CERR( "適宜根を追加して、根付き木を根のみに変形する問題に帰着させます。" );
-      CERR( "親子関係にないノードの削除順を入れ替えられる必要十分条件を、" );
-      CERR( "ノードの不変量の大小で記述しましょう。不変量が最大または最小なノードの" );
-      CERR( "削除位置は後ろに自由に動かせるので、親子で連続削除される" );
-      CERR( "と仮定して良いです。その親子を圧縮した場合の答えとのズレを管理して、" );
-      CERR( "小さい根付き木に帰着させましょう。" );
+      CERR( "コスト正の各操作を実行する回数を決定すれば良いので、" );
+      CERR( "- コスト0の操作のみで処理できる必要十分条件の決定" );
+      CERR( "- コスト正の操作回数の合計kを決め打った時の最小コストc(k)の決定" );
+      CERR( "  - c(k)が単調ならばc(k)の最小値を二分探索" );
+      CERR( "  - c(k)が凸ならばc(k)の最小値を三分探索" );
+      CERR( "  - 一般にはc(k)の最小値を全探策" );
+      CERR( "- コスト正の操作回数の組み合わせの全探策" );
+      CERR( "を検討しましょう。" );
     } else {
-      ASK_YES_NO( "コスト含めて全く同じである操作を反復できる問題ですか？" );
-      if( reply == "y" ){
-        CERR( "コスト正の各操作を実行する回数を決定すれば良いので、" );
-        CERR( "- コスト0の操作のみで処理できる必要十分条件の決定" );
-        CERR( "- コスト正の操作回数の合計kを決め打った時の最小コストc(k)の決定" );
-        CERR( "  - c(k)が単調ならばc(k)の最小値を二分探索" );
-        CERR( "  - c(k)が凸ならばc(k)の最小値を三分探索" );
-        CERR( "  - 一般にはc(k)の最小値を全探策" );
-        CERR( "- コスト正の操作回数の組み合わせの全探策" );
-        CERR( "を検討しましょう。" );
-      } else {
-        CERR( "操作コストの最小化は、操作による状態遷移を有向グラフ上の移動とみなすことで" );
-        CERR( "最短経路問題に帰着させることが可能です。" );
-        CALL_AC( MinimisationMovingCost );
-      }
+      CERR( "操作コストの最小化は、操作による状態遷移を有向グラフ上の移動とみなすことで" );
+      CERR( "最短経路問題に帰着させることが可能です。" );
+      CALL_AC( MinimisationMovingCost );
     }
+  }
 }
 
 AC( MaximisationCountingOperation )
@@ -2427,7 +2523,8 @@ AC( Counting )
   CERR( "- 状態数が多い場合、状態の満たす関係式を特定して状態数の削減。" );
   CERR( "を検討しましょう。" );
   ASK_NUMBER(
-	     "数の数え上げ問題" ,
+	     "数（配列の添字）の数え上げ問題" ,
+	     "組（行列の添字）の数え上げ問題" ,
 	     "配列の数え上げ問題" ,
 	     "文字列の数え上げ問題" ,
 	     "行列の数え上げ問題" ,
@@ -2439,11 +2536,12 @@ AC( Counting )
 	     "経路の数え上げ問題" ,
 	     "タイリング／塗り分けの数え上げ問題" ,
 	     "ヤング図形の数え上げ問題" ,
-	     "カタラン数の計算問題" ,
 	     "操作回数の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingNumber );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingPair );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArray );
   } else if( num == num_temp++ ){
@@ -2499,6 +2597,13 @@ AC( CountingNumber )
   }
 }
 
+AC( CountingPair )
+{
+  CERR( "条件P(i,j)を満たすN未満の非負整数iとM未満の非負整数jの数え上げは、" );
+  CERR( "関数f(i,j) = P(i,j)?1:0などの総和の計算問題に帰着されます。" );
+  CALL_AC( ExplicitExpressionDoubleSum );
+}
+
 AC( CountingExplicitExpression )
 {
   CERR( "- 変数の対称性があれば大小関係を制限した全探策" );
@@ -2532,11 +2637,14 @@ AC( CountingArray )
   ASK_NUMBER(
              "条件を満たす配列の数え上げ問題" ,
              "与えられた配列の部分列の数え上げ問題"
+             "与えられた配列の添字の数え上げ問題"
              );
   if( num == num_temp++ ){
     CALL_AC( CountingArrayConditional );
-  } else {
+  } else if( num == num_temp++ ){
     CALL_AC( CountingSubArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingNumber );
   }
 }
 
@@ -3382,7 +3490,7 @@ AC( Query )
   if( num == num_temp++ ){
     ASK_NUMBER(
                "配列クエリ" ,
-               "木クエリ" ,
+               "木クエリ（森クエリは木クエリに帰着）" ,
                "グリッドクエリ" ,
                "一般のグラフクエリ"
                );
@@ -3707,7 +3815,9 @@ AC( QueryTree )
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
   CERR( "- 木上の累積和で、可換群構造に関する部分木総和取得O(1)" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\Tree" );
-  CERR( "- 全域木DPで、可換モノイド構造に関する各部分木総乗取得O(N)" );
+  CERR( "- 全方位木DPで、モノイド構造に関する各部分木総乗取得O(N)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree" );
+  CERR( "- ダブリングで、トポロジカルソートされた頂点番号未満の最近祖先取得O(log N)" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree" );
   CERR( "- 重み付きLCAで、モノイド構造に関するパス総乗取得O(log N)" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree\\Weighted" );
@@ -3936,9 +4046,20 @@ AC( QueryTimeSeriesChangeDifference )
 
 AC( Simulation )
 {
-  CERR( "愚直なシミュレーションで間に合うか否かを判定し、間に合うならばそのまま" );
-  CERR( "実装しましょう。間に合わないならば、" );
+  CALL_AC( SimulateOperation );
+  ASK_YES_NO( "操作回数の計算問題ですか？" );
+  if( reply == "y" ){
+    CALL_AC( ReducingOperation );
+    CALL_AC( CountingOperation );
+  }
+}
+
+AC( SimulateOperation )
+{
+  CERR( "まずは愚直なシミュレーションで間に合うか否かを判定し、" );
+  CERR( "間に合うならばそのまま実装しましょう。間に合わないならば、" );
   CERR( "- 操作／遷移の纏め上げによる高速化" );
+  CERR( "- 序盤+周期性+最終ループ（途中までの可能性があるので最大１周期分見る）" );
   CERR( "- 最終結果に影響するイベントのみを管理" );
   CERR( "  - イベントを重複して解決するならば座標圧縮" );
   CERR( "  - イベントを重複して解決しないならばsetやmapで管理して" );
@@ -3949,6 +4070,10 @@ AC( Simulation )
   CERR( "    区間代入更新で管理" );
   CERR( "  - 特にグリッド上の経路は線分の集まりとみなして処理可能" );
   CERR( "- イベント群を区間更新クエリに翻訳して双対セグメント木などによる高速化" );
+  CERR( "- イベント群をモノイドに翻訳して繰り返し二乗法などによる高速化" );
+  CERR( "  - x -> max(bound,x+A_i)の遷移はx -> x+A_iの遷移との差を" );
+  CERR( "    累積和の累積maxに翻訳" );
+  CERR( "- 操作回数の計算は、何らかの数値に単調性があれば二分探索" );
   CERR( "を検討しましょう。" );
 }
 
@@ -4272,7 +4397,12 @@ AC( DecisionExistence )
     CERR( "bool値の方程式は命題の充足可能性に帰着させましょう。" );
     CALL_AC( DecisionSatisfiability );
   } else if( num == num_temp++ ){
-    CALL_AC( ConstructionArray );
+    ASK_YES_NO( "順列の存在判定ですか？" );
+    if( reply == "y" ){
+      CALL_AC( ConstructionPermutation );
+    } else {
+      CALL_AC( ConstructionArray );
+    }
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMatrix );
   } else if( num == num_temp++ ){
@@ -4376,6 +4506,7 @@ AC( Construction )
   ASK_NUMBER(
 	     "数やベクトルに関する構築" ,
 	     "配列や文字列に関する構築" ,
+	     "順列に関する構築" ,
 	     "行列に関する構築" ,
 	     "写像の構築" ,
              "グラフに関する構築" ,
@@ -4387,6 +4518,8 @@ AC( Construction )
     CALL_AC( ConstructionNumber );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionPermutation );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMatrix );
   } else if( num == num_temp++ ){
@@ -4406,13 +4539,27 @@ AC( ConstructionNumber )
 {
   ASK_NUMBER(
 	     "数や固定長ベクトルの表示方法の構築" ,
-	     "方程式の解の構築"
+	     "方程式の解の構築" ,
+             "位取り記法表示が何らかの性質を持つ数の構築"
              );
   if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
-  } else {
+  } else if( num == num_temp++ ){
     CALL_AC( Solving );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionDigits );
   }
+}
+
+AC( ConstructionDigits )
+{
+  CERR( "- 構築する桁数が少なければ、候補を絞って全探策" );
+  CERR( "- 入力の位取り記法表示Sと関係のある性質であれば、" );
+  CERR( "  制約から探索可能な文字列操作を逆算して" );
+  CERR( "  - Sに0...0などを挿入" );
+  CERR( "  - Sの各桁を固定回数反復" );
+  CERR( "  - Sの部分文字列を反復" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ConstructionArray )
@@ -4425,11 +4572,47 @@ AC( ConstructionArray )
     CERR( "- １つの配列の構成は、p進法や階差数列への翻訳を検討しましょう。" );
     CERR( "- 何らかの関数値が一致する２つの配列の構成は、鳩の巣原理をもとに" );
     CERR( "  動かすパラメータを設定し、全探策を検討しましょう。" );
-    CERR( "- 順列の構成は、階乗進法や互換表示や巡回置換表示を検討し、" );
-    CERR( "  小さいケースに帰着させるためにnext_permutationで実験しましょう。" );
   } else {
     CALL_AC( ConstructionPartition );
   }
+}
+
+AC( ConstructionPermutation )
+{
+  ASK_YES_NO( "順列Pの何らかのスコアf(P)が定義される問題ですか？" );
+  if( reply == "y" ){
+    CERR( "Pが存在する必要十分条件を、f(P)が特定の区間に属すことに翻訳しましょう。" );
+    CERR( "- f(P)を決め打ってPの探索" );
+    CERR( "  - 焼き鈍し法による最適化" );
+    CERR( "    \\Mathematics\\Combinatorial\\SimulatedAnnealing" );
+  }
+  CERR( "- 互換表示や巡回置換表示の探索" );
+  CERR( "- 階乗進法で探索" );
+  if( reply == "y" ){
+    CERR( "  - f(P)がPの階乗進法に関して単調ならば二分探索" );
+  }
+  CERR( "- -1して法Nに帰着させ、(x+yi)_iの形に絞って考察" );
+  CERR( "- 小さいケースはnext_permutationで愚直" );
+  CERR( "  - 実験をしてNがある程度大きい際の存在の必要十分条件が得られたら" );
+  CERR( "    それより大きいケースを再帰で小さいNに帰着" );
+  if( reply == "y" ){
+    CERR( "  - f(P)の動く範囲が狭くかつf(P)=f(Q)を満たすP!=Qを探すならば、" );
+    CERR( "    Pの先頭を固定して鳩の巣原理で末尾いくつかを全探策" );
+  }
+  CERR( "- 端を確定させた時の条件が残りの部分の構築に帰着できそうならば、" );
+  CERR( "  端から確定させる再帰" );
+  CERR( "  - 順列全体より狭く、毎回端を残っている最大か最小に割り振る制限" );
+  if( reply == "y" ){
+    CERR( "  - 確定させる値によってf(Pの残り)の属すべき区間がどう変化するかの計算" );
+  }
+  CERR( "- 順列の残りの候補から要素を選択する際は" );
+  CERR( "  - 追加と削除両方行うならば、sorted setやBITによる集合管理" );
+  CERR( "    \\Mathematics\\SetTheory\\Line\\Bounded" );
+  CERR( "  - 削除のみ行うならば、LinkedVectorで残りをベクトルで管理し、" );
+  CERR( "    素集合データ構造で削除を「左に残っているうちの最大元への結合」に翻訳" );
+  CERR( "    \\Utility\\Vector\\Linked" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ConstructionMatrix )
