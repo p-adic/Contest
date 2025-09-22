@@ -28,19 +28,17 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 // /* COMPAREに使用。圧縮時は削除する。*/
-// MP Naive( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
-// // MP Naive( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
+// using answer_type = ll;
+// answer_type Naive( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
 // {
-//   MP answer{};
-//   return answer;
+//   answer_type a{};
+//   return a;
 // }
-
-// /* COMPAREに使用。圧縮時は削除する。*/
-// MP Answer( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
-// // MP Answer( ll N , ll M , ll K , const vector<ll>& A , const bool& debug_output = true )
+// 
+// answer_type Answer( int N , int M , int K , const vector<int>& A , const bool& debug_output = true )
 // {
-//   MP answer{};
-//   return answer;
+//   answer_type a{};
+//   return a;
 // }
 
 /* 圧縮時は中身だけ削除する。*/
@@ -64,7 +62,7 @@ inline void SmallTest()
   // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt
   // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt
  
-  CERR( "全ての出力が一致しました。" );
+  CERR( "全てのケースを確認しました。" );
 }
 
 /* 圧縮時は中身だけ削除する。*/
@@ -82,7 +80,7 @@ inline void RandomTest( const int& test_case_num )
   REPEAT( test_case_num ){
 
   }
-  CERR( "全ての出力が一致しました。" );
+  CERR( "全てのケースを確認しました。" );
 }
 
 #define INCLUDE_MAIN
@@ -432,7 +430,7 @@ TE <uint M> DC_OF_HASH(Mod<M>);TE <uint M> DF_OF_HASH_FOR_MOD(Mod<M>);
 
 /* Iteration (3KB) */
 #define SPECIALSATION_OF_AR_PROGRESSION_SUM(TYPE)TE <> IN TYPE ArithmeticProgressionSum(CO TYPE& l,CO TYPE& r,CO TYPE& d){RE SpecialisedArithmeticProgressionSum(l,r,d);}
-TE <TY T,TY U,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(T t,CO V<U>& f,OPR opr){for(auto& u:f){t = opr(MO(t),u);}RE MO(t);}TE <TY T,TY U,TE <TY...> TY V> IN T Sum(T t,CO V<U>& f){RE LeftConnectiveProd(MO(t),f,[](T t0,CO U& u1){RE MO(t0 += u1);});}TE <TY T,TE <TY...> TY V> IN T Sum(CO V<T>& f){RE Sum(T{},f);}TE <TY T,TY U,TE <TY...> TY V> IN T Prod(T t,CO V<U>& f){RE LeftConnectiveProd(MO(t),f,[](T t0,CO U& u1){RE MO(t0 *= u1);});}TE <TY T,TE <TY...> TY V> IN T Prod(CO V<T>& f){RE Prod(T{1},f);}TE <TY T> IN T& SetMax(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMax(T& t0,CO U& u1,CO Args&... args){RE SetMax(t0 < u1?t0 = u1:t0,args...);}TE <TY T> IN T& SetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMin(T& t0,CO U& u1,CO Args&... args){RE SetMin(u1 < t0?t0 = u1:t0,args...);}TE <TY T,TE <TY...> TY V> IN CO T& Max(CO V<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Max(T t0,CO U& t1,CO Args&... args){RE MO(SetMax(t0,t1,args...));}TE <TY T,TE <TY...> TY V> IN CO T& Min(CO V<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Min(T t0,CO U& t1,CO Args&... args){RE MO(SetMin(t0,t1,args...));}TE <TY T,TY UINT>T Power(CO T& t,CO UINT& EX,T init = 1){RE EX > 1?Power(t * t,EX >> 1,MO(EX & 1?init *= t:init)):MO(EX > 0?init *= t:(AS(EX == 0),init));}TE <TY T> IN T PowerMemorisation(CO T& t,CRI EX){AS(EX >= 0);ST Map<T,VE<T>> memory{};auto& AN = memory[t];if(AN.empty()){AN.push_back(1);}WH(int(AN.SZ())<= EX){AN.push_back(AN.back()* t);}RE AN[EX];}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d = 1){RE(l + r)*(r - l + 1)/ 2;}TE <TY INT> IN INT SpecialisedArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d){AS(l <= r);CO INT c =(r - l)/ d;RE(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}
+ TE <TY T,TY U,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(T t,CO V<U>& f,OPR opr){for(auto& u:f){t = opr(MO(t),u);}RE MO(t);}TE <TY T,TY U,TE <TY...> TY V> IN T Sum(T t,CO V<U>& f){RE LeftConnectiveProd(MO(t),f,[](T t0,CO U& u1){RE MO(t0 += u1);});}TE <TY T,TE <TY...> TY V> IN T Sum(CO V<T>& f){RE Sum(T{},f);}TE <TY T,TY U,TE <TY...> TY V> IN T Prod(T t,CO V<U>& f){RE LeftConnectiveProd(MO(t),f,[](T t0,CO U& u1){RE MO(t0 *= u1);});}TE <TY T,TE <TY...> TY V> IN T Prod(CO V<T>& f){RE Prod(T{1},f);}TE <TY T> IN T& SetMax(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMax(T& t0,CO U& u1,CO Args&... args){RE SetMax(t0 < u1?t0 = u1:t0,args...);}TE <TY T> IN T& SetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMin(T& t0,CO U& u1,CO Args&... args){RE SetMin(u1 < t0?t0 = u1:t0,args...);}TE <TY T,TE <TY...> TY V> IN CO T& Max(CO V<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Max(T t0,CO U& t1,CO Args&... args){RE MO(SetMax(t0,t1,args...));}TE <TY T,TE <TY...> TY V> IN CO T& Min(CO V<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Min(T t0,CO U& t1,CO Args&... args){RE MO(SetMin(t0,t1,args...));}TE <TY T,TY UINT>T Power(CO T& t,CO UINT& EX,T init = 1){RE EX > 1?Power(t * t,EX >> 1,MO(EX & 1?init *= t:init)):MO(EX > 0?init *= t:(AS(EX == 0),init));}TE <TY T> IN T PowerMemorisation(CO T& t,CRI EX){AS(EX >= 0);ST Map<T,VE<T>> memory{};auto& AN = memory[t];if(AN.empty()){AN.push_back(1);}WH(int(AN.SZ())<= EX){AN.push_back(AN.back()* t);}RE AN[EX];}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d = 1){RE(l + r)*(r - l + 1)/ 2;}TE <TY INT> IN INT SpecialisedArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d){AS(l - 1 <= r);CO INT c =(r - l)/ d;RE l - 1 == r?0:(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}
 SPECIALSATION_OF_AR_PROGRESSION_SUM(int);
 SPECIALSATION_OF_AR_PROGRESSION_SUM(uint);
 SPECIALSATION_OF_AR_PROGRESSION_SUM(ll);
