@@ -1559,6 +1559,8 @@ AC( SingleKnapsack )
   if( reply == "y" ){
     CALL_AC( SingleKnapsackMultipleChoice );
   } else {
+    CERR( "最小費用流はコストに流量が掛かるためこの設定では適用できないことに" );
+    CERR( "注意してください。" );
     CALL_AC( SingleKnapsackSingleChoice );
   }
 }
@@ -1651,6 +1653,7 @@ AC( SingleKnapsackSingleChoice )
   if( num == num_temp++ ){
     CALL_AC( SingleKnapsackCostOne );
   } else if( num == num_temp++ ){
+    CERR( "最大流はコストがない場合にしか適用できないことに注意してください。" );
     ASK_YES_NO( "C_iはiに依存しない値ですか？" );
     if( reply == "y" ){
       CALL_AC( SingleKnapsackUnordered );
@@ -1675,6 +1678,12 @@ AC( SingleKnapsackCostOne )
 
 AC( SingleKnapsackUnordered )
 {
+  ASK_YES_NO( "根付き木の根を含む連結部分集合を選択する問題ですか？" );
+  if( reply == "y" ){
+    CERR( "線形グラフの場合を考え、その解法を深さ優先探索に一般化しましょう。" );
+    CERR( "以下線形グラフとします。" );
+    CERR( "" );
+  }
   CERR( "コストまたは価値でソートしても構いません。" );
   ASK_YES_NO( "コストが１次元ですか？" );
   CERR( "- O(N 2^N)が通りそうかつコストの動く範囲が遷移途中も制限されているならば、" );
@@ -1728,9 +1737,8 @@ AC( SingleKnapsackWithMultiCost )
 
 AC( SingleKnapsackCostfree )
 {
-  ASK_YES_NO( "各項が独立に選択でき、かつ選択方法に罰金や報酬がないですか？" );
+  ASK_YES_NO( "各項が独立に選択できる（選択方法に罰金や報酬がない）問題ですか？" );
   if( reply == "y" ){
-    ASK_YES_NO( "各項が独立に選択でき、かつ選択方法に罰金や報酬がないですか？" );
     CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
     CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
     CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
@@ -1986,7 +1994,7 @@ AC( MaximisationSubsetSize )
   ASK_NUMBER(
              "最大二部マッチング" ,
              "非空有限集合族の選択関数の像の最大化" ,
-	     "その他の部分集合の価値最大化問題" ,
+	     "その他の部分集合の価値最大化／コスト最初化問題" ,
 	     "部分集合への分割に関する最小化問題"
 	     );
   if( num == num_temp++ ){
@@ -1997,31 +2005,38 @@ AC( MaximisationSubsetSize )
     CERR( "" );
     CALL_AC( MaximumBipartite );
   } else if( num == num_temp++ ){
-    ASK_YES_NO( "各要素の価値は1ですか？" );
+    ASK_YES_NO( "コストと価値の両方がありますか？" );
     if( reply == "y" ){
-      CALL_AC( SubsetExhusiveSearch );
-      CERR( "- 半順序集合の極大鎖ならば、後続関数を定義してその逆像を辺とする" );
-      CERR( "  非輪状有向グラフを構築し、極大元からの最長歩道計算" );
-      CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\LongestWalk\\a.hpp" );
-      CERR( "- 半順序集合の極大反鎖ならば、" );
-      CERR( "  - 鎖への極小な分割のサイズを求めてDilworthの定理" );
-      CERR( "    （あくまで個数のみの特定で、証明に基く帰納的構築は遅い）" );
-      CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
-      CERR( "  - トポロジカルソートされているならば、始切片としてNに埋め込み、" );
-      CERR( "    半順序と整合的な後続関数S:N->Nを定義して、Sの値が元の集合に入らない" );
-      CERR( "    要素全体の集合をSの単調性を用いて二分探索で計算" );
-      CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
-      CERR( "  \\Mathematics\\Combinatorial\\IntervalScheduling\\a.hpp" );
-      CERR( "- 同値関係の独立系の最大化（完全代表系の計算）ならば、深さ１の幅優先探索や" );
-      CERR( "  による連結成分計算" );
-      CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\QuotientSet" );
-      CERR( "を検討しましょう。" );
-      CERR( "" );
-      CERR( "もしくはコストなしのナップサック問題を考えましょう。" );
+      CERR( "選択方法に制限付きのナップサック問題を考えましょう。" );
+      CALL_AC( SingleKnapsackUnordered );
     } else {
-      CERR( "コストなしのナップサック問題を考えましょう。" );
+      CERR( "コストは-1倍して価値とみなし、価値のみがある問題を考えます。" );
+      ASK_YES_NO( "各要素の価値は1ですか？" );
+      if( reply == "y" ){
+        CALL_AC( SubsetExhusiveSearch );
+        CERR( "- 半順序集合の極大鎖ならば、後続関数を定義してその逆像を辺とする" );
+        CERR( "  非輪状有向グラフを構築し、極大元からの最長歩道計算" );
+        CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\LongestWalk\\a.hpp" );
+        CERR( "- 半順序集合の極大反鎖ならば、" );
+        CERR( "  - 鎖への極小な分割のサイズを求めてDilworthの定理" );
+        CERR( "    （あくまで個数のみの特定で、証明に基く帰納的構築は遅い）" );
+        CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
+          CERR( "  - トポロジカルソートされているならば、始切片としてNに埋め込み、" );
+          CERR( "    半順序と整合的な後続関数S:N->Nを定義して、Sの値が元の集合に入らない" );
+          CERR( "    要素全体の集合をSの単調性を用いて二分探索で計算" );
+          CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
+          CERR( "  \\Mathematics\\Combinatorial\\IntervalScheduling\\a.hpp" );
+          CERR( "- 同値関係の独立系の最大化（完全代表系の計算）ならば、深さ１の幅優先探索や" );
+          CERR( "  による連結成分計算" );
+          CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\QuotientSet" );
+          CERR( "を検討しましょう。" );
+          CERR( "" );
+          CERR( "もしくはコストなしのナップサック問題を考えましょう。" );
+      } else {
+        CERR( "コストなしのナップサック問題を考えましょう。" );
+      }
+      CALL_AC( SingleKnapsackCostfree );
     }
-    CALL_AC( SingleKnapsackCostfree );
   } else {
     CALL_AC( MinimisationPartitionOfSet );
   }
