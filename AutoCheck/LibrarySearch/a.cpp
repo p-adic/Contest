@@ -47,6 +47,8 @@ AC( LibrarySearch )
 AC( ExplicitExpression )
 {
   ASK_NUMBER(
+             "一重和や一重積の計算問題" ,
+             "二重和や二重積や積和の計算問題" ,
 	     "固定長引数関数や格子点上の関数や配列の計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の計算問題" ,
@@ -61,6 +63,10 @@ AC( ExplicitExpression )
              "その他の数論的関数の計算問題"
 	     );
   if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionArraySum );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionDoubleSum );
+  } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArray );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionFunctionOnPermutation );
@@ -85,6 +91,179 @@ AC( ExplicitExpression )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArithmetic );
   }
+}
+
+AC( ExplicitExpressionArraySum )
+{
+  ASK_NUMBER(
+             "１重和や１重積を複数回求める問題" ,
+	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
+	     "２つの配列の内積の計算問題" ,
+	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
+	     "配列を受け取る関数の配列をわたる総和の計算問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "２重和や２重積を求める問題と同様に処理しましょう。" );
+    CALL_AC( ExplicitExpressionDoubleSum );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionOneArrayEntrySum );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionInnerProduct );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionOneArraySubArraySum );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionArrayCombinatorial );
+  }
+}
+
+AC( ExplicitExpressionOneArrayEntrySum )
+{
+  CERR( "1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i f(a_i)などを考える" );
+  CERR( "とします。必要ならば(a_i)_iをソートして広義単調増加とします。" );
+  CERR( "- f(a_{i+1}) - f(a_i)がO(1)で計算できO(N)が間に合いそうならば、" );
+  CERR( "  f(a_i)の差分計算による高速化" );
+  CERR( "- f(a_i)がiに関する等比数列K個の和で表せO(K log N)が間に合いそうならば" );
+  CERR( "  等比数列の総和の公式" );
+  CERR( "  \\Mathematics\\Arithmetic\\Power\\GeometricProgression" );
+  CERR( "- f(a_i)がK次正方行列AとK次元ベクトルvを用いて(A^i v)[0]と表せ" );
+  CERR( "  - A-Eが正則でO(K^3 log N)が間に合いそうならば、等比数列の総和の公式" );
+  CERR( "    \\Mathematics\\LinearAlgebra" );
+  CERR( "    \\Mathematics\\Arithmetic\\Power\\GeometricProgression" );
+  CERR( "  - A-Eが正則とは限らずO(K^3 log N)が間に合いそうならば、vにf(a_i)の" );
+  CERR( "    累積和を末尾挿入し、行列累乗" );
+  CERR( "    \\Mathematics\\LinearAlgebra" );
+  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(K)が間に合いそうならば" );
+  CERR( "  条件分岐で総和を分割して総和の漸化式を求める分割統治法による再帰" );
+  CERR( "- #im(f)が小さくf(a_)の各点逆像が計算しやすいならば" );
+  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
+  CERR( "  sum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
+  CERR( "- #im(f)が小さくfが非負でf(a_)の始切片逆像が計算しやすいならば" );
+  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
+  CERR( "  sum_i f(a_i)=sum_{y>=1} #f(a_)^{-1}([y,∞))" );
+  CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
+  CERR( "  (a_)の各点逆像による纏め上げをする分割統治法" );
+  CERR( "  sum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
+  CERR( "- Nが大きい場合と小さい場合で解法の折衷" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionInnerProduct )
+{
+  CERR( "数列(a_i)_iと(b_i)_iが与えられるとします。" );
+  CERR( "f(X) = sum_{i=0}^{N-1} a_i X^i" );
+  CERR( "g(X) = sum_{i=0}^{N-1} b_{N-i-1} X^i" );
+  CERR( "と置きます。" );
+  ASK_NUMBER(
+             "(sum_{i=0}^{N-i-j} a_i b_{i+j})_{j=0}^{N-1}の計算"
+             "(sum_{i=0}^{N-1} a_i b_{i+j})_{j=0}^{N-1}の計算"
+             );
+  if( num == num_temp++ ){
+    CERR( "f(X)g(X)mod X^N = sum_{i=0}^{N-1} c_i X^i" );
+    CERR( "と置くと" );
+    CERR( "(c_{N-1-j})_{j=0}^{N-1}" );
+    CERR( "が答えです。" );
+  } else if( num == num_temp++ ){
+    CERR( "f(X)g(X) = sum_{i=0}^{2N-2} c_i X^i" );
+    CERR( "と置くと" );
+    CERR( "(sum_{k \equiv -1-j mod N}c_k)_{j=0}^{N-1}" );
+    CERR( "が答えです。" );
+  }
+  CERR( "\\Mathematics\\Polynoial\\Truncate" );
+}
+
+AC( ExplicitExpressionOneArraySubArraySum )
+{
+  ASK_NUMBER(
+             "連続部分列への分割に関する関数の総和の計算問題" ,
+             "連続とは限らない部分列への分割に関する関数の総和の計算問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "配列の添字集合は全順序集合なので、木の分割の問題に一般化されます。" );
+    CALL_AC( ExplicitExpressionFunctionOnTree );
+    CERR( "" );
+    CERR( "更にfが部分列の長さに関する再帰的な構造を持つ場合、全ての連続部分列に" );
+    CERR( "対しfの値を前計算することを検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "配列の並び換えによって答えが変わらないので、適切にソートしてから" );
+    CERR( "計算することを検討しましょう。" );
+  }
+}
+
+AC( ExplicitExpressionArrayCombinatorial )
+{
+  CERR( "長さNの配列の有限集合Sと、Sを定義域に持つ関数fが与えられているとして、" );
+  CERR( "sum_{A in S} f(A)を求めます。" );
+  CERR( "- 任意のA in Sに対し" );
+  CERR( "  f(A) = sum_{i=0}^{N-1} g(A,i)" );
+  CERR( "  を満たす関数gが存在するならば、" );
+  CERR( "  sum_{A in S} f(A) = sum_{A in S} sum_{i=0}^{N-1} g(A,i)" );
+  CERR( "                    = sum_{i=0}^{N-1} sum_{A in S} g(A,i)" );
+  CERR( "  によりg(-,i)の逆像の数え上げ問題に帰着" );
+  CERR( "- 任意のA in Sに対し" );
+  CERR( "  f(A) = #{i in [0,N)|P(A,i)} " );
+  CERR( "  を満たす関係Pが存在するならば、Pの特性関数をgと置けば任意のA in Sに対し" );
+  CERR( "  f(A) = sum_{i=0}^{N-1} g(A,i)" );
+  CERR( "  が成り立つので上の場合に帰着" );
+  CERR( "- 任意のA in Sに対し" );
+  CERR( "  f(A) = prod_{i=0}^{N-1} g(A,i)" );
+  CERR( "  を満たす関数gが存在するならば、積の和典型などの組み合わせ論的解釈" );
+  CERR( "  https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
+  CERR( "  https://ladywingclover.hatenablog.com/entry/2022/11/24/084524" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionDoubleSum )
+{
+  ASK_YES_NO( "商や剰余の総和の計算問題ですか？" );
+  if( reply == "y" ){
+    CERR( "- f(x,y)=h(floor(g_1(x,y)/g_2(x,y)))の場合、分子か分母を固定して総和計算" );
+    CERR( "  - floor(x/y)の和は" );
+    CERR( "    - yを固定してxを動かすならばfloor_sum" );
+    CERR( "      \\Mathematics\\Combinatorial\\FloorSum" );
+    CERR( "    - xを固定してyを動かすならば平方分割" );
+    CERR( "      \\Mathematics\\Combinatorial\\FloorSum\\FloorRiemanZeta" );
+    CERR( "  - floor(a_i/b_j)の和は、b_jの重複を頻度表で管理して" );
+    CERR( "    b_jが無重複かつ単調である場合に帰着させ、" );
+    CERR( "    - iを固定してjを動かすならば答えをA[i]に格納するとして、" );
+    CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
+    CERR( "      A[i]に愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
+    CERR( "      floor(a_i/b_j)=vを満たすjの区間長*vをA[i]に一点加算" );
+    CERR( "    - jを固定してiを動かすならば答えをA[j]に格納するとして、" );
+    CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
+    CERR( "      A[j]たちに愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
+    CERR( "      floor(a_i/b_j)=vを満たすjの区間でAにvを区間加算" );
+    CERR( "    \\Mathematics\\Combinatorial\\FloorSum\\Parallel" );
+    CERR( "- f(x,y)=h(g_1(x,y)%g_2(x,y))の場合、" );
+    CERR( "  - xを固定してyを動かすx%yの和は平方分割" );
+    CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
+    CERR( "  - a_i%b_jの和は" );
+    CERR( "    - iを固定してjを動かすならばa_i/b_jに帰着するか、または" );
+    CERR( "      エラトステネスの要領でAの約数であってBの成分であるものを前計算" );
+    CERR( "    - jを固定してiを動かすならばa_i/b_jに帰着" );
+    CERR( "    \\Mathematics\\Combinatorial\\ResidueSum\\Parallel" );
+  } else {
+    CERR( "2変数関数f(x,y)と配列(a_i)_{i=0}^{N-1}, (b_j)_{j=0}^{M-1}に対する" );
+    CERR( "二重和sum_i sum_j f(a_i,b_j)などを考えるとします。" );
+    CERR( "必要ならば(a_i)_iと(b_j)をソートしてともに広義単調増加とします。" );
+    CERR( "- sum_i f(a_i,b_j)の計算量をO(g(N))としてO(g(N)M)が間に合いそうならば、" );
+    CERR( "  和の順序交換sum_i sum_j f(a_i,b_j) = sum_j sum_i f(a_i,b_j)" );
+    CERR( "- sum_j (f(a_i,b_{j+1}) - f(a_i,b_j))の計算量をO(g(N))としてO(g(N)M)が" );
+    CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
+    CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
+    CERR( "  積和の和積化" );
+    CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
+    CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
+    CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
+    CERR( "  fの各点逆像による纏め上げをする分割統治法" );
+    CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
+    CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
+    CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
+    CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
+    CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
+    CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
+    CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
+  }
+  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionArray )
@@ -112,18 +291,6 @@ AC( ExplicitExpressionArray )
     CALL_AC( ExplicitExpressionUnaryOther );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionMultivariable );
-  }
-  ASK_YES_NO( "総和／総乗の計算問題ですか？" );
-  if( reply == "y" ){
-    ASK_NUMBER( 
-               "一重和や一重積の計算問題" ,
-               "二重和や二重積や積和の計算問題"
-                );
-    if( num == num_temp++ ){
-      CALL_AC( ExplicitExpressionArraySum );
-    } else if( num == num_temp++ ){
-      CALL_AC( ExplicitExpressionDoubleSum );
-    }
   }
 }
 
@@ -277,163 +444,6 @@ AC( ExplicitExpressionMultivariable )
   CERR( "- A,B>1に対するmin_{p|B} (v_p(A)/v_p(B))の計算は" );
   CERR( "  max_{X=1}^{floor(log_2(B))} min_{p|B} floor(v_p(A^X)/v_p(B))/X" );
   CERR( "  = max_{X=1}^{floor(log_2(B))} (A^XがBで割り切れる回数)/X" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( ExplicitExpressionArraySum )
-{
-  ASK_NUMBER(
-	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
-	     "２つの配列の内積の計算問題" ,
-	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
-	     "配列を受け取る関数の配列をわたる総和の計算問題"
-	     );
-  if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionOneArrayEntrySum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionInnerProduct );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionOneArraySubArraySum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionArrayCombinatorial );
-  }
-}
-
-AC( ExplicitExpressionOneArrayEntrySum )
-{
-  CERR( "1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i f(a_i)などを考える" );
-  CERR( "とします。必要ならば(a_i)_iをソートして広義単調増加とします。" );
-  CERR( "- f(a_{i+1}) - f(a_i)がO(1)で計算できO(N)が間に合いそうならば、" );
-  CERR( "  f(a_i)の差分計算による高速化" );
-  CERR( "- f(a_i)がiに関する等比数列K個の和で表せO(K log N)が間に合いそうならば" );
-  CERR( "  等比数列の総和の公式" );
-  CERR( "  \\Mathematics\\Arithmetic\\Power\\GeometricProgression" );
-  CERR( "- f(a_i)がK次正方行列AとK次元ベクトルvを用いて(A^i v)[0]と表せ" );
-  CERR( "  - A-Eが正則でO(K^3 log N)が間に合いそうならば、等比数列の総和の公式" );
-  CERR( "    \\Mathematics\\LinearAlgebra" );
-  CERR( "    \\Mathematics\\Arithmetic\\Power\\GeometricProgression" );
-  CERR( "  - A-Eが正則とは限らずO(K^3 log N)が間に合いそうならば、vにf(a_i)の" );
-  CERR( "    累積和を末尾挿入し、行列累乗" );
-  CERR( "    \\Mathematics\\LinearAlgebra" );
-  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(K)が間に合いそうならば" );
-  CERR( "  条件分岐で総和を分割して総和の漸化式を求める分割統治法による再帰" );
-  CERR( "- #im(f)が小さくf(a_)の各点逆像が計算しやすいならば" );
-  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
-  CERR( "- #im(f)が小さくfが非負でf(a_)の始切片逆像が計算しやすいならば" );
-  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_i f(a_i)=sum_{y>=1} #f(a_)^{-1}([y,∞))" );
-  CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
-  CERR( "  (a_)の各点逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
-  CERR( "- Nが大きい場合と小さい場合で解法の折衷" );
-  CERR( "  - 1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i floor(M/a_i)" );
-  CERR( "    などを考える。(a_i)_{i=0}^{N-1}はソートしてよく、Bをfloor(M/整数)の形で" );
-  CERR( "    固定してa_i<=Bの範囲では愚直計算、a_i>Bの範囲ではfloor(M/a_i)=jと置いて" );
-  CERR( "    各1<=j<floor(M/B)に対し(iの個数)*jの総和を求める分割統治法" );
-  CERR( "  - 1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i M%a_iなどを" );
-  CERR( "    考える。(a_i)_{i=0}^{N-1}はソートしてよく、M%a_i=M-floor(M/a_i)*a_i" );
-  CERR( "    を用いてsum_i floor(M/a_i)*a_iに帰着させる。Bをfloor(M/整数)の形で" );
-  CERR( "    固定してa_i<=Bの範囲では愚直計算、a_i>Bの範囲ではfloor(M/a_i)=jと置いて" );
-  CERR( "    各1<=j<floor(M/B)に対し(a_iの総和)*jの総和を求める分割統治法" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( ExplicitExpressionInnerProduct )
-{
-  CERR( "数列(a_i)_iと(b_i)_iが与えられるとします。" );
-  CERR( "f(X) = sum_{i=0}^{N-1} a_i X^i" );
-  CERR( "g(X) = sum_{i=0}^{N-1} b_{N-i-1} X^i" );
-  CERR( "と置きます。" );
-  ASK_NUMBER(
-             "(sum_{i=0}^{N-i-j} a_i b_{i+j})_{j=0}^{N-1}の計算"
-             "(sum_{i=0}^{N-1} a_i b_{i+j})_{j=0}^{N-1}の計算"
-             );
-  if( num == num_temp++ ){
-    CERR( "f(X)g(X)mod X^N = sum_{i=0}^{N-1} c_i X^i" );
-    CERR( "と置くと" );
-    CERR( "(c_{N-1-j})_{j=0}^{N-1}" );
-    CERR( "が答えです。" );
-  } else if( num == num_temp++ ){
-    CERR( "f(X)g(X) = sum_{i=0}^{2N-2} c_i X^i" );
-    CERR( "と置くと" );
-    CERR( "(sum_{k \equiv -1-j mod N}c_k)_{j=0}^{N-1}" );
-    CERR( "が答えです。" );
-  }
-  CERR( "\\Mathematics\\Polynoial\\Truncate" );
-}
-
-AC( ExplicitExpressionOneArraySubArraySum )
-{
-  ASK_NUMBER(
-             "連続部分列への分割に関する関数の総和の計算問題" ,
-             "連続とは限らない部分列への分割に関する関数の総和の計算問題"
-             );
-  if( num == num_temp++ ){
-    CERR( "配列の添字集合は全順序集合なので、木の分割の問題に一般化されます。" );
-    CALL_AC( ExplicitExpressionFunctionOnTree );
-    CERR( "" );
-    CERR( "更にfが部分列の長さに関する再帰的な構造を持つ場合、全ての連続部分列に" );
-    CERR( "対しfの値を前計算することを検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "配列の並び換えによって答えが変わらないので、適切にソートしてから" );
-    CERR( "計算することを検討しましょう。" );
-  }
-}
-
-AC( ExplicitExpressionArrayCombinatorial )
-{
-  CERR( "長さNの配列の有限集合Sと、Sを定義域に持つ関数fが与えられているとして、" );
-  CERR( "sum_{A in S} f(A)を求めます。" );
-  CERR( "- 任意のA in Sに対し" );
-  CERR( "  f(A) = sum_{i=0}^{N-1} g(A,i)" );
-  CERR( "  を満たす関数gが存在するならば、" );
-  CERR( "  sum_{A in S} f(A) = sum_{A in S} sum_{i=0}^{N-1} g(A,i)" );
-  CERR( "                    = sum_{i=0}^{N-1} sum_{A in S} g(A,i)" );
-  CERR( "  によりg(-,i)の逆像の数え上げ問題に帰着" );
-  CERR( "- 任意のA in Sに対し" );
-  CERR( "  f(A) = #{i in [0,N)|P(A,i)} " );
-  CERR( "  を満たす関係Pが存在するならば、Pの特性関数をgと置けば任意のA in Sに対し" );
-  CERR( "  f(A) = sum_{i=0}^{N-1} g(A,i)" );
-  CERR( "  が成り立つので上の場合に帰着" );
-  CERR( "- 任意のA in Sに対し" );
-  CERR( "  f(A) = prod_{i=0}^{N-1} g(A,i)" );
-  CERR( "  を満たす関数gが存在するならば、積の和典型などの組み合わせ論的解釈" );
-  CERR( "  https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
-  CERR( "  https://ladywingclover.hatenablog.com/entry/2022/11/24/084524" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( ExplicitExpressionDoubleSum )
-{
-  CERR( "2変数関数f(x,y)と配列(a_i)_{i=0}^{N-1}, (b_j)_{j=0}^{M-1}に対する" );
-  CERR( "二重和sum_i sum_j f(a_i,b_j)などを考えるとします。" );
-  CERR( "必要ならば(a_i)_iと(b_j)をソートしてともに広義単調増加とします。" );
-  CERR( "- sum_i f(a_i,b_j)の計算量をO(g(N))としてO(g(N)M)が間に合いそうならば、" );
-  CERR( "  和の順序交換sum_i sum_j f(a_i,b_j) = sum_j sum_i f(a_i,b_j)" );
-  CERR( "- sum_j (f(a_i,b_{j+1}) - f(a_i,b_j))の計算量をO(g(N))としてO(g(N)M)が" );
-  CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
-  CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
-  CERR( "  積和の和積化" );
-  CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
-  CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
-  CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
-  CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
-  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
-  CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
-  CERR( "- f(x,y)=h(floor(g_1(x,y)/g_2(x,y)))の場合、floorの値ごとに纏め上げて" );
-  CERR( "  バケット分割で高速化" );
-  CERR( "  - xに関するfloor(x/y)の和はfloor_sum" );
-  CERR( "    \\Mathematics\\Combinatorial\\FloorSum" );
-  CERR( "  - yに関するfloor(x/y)の和は平方分割" );
-  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
-  CERR( "- f(x,y)=h(g_1(x,y)%g_2(x,y))の場合、x%y = x - floor(x/y)yを用いて" );
-  CERR( "  剰余を商に帰着" );
   CERR( "を検討しましょう。" );
 }
 
