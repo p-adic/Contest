@@ -236,7 +236,7 @@ using lld = __float128;
 #else
 /* BinarySearch (2KB)*/
 // EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。
-#define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
+#define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER , EXTERNAL ) \
   static_assert( ! is_same<decldecay_t( CONST_TARGET ),uint>::value && ! is_same<decldecay_t( CONST_TARGET ),ull>::value ); \
   ll ANSWER = MINIMUM;							\
   {									\
@@ -248,7 +248,7 @@ using lld = __float128;
     ll DIFFERENCE_BS;							\
     while( ANSWER ## _L < ANSWER ## _R ){                               \
       DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
-      CERR( "二分探索中:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
+      DERR( "二分探索中:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
       if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
 	ANSWER ## _R = UPDATE_U;                                        \
       } else {								\
@@ -257,44 +257,41 @@ using lld = __float128;
       ANSWER = UPDATE_ANSWER;						\
     }									\
     if( ANSWER ## _L > ANSWER ## _R ){                                  \
-      CERR( "二分探索失敗:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , ">" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-      CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
-      ANSWER = MAXIMUM + 1;						\
+      DERR( "二分探索失敗:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , ">" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #ANSWER , ":=" , #EXTERNAL , "=" , EXTERNAL ); \
+      DERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
+      ANSWER = EXTERNAL;						\
     } else {								\
-      CERR( "二分探索終了:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" ); \
-      CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
-      CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
+      DERR( "二分探索終了:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" ); \
+      DERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
+      DERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
       EXPRESSION_BS = ( EXPRESSION );					\
-      CERR( "二分探索結果:" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
+      DERR( "二分探索結果:" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
       if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
-	CERR( "二分探索成功:" , #ANSWER , ":=" , ANSWER );		\
+	DERR( "二分探索成功:" , #ANSWER , ":=" , ANSWER );		\
       } else {								\
-	CERR( "二分探索失敗:" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
-	ANSWER = MAXIMUM + 1;						\
+	DERR( "二分探索失敗:" , #ANSWER , ":=" , #EXTERNAL , "=" , EXTERNAL ); \
+	DERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
+	ANSWER = EXTERNAL;						\
       }									\
     }									\
   }									\
 
 // 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。
-#define MIN_GEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , Mid( ANSWER ## _L , ANSWER ## _R ) )
+#define MIN_GEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , Mid( ANSWER ## _L , ANSWER ## _R ) , ( MAXIMUM ) + 1 )
 // 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。
-#define MAX_LEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , Mid( ANSWER ## _L + 1 , ANSWER ## _R ) )
+#define MAX_LEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , Mid( ANSWER ## _L + 1 , ANSWER ## _R ) , ( MINIMUM ) - 1 )
 // 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。
-#define MAX_GEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , Mid( ANSWER ## _L + 1 , ANSWER ## _R ) )
+#define MAX_GEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , Mid( ANSWER ## _L + 1 , ANSWER ## _R ) , ( MINIMUM ) - 1 )
 // 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。
-#define MIN_LEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , Mid( ANSWER ## _L , ANSWER ## _R ) )
+#define MIN_LEQ( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , Mid( ANSWER ## _L , ANSWER ## _R ) , ( MAXIMUM ) + 1 )
 template <typename INT> inline constexpr INT Mid( const INT& l , const INT& r ) { return l + ( ( r - l ) >> 1 ); }
 
 /* TwoPoitnterApproach (2KB)*/
 // VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。
-// ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を
-// {INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。
-// ANSWER ## _tempがCONTINUE_CONDITIONを満たす限り、ANSWER ## _tempが
-// 条件ON_CONDITIONを満たすか否かを判定し、それがtrueになるか
-// VAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの
-// 更新操作UPDATE_Lを繰り返し、その後VAR_TPA ## _RとVPA_TPA ## _infoの
-// 更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）
+// ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を{INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。
+// ANSWER ## _tempがCONTINUE_CONDITIONを満たす限り、ANSWER ## _tempが条件ON_CONDITIONを満たすか否かを判定し、
+// それがtrueになるかVAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの更新操作UPDATE_Lを繰り返し、
+// その後VAR_TPA ## _RとVPA_TPA ## _infoの更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）
 // ON_CONDITIONがtrueとなる極大閉区間とその時点でのinfoをANSWERに格納する。
 // 例えば長さNの非負整数値配列Aで極大な正値区間とそこでの総和を取得したい場合
 // auto update_L = [&]( int& i_L , auto& i_info ){ i_info -= A[i_L++]; };
@@ -304,6 +301,7 @@ template <typename INT> inline constexpr INT Mid( const INT& l , const INT& r ) 
 // VAR_TPA ## _infoもintervalにコピーされるので、setやvectorなどのコピーのコストが
 // 大きいデータを用いてon,off判定する時はTPAより前に宣言して使う。
 #define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO_init ) \
+  DERRNS( "エラー出力 " , __LINE__ , ": 尺取り法開始\n" );                      \
   vector<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO_init )>> ANSWER{}; \
   {									\
     auto init_TPA = INIT;						\
@@ -316,10 +314,10 @@ template <typename INT> inline constexpr INT Mid( const INT& l , const INT& r ) 
     while( true ){                                                      \
       bool continuing = CONTINUE_CONDITION;				\
       bool on_TPA = continuing && ( ON_CONDITION );			\
-      CERR( continuing ? "尺取り中" : "尺取り終了" , ": [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info ); \
+      DERR( continuing ? "尺取り法実行中" : "尺取り法終了" , ": [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info ); \
       if( on_TPA_prev && ! on_TPA ){					\
 	ANSWER.push_back( ANSWER ## _prev );				\
-	CERR( #ANSWER , "に" , ANSWER ## _prev , "を格納します。" );	\
+	DERR( #ANSWER , "に" , ANSWER ## _prev , "を格納します。" );	\
       }									\
       if( continuing ){							\
 	if( on_TPA || VAR_TPA ## _L == VAR_TPA ## _R ){			\
@@ -430,7 +428,7 @@ TE <uint M> DC_OF_HASH(Mod<M>);TE <uint M> DF_OF_HASH_FOR_MOD(Mod<M>);
 
 /* Iteration (3KB) */
 #define SPECIALSATION_OF_AR_PROGRESSION_SUM(TYPE)TE <> IN TYPE ArithmeticProgressionSum(CO TYPE& l,CO TYPE& r,CO TYPE& d){RE SpecialisedArithmeticProgressionSum(l,r,d);}
- TE <TY T,TY U,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(T t,CO V<U>& f,OPR opr){for(auto& u:f){t = opr(MO(t),u);}RE MO(t);}TE <TY T,TY U,TE <TY...> TY V> IN T Sum(T t,CO V<U>& f){RE LeftConnectiveProd(MO(t),f,[](T t0,CO U& u1){RE MO(t0 += u1);});}TE <TY T,TE <TY...> TY V> IN T Sum(CO V<T>& f){RE Sum(T{},f);}TE <TY T,TY U,TE <TY...> TY V> IN T Prod(T t,CO V<U>& f){RE LeftConnectiveProd(MO(t),f,[](T t0,CO U& u1){RE MO(t0 *= u1);});}TE <TY T,TE <TY...> TY V> IN T Prod(CO V<T>& f){RE Prod(T{1},f);}TE <TY T> IN T& SetMax(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMax(T& t0,CO U& u1,CO Args&... args){RE SetMax(t0 < u1?t0 = u1:t0,args...);}TE <TY T> IN T& SetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMin(T& t0,CO U& u1,CO Args&... args){RE SetMin(u1 < t0?t0 = u1:t0,args...);}TE <TY T,TE <TY...> TY V> IN CO T& Max(CO V<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Max(T t0,CO U& t1,CO Args&... args){RE MO(SetMax(t0,t1,args...));}TE <TY T,TE <TY...> TY V> IN CO T& Min(CO V<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Min(T t0,CO U& t1,CO Args&... args){RE MO(SetMin(t0,t1,args...));}TE <TY T,TY UINT>T Power(CO T& t,CO UINT& EX,T init = 1){RE EX > 1?Power(t * t,EX >> 1,MO(EX & 1?init *= t:init)):MO(EX > 0?init *= t:(AS(EX == 0),init));}TE <TY T> IN T PowerMemorisation(CO T& t,CRI EX){AS(EX >= 0);ST Map<T,VE<T>> memory{};auto& AN = memory[t];if(AN.empty()){AN.push_back(1);}WH(int(AN.SZ())<= EX){AN.push_back(AN.back()* t);}RE AN[EX];}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d = 1){RE(l + r)*(r - l + 1)/ 2;}TE <TY INT> IN INT SpecialisedArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d){AS(l - 1 <= r);CO INT c =(r - l)/ d;RE l - 1 == r?0:(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}
+ TE <TY T,TY U,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(T t,CO V<U>& f,OPR opr){for(auto& u:f){t = opr(MO(t),u);}RE MO(t);}TE <TY T,TY U,TE <TY...> TY V> IN T Sum(CO V<U>& f){RE LeftConnectiveProd(T{0},f,[](T t0,CO U& u1){RE MO(t0 += u1);});}TE <TY T,TY U,TE <TY...> TY V> IN T Prod(CO V<U>& f){RE LeftConnectiveProd(T{1},f,[](T t0,CO U& u1){RE MO(t0 *= u1);});}TE <TY T> IN T& SetMax(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMax(T& t0,CO U& u1,CO Args&... args){RE SetMax(t0 < u1?t0 = u1:t0,args...);}TE <TY T> IN T& SetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMin(T& t0,CO U& u1,CO Args&... args){RE SetMin(u1 < t0?t0 = u1:t0,args...);}TE <TY T,TE <TY...> TY V> IN CO T& Max(CO V<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Max(T t0,CO U& t1,CO Args&... args){RE MO(SetMax(t0,t1,args...));}TE <TY T,TE <TY...> TY V> IN CO T& Min(CO V<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TY U,TY...Args> IN T Min(T t0,CO U& t1,CO Args&... args){RE MO(SetMin(t0,t1,args...));}TE <TY T,TY UINT>T Power(CO T& t,CO UINT& EX,T init = 1){RE EX > 1?Power(t * t,EX >> 1,MO(EX & 1?init *= t:init)):MO(EX > 0?init *= t:(AS(EX == 0),init));}TE <TY T> IN T PowerMemorisation(CO T& t,CRI EX){AS(EX >= 0);ST Map<T,VE<T>> memory{};auto& AN = memory[t];if(AN.empty()){AN.push_back(1);}WH(int(AN.SZ())<= EX){AN.push_back(AN.back()* t);}RE AN[EX];}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d = 1){RE(l + r)*(r - l + 1)/ 2;}TE <TY INT> IN INT SpecialisedArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d){AS(l - 1 <= r);CO INT c =(r - l)/ d;RE l - 1 == r?0:(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}
 SPECIALSATION_OF_AR_PROGRESSION_SUM(int);
 SPECIALSATION_OF_AR_PROGRESSION_SUM(uint);
 SPECIALSATION_OF_AR_PROGRESSION_SUM(ll);
