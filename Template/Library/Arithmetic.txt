@@ -15,8 +15,8 @@
 //     Arithmetic/Mod/Function/Euler/
 //   - MoeviusFunction: メビウス関数(+素因数分解,素数列挙,最小素因子) (6KB)
 //     Arithmetic/Divisor/Moevius/
-// - GCD: 最大公約数,最小公倍数 (1KB)
-//   Arithmetic/Divisor/GCD/
+// - LCM: 最小公倍数 (1KB)
+//   Arithmetic/Divisor/GCD/LCM/
 // - DivisorSum: 約数の冪乗和 (1KB)
 //     Arithmetic/Divisor/Sum/
 // - Sqrt: 平方根 (1KB)
@@ -25,8 +25,8 @@
 //     Arithmetic/Iteration/Truncated/xs
 //   - DiscreteLgarithm: 羃剰余離散対数 (1KB)
 //     Arithmetic/Mod/Function/DiscreteLogaxrithm/xs
-// - DynamicMod: 動的mod (10KB)
-//   Arithmetic/Mod/DynamicModulo/
+// - Mod: コンパイル時定数mod (10KB)
+//   Arithmetic/Mod/ConstexprModulo/
 //   - ShifedMod: K未満は維持する動的mod (6KB)
 //     Arithmetic/Mod/DynamicModulo/Shifted/
 // - AdicExpansion: 位取り記法 (1KB)

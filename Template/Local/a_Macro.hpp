@@ -2,19 +2,19 @@
 
 #pragma once
 
-// 提出時: CIN -> cin, COUT -> cout, CERR -> 出力なし, DERR -> 不使用
-// サンプル確認時: CIN -> ifs, COUT -> ofs, CERR -> cerr, DERR -> ofs_err
-// デバッグ出力時: CIN -> cin, COUT -> cout, CERR -> cerr, DERR -> cerr
-// 非デバッグ出力時: CIN -> cin, COUT -> cout, CERR -> cerr, DERR -> 出力なし
+// 提出時: CIN -> cin, COUT -> cout, CERR&WHAT -> 出力なし, DERR -> 不使用
+// サンプル確認時: CIN -> ifs, COUT -> ofs, CERR&WHAT -> cerr, DERR -> ofs_err
+// ローカル実行デバッグ出力時: CIN -> cin, COUT -> cout, CERR&WHAT -> cerr, DERR -> cerr
+// ローカル実行非デバッグ出力時、実験時、テスト時: CIN -> cin, COUT -> cout, CERR&WHAT -> cerr, DERR -> 出力なし
 #ifdef DEBUG_OUTPUT
   #define COUT_TARGET ( searched_br ? cout << "出力 " << __LINE__ << ": " : cout )
-  #define CERR_TARGET ( searched_br ? cerr << "エラー出力 " << __LINE__ << ": " : cerr )
+  #define WHAT_TARGET ( searched_br ? cerr << "エラー出力 " << __LINE__ << ": " : cerr )
   #define DERR2( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
   #define DERRNS2( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
   #define DERR_A2 CoutArray( cerr , I , N , A ) << flush
 #else
   #define COUT_TARGET cout
-  #define CERR_TARGET cerr
+  #define WHAT_TARGET cerr
   #define DERR2( ... )
   #define DERRNS2( ... )
   #define DERR_A2
@@ -33,13 +33,13 @@
 #define COUT( ... ) if( exec_mode == sample_check_mode ){ VariadicCout( ofs , __VA_ARGS__ ) << endl; } else { searched_br = true; VariadicCout( COUT_TARGET , __VA_ARGS__ ) << endl; }
 #define COUTNS( ... ) if( exec_mode == sample_check_mode ){ VariadicCoutNonSep( ofs , __VA_ARGS__ ) << flush; } else { VariadicCoutNonSep( COUT_TARGET , __VA_ARGS__ ) << flush; searched_br = HasBr( __VA_ARGS__ ); }
 #define COUT_A( I , N , A ) if( exec_mode == sample_check_mode ){ CoutArray( ofs , I , N , A ) << endl; } else { CoutArray( COUT_TARGET , I , N , A ) << endl; }
-#define CERR( ... ) searched_br = true; VariadicCout( CERR_TARGET , __VA_ARGS__ ) << endl
-#define CERRNS( ... ) VariadicCoutNonSep( CERR_TARGET , __VA_ARGS__ ) << flush; searched_br = HasBr( __VA_ARGS__ )
-#define CERR_A( I , N , A ) CoutArray( CERR_TARGET , I , N , A ) << endl
-#define WHAT( ... ) CERR( #__VA_ARGS__ , "=" , __VA_ARGS__ )
-#define DERR( ... ) if( exec_mode == sample_check_mode ){ DERR1( __VA_ARGS__ ); } else { DERR2( __VA_ARGS__ ); }
-#define DERRNS( ... ) if( exec_mode == sample_check_mode ){ DERRNS1( __VA_ARGS__ ); } else { DERRNS2( __VA_ARGS__ ); }
-#define DERR_A( I , N , A ) if( exec_mode == sample_check_mode ){ DERR_A1; } else { DERR_A2; }
+#define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
+#define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
+#define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
+#define WHAT( ... ) VariadicCout( WHAT_TARGET , #__VA_ARGS__ , "=" , __VA_ARGS__ ) << endl;
+#define DERR( ... ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERR1( __VA_ARGS__ ); } else { DERR2( __VA_ARGS__ ); }
+#define DERRNS( ... ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERRNS1( __VA_ARGS__ ); } else { DERRNS2( __VA_ARGS__ ); }
+#define DERR_A( I , N , A ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERR_A1; } else { DERR_A2; }
 #define TLE( CONDITION ) assert( CONDITION )
 #define MLE( CONDITION ) assert( CONDITION )
 #define OLE( CONDITION ) assert( CONDITION )
@@ -64,6 +64,7 @@
   #define REPEAT_MAIN( BOUND )                                    \
     START_MAIN;                                                   \
       signal( SIGABRT , &AlertAbort );                              \
+      MP::SetModulo( P , true );                                    \
       if constexpr( !submit_only ){                                 \
         AutoCheck( use_getline , sample_check , problem_order );    \
       }                                                             \
@@ -111,6 +112,7 @@
   #define REPEAT_MAIN( BOUND )                                    \
     START_MAIN;                                                   \
       signal( SIGABRT , &AlertAbort );                              \
+      MP::SetModulo( P , true );                                    \
       if constexpr( !submit_only ){                                 \
         AutoCheck( use_getline , sample_check , problem_order );    \
       }                                                             \
