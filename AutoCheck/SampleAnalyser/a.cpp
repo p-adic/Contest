@@ -6,13 +6,13 @@
 extern int exec_mode;
 #include "../../Template/Local/Mode/a_Body.hpp"
 
-// デバッグモードでないと翻訳単位ごとに異なる実装をDynamicModが持ってしまうるので実行時に
+// デバッグモードでないと翻訳単位ごとに異なる実装をDModが持ってしまうるので実行時に
 // Segmentation Faultとなる。
 #include "../../../Mathematics/Arithmetic/Mod/DynamicModulo/Debug/a_Body.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/Function/DiscreteLog/a_Body.hpp"
 #include "../../../Mathematics/Combinatorial/Loop/a_Body.hpp"
 #include "../../../Mathematics/LinearAlgebra/Rank/Mod/a_Body.hpp"
-#include "../../../Mathematics/Polynomial/LagrangeInterpolation/a_Body.hpp"
+#include "../../../Mathematics/Polynomial/MultipointEvaluation/LagrangeInterpolation/a_Body.hpp"
 
 AC( SampleAnalyser )
 {
@@ -20,8 +20,9 @@ AC( SampleAnalyser )
   int P = 998244353;
   if( reply != "y" ){
     CERRNS( "出力の法: " ); cin >> P;
+    ASK_YES_NO( to_string( P ) + "は素数ですか？" );
+    DMod::SetModulo( P , reply == "y" );
   }
-  DynamicMod::SetModulo( P );
   int sample_repetition_num = 3;
   bool use_memorised_sample = false;
   const string sample_path = "C:/Users/user/Documents/Programming/Contest/AutoCheck/SampleMemoriser/Sample/";
@@ -41,7 +42,7 @@ AC( SampleAnalyser )
     }
   }
   vector<vector<ll>> input( sample_repetition_num );
-  vector<DynamicMod> output( sample_repetition_num );
+  vector<DMod> output( sample_repetition_num );
   int var = 0;
   if( use_memorised_sample ){
     const string input_path = sample_path + problem_order + "/input/sample";
@@ -73,7 +74,11 @@ AC( SampleAnalyser )
         CERR( "" );
       }
       while( !ifs_output.eof() ){
-        ifs_output >> output[sample_num - 1];
+        string temp;
+        ifs_output >> temp;
+        if( temp != "" ){
+          output[sample_num - 1] = stoll( temp );
+        }
       }
     }
   } else {
@@ -116,7 +121,7 @@ AC( SampleAnalyser )
       FOR( sample_num , 0 , sample_repetition_num ){
         input[sample_num] = { a + d * sample_num };
       }
-      CERRNS( "出力列: " ); CIN_A( DynamicMod , 0 , sample_repetition_num , A );
+      CERRNS( "出力列: " ); CIN_A( DMod , 0 , sample_repetition_num , A );
       output = move( A );
     }
   }
@@ -148,10 +153,10 @@ AC( SampleAnalyser )
       }
       CERR( "サンプル出力の法" + P_str + "における" + to_string( var ) + "変数多項式補間を試みます。" );
       if( var == 1 ){
-	if( sample_repetition_num < 4 || ! prime ){
+	if( sample_repetition_num < 4 || P != 998244353 ){
 	  InputPolynomialAnalysis1_few( sample_repetition_num , input , output , scale , P , P_str );
 	} else {
-	  InputPolynomialAnalysis1_enough( sample_repetition_num , input , output , scale , P , P_str , continuous );
+	  InputPolynomialAnalysis1_enough( sample_repetition_num , input , output , scale , continuous );
 	}
       } else if( var == 2 ){
 	if( sample_repetition_num < 9 || !prime ){
@@ -206,7 +211,7 @@ AC( SampleAnalyser )
   CERR( "サンプルの解析を終了します。");
 }
 
-void PowerAnalysis( const int& sample_repetition_num , const vector<DynamicMod>& output , const int& scale , const int& P )
+void PowerAnalysis( const int& sample_repetition_num , const vector<DMod>& output , const int& scale , const int& P )
 {
   CEXPR( int , diff_bound , 30 );
   const int diff_max = diff_bound / sample_repetition_num * scale;
@@ -232,7 +237,7 @@ void PowerAnalysis( const int& sample_repetition_num , const vector<DynamicMod>&
       }
     }
     vector exponent( sample_repetition_num , vector( sqrtP * 2 + 1 , sqrtP ) );
-    DynamicMod base_mod{ base } , power = Power( base_mod , -sqrtP );
+    DMod base_mod{ base } , power = Power( base_mod , -sqrtP );
     FOREQ( d , -sqrtP , sqrtP ){
       FOR( sample_num , 0 , sample_repetition_num ){
 	int temp = ( power - output[sample_num] ).Represent();
@@ -272,7 +277,7 @@ void PowerAnalysis( const int& sample_repetition_num , const vector<DynamicMod>&
   }
 }
 
-void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 4 );
   CEXPR( int , length , size ); // 4
@@ -293,10 +298,10 @@ void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vect
   while( valid && !match ){
     match = true;
     FOR( sample_num , 0 , sample_repetition_num ){
-      DynamicMod x_power = DynamicMod::one() , x{ input[sample_num][0] };
-      DynamicMod temp{};
+      DMod x_power = DMod::one() , x{ input[sample_num][0] };
+      DMod temp{};
       FOR( i , 0 , size ){
-	temp += DynamicMod( index[i] ) * x_power;
+	temp += DMod( index[i] ) * x_power;
 	x_power *= x;
       }
       if( output[sample_num] * denom != temp ){
@@ -320,23 +325,24 @@ void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vect
   CERR( "" );
 }
 
-void InputPolynomialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous )
+void InputPolynomialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const bool& continuous )
 {
+  constexpr uint P = 998244353;
   for( int skip_span = 1 ; skip_span <= ( continuous ? ( sample_repetition_num + 2 ) / 3 : 1 ) ; skip_span++ ){
     for( int residue = 0 ; residue < skip_span ; residue++ ){
-      vector<DynamicMod> input_copy{};
-      vector<DynamicMod> output_copy{};
+      vector<Mod<P>> input_copy{};
+      vector<Mod<P>> output_copy{};
       int sample_size = 0;
       for( int sample_num = residue ; sample_num < sample_repetition_num ; sample_num += skip_span ){
         input_copy.push_back( ( input[sample_num][0] - residue ) / skip_span );
-        output_copy.push_back( output[sample_num] );
+        output_copy.push_back( output[sample_num].Represent() );
         sample_size++;
       }
       if( continuous ){
         CERR( "入力を" , residue , "番目から" , skip_span , "置きに選んで多項式補間を試みます。" );
       }
       auto answer = LagrangeInterpolation( input_copy , output_copy );
-      answer.RemoveRedundantZero();
+      answer.Reduce();
       int size = answer.size();
       if( size < sample_size ){
         CERR( "補間成功（次数が小さいため信頼度は高い）:" );
@@ -359,7 +365,7 @@ void InputPolynomialAnalysis1_enough( const int& sample_repetition_num , const v
   }
 }
 
-void InputPolynomialAnalysis2_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputPolynomialAnalysis2_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 3 );
   CEXPR( int , length , size * size ); // 9
@@ -380,13 +386,13 @@ void InputPolynomialAnalysis2_few( const int& sample_repetition_num , const vect
   while( valid && !match ){
     match = true;
     FOR( sample_num , 0 , sample_repetition_num ){
-      DynamicMod x_power = DynamicMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] };
-      DynamicMod temp{};
+      DMod x_power = DMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] };
+      DMod temp{};
       FOR( dx , 0 , size ){
-	DynamicMod xy_power = x_power;
+	DMod xy_power = x_power;
 	FOR( dy , 0 , size ){
 	  int i = size * dx + dy;
-	  temp += DynamicMod( index[i] ) * xy_power;
+	  temp += DMod( index[i] ) * xy_power;
 	  xy_power *= y;
 	}
 	x_power *= x;
@@ -415,15 +421,15 @@ void InputPolynomialAnalysis2_few( const int& sample_repetition_num , const vect
   CERR( "" );
 }
 
-void InputPolynomialAnalysis2_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputPolynomialAnalysis2_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 3 );
   CEXPR( int , length , size * size ); // 9
-  vector M( sample_repetition_num , vector<DynamicMod>( length + 1 ) );
+  vector M( sample_repetition_num , vector<DMod>( length + 1 ) );
   FOR( sample_num , 0 , sample_repetition_num ){  
-    DynamicMod x_power = DynamicMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] };
+    DMod x_power = DMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] };
     FOR( dx , 0 , size ){
-      DynamicMod xy_power = x_power;
+      DMod xy_power = x_power;
       FOR( dy , 0 , size ){
 	int i = size * dx + dy;
 	M[sample_num][i] = xy_power;
@@ -448,7 +454,7 @@ void InputPolynomialAnalysis2_enough( const int& sample_repetition_num , const v
   CERR( "" );
 }
 
-void InputPolynomialAnalysis3_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputPolynomialAnalysis3_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 2 );
   CEXPR( int , length , size * size * size ); // 8
@@ -469,15 +475,15 @@ void InputPolynomialAnalysis3_few( const int& sample_repetition_num , const vect
   while( valid && !match ){
     match = true;
     FOR( sample_num , 0 , sample_repetition_num ){
-      DynamicMod x_power = DynamicMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] } , z{ input[sample_num][2] };
-      DynamicMod temp{};
+      DMod x_power = DMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] } , z{ input[sample_num][2] };
+      DMod temp{};
       FOR( dx , 0 , size ){
-	DynamicMod xy_power = x_power;
+	DMod xy_power = x_power;
 	FOR( dy , 0 , size ){
-	  DynamicMod xyz_power = xy_power;
+	  DMod xyz_power = xy_power;
 	  FOR( dz , 0 , size ){
 	    int i = size * size * dx + size * dy + dz;
-	    temp += DynamicMod( index[i] ) * xyz_power;
+	    temp += DMod( index[i] ) * xyz_power;
 	    xyz_power *= z;
 	  }
 	  xy_power *= y;
@@ -510,17 +516,17 @@ void InputPolynomialAnalysis3_few( const int& sample_repetition_num , const vect
   CERR( "" );
 }
 
-void InputPolynomialAnalysis3_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputPolynomialAnalysis3_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 2 );
   CEXPR( int , length , size * size * size ); // 8
-  vector M( sample_repetition_num , vector<DynamicMod>( length + 1 ) );
+  vector M( sample_repetition_num , vector<DMod>( length + 1 ) );
   FOR( sample_num , 0 , sample_repetition_num ){  
-    DynamicMod x_power = DynamicMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] } , z{ input[sample_num][1] };
+    DMod x_power = DMod::one() , x{ input[sample_num][0] } , y{ input[sample_num][1] } , z{ input[sample_num][1] };
     FOR( dx , 0 , size ){
-      DynamicMod xy_power = x_power;
+      DMod xy_power = x_power;
       FOR( dy , 0 , size ){
-	DynamicMod xyz_power = xy_power;
+	DMod xyz_power = xy_power;
 	FOR( dz , 0 , size ){
 	  int i = size * size * dx + size * dy + dz;
 	  M[sample_num][i] = xyz_power;
@@ -549,7 +555,7 @@ void InputPolynomialAnalysis3_enough( const int& sample_repetition_num , const v
   CERR( "" );
 }
 
-void InputLinearAnalysis4( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputLinearAnalysis4( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , var , 4 );
   CEXPR( int , length , var + 1 ); // 5
@@ -570,9 +576,9 @@ void InputLinearAnalysis4( const int& sample_repetition_num , const vector<vecto
   while( valid && !match ){
     match = true;
     FOR( sample_num , 0 , sample_repetition_num ){
-      DynamicMod temp = index[var];
+      DMod temp = index[var];
       FOR( i , 0 , var ){
-	temp += DynamicMod( index[i] ) * input[sample_num][i];
+	temp += DMod( index[i] ) * input[sample_num][i];
       }
       if( output[sample_num] * denom != temp ){
 	match = false;
@@ -596,7 +602,7 @@ void InputLinearAnalysis4( const int& sample_repetition_num , const vector<vecto
   CERR( "" );
 }
 
-void InputExponentialAnalysis1_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputExponentialAnalysis1_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 3 );
   CEXPR( int , length , size + 2 ); // 5
@@ -617,11 +623,11 @@ void InputExponentialAnalysis1_few( const int& sample_repetition_num , const vec
   while( valid && !match ){
     match = true;
     FOR( sample_num , 0 , sample_repetition_num ){
-      DynamicMod x{ input[sample_num][0] } , x_power = Power( x , input[sample_num][0] - 1 );
-      DynamicMod temp = DynamicMod( index[length-1] ) + DynamicMod( index[length-2] ) * x;
+      DMod x{ input[sample_num][0] } , x_power = Power( x , input[sample_num][0] - 1 );
+      DMod temp = DMod( index[length-1] ) + DMod( index[length-2] ) * x;
       FOR( d , 0 , size ){
 	int i = d;
-	temp += DynamicMod( index[i] ) * x_power;
+	temp += DMod( index[i] ) * x_power;
 	x_power *= x;
       }
       if( output[sample_num] * denom != temp ){
@@ -647,7 +653,7 @@ void InputExponentialAnalysis1_few( const int& sample_repetition_num , const vec
   CERR( "" );
 }
 
-void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous )
+void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str , const bool& continuous )
 {
   CEXPR( int , size , 3 );
   CEXPR( int , length , size + 2 );
@@ -659,10 +665,10 @@ void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const 
       }
       CERR( "入力を" , residue , "番目から" , skip_span , "置きに選んで指数関数の一次結合による補間を試みます。" );
       FOREQ( dx1 , -1 , 1 ){
-        vector M( sample_size , vector<DynamicMod>( length + 1 ) );
+        vector M( sample_size , vector<DMod>( length + 1 ) );
         for( int sample_num = residue ; sample_num < sample_repetition_num ; sample_num += skip_span ){
-          DynamicMod x{ ( input[sample_num][0] + skip_span - 1 ) / skip_span + dx1 };
-          DynamicMod x_power = Power( x , ( input[sample_num][0] + skip_span - 1 ) / skip_span - 1 );
+          DMod x{ ( input[sample_num][0] + skip_span - 1 ) / skip_span + dx1 };
+          DMod x_power = Power( x , ( input[sample_num][0] + skip_span - 1 ) / skip_span - 1 );
           FOR( d , 0 , size ){
             M[sample_num / skip_span][d] = x_power;
             x_power *= x;
@@ -706,7 +712,7 @@ void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const 
   }
 }
 
-void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 3 );
   CEXPR( int , var , 2 );
@@ -728,16 +734,16 @@ void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vec
   while( valid && !match ){
     match = true;
     FOR( sample_num , 0 , sample_repetition_num ){
-      DynamicMod x{ input[sample_num][0] } , y{ input[sample_num][1] } , x_power = Power( x , input[sample_num][1] - 1 ) , y_power = Power( y , input[sample_num][0] - 1 );
-      DynamicMod temp = DynamicMod( index[length-1] );
+      DMod x{ input[sample_num][0] } , y{ input[sample_num][1] } , x_power = Power( x , input[sample_num][1] - 1 ) , y_power = Power( y , input[sample_num][0] - 1 );
+      DMod temp = DMod( index[length-1] );
       FOR( d , 0 , size ){
 	int i = d;
-	temp += DynamicMod( index[i] ) * x_power;
+	temp += DMod( index[i] ) * x_power;
 	x_power *= x;
       }
       FOR( d , 0 , size ){
 	int i = size + d;
-	temp += DynamicMod( index[i] ) * y_power;
+	temp += DMod( index[i] ) * y_power;
 	y_power *= y;
       }
       if( output[sample_num] * denom != temp ){
@@ -767,14 +773,14 @@ void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vec
   CERR( "" );
 }
 
-void InputExponentialAnalysis2_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+void InputExponentialAnalysis2_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CEXPR( int , size , 3 );
   CEXPR( int , var , 2 );
   CEXPR( int , length , var * ( var - 1 ) * size + 1 ); // 7
-  vector M( sample_repetition_num , vector<DynamicMod>( length + 1 ) );
+  vector M( sample_repetition_num , vector<DMod>( length + 1 ) );
   FOR( sample_num , 0 , sample_repetition_num ){  
-    DynamicMod x{ input[sample_num][0] } , y{ input[sample_num][1] } , x_power = Power( x , input[sample_num][1] - 1 ) , y_power = Power( y , input[sample_num][0] - 1 );
+    DMod x{ input[sample_num][0] } , y{ input[sample_num][1] } , x_power = Power( x , input[sample_num][1] - 1 ) , y_power = Power( y , input[sample_num][0] - 1 );
     FOR( d , 0 , size ){
       int i = d;
       M[sample_num][i] = x_power;
