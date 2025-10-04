@@ -128,7 +128,7 @@ IN VO RandomTest( const int& test_case_num )
     #define CIN( LL , ... ) LL __VA_ARGS__; SET( __VA_ARGS__ )
     #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); }
     #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
-    #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
+    #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE VAR( N0 + I0 , VE<LL>( N1 + I1 ) ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
     #define FINISH_MAIN SET_ASSERT( test_case_num , 1 , test_case_num_bound ); } REPEAT( test_case_num ){ Solve(); } }
   #endif
   #define SET_ASSERT( A , MIN , MAX ) SET( A ); ASSERT( A , MIN , MAX )
