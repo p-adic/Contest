@@ -2,15 +2,13 @@
 
 #pragma once
 
-#pragma GCC optimize ( "O3" )
-#pragma GCC optimize ( "unroll-loops" )
-#pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
+#define _GLIBCXX_DEBUG
 
 #define SET( ... ) VariadicCin( cin , __VA_ARGS__ )
 #define CIN( LL , ... ) LL __VA_ARGS__; SET( __VA_ARGS__ )
 #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); }
 #define CIN_A( LL , I , N , ... ) vector<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
-#define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) vector<vector<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
+#define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) vector VAR( N0 + I0 , vector<LL>( N1 + I1 ) ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
 
 #define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now(); double loop_average_time = 0.0 , loop_start_time = 0.0 , current_time = 0.0; int loop_count = 0; assert( loop_average_time < 1.0 && loop_start_time < 1.0 && loop_count == 0 )
 #define CURRENT_TIME ( current_time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 ) )
