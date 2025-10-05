@@ -11,6 +11,8 @@ AC( ExplicitExpressionInnerProduct );
 AC( ExplicitExpressionOneArraySubArraySum );
 AC( ExplicitExpressionArrayCombinatorial );
 AC( ExplicitExpressionDoubleSum );
+AC( ExplicitExpressionDoubleSumQuotient );
+AC( ExplicitExpressionDoubleSumNonQuotient );
 AC( ExplicitExpressionArray );
 AC( ExplicitExpressionUnaryLinearRecursion );
 AC( ExplicitExpressionUnaryIteration );

@@ -216,52 +216,92 @@ AC( ExplicitExpressionDoubleSum )
 {
   ASK_YES_NO( "商や剰余の総和の計算問題ですか？" );
   if( reply == "y" ){
-    CERR( "- f(x,y)=h(floor(g_1(x,y)/g_2(x,y)))の場合、分子か分母を固定して総和計算" );
-    CERR( "  - floor(x/y)の和は" );
-    CERR( "    - yを固定してxを動かすならばfloor_sum" );
-    CERR( "      \\Mathematics\\Combinatorial\\FloorSum" );
-    CERR( "    - xを固定してyを動かすならば平方分割" );
-    CERR( "      \\Mathematics\\Combinatorial\\FloorSum\\FloorRiemanZeta" );
-    CERR( "  - floor(a_i/b_j)の和は、b_jの重複を頻度表で管理して" );
-    CERR( "    b_jが無重複かつ単調である場合に帰着させ、" );
-    CERR( "    - iを固定してjを動かすならば答えをA[i]に格納するとして、" );
-    CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
-    CERR( "      A[i]に愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
-    CERR( "      floor(a_i/b_j)=vを満たすjの区間長*vをA[i]に一点加算" );
-    CERR( "    - jを固定してiを動かすならば答えをA[j]に格納するとして、" );
-    CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
-    CERR( "      A[j]たちに愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
-    CERR( "      floor(a_i/b_j)=vを満たすjの区間でAにvを区間加算" );
-    CERR( "    \\Mathematics\\Combinatorial\\FloorSum\\Parallel" );
-    CERR( "- f(x,y)=h(g_1(x,y)%g_2(x,y))の場合、" );
-    CERR( "  - xを固定してyを動かすx%yの和は平方分割" );
-    CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
-    CERR( "  - a_i%b_jの和は" );
-    CERR( "    - iを固定してjを動かすならばa_i/b_jに帰着するか、または" );
-    CERR( "      エラトステネスの要領でAの約数であってBの成分であるものを前計算" );
-    CERR( "    - jを固定してiを動かすならばa_i/b_jに帰着" );
-    CERR( "    \\Mathematics\\Combinatorial\\ResidueSum\\Parallel" );
+    CALL_AC( ExplicitExpressionDoubleSumQuotient );
   } else {
-    CERR( "2変数関数f(x,y)と配列(a_i)_{i=0}^{N-1}, (b_j)_{j=0}^{M-1}に対する" );
-    CERR( "二重和sum_i sum_j f(a_i,b_j)などを考えるとします。" );
-    CERR( "必要ならば(a_i)_iと(b_j)をソートしてともに広義単調増加とします。" );
-    CERR( "- sum_i f(a_i,b_j)の計算量をO(g(N))としてO(g(N)M)が間に合いそうならば、" );
-    CERR( "  和の順序交換sum_i sum_j f(a_i,b_j) = sum_j sum_i f(a_i,b_j)" );
-    CERR( "- sum_j (f(a_i,b_{j+1}) - f(a_i,b_j))の計算量をO(g(N))としてO(g(N)M)が" );
-    CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
-    CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
-    CERR( "  積和の和積化" );
-    CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
-    CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
+    CALL_AC( ExplicitExpressionDoubleSumNonQuotient );
+  }
+}
+
+AC( ExplicitExpressionDoubleSumQuotient )
+{
+  CERR( "- f(x,y)=h(floor(g_1(x,y)/g_2(x,y)))の場合、分子か分母を固定して総和計算" );
+  CERR( "  - floor(x/y)の和は" );
+  CERR( "    - yを固定してxを動かすならばfloor_sum" );
+  CERR( "      \\Mathematics\\Combinatorial\\FloorSum" );
+  CERR( "    - xを固定してyを動かすならば平方分割" );
+  CERR( "      \\Mathematics\\Combinatorial\\FloorSum\\FloorRiemanZeta" );
+  CERR( "  - floor(a_i/b_j)の和は、b_jの重複を頻度表で管理して" );
+  CERR( "    b_jが無重複かつ単調である場合に帰着させ、" );
+  CERR( "    - iを固定してjを動かすならば答えをA[i]に格納するとして、" );
+  CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
+  CERR( "      A[i]に愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
+  CERR( "      floor(a_i/b_j)=vを満たすjの区間長*vをA[i]に一点加算" );
+  CERR( "    - jを固定してiを動かすならば答えをA[j]に格納するとして、" );
+  CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
+  CERR( "      A[j]たちに愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
+  CERR( "      floor(a_i/b_j)=vを満たすjの区間でAにvを区間加算" );
+  CERR( "    \\Mathematics\\Combinatorial\\FloorSum\\Parallel" );
+  CERR( "- f(x,y)=h(g_1(x,y)%g_2(x,y))の場合、" );
+  CERR( "  - xを固定してyを動かすx%yの和は平方分割" );
+  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
+  CERR( "  - a_i%b_jの和は" );
+  CERR( "    - iを固定してjを動かすならばa_i/b_jに帰着するか、または" );
+  CERR( "      エラトステネスの要領でAの約数であってBの成分であるものを前計算" );
+  CERR( "    - jを固定してiを動かすならばa_i/b_jに帰着" );
+  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum\\Parallel" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionDoubleSumNonQuotient )
+{
+  CERR( "2変数関数f(x,y)と配列(a_i)_{i=0}^{N-1}, (b_j)_{j=0}^{M-1}に対する" );
+  CERR( "二重和X_i Y_j f(a_i,b_j)などを考えるとします。X,Yは" );
+  CERR( "sum,prod,min,maxなどです。" );
+  CERR( "必要ならば(a_i)_iと(b_j)をソートしてともに広義単調増加とします。" );
+  ASK_NUMBER(
+             "X=Y=sum" ,
+             "X=Y=prod" ,
+             "X=Y=min,max" ,
+             "X!=YかつY=sum" ,
+             "X!=YかつY=prod" ,
+             "X!=YかつY=min,max"
+             );
+  CERR( "- iやjなどに関する動的計画法" );
+  if( num < 3 ){
+    CERR( "- X_i f(a_i,b_j)の計算量をO(g(N))としてO(g(N)M)が間に合いそう" );
+    CERR( "  ならば、順序交換X_i Y_j f(a_i,b_j) = Y_j X_i f(a_i,b_j)" );
+  }
+  CERR( "- Y_j f(a_i,b_j)のiに関する差分計算" );
+  if( num == 0 || num == 3 ){
+    CERR( "  - Y_j(f(a_i,b_{j+1})-f(a_i,b_j))の式変形による計算" );
+  } else if( num == 1 || num == 4 ){
+    CERR( "  - Y_j(f(a_i,b_{j+1})/f(a_i,b_j))の式変形による計算" );
+  } else if( num == 2 || num == 5 ){
+    CERR( "  - 順序多重集合{f(a_i,b_j)}_jをiに関して差分計算" );
+  }
+  if( num == 0 ){
+    CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそう" );
+    CERR( "  ならば、積和の和積化" );
+    CERR( "  X_i Y_j f(a_i,b_j) = sum_k((X_i g_k(a_i))(Y_j h_k(b_j)))" );
+  }
+  if( num == 2 ){
+    CERR( "- N=MかつX=Y=max（minの場合は-1倍）でf(a_i,b_j)の代わりに" );
+    CERR( "  min(f(a_i,b_j),f(a_j,b_i))などを考えるならば、f(a_i,b_j)<f(a_j,b_i)" );
+    CERR( "  の必要十分条件を求めてそれを満たすj全体の集合S_iを考え、" );
+    CERR( "  max_i max_{j in S_i} f(a_i,b_j)に帰着" );
+    CERR( "  - fが積や比ならf(a_i,b_j)<f(a_j,b_i)は比や積のソートに帰着" );
+    CERR( "  - S_iはiに関する差分計算" );
+  }
+  if( num < 3 ){
     CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
     CERR( "  fの各点逆像による纏め上げをする分割統治法" );
-    CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
+    CERR( "  X_i Y_j f(a_i,b_j)=X_z #f(a_,b_)^{-1}(z) z" );
     CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
     CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
-    CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
+    CERR( "  X_i Y_j f(a_i,b_j)=X_{z>0} #f(a_,b_)^{-1}([z,∞))" );
     CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
     CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
-    CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
+    CERR( "  X_i Y_j f(a_i,b_j)=X_v #(a_,b_)^{-1}(v) f(v)" );
   }
   CERR( "を検討しましょう。" );
 }
@@ -660,7 +700,7 @@ AC( ExplicitExpressionRandomAccess )
     CERR( "固定長変数関数の逆像の数え上げ問題は、" );
     CALL_AC( CountingExplicitExpression );
   }
-  ASK_YES_NO( "Sの各要素sごとにs未満のSの項数が高速に求まりますか？" );
+  ASK_YES_NO( "Sの各要素sごとにs未満のSの要素数が高速に求まりますか？" );
   if( reply == "y" ){
     CERR( "Sの各要素sごとにs未満のSの項を数え上げ問題を考えて、" );
     CERR( "sに関する二分探索を検討しましょう。" );
@@ -674,11 +714,9 @@ AC( ExplicitExpressionRandomAccess )
       CERR( "" );
     }
     CERR( "以下、Sを文字列の集合とします。数は位取り記法で文字列とみなします。" );
-    CERR( "文字cに最小元である文字mをd個連続させた文字列cm...m未満の" );
-    CERR( "Sの項数dp[d][c]の漸化式を再帰関数などで実装し、dが大きい順に" );
-    CERR( "(1) dp[d][c]<iである限りcをインクリメントし、1+d桁目をcに確定させる。" );
-    CERR( "(2) iにc==m?0:dp[d][cの前者]を減算する" );
-    CERR( "という処理を繰り返しましょう。" );
+    CERR( "文字cを辞書順昇順に走査し、先頭1文字目をcに決め打った時のSの要素数を" );
+    CERR( "iから引けるだけ引き、引けなくなったらcをa[i]の先頭1文字目に確定させます。" );
+    CERR( "これでa[i]の長さが1少ない場合に帰着させられ、再帰的にa[i]を求められます。" );
   }
 }
 
@@ -1398,6 +1436,7 @@ AC( MaximisationFunctionOnMultipleArray )
   ASK_NUMBER(
              "A_0の部分和とA_1の補部分和の最大／最小化問題" ,
              "A_iの部分和と関数f_iの積のiをわたる総和の最大／最小化問題" ,
+             "max_i max_j f(a_i,b_j)などの計算問題" ,
              "その他の問題"
              );
   if( num == num_temp++ ){
@@ -1414,6 +1453,8 @@ AC( MaximisationFunctionOnMultipleArray )
     CERR( "A_0,A_1,...はそれぞれ昇順にソートしても良く、S_0,S_1,...は" );
     CERR( "終切片に限っても一般性を失いません。S_0,S_1,...,S_{M-2}を" );
     CERR( "決め打ち全探策しS_{M-1}の最適解を二分探索で求めましょう。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionDoubleSumNonQuotient );
   } else if( num == num_temp++ ){
     CERR( "A_0,A_1,...を結合して１つの配列とみなします。" );
     CALL_AC( MaximisationFunctionOnOneArray );
