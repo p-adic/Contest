@@ -36,7 +36,7 @@
 #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
 #define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
 #define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
-#define WHAT( ... ) VariadicCout( WHAT_TARGET , #__VA_ARGS__ , "=" , __VA_ARGS__ ) << endl;
+#define WHAT( ... ) VariadicCout( WHAT_TARGET , "(" , #__VA_ARGS__ , ") = (" , __VA_ARGS__ , ")" ) << endl;
 #define DERR( ... ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERR1( __VA_ARGS__ ); } else { DERR2( __VA_ARGS__ ); }
 #define DERRNS( ... ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERRNS1( __VA_ARGS__ ); } else { DERRNS2( __VA_ARGS__ ); }
 #define DERR_A( I , N , A ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERR_A1; } else { DERR_A2; }
