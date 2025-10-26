@@ -2671,16 +2671,15 @@ AC( MaximisationGameIllFounded )
 
 AC( Counting )
 {
-  CERR( "動的計画法で計算量が大きい場合、" );
-  CERR( "- dp[i]の代わりに" );
-  CERR( "  - sum_{k<=i}dp[k]を考える。" );
-  CERR( "  - i番目の状態をdp[i+1]への寄与C(k)が等しい状態kへ細分してdp[i][k]を考える。" );
-  CERR( "  - i番目の状態をdp[i+1]への寄与がcである状態の和集合へ細分してdp[i][c]を考える。" );
-  CERR( "- dp[i][i] = *_i(dp[i][0,i))かつdp[i][j]=dp[j][j] o dp[i-1][j]を" );
-  CERR( "  満たすモノイド演算*と作用oが存在するならば、dp[i][i]を別個に管理して" );
-  CERR( "  NextDPの遷移を区間加算や区間作用が可能なデータ構造でinplace化。" );
-  CERR( "- 状態数が多い場合、状態の満たす関係式を特定して状態数の削減。" );
-  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "複数の条件を満たす項の数え上げ問題ですか？" );
+  if( reply == "y" ){
+    CERR( "条件P_1,...,P_rの真偽が固定されている場合、" );
+    CERR( "条件をいくつか除いたり逆にしたりした場合を計算し、包除原理などで" );
+    CERR( "答えを求めましょう。" );
+    CERR( "例えば全事象Uの排他的被覆を与える事象A,B,C,Dがある時、" );
+    CERR( "#A = #(A cup B) + #(A cup C) + #(A cup D) - #U" );
+    CERR( "などと計算することができます。" );
+  }
   ASK_YES_NO( "クエリ問題ですか？" );
   if( reply == "y" ){
     CALL_AC( QueryCounting );
@@ -2738,6 +2737,18 @@ AC( Counting )
     if( reply == "y" ){
       CALL_AC( SampleAnalyser );
     }
+  }
+  ASK_YES_NO( "計算量が2乗に大きい程度の動的計画法で解けますか？" );
+  if( reply == "y" ){
+    CERR( "- dp[i]の代わりに" );
+    CERR( "  - sum_{k<=i}dp[k]を考える。" );
+    CERR( "  - i番目の状態をdp[i+1]への寄与C(k)が等しい状態kへ細分してdp[i][k]を考える。" );
+    CERR( "  - i番目の状態をdp[i+1]への寄与がcである状態の和集合へ細分してdp[i][c]を考える。" );
+    CERR( "- dp[i][i] = *_i(dp[i][0,i))かつdp[i][j]=dp[j][j] o dp[i-1][j]を" );
+    CERR( "  満たすモノイド演算*と作用oが存在するならば、dp[i][i]を別個に管理して" );
+    CERR( "  NextDPの遷移を区間加算や区間作用が可能なデータ構造でinplace化。" );
+    CERR( "- 状態数が多い場合、状態の満たす関係式を特定して状態数の削減。" );
+    CERR( "を検討しましょう。" );
   }
 }
 
