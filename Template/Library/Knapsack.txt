@@ -26,6 +26,10 @@
 //         Combinatorial/KnapsackProblem/BoundedChoice/Costfree/
 //         - NegativeValue (17KB)
 //           Combinatorial/KnapsackProblem/BoundedChoice/Costfree/NegativeValue/
+//   - ChoiceRestoration:選択復元版
+//     Combinatorial/KnapsackProblem/ChoiceRestoration/
+//     - Costwise: (3KB)
+//       Combinatorial/KnapsackProblem/ChoiceRestoration/Costwise/
 //   :
 //   :
 //   https://p-adic.github.io/cpp/#:~:text=ナップサック問題
