@@ -5,52 +5,68 @@
   // CIN( string , S );
   CIN( int , Q ); // 入力受け取り順に注意
   // 以下のデータ構造は下部のクエリ処理を書き終えて必要な処理を確認してから選択する。
+  // (1) 最下部に必要なクエリ処理を書く。
+  // (2) ここに必要な代数構造とX_preの定義をする。
+  // (3) 以下のデータ構造を選択する。
+  // using U = MP;
+  // auto op = [&]( U u0 , const U& u1 ){
+  //   u0 += u1;
+  //   return move( u0 );
+  // };
+  // U unit{};
+  // auto inv = [&]( const U& u ){
+  //   return -u;
+  // };
+  // AbstractGroup G{ op , unit , inv };
+  
+  // auto& X_pre = A;
+  // // vector<U> X_pre( N );
 
   // /* 累積和 O(N)/O(1) */
   // /* SetTheory/DirectProduct/AffineSpace/CumulativeProduct/ */
-  // CumulativeSum X{ move( A ) };
+  // CumulativeSum X{ move( X_pre ) };
 
   // /* 階差数列 O(N)/O(1) */
   // /* SetTheory/DirectProduct/AffineSpace/DifferenceSequence/ */
-  // DifferenceSequence X{ move( A ) };
+  // DifferenceSequence X{ move( X_pre ) };
 
   // /* フェニック木 O(N)/O(log N) */
   // /* SetTheory/DirectProduct/AffineSpace/BIT/ */
-  // BIT bit{ A };
+  // BIT bit{ X_pre };
   // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/ */
-  // // IntervalAddBIT X{ A };
+  // // IntervalAddBIT X{ X_pre };
   // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/ */
-  // // IntervalMaxBIT X{ decltype(A[0])( 0 ) , A };
-  // // IntervalMinBIT X{ decltype(A[0])( 1e9 ) , A };
+  // // IntervalMaxBIT X{ decltype(A[0])( 0 ) , X_pre };
+  // // IntervalMinBIT X{ decltype(A[0])( 1e9 ) , X_pre };
 
   // /* 排他的スパーステーブル O(N log N)/O(__builtin_clzの計算量) */
   // /* SetTheory/DirectProduct/AffineSpace/DisjointSparseTable/ */
-  // DisjointSparseTable X{ A }; // 最大値の管理
-  // // AbstractDisjointSparseTable X{ MinSemilattice<decltype(A[0])>( 1e9 ) , A };
-  // // AbstractDisjointSparseTable X{ MultiplicativeMonoid<decltype(A[0])>( 1 ) , A };
+  // DisjointSparseTable X{ X_pre }; // 最大値の管理
+  // // AbstractDisjointSparseTable X{ MinSemilattice<decltype(A[0])>( 1e9 ) , X_pre };
+  // // AbstractDisjointSparseTable X{ MultiplicativeMonoid<decltype(A[0])>( 1 ) , X_pre };
 
   // /* セグメント木 O(N)/O(log N) */
   // /* SetTheory/DirectProduct/AffineSpace/SegmentTree/ */
-  // SegmentTree X{ A }; // 最大値の管理
-  // // AbstractSegmentTree X{ MinSemilattice<decltype(A[0])>( 1e9 ) , A };
-  // // AbstractSegmentTree X{ MultiplicativeMonoid<decltype(A[0])>( 1 ) , A };
+  // int val_min = -1; SegmentTree X{ val_min , X_pre }; // 最大値の管理
+  // // AbstractSegmentTree X{ MinSemilattice<decltype(A[0])>( 1e9 ) , X_pre };
+  // // AbstractSegmentTree X{ MultiplicativeMonoid<decltype(A[0])>( 1 ) , X_pre };
 
   // /* 平方分割 O(N)/O(√N) */
   // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/ */
-  // SqrtDecomposition X{ move( A ) };
+  // SqrtDecomposition X{ move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/IntervalAdd/ */
-  // // IntervalAddSqrtDecomposition X{ move( A ) };
+  // // IntervalAddSqrtDecomposition X{ move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/ */
   // // MultiplicativeMonoid<decltype(A[0])> monoid{1}; // 非可換な区間乗算更新を処理する場合
-  // // DualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( A ) };
+  // // DualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Comutative/ */
   // // MultiplicativeMonoid<decltype(A[0])> monoid{1}; // 可換な区間乗算更新を処理する場合
-  // // CommutativeDualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( A ) };
+  // // CommutativeDualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/ */
-  // // LazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP>{} , move( A ) }; // 区間乗算更新と区間和取得を処理する場合
+  // // LazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP>{} , move( X_pre ) }; // 区間乗算更新と区間和取得を処理する場合
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/ */
-  // // IntervalMultiplyLazySqrtDecomposition X{ RegularRSet{ MultiplicativeMonoid<MP>{ 1 ) } , Module<MP,MP>{} , move( a ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
-  // // GeometricProgressionMinDualSqrtDecomposition X{ Module<int,int>{} , int( 1e9 ) , {1,-1} , move( a ) }; // 区間一次式min更新と一点取得を処理する場合
+  // // IntervalMultiplyLazySqrtDecomposition X{ RegularRSet{ MultiplicativeMonoid<MP>{ 1 ) } , Module<MP,MP>{} , move( X_pre ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
+  // // GeometricProgressionMinDualSqrtDecomposition X{ Module<int,int>{} , int( 1e9 ) , {1,-1} , move( X_pre ) }; // 区間一次式min更新と一点取得を処理する場合
   // // /* Algebra/Monoid/Group/DirectSum/ */
   // // int index = -1 , dim = 26;
   // // DirectSumGroup dsg{ group , index , dim }; // 自由加群
