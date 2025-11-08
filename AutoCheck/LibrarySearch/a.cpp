@@ -1036,7 +1036,8 @@ AC( Maximisation )
 	     "最小値の最大化問題" ,
 	     "部分和の最小化問題" ,
 	     "部分和の差の最大／最小化問題" ,
-	     "2人ゲームの最終的な不変量の最大／最小化問題"
+	     "2人ゲームの最終的な不変量の最大／最小化問題" ,
+             "演算による表示長の最小化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationMovingCost );
@@ -1077,9 +1078,11 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationSubsetSum );
   } else if( num == num_temp++ ){
-
+    CALL_AC( MinimisationSubsetSumDifference );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationGame );
+  } else if( num == num_temp++ ){
+    CALL_AC( MinimisationExpression );
   }
 }
 
@@ -2318,43 +2321,9 @@ AC( MinimisationPartitionOfArray )
     CERR( "f circ AをA_0、g circ AをA_1と置きます。" );
     CALL_AC( MaximisationFunctionOnTwoArray );
   } else if( num == num_temp++ ){
-    CERR( "「Aの補部分和」と「Aの総和」から「Aの部分和」を引いたものです。" );
-    CERR( "差が引き算の絶対値であることから、絶対値を取る前の値である" );
-    CERR( "2×「Aの部分和」-「Aの総和」" );
-    CERR( "に注目します。" );
-    ASK_NUMBER(
-               "Aの部分和と補部分和の差の最小化問題" ,
-               "Aの部分和と補部分和の差の最大化問題" ,
-               );
-    if( num == num_temp++ ){
-      CERR( "差の最小化は「Aの部分和」と「Aの総和の半分」の差の最小化に帰着しましょう。" );
-      CERR( "２つの値のうち小さい方を考えることで上限付き部分和の最大化問題となります。" );
-    } else if( num == num_temp++ ){
-      CERR( "差の最大化は「Aの部分和」が最大か最小である場合に達成されます。" );
-      CERR( "Aと-Aを考えることで、部分和の最大化問題となります。" );
-    }
-    CERR( "" );
-    CALL_AC( Knapsack );
+    CALL_AC( MinimisationSubsetSumDifferenceTwoPiece );
   } else if( num == num_temp++ ){
-    CERR( "非空部分集合とその補集合の非空部分集合をそれぞれS,Tと置き、" );
-    CERR( "定数Cによる|#S - #T|<=Cという制約以外には制約がないとします。" );
-    CERR( "" );
-    CERR( "定義からSとTは交わりが空ですが、部分和の差を考える上では交わりを" );
-    CERR( "持たせても答えは変わらないため、結局|#S - #T| <= Cを守りつつ" );
-    CERR( "要素数が[floor(N/2),floor(N/2)+C]に属す相異なる非空部分集合" );
-    CERR( "の組全体に(S,T)を渡らせてAの部分和の差の最小化を" );
-    CERR( "する問題に帰着されます" );
-    CERR( "" );
-    CERR( "和を取る値の幅をv_maxと置き、集合の要素数をNと置くと、" );
-    CERR( "部分和の候補は高々v_max N通り、要素数floor(N/2)の部分集合の候補は" );
-    CERR( "約2^N/√N通りで、log_2(v_max N)の定数倍 < Nならば鳩の巣原理より" );
-    CERR( "答えは0です。" );
-    CERR( "" );
-    CERR( "以下N <= log_2(v_max N)の定数倍とします。" );
-    CERR( "排他的なS,Tを半分列挙することで答えをO(CN 3^{N/2})で求められ、" );
-    CERR( "結局O(N + C v_max^{(log_2 3)/2} log_2 v_max)で解く" );
-    CERR( "ことが可能です。" );
-    CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\Difference" );
+    CALL_AC( MinimisationSubsetSumDifferenceThreePiece );
   } else if( num == num_temp++ ){
     CALL_AC( KnapsackIntervalSumAbsoluteSum );
   }
@@ -2597,6 +2566,63 @@ AC( MinimisationSubsetSum )
   }
 }
 
+AC( MinimisationSubsetSumDifference )
+{
+  ASK_NUMBER(
+             "Aの部分和と補部分和の差の最大／最小化問題" ,
+             "Aの非空部分和と補集合の非空部分和の差の最小化問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( MinimisationSubsetSumDifferenceTwoPiece );
+  } else if( num == num_temp++ ){
+    CALL_AC( MinimisationSubsetSumDifferenceThreePiece );
+  }
+}
+
+AC( MinimisationSubsetSumDifferenceTwoPiece )
+{
+  CERR( "「Aの補部分和」は定数「Aの総和」から「Aの部分和」を引いたものです。" );
+  CERR( "差が引き算の絶対値であることから、絶対値を取る前の値である" );
+  CERR( "2×「Aの部分和」-「Aの総和」" );
+  CERR( "に注目します。" );
+  ASK_NUMBER(
+             "Aの部分和と補部分和の差の最小化問題" ,
+             "Aの部分和と補部分和の差の最大化問題" ,
+             );
+  if( num == num_temp++ ){
+    CERR( "差の最小化は「Aの部分和」と「Aの総和の半分」の差の最小化に帰着しましょう。" );
+    CERR( "２つの値のうち小さい方を考えることで上限付き部分和の最大化問題となります。" );
+  } else if( num == num_temp++ ){
+    CERR( "差の最大化は「Aの部分和」が最大か最小である場合に達成されます。" );
+    CERR( "Aと-Aを考えることで、部分和の最大化問題となります。" );
+  }
+  CERR( "" );
+  CALL_AC( Knapsack );
+}
+
+AC( MinimisationSubsetSumDifferenceThreePiece )
+{
+  CERR( "非空部分集合とその補集合の非空部分集合をそれぞれS,Tと置き、" );
+  CERR( "定数Cによる|#S - #T|<=Cという制約以外には制約がないとします。" );
+  CERR( "" );
+  CERR( "定義からSとTは交わりが空ですが、部分和の差を考える上では交わりを" );
+  CERR( "持たせても答えは変わらないため、結局|#S - #T| <= Cを守りつつ" );
+  CERR( "要素数が[floor(N/2),floor(N/2)+C]に属す相異なる非空部分集合" );
+  CERR( "の組全体に(S,T)を渡らせてAの部分和の差の最小化を" );
+  CERR( "する問題に帰着されます" );
+  CERR( "" );
+  CERR( "和を取る値の幅をv_maxと置き、集合の要素数をNと置くと、" );
+  CERR( "部分和の候補は高々v_max N通り、要素数floor(N/2)の部分集合の候補は" );
+  CERR( "約2^N/√N通りで、log_2(v_max N)の定数倍 < Nならば鳩の巣原理より" );
+  CERR( "答えは0です。" );
+  CERR( "" );
+  CERR( "以下N <= log_2(v_max N)の定数倍とします。" );
+  CERR( "排他的なS,Tを半分列挙することで答えをO(CN 3^{N/2})で求められ、" );
+  CERR( "結局O(N + C v_max^{(log_2 3)/2} log_2 v_max)で解く" );
+  CERR( "ことが可能です。" );
+  CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\Difference" );
+}
+
 AC( MaximisationGame )
 {
   ASK_YES_NO( "整礎なゲームですか？" );
@@ -2667,6 +2693,18 @@ AC( MaximisationGameIllFounded )
   CERR( "数値を置き換えるゲームは頻度表を用いて数値を移動するゲームに" );
   CERR( "翻訳できることがありますが、その場合は数値の移動が結果的に" );
   CERR( "起こらない操作も許されるか否かに注意しましょう。" );
+}
+
+AC( MinimisationExpression )
+{
+  CERR( "項tを集合Sの要素とモノイド演算*、群演算+、写像fを用いて" );
+  CERR( "t=f(*総乗)+(*総乗)" );
+  CERR( "と表示する時の表示長の最小化問題は*総乗をkeyとして総乗長の最小値を" );
+  CERR( "管理する連想配列を用いることで解くことができます。" );
+  CERR( "\\Mathematics\\Combinatorial\\AlgebraicGeneration" );
+  CERR( "" );
+  CERR( "特に*による総乗長の最小化は+=*、f=idとすることで半分全列挙で" );
+  CERR( "求めることができます。" );
 }
 
 AC( Counting )
@@ -3227,18 +3265,29 @@ AC( CountingShapedSubString )
 
 AC( CountingMatrix )
 {
-  CERR( "H行W列の行列を考えます。行と列の制約を2進法に翻訳してbitごとに考えましょう。" );
-  CERR( "- 各行と各列にちょうど１回ずつ1が現れる{0,1}値行列は全単射H->Wと等価なので" );
-  CERR( "  その個数はH==W?H!:0" );
-  CERR( "- 各行と各列に高々１回のみ1が現れる{0,1}値行列は単射部分写像H-->Wと等価なので" );
-  CERR( "  その個数はsum_{n<=min(H,W)} n! binom(H,n) binom(W,n)" );
-  CERR( "- i行目の総和がx_i、j列目の総和がy_jに指定された数え上げは、各成分とxとyを" );
-  CERR( "  D桁の2進法で表示し、繰り上がりを考慮してd<D,h<=[H/2+1]*W,w<=[W/2+1]*Hに対する" );
-  CERR( "  dp[d][h][w]=" );
-  CERR( "  「2^dの位までの行の総和=(x%2^{d+1})+w2^{d+1}、" );
-  CERR( "   2^dの位までの列の総和=(y%2^{d+1})+h2^{d+1}となる個数」" );
-  CERR( "  を管理する桁DP（O(D (W/2+1)^H (H/2+1)^W 2^{HW})）" );
-  CERR( "  - sum(x)=sum(y)よりsum(w)=sum(h)なので必要ならば状態を１つ削減" );
+  CERR( "H行W列の行列を考えます。行と列の制約を2進法に翻訳してbitごとに考えます。" );
+  ASK_NUMBER(
+             "各行と各列にちょうど１回ずつ1が現れる{0,1}値行列の数え上げ" ,
+             "各行と各列に高々１回のみ1が現れる{0,1}値行列の数え上げ" ,
+             "i行目の総和がx_i、j列目の総和がy_jに指定された行列の数え上げ"
+             );
+  if( num == num_temp++ ){
+    CERR( "全単射H->Wと等価なのでその個数はH==W?H!:0です。" );
+  } else if( num == num_temp++ ){
+    CERR( "単射部分写像H-->Wと等価なのでその個数は" );
+    CERR( "sum_{n<=min(H,W)} n! binom(H,n) binom(W,n)です。" );
+  } else if( num == num_temp++ ){
+    CERR( "各成分とxとyをD桁の2進法で表示し、繰り上がりを考慮して" );
+    CERR( "d<D,h<=[H/2+1]*W,w<=[W/2+1]*Hに対する" );
+    CERR( "dp[d][h][w]=" );
+    CERR( "「2^dの位までの行の総和=(x%2^{d+1})+w*2^{d+1}、" );
+    CERR( "  2^dの位までの列の総和=(y%2^{d+1})+h*2^{d+1}となる個数」" );
+    CERR( "を管理する桁DP（O(D (W/2+1)^H (H/2+1)^W 2^{HW})）" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+    CERR( "なおsum(x)=sum(y)よりsum(w)=sum(h)なので、" );
+    CERR( "必要ならば状態を１つ削減することが可能です。" );
+  }
 }
 
 AC( CountingGraph )
@@ -4701,6 +4750,7 @@ AC( DecisionPresentability )
     CERR( "  結果得られる数／文字列の再帰的な全探策" );
   }
   CERR( "を検討しましょう。" );
+  CALL_AC( MinimisationExpression );
 }
 
 AC( Construction )
@@ -4720,6 +4770,7 @@ AC( Construction )
              "グラフに関する構築" ,
 	     "戦略の構築" ,
              "集合に関する構築" ,
+             "タイリングの構築" ,
 	     "ソースコードの構築"
 	     );
   if( num == num_temp++ ){
@@ -4738,6 +4789,8 @@ AC( Construction )
     CALL_AC( ConstructionStrategy );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionSet );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionTiling );
   } else if( num == num_temp++ ){
     CERR( "正解を出力をするソースコードを提出しましょう。" );
   }
@@ -4825,6 +4878,10 @@ AC( ConstructionPermutation )
 
 AC( ConstructionMatrix )
 {
+  ASK_YES_NO( "いくつかの成分の和の像が多重集合として固定されている問題ですか？" );
+  if( reply == "y" ){
+    CERR( "像をソートした数列の階差数列を考え、その成分ごとに行列を範囲更新しましょう。" );
+  }
   CERR( "行列の数え上げ問題に帰着させ、復元しましょう。" );
   CALL_AC( CountingMatrix );
 }
@@ -4963,6 +5020,23 @@ AC( ConstructionPartition )
 {
   CERR( "集合や文字列や配列の分割は写像の一種です。" );
   AC( ConstructionMap );
+}
+
+AC( ConstructionTiling )
+{
+  CERR( "グリッドのタイリングは" );
+  CERR( "- 実装の削減" );
+  CERR( "  - 転置による場合分けの削減" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Grid\\Tranposition" );
+  CERR( "  - 座標１つと向きだけ指定してタイル配置を行う関数の導入" );
+  CERR( "  - x軸とy軸の範囲を指定して周期的なタイリングを行う関数の導入" );
+  CERR( "- 小さいケースへの帰着" );
+  CERR( "  - 短辺と1辺を共有する長方形を構築し、長辺を周期的な縮小" );
+  CERR( "  - 縮小不可能な小さい長方形の考察（サンプルに帰着）" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "そしてタイルによる長方形の描画可能性判定を行いましょう。" );
+  CALL_AC( DecisionDrawability );
 }
 
 AC( Deduction )
