@@ -2,37 +2,40 @@
   // CIN( int , N ); int M = N - 1;
   using weight_type = ll;
   using path_type = Tuple<int,weight_type>;
+  using edge_type = Tuple<int,int,weight_type>;
+  CIN_A( edge_type , 0 , M , UVW );
+  // CIN_A( T2<int> , 0 , M , UV );
+  // CIN_A( weight_type , 0 , M , weight_enum );
   vector<vector<path_type>> e( N );
-  // vector<Tuple<int,int,weight_type>> wedge_enum( M );
-  // vector<Tuple<int,int>> edge_enum( M );
+  // vector<edge_type> UVW( M );
+  // vector<T2<int>> UV( M );
   // vector<weight_type> weight_enum( M );
-  // CEXPR( weight_type , infty , 1e18 );
-  // vector weight( N , vector( N , infty ) ); FOR( i , 0 , N ){ weight[i][i] = 0; }
   // CIN_AA( weight_type , 0 , N , 0 , N , weight );
+  // CEXPR( weight_type , infty , 1e18 ); vector weight( N , vector( N , infty ) ); FOR( i , 0 , N ){ weight[i][i] = 0; }
   FOR( m , 0 , M ){
     CIN( int , i , j ); --i; --j;
     CIN( ll , w );
-    e[i].push_back( {j,w} );
-    e[j].push_back( {i,w} );
-    // wedge_enum[m] = {i,j,w};
-    // edge_enum[m] = {i,j};
+    e[i] <<= {j,w};
+    e[j] <<= {i,w};
+    // UVW[m] = {i,j,w};
+    // UV[m] = {i,j};
     // weight_enum[m] = w;
     // weight[i][j] = weight[j][i] = w;
   }
   auto edge = Get( e );
   // auto edge = [&]( const int& i ){
-  //   vector<path> answer{};
+  //   vector<path_type> a{};
   //   FOR( j , 0 , N ){
-  //     answer.push_back( { j , weight[i][j] } );
+  //     a <<= { j , weight[i][j] };
   //   }
-  //   return answer;
+  //   return a;
   // };
   Graph graph{ N , edge };
 
   // /* 状態を1次元分追加 */
   // using T = T2<int>;
   // CIN( int , K );
-  // Set_HW( N , K );
+  // SET_HW( N , K );
   // auto edge = [&]( const T& v ){
   //   auto& [i,k] = v;
   //   vector<Pair<T,weight_type>> a{};
@@ -56,14 +59,18 @@
   // /* chosen_edge_num={選択された辺の番号全体} */
   // /* cc_size=連結成分数 */
   // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
-  // auto [chosen_edge_num,cc_size] = Kruscal( graph , edge_enum );
+  // auto [chosen_edge_num,cc_size] = Kruscal( graph , UV );
   // ll sum = 0; RUN( chosen_edge_num , m ){ sum += weight_enum[m]; }  
 
   // /* ワーシャルフロイド法 O(V^3) */
   // /* Geometry/Graph/Algorithm/FloydWarshall/ */
-  // FloydWarshall fw{ infty , weight }; FOR( i , 0 , N ){ FOR( j , 0 , N ){ auto& d = fw.Get( i , j ); COUTNS( d == infty ? -1 : infty , " \n"[j==N-1] ); } }
+  // FloydWarshall fw{ infty , weight };
+  // FOR( i , 0 , N ){ FOR( j , 0 , N ){ weight[i][j] = fw.Get( i , j ); }
 
   // /* ヘルドカープ法 O((V+E)2^{経由すべき点の個数}) */
   // /* Geometry/Graph/Algorithm/HeldKarp/ */
-  // HeldKarp hk{ graph }; vector<weight_type> d = hk.GetDistance( 0 , id<int>( N ) , true );
+  // HeldKarp hk{ graph };
+  // vector<int> factor = id<int>( N );
+  // bool revisitable = false;
+  // vector<weight_type> d = hk.GetDistance( 0 , factor , revisitable );
 

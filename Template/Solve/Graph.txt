@@ -2,16 +2,19 @@
   // CIN( int , N ); int M = N - 1;
   vector<vector<int>> e( N );
   // vector<Set<int>> e( N );
-  // vector<T2<int>> edge_enum( M );
+  // vector<vector<int>> e_inv( N );
+  // CIN_A( T2<int> , 0 , M , UV ); --UV;
+  // vector<T2<int>> UV( N );
   FOR( m , 0 , M ){
-    CIN( int , i , j ); --i; --j;
-    e[i] <<= j;
-    e[j] <<= i;
-    // edge_enum[m] = {i,j};
+    auto& [u,v] = UV[m];
+    // CIN( int , u , v ); --u; --v;
+    e[u] <<= v;
+    e[v] <<= u;
+    // e_inv[v] <<= u;
+    // UV[m] = {u,v};
   }
   auto edge = Get( e );
   Graph graph{ N , edge };
-  using T = decltype( graph )::type;
 
   // /* 状態を1次元分追加 */
   // using T = T2<int>;
@@ -33,6 +36,7 @@
 
   // /* （多点）幅優先探索 O(V+E) */
   // /* Geometry/Graph/Algorithm/BreadthFirstSearch/ */
+  // using T = decltype( graph )::type;
   // T external_point = -1;
   // vector<T> start_points = {0};
   // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance();
@@ -74,7 +78,7 @@
   // // vector<int> weight( N ); // 各連結成分のサイズを根の添え字に格納
   // // ll weight2 = N; // 連結成分サイズの2乗和を管理
   // // FOR( m , 0 , M ){
-  // //   auto& [i,j] = edge_enum[m];
+  // //   auto& [i,j] = UV[m];
   // //   int ri = uff.RootOfNode( i );
   // //   int rj = uff.RootOfNode( j );
   // //   if( ri != rj ){
