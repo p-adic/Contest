@@ -1,10 +1,11 @@
   CIN( int , N , M );
   // CIN( int , N ); int M = N - 1;
+  CIN_A( T2<int> , 0 , M , UV ); --UV;
+  // vector<T2<int>> UV( N );
+  // Map<T2<int>,int> UV_inv{};
   vector<vector<int>> e( N );
   // vector<Set<int>> e( N );
-  // vector<vector<int>> e_inv( N );
-  // CIN_A( T2<int> , 0 , M , UV ); --UV;
-  // vector<T2<int>> UV( N );
+  // vector<vector<int>> e_inv( N ); // 有向グラフの逆辺
   FOR( m , 0 , M ){
     auto& [u,v] = UV[m];
     // CIN( int , u , v ); --u; --v;
@@ -12,6 +13,7 @@
     e[v] <<= u;
     // e_inv[v] <<= u;
     // UV[m] = {u,v};
+    // UV_inv[{u,v}] = UV_inv[{v,u}] = m;
   }
   auto edge = Get( e );
   Graph graph{ N , edge };
@@ -48,28 +50,75 @@
 
   // /* 木DP O(V) */
   // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/ */
+  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/Recursion/ */
   // /* ノードiにU型の値A[i]が定まっておりその部分木和をdp[i]に格納する場合 */
-  //   auto f = [&]( vector<U> u , const int& i ){
-  //     U answer = A[i];
-  //     for( auto& x : u ){ answer += x; }
-  //     return answer;
-  //   };
-  // auto x = RecursionRootingDP( graph , f , 0 );
+  // using U = ll;
+  // auto f = [&]( vector<U> u = {} , const int& i = 0 ){
+  //   U answer = A[i];
+  //   for( auto& x : u ){ answer += x; }
+  //   return answer;
+  // };
+  // auto dp = RootingDP( dfst , f );
+  // // auto val = RecursionRootingDP( graph , f , 0 );
+  // /* 辺mにU型の値A[m]が定まっており、ノードiの部分木和+(iが根?U{}:A[iの親への辺番号])を
+  //   dp[i]に格納する場合*/
+  // using U = ll;
+  // auto f = [&]( vector<U> u = {} , const int& i = 0 ){
+  //   U answer = i == root ? U{} : A[UV_inv[{i,dfst.Parent(i)}]];
+  //   for( auto& x : u ){ answer += x; }
+  //   return answer;
+  // };
+  // auto dp = RootingDP( dfst , f );
   // /* ノードiにU型の値A[i]が定まっており型Uの非可換モノイド構造Mが与えられノード番号の全順序ordが定義されておりiの子ノードをわたるノード番号jのord昇順のMに関するdp[j]の総乗をA[i]に右から掛けたものをdp[i]に格納する場合 */
-  //   auto f = [&]( vector<pair<U,int>> u , const int& i ){
-  //     U answer = A[i];
-  //     sort( u.begin() , u.end() , [&]( const pair<U,int>& u0 , const pair<U,int>& u1 ){ return ord( get<1>( u0 ) , get<1>( u1 ) ); } );
-  //     for( auto& [x,j] : u ){ answer = M.Product( move( answer ) , x ); }
-  //     return pair{ move( answer ) , i };
-  //   };
-  // auto x = RecursionRootingDP( graph , f , 0 );
-  // /* val( i )にprodで右からiの子ノードjをわたるdp[j]を掛けた値をdp[i]に格納する場合 */
-  // auto val = [&]( const int& i ){ return A[i]; };
+  // using U = ll;
+  // auto f = [&]( vector<Pair<U,int>> u = {} , const int& i = 0 ){
+  //   U answer = A[i];
+  //   sort( u.begin() , u.end() , [&]( const pair<U,int>& u0 , const pair<U,int>& u1 ){ return ord( get<1>( u0 ) , get<1>( u1 ) ); } );
+  //   for( auto& [x,j] : u ){ answer = M.Product( move( answer ) , x ); }
+  //   return pair{ move( answer ) , i };
+  // };
+  // auto dp = RootingDP( dfst , f );
+  // // auto val = RecursionRootingDP( graph , f , 0 );
+  // /* f( i )にprodで右からiの子ノードjをわたるdp[j]を掛けた値をdp[i]に格納する場合 */
+  // using U = ll;
+  // auto f = [&]( const int& i ){ return A[i]; };
   // auto prod = [&]( U u0 , U u1 , const int& i , const int& j ){
   //   u0 *= u1;
   //   return move( u0 );
   // };
-  // auto x = BinaryRootingDP( graph , val , prod , 0 );
+  // auto val = BinaryRootingDP( graph , f , prod , 0 );
+
+  // /* 全方位木DP O(V) */
+  // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/RootingDP/Rerooting/ */
+  // /*「パスの数」を求める場合 */
+  // AdditiveMonoid<int> monoid{};
+  // auto f = [&]( const int& u , const int& i ){ return u + 1; };
+  // auto g = [&]( cost int& u , const bool& is_child , const int& k , const int& j ){ return u; };
+  // auto dp = RerootingDP( dfst , monoid , f , g );
+  // /*「パスの長さの最大値」を求める場合 */
+  // MaxSemilattive<int> monoid{ -1 };
+  // auto f = [&]( const int& u , const int& i ){ return u + 1; };
+  // auto g = [&]( cost int& u , const bool& is_child , const int& k , const int& j ){ return u; };
+  // auto dp = RerootingDP( dfst , monoid , f , g );
+  // /* ノードiにU型の値A[i]が定まっており型Uの可換モノイド構造monoidが与えられiを根としてノードjの
+  //    子ノードkをわたって(iを根としてkが葉?A[k]:dp[i][k])の総和をdp[i][j]に格納する場合 */
+  // auto f = [&]( const U& u , const int& i ){ return u; };
+  // auto g = [&]( cost U& u , const bool& is_child , const int& k , const int& j ) { return dfst.IsLeaf( i , k ) ? A[k] : u; };
+  // auto dp = RerootingDP( dfst , monoid , f , g );
+  // /* ノードiにU型の値A[i]が定まっており型Uの可換モノイド構造monoidが与えられiを根として
+  //   (ノードjが葉?A[j]:jの子ノードkをわたるdp[i][k]の総和)をdp[i][j]に格納する場合は、
+  //   dp[i][i]=(size=1?A[i]:上のケースのdp[i][i])で処理可能 */
+  // /* 並び換え不変な関数h:U^{< omega} -> Uが与えられており
+  //    h(iを根とした時のjの子ノードkをわたるdp][i][k]たち)をdp[i][j]に格納する場合 */
+  // auto concate = [&]( vector<U> v0 ,  const vector<U>& v1 ){
+  //   RUN( v1 , u ){ v0 <<= u; }
+  //   return move( v0 );
+  // };
+  // vector<U> empty{}:
+  // AbstractMonoid monoid{ concat , empty };
+  // auto f = [&]( const vector<U>& v , const int& i ){ return vector<U>{ h( v ) }; };
+  // auto g = [&]( cost vector<U>& v , const bool& is_child , const int& k , const int& j ) -> const vector<U>& { return v; };
+  // auto dp = RerootingDP( dfst , monoid , f , g );
 
   // /* 素集合データ構造 O(V+Eα(V)) */
   // /* Geometry/Graph/Algorithm/UnionFindForest/ */
