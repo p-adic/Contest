@@ -3,21 +3,21 @@
 #pragma once
 
 // 提出時: CIN -> cin, COUT -> cout, CERR&WHAT -> 出力なし, DERR -> 不使用
-// サンプル確認時: CIN -> ifs, COUT -> ofs, CERR&WHAT -> cerr, DERR -> ofs_err
-// ローカル実行デバッグ出力時: CIN -> cin, COUT -> cout, CERR&WHAT -> cerr, DERR -> cerr
-// ローカル実行非デバッグ出力時、実験時、テスト時: CIN -> cin, COUT -> cout, CERR&WHAT -> cerr, DERR -> 出力なし
+// サンプル確認時: CIN -> ifs, COUT -> ofs, CERR -> cerr, WHAT&DERR -> ofs_err
+// ローカル実行デバッグ出力時: CIN -> cin, COUT -> cout, CERR -> cerr, WHAT&DERR -> cerr
+// ローカル実行非デバッグ出力時、実験時、テスト時: CIN -> cin, COUT -> cout, CERR -> cerr, WHAT&DERR -> 出力なし
 #ifdef DEBUG_OUTPUT
   #define COUT_TARGET ( searched_br ? cout << "出力 " << __LINE__ << ": " : cout )
-  #define WHAT_TARGET ( searched_br ? cerr << "エラー出力 " << __LINE__ << ": " : cerr )
   #define DERR2( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
   #define DERRNS2( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
   #define DERR_A2 CoutArray( cerr , I , N , A ) << flush
+  #define WHAT( ... ) VariadicCout( cerr << "エラー出力 " << __LINE__ << ": " , "(" , #__VA_ARGS__ , ") = (" , __VA_ARGS__ , ")" ) << endl;
 #else
   #define COUT_TARGET cout
-  #define WHAT_TARGET cerr
   #define DERR2( ... )
   #define DERRNS2( ... )
   #define DERR_A2
+  #define WHAT( ... ) 
 #endif
 
 #ifdef SAMPLE_CHECK
@@ -36,7 +36,6 @@
 #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
 #define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
 #define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
-#define WHAT( ... ) VariadicCout( WHAT_TARGET , "(" , #__VA_ARGS__ , ") = (" , __VA_ARGS__ , ")" ) << endl;
 #define DERR( ... ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERR1( __VA_ARGS__ ); } else { DERR2( __VA_ARGS__ ); }
 #define DERRNS( ... ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERRNS1( __VA_ARGS__ ); } else { DERRNS2( __VA_ARGS__ ); }
 #define DERR_A( I , N , A ) if( exec_mode == sample_check_mode || exec_mode == experiment_mode || exec_mode == small_test_mode || exec_mode == random_test_mode ){ DERR_A1; } else { DERR_A2; }
