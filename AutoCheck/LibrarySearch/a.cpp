@@ -2726,6 +2726,7 @@ AC( Counting )
                "数（配列の添字）の数え上げ問題" ,
                "組（行列の添字）の数え上げ問題" ,
                "配列の数え上げ問題" ,
+               "順列の数え上げ問題" ,
                "文字列の数え上げ問題" ,
                "行列の数え上げ問題" ,
                "グラフの数え上げ問題" ,
@@ -3006,7 +3007,7 @@ AC( CountingArrayOtherRelation )
 {
   ASK_YES_NO( "順列の数え上げですか？" );
   if( reply == "y" ){
-    CERR( "1やNの位置の候補を絞り込み、昇順または降順に残りの位置を確定させましょう。" );
+    CALL_AC( CountingPermutation );
   } else {  
     ASK_YES_NO( "配列への格納順が関係ありますか？" );
     if( reply == "y" ){
@@ -3036,7 +3037,7 @@ AC( CountingSubArray )
   if( num == num_temp++ ){
     CALL_AC( CountingSumFixedSubArray );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingRestrctedSubArray );
+    CALL_AC( CountingRestrictedSubArray );
   } else if( num == num_temp++ ){
     CALL_AC( CountingGeneralRelationSubArray );
   } else if( num == num_temp++ ){
@@ -3077,7 +3078,7 @@ AC( CountingSumFixedSubArray )
   CERR( "を検討しましょう。" );
 }
 
-AC( CountingRestrctedSubArray )
+AC( CountingRestrictedSubArray )
 {
   ASK_NUMBER(
 	     "連続部分列の数え上げ問題" ,
@@ -3099,11 +3100,11 @@ AC( CountingRestrctedSubArray )
   CERR( "と表されます。" );
   CERR( "" );
   if( num == num_temp++ ){
-    CALL_AC( CountingRestrctedContinuousSubArray );
+    CALL_AC( CountingRestrictedContinuousSubArray );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingRestrctedDiscontinuousSubArray );
+    CALL_AC( CountingRestrictedDiscontinuousSubArray );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingRestrctedSubPermutation );
+    CALL_AC( CountingRestrictedSubPermutation );
   }
   CERR( "を検討しましょう。" );
   CERR( "" );
@@ -3113,7 +3114,7 @@ AC( CountingRestrctedSubArray )
   CERR( "を検討しましょう。" );
 }
 
-AC( CountingRestrctedContinuousSubArray )
+AC( CountingRestrictedContinuousSubArray )
 {
   CERR( "P(B)を満たすAの連続部分列Bの数え上げは、" );
   CERR( "- R_lたちがlに依存しないならば尺取り法O(N)" );
@@ -3123,7 +3124,7 @@ AC( CountingRestrctedContinuousSubArray )
   CERR( "を検討しましょう。" );
 }
 
-AC( CountingRestrctedDiscontinuousSubArray )
+AC( CountingRestrictedDiscontinuousSubArray )
 {
   CERR( "P(B)を満たすAの連続とは限らない部分列Bの数え上げは、" );
   CERR( "- n-1<=i<=max{j<=N|Q(j)}を満たす各i" );
@@ -3143,7 +3144,7 @@ AC( CountingRestrctedDiscontinuousSubArray )
   CERR( "を検討しましょう。" );
 }
 
-AC( CountingRestrctedSubPermutation )
+AC( CountingRestrictedSubPermutation )
 {
   CERR( "P(B)を満たすAの部分順列Bの数え上げは、" );
   CERR( "- n-1<=|S|<=max{j<=N|Q(j)}を満たす(0,1,...,N-1)の部分集合S" );
@@ -3191,6 +3192,31 @@ AC( CountingSubArrayImageArray )
   CERR( "「末尾が第i成分由来で辞書順最小なAの部分列の個数dp[i]」" );
   CERR( "「s=A[j]を満たすj<iの最大値last[i][s]」" );
   CERR( "の２つを管理するiに関する動的計画法を検討しましょう。" );
+}
+
+AC( CountingPermutation )
+{
+  ASK_NUMBER(
+             "条件を満たす順列の数え上げ問題" ,
+             "与えられた順列の部分列の数え上げ問題" ,
+             "与えられた配列の部分順列（部分列の並び換え）の数え上げ問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "成分に属性があり、順列が属性に関する制約を持つ場合、まずは同属性の成分を" );
+    CERR( "同一視した場合の並べ方の総数を求め、次に並べ方を固定した場合の順列の" );
+    CERR( "個数を求める次元削減を検討しましょう。" );
+    ASK_YES_NO( "Nが2羃に限られますか？" );
+    if( rply == "y" ){
+      CERR( "順列を順序付けに翻訳し、先頭N/2項と末尾N/2項の順序付けに帰着させる" );
+      CERR( "再帰を検討しましょう。" );
+    } else {
+      CERR( "1やNの位置の候補を絞り込み、昇順または降順に残りの位置を確定させましょう。" );
+    }
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingSubArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingRestrictedSubPermutation );
+  }
 }
 
 AC( CountingString )
@@ -3413,7 +3439,7 @@ AC( CountingMap )
 AC( CountingStrategy )
 {
   CERR( "なるべく簡単な操作に同値変形しましょう。" );
-  CALL_AC( InterpretingIncreasingSequence );
+  CALL_AC( InterpretingSequenceOperation );
   ASK_NUMBER(
 	     "不可逆な操作列の数え上げ問題" ,
 	     "操作する対象全体の集合の数え上げ問題" ,
@@ -3439,25 +3465,107 @@ AC( CountingStrategy )
   }
 }
 
-AC( InterpretingIncreasingSequence )
+AC( InterpretingSequenceOperation )
 {
-  CERR( "- 単調増加列は非負階差数列／ヤング図形／01列に翻訳" );
-  CERR( "  - 成分への+1は" );
-  CERR( "    - ヤング図形に新たなマスを追加しそこに何回目の操作かを記入（後で反転）" );
-  CERR( "    - 01列の10->01に翻訳" );
-  CERR( "  - 成分への-1は" );
-  CERR( "    - ヤング図形のマスを削除しそこに何回目の操作かを記入" );
-  CERR( "    - 01列の01->10に翻訳" );
-  CERR( "  - 成分への+2は01列の100->001に翻訳" );
-  CERR( "- 配列の隣接2項への+1は" );
-  CERR( "  - 階差数列の-1,0,1に翻訳" );
-  CERR( "  - 単調かつ値の等しい隣接2項への操作ならば01列の110->011に翻訳" );
-  CERR( "- 配列の隣接2項への-1,1は" );
-  CERR( "  - 累積和の-1に翻訳" );
-  CERR( "  - 単調かつ値の等しい隣接2項への操作ならば01列の0110->1001に翻訳" );
-  CERR( "- 配列の2個隣の成分同士を更新する操作しかないならば偶奇で２つの配列に分割" );
-  CERR( "- ヤング図形のマスの追加と操作番号書き込みは、操作を逆順にし番号を反転することで" );
-  CERR( "  ヤング図形のマスの削除と操作番号書き込みに対応させ、標準ヤングタブローに帰着" );
+  ASK_NUMBER(
+             "01列の操作" ,
+             "単調増加列の操作" ,
+             "一般の数列の操作"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( Interpreting01SequenceOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( InterpretingIncreasingSequenceOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( InterpretingGeneralSequenceOperation );
+  }
+}
+
+AC( Interpreting01SequenceOperation )
+{
+  ASK_NUMBER(
+             "1の個数が変わらない操作のみ" ,
+             "2進法での繰り上がりなし加算" ,
+             "2進法での加算／減算"
+             );
+  if( num == num_temp++ ){
+    CERR( "0と1をswapさせていく操作の積み重ねに翻訳し、どのような積み重ねが" );
+    CERR( "許されているかを考え、その操作の不変量や増減量を考えましょう。" );
+    CERR( "- 10->01ならば、1つの閉じ括弧の深さが1増え、括弧列（各深さが正）が保たれる。" );
+    CERR( "- 01->10ならば、1つの閉じ括弧の深さが1減る。" );
+  } else if( num == num_temp++ ){
+    CERR( "ライツアウトに翻訳しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "非負整数に翻訳しましょう。" );
+  }
+}
+
+AC( InterpretingIncreasingSequenceOperation )
+{
+  CERR( "単調増加列は" );
+  CERR( "- 非負階差数列" );
+  CERR( "- 01列（1の個数で階差を表現）" );
+  CERR( "- ヤング図形（マスの個数で値を表現し左右反転）" );
+  CERR( "に翻訳しましょう。" );
+  ASK_NUMBER(
+             "1成分への正の加算のみ" ,
+             "1成分への加算／減算" ,
+             "1成分への正の減算のみ" ,
+             "値の等しい隣接2成分への操作"
+             );
+  if( num == num_temp++ ){
+    CERR( "1成分への+1を" );
+    CERR( "- 01列の10->01" );
+    CERR( "- ヤング図形に新たなマスを追加しそこに操作番号を記入、" );
+    CERR( "  更に操作を逆順にし番号を反転することでヤング図形のマスの削除と" );
+    CERR( "  操作番号書き込みに対応させることで標準ヤングタブローに帰着" );
+    CERR( "と翻訳しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "- 1成分への+1を01列の10->01" );
+    CERR( "- 1成分への-1を01列の01->10" );
+    CERR( "と翻訳しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "1成分への-1を" );
+    CERR( "- 01列の01->10" );
+    CERR( "- ヤング図形のマスを削除しそこに操作番号を記入" );
+    CERR( "と翻訳しましょう。" );
+  } else if( num == num_temp++ ){
+    ASK_YES_NO( "同じ値の加算／減算を行いますか？" );
+    if( reply == "y" ){
+      CERR( "- 値の等しい隣接2成分への+1を01列の110->011" );
+      CERR( "- 値の等しい隣接2成分への-1を01列の011->110" );
+      CERR( "と翻訳しましょう。" );
+    }
+    ASK_YES_NO( "同じ値の受け渡しを行いますか？" );
+    if( reply == "y" ){
+      CERR( "- 値の等しい隣接2成分間の-1,+1は01列の0110->1001" );
+      CERR( "- 値の等しい隣接2成分間の+1,-1は01列の1001->0110" );
+      CERR( "と翻訳しましょう。" );
+    }
+  }
+  CERR( "以下01列に翻訳して考えます。" );
+  CALL_AC( Interpreting01SequenceOperation );
+}
+
+AC( InterpretingGeneralSequenceOperation )
+{
+  ASK_YES_NO( "距離の固定された2成分への操作ですか？" );
+  if( reply == "y" ){
+    CERR( "距離をDと置きます。D>1ならば成分番号をDで割った余りで配列をD個に" );
+    CERR( "分割し、D=1に帰着させましょう。" );
+    ASK_YES_NO( "同じ値の加算／減算を行いますか？" );
+    if( reply == "y" ){
+      CERR( "- 隣接2成分への+1を階差数列の-1,0,+1" );
+      CERR( "- 隣接2成分への-1を階差数列の+1,0,-1" );
+      CERR( "と翻訳しましょう。" );
+    }
+    ASK_YES_NO( "同じ値の受け渡しを行いますか？" );
+    if( reply == "y" ){
+      CERR( "- 隣接2成分への-1,+1を累積和の-1" );
+      CERR( "- 隣接2成分への+1,-1を累積和の+1" );
+      CERR( "と翻訳しましょう。" );
+    }
+  }
 }
 
 AC( CountingPath )
@@ -4437,10 +4545,12 @@ AC( DecisionGame )
 
 AC( DecisionContinuingGame )
 {
-  CERR( "ゲーム問題ライブラリとOEISの活用を忘れないように気を付けましょう。" );
-  CERR( "\\Mathematics\\Game" );
-  CERR( "https://oeis.org/?language=japanese" );
-  ASK_YES_NO( "入力の個数は一定ですか？" );
+  ASK_YES_NO( "先手しか可能でない遷移であって他のどの遷移へも経由できるものがありますか？" );
+  if( reply == "y" ){
+    CERR( "strategy-stealing argumentで先手必勝判定をしましょう。" );
+    CERR( "https://en.wikipedia.org/wiki/Strategy-stealing_argument" );
+  }
+  ASK_YES_NO( "入力の個数（長さ）は一定ですか？" );
   if( reply == "y" ){
     CERR( "まず愚直解を動的計画法で書いて実験し、勝敗の規則を見付けましょう。" );
     CERR( "デバッグモードで勝敗を計算する際は実験の出力と混ざらないように" );
@@ -4451,39 +4561,62 @@ AC( DecisionContinuingGame )
     CERR( "  変数の少ない動的計画法に翻訳" );
     CERR( "- 愚直解またはその少変数化における動的計画法のデータ構造高速化" );
     CERR( "- 必勝状態に対応する変数列のOEIS検索やサンプル解析" );
+    CERR( "を検討しましょう。" );
   } else {
     CERR( "まずゲームをなるべく簡単な設定に同値変形しましょう。" );
-    CALL_AC( InterpretingIncreasingSequence );
-    CERR( "- 数列で１成分を更新したり末尾追加したりするだけなら和に分解" );
-    CERR( "- 良い不変量を探し、不変量を変えないような応酬が可能な操作を無視することで" );
-    CERR( "  不変量の推移のみを観察しましょう。例えば以下の不変量に注目" );
-    CERR( "  - 何らかの数値の適当な法での値" );
-    CERR( "  - 特定の二部マッチング上での各組内での何らかの数値（到達個数など）の偶奇" );
-    CERR( "    - グリッドで、１回の移動で移り合える２マスの組によるタイリング" );
-    CERR( "    - 配列で、１回の操作で影響を受ける成分が常に２個ならば、そのような" );
-    CERR( "      ２成分ずつによるタイリング" );
-    CERR( "  - ある成分を無視する同値関係での剰余類" );
-    CERR( "  - 既に得られている不変量を変えない操作で応酬できる操作を無視する同値関係" );
-    CERR( "その後、ゲームの性質に注目して典型考察に帰着させましょう。" );
+    ASK_YES_NO( "文字列／数列の操作をするゲームですか？" );
+    if( reply == "y" ){
+      CERR( "文字列は文字を数に変換して数列に置き換えます。" );
+      CALL_AC( InterpretingSequenceOperation );
+      ASK_YES_NO( "1成分を更新したり末尾追加したりするだけですか？" );
+      if( reply == "y" ){
+        CERR( "1成分ごとのゲーム和に分解しましょう。" );
+      }
+    }
   }
-  CERR( "- ゲームの和に分解できるならばグランディ数を計算、" );
-  CERR( "  できないならば必勝状態判定" );
-  CERR( "  - 状態数や遷移回数上限が少ないならば、グランディ数や必勝状態判定を再帰で" );
-  CERR( "    計算しましょう" );
-  CERR( "  - ゲームの状態遷移の全探策が自動化できそうならば、" );
-  CERR( "    整礎構造を探して順序数の小さい順に実験をし、" );
-  CERR( "    OEISを用いてグランディ数や必勝状態判定を推測しましょう。" );
-  CERR( "  - ゲームの状態遷移の全探索が自動化できなさそうならば、手計算での実験だと" );
-  CERR( "    考察漏れが生じやすいので他の考察を優先しましょう。" );
-  CERR( "- 先手しか可能でない遷移であって他のどの遷移へも経由できるものがあるならば" );
-  CERR( "  strategy-stealing argument" );
-  CERR( "  https://en.wikipedia.org/wiki/Strategy-stealing_argument" );
-  CERR( "- 状態がモノイドをなし各ターンに状態に値を加算するゲームで" );
-  CERR( "  先手が何を選んでも続く後手の選択次第で２手の総和を一定値Sに保てるならば、" );
-  CERR( "  Sの加算を反復するミラー戦略" );
-  CERR( "- ゲームの状態に全順序構造があり勝敗が十分長い区間で一定ならば、" );
-  CERR( "  勝敗で区間を連結成分に分解" );
-  CERR( "を検討しましょう。" );
+  CERR( "ゲームの和に分解できるならばグランディ数を計算、できないならば必勝状態判定" );
+  CERR( "をする方針で考察します。" );
+  ASK_YES_NO( "状態数や遷移回数上限が10^6程度ですか？" );
+  if( reply == "y" ){
+    CERR( "グランディ数や必勝状態判定は再帰で計算しましょう" );
+  } else {
+    ASK_YES_NO( "状態数が少ない場合は状態遷移の全探策が自動化できそうですか？" );
+    if( reply == "y" ){
+      CERR( "整礎構造を探して順序数の小さい順に実験をし、" );
+      CERR( "OEISを用いてグランディ数や必勝状態判定を推測しましょう。" );
+      CERR( "\\Mathematics\\Game" );
+      CERR( "https://oeis.org/?language=japanese" );
+    } else {
+      CERR( "手計算での実験だと考察漏れが生じやすいのでグランディ数や必勝状態判定を" );
+      CERR( "以外の考察を優先しましょう。" );
+    }
+  }
+  CERR( "良い不変量を探し、不変量を変えないような応酬が可能な" );
+  CERR( "操作を無視することで不変量の推移ゲームに帰着させましょう。" );
+  ASK_NUMBER(
+             "状態がモノイドをなし状態に値を加算するゲーム" ,
+             "状態が無向グラフをなし未踏地に移動するゲーム" ,
+             "その他のゲーム"
+             );
+  if( num == num_temp++ ){
+    CERR( "先手が何を選んでも続く後手の選択次第で２手の加算値総和を一定値Bの倍数に" );
+    CERR( "保てるならば、mod Bでの値の非零性を不変量と見るミラー戦略" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "グラフのタイリングであって、各点ごとにそこから到達可能な同タイル内の点が" );
+    CERR( "丁度１個であるものを探し、それによる二部マッチングで移動を決定する" );
+    CERR( "ミラー戦略を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "- ある成分を無視する同値関係" );
+    CERR( "- 操作Aが、何らかの不変量を変えない操作Bで応酬できる場合、" );
+    CERR( "  Aを無視する（Aでの移動先を同一視する）同値関係" );
+    CERR( "などで状態をタイリングをし、各タイルの到達回数の偶奇を不変量として" );
+    CERR( "それを維持するミラー戦略を検討しましょう。" );
+  }
+  ASK_YES_NO( "ゲームの状態に全順序構造があり勝敗が十分長い区間で一定ですか？" );
+  if( reply == "y" ){
+    CERR( "勝敗で区間を連結成分に分解し、連結成分の計算に帰着させましょう。" );
+  }
 }
 
 AC( DecisionContinuingGameCheck )
