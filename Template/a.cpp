@@ -92,7 +92,7 @@ IN VO RandomTest( const int& test_case_num )
 // Arithmetic ../Contest/Template/Library/Arithmetic.txt
 // BFS ../Contest/Template/Library/BFS.txt
 // BIT ../Contest/Template/Library/BIT.txt
-// CoordinateCompress SetTheory/DirectProduct/CoordinateCompress/compress.txt
+// CoordinateCompress ../Contest/Template/Library/CoordinateCompress.txt
 // DFS ../Contest/Template/Library/DFS.txt
 // DifferenceSequence ../Contest/Template/Library/DifferenceSequence.txt
 // Dijkstra ../Contest/Template/Library/Dijkstra.txt
