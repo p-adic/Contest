@@ -5,6 +5,7 @@
 
 AC( LibrarySearch );
 AC( ExplicitExpression );
+AC( ExplicitExpressionSum );
 AC( ExplicitExpressionArraySum );
 AC( ExplicitExpressionOneArrayEntrySum );
 AC( ExplicitExpressionInnerProduct );

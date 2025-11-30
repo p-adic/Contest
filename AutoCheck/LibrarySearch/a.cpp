@@ -47,8 +47,7 @@ AC( LibrarySearch )
 AC( ExplicitExpression )
 {
   ASK_NUMBER(
-             "一重和や一重積の計算問題" ,
-             "二重和や二重積や積和の計算問題" ,
+             "総和や総乗の計算問題" ,
 	     "固定長引数関数や格子点上の関数や配列の計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の計算問題" ,
@@ -63,9 +62,7 @@ AC( ExplicitExpression )
              "その他の数論的関数の計算問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionArraySum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionDoubleSum );
+    CALL_AC( ExplicitExpressionSum );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArray );
   } else if( num == num_temp++ ){
@@ -90,6 +87,28 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionLimit );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArithmetic );
+  }
+}
+
+AC( ExplicitExpressionSum )
+{
+  ASK_YES_NO( "総和や総乗を取る項数は指数オーダーですか？" );
+  if( reply == "y" ){
+    CERR( "- 総和や総乗を個数で平均化することで期待値計算に帰着" );
+    CERR( "- 総和を0,1の和で表して確率計算に帰着" );
+    CERR( "を検討しましょう。" );
+    CALL_AC( ExplicitExpressionProbability );
+  } else {
+    ASK_NUMBER(
+               "一重和や一重積の計算問題" ,
+               "二重和や二重積や積和の計算問題"
+               );
+    if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionSum );
+      CALL_AC( ExplicitExpressionArraySum );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionDoubleSum );
+    }
   }
 }
 
@@ -733,6 +752,15 @@ AC( ExplicitExpressionTotalAccess )
 
 AC( ExplicitExpressionProbability )
 {
+  // "部分集合の要素数の期待値ですか？"
+  // "グリッドの黒マスの個数の期待値ですか？"
+  // "転倒数の期待値ですか？"
+  // "単位時間に高々1回独立に起こる事象の起きた回数の期待値ですか？"
+  // "裏が出るまでのコイン投げ回数の期待値ですか？"
+  // "nを確率的に減らしてi以下にする試行回数の期待値ですか？"
+  // "操作／遷移回数の期待値ですか？"
+  // "N個の確率変数X_1,...,X_Nのj番目の値の期待値ですか？"
+  // "N個の確率変数X_1,...,X_Nの総和の二乗の期待値ですか？"
   vector<bool> type{};
   ASK_YES_NO( "期待値の計算問題ですか？" );
   if( reply == "y" ){
@@ -768,8 +796,10 @@ AC( ExplicitExpressionProbability )
       type[2] = reply == "y";
       ASK_YES_NO( "N個の確率変数X_1,...,X_Nのj番目の値の期待値ですか？" );
       type <<= reply == "y";
+      ASK_YES_NO( "N個の確率変数X_1,...,X_Nの総和の二乗の期待値ですか？" );
+      type <<= reply == "y";
     }
-    type.resize( 8 );
+    type.resize( 9 );
     CERR( "- 期待値計算は" );
     CERR( "  - 確率を用いた愚直な計算" );
     CERR( "  - 対象を和で表して線形性" );
@@ -828,7 +858,12 @@ AC( ExplicitExpressionProbability )
       CERR( "  - N個の確率変数X_1,...,X_Nのj番目Y_jなら、Y_j<=yを#{i|X_i<=y}>=jに" );
       CERR( "    読み替えることで、X_iの累積密度関数F_iを用いてY_jの累積密度関数G_j(y)を" );
       CERR( "    prod_i(zF_i(y)+(1-F_i(y))のj次以上の係数和で表し、" );
-      CERR( "    E[Y_j] = int_{R} y G_j'(y) dyを求めましょう。" );
+      CERR( "    E[Y_j] = int_{R} y G_j'(y) dyを計算" );
+    }
+    if( type[8] ){
+      CERR( "  - N個の確率変数X_1,...,X_Nの総和の二乗なら二乗の総和と" );
+      CERR( "    cross termに分解して期待値を計算" );
+      CERR( "    \\Mathematics\\Analysis\\Probability\\Distribution" );
     }
   }
   CERR( "- 確率計算は" );
@@ -2850,7 +2885,7 @@ AC( CountingArray )
 {
   ASK_NUMBER(
              "条件を満たす配列の数え上げ問題" ,
-             "与えられた配列の部分列の数え上げ問題"
+             "与えられた配列の部分列の数え上げ問題" ,
              "与えられた配列の添字の数え上げ問題"
              );
   if( num == num_temp++ ){
@@ -3174,7 +3209,7 @@ AC( CountingRestrictedSubPermutation )
 
 AC( CountingGeneralRelationSubArray )
 {
-  ASK_NUMBER( "配列への格納順が関係ありますか？" );
+  ASK_YES_NO( "配列への格納順が関係ありますか？" );
   if( reply == "y" ){
     CERR( "半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
     CALL_AC( CountingGraph );
