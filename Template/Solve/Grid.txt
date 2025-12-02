@@ -75,6 +75,35 @@
   // // auto [colour,colour_inv,cc_num] = bfs.GetConnectedComponent();
   // // FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } }
 
+  // /* 素集合データ構造 O((HW+Q)α(HW)) */
+  // /* Geometry/Graph/Algorithm/UnionFindForest/ */
+  // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
+  // // vector weight( H , vector<int>( W ) ); // 各連結成分のサイズを根の添え字に格納
+  // // FOR( h , 0 , H ){
+  // //   FOR( w , 0 , W ){
+  // //     auto r = uff.RootOfNode( {h,w} );
+  // //     weight[r[O]][r[I]]++;
+  // //   }
+  // // }
+  // // ll weight2 = 0; // 連結成分サイズの2乗和を管理
+  // // FOR( h , 0 , H ){
+  // //   FOR( w , 0 , W ){
+  // //     weight2 += ll( weight[rh][rw] ) * weight[rh][rw];
+  // //   }
+  // // }
+  // // FOR( q , 0 , Q ){
+  // //   auto& [h0,w0,h1,w1] = query[q];
+  // //   auto ri = uff.RootOfNode( {h0,w0} );
+  // //   auto rj = uff.RootOfNode( {h1,w1} );
+  // //   if( ri != rj ){
+  // //     int wi = weight[ri[O]][ri[I]];
+  // //     int wj = weight[rj[O]][rj[I]];
+  // //     uff.Graft( ri , rj );
+  // //     weight[ri[O]][ri[I]] = weight[rj[O]][rj[I]] = wi + wj;
+  // //     weight2 += 2 * ll( wi ) * wj;
+  // //   }
+  // // }
+
   // /* ２次元累積和 O(HW+Q) */
   // /* SetTheory/DirectProduct/AffineSpace/CumulativeProduct/TwoDimensional/ */
   // TwoDimensionalCumulativeSum<ll> tdcs{ grid };
@@ -87,10 +116,31 @@
   // /* SetTheory/DirectProduct/AffineSpace/BIT/TwoDimensional/ */
   // TwoDimensionalBIT<ll> bit{ H , W };
   // FOR( q , 0 , Q ){
-  //   auto& [type,h0,w0,h1,w1] = query[q];
+  //   auto& [type,h0,w0,h1,w1,u] = query[q];
   //   if( type == 1 ){
   //     bit.RectangleAdd( h0 , w0 , h1 , w1 , 1 );
   //   } else {
   //     COUT( bit.RectangleSum( h0 , w0 , h1 , w1 ) );
+  //   }
+  // }
+
+  // /* １次元データ構造の並列による愚直２次元化 O(HW+QH√(W log W)) */
+  // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/IntervalSetMax/ */
+  // /* 整数の区間max更新+区間和取得 */
+  // vector X( H , IntervalSetMaxSqrtDecomposition{ int( -1e9 ) , vector( W , int( -1e9 ) ) } );
+  // // /* Z加群の区間max更新+区間和取得 */
+  // // vector X( H , IntervalSetMaxSqrtDecomposition{ AbstructModule( 0 , action , AbstractMonoid( product , unit ) ) , val_min , vector( W , val_min ) } );
+  // FOR( q , 0 , Q ){
+  //   auto& [type,h0,w0,h1,w1,u] = query[q];
+  //   if( type == 1 ){
+  //     FOREQ( h , h0 , h1 ){
+  //       X[h].IntervalSetMax( w0 , w1 , u );
+  //     }
+  //   } else {
+  //     int temp = 0;
+  //     FOREQ( h , h0 , h1 ){
+  //       temp += X[h].IntervalSum( w0 , w1 );
+  //     }
+  //     COUT( temp );
   //   }
   // }

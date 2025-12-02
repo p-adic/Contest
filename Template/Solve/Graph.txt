@@ -122,18 +122,27 @@
 
   // /* 素集合データ構造 O(V+Eα(V)) */
   // /* Geometry/Graph/Algorithm/UnionFindForest/ */
-  // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
-  // // AbstractUnionFindForest uff{ N , AdditiveGroup<int>() };
-  // // vector<int> weight( N ); // 各連結成分のサイズを根の添え字に格納
+  // UnionFindForest uff{ N };
+  // // vector<int> weight( N , 1 ); // 各連結成分のサイズを根の添え字に格納
   // // ll weight2 = N; // 連結成分サイズの2乗和を管理
+  // // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
+  // // // vector<int> weight( N );
+  // // // FOR( i , 0 , N ){
+  // // //   auto ri = uff.RootOfNode( i );
+  // // //   weight[ri]++;
+  // // // }
+  // // // ll weight2 = 0;
+  // // // FOR( i , 0 , N ){
+  // // //   weight2 += ll( weight[ri] ) * weight[ri];
+  // // // }
   // // FOR( m , 0 , M ){
   // //   auto& [i,j] = UV[m];
-  // //   int ri = uff.RootOfNode( i );
-  // //   int rj = uff.RootOfNode( j );
+  // //   auto ri = uff.RootOfNode( {h0,w0} );
+  // //   auto rj = uff.RootOfNode( {h1,w1} );
   // //   if( ri != rj ){
   // //     int wi = weight[ri];
   // //     int wj = weight[rj];
-  // //     Graft( i , j );
+  // //     uff.Graft( ri , rj );
   // //     weight[ri] = weight[rj] = wi + wj;
   // //     weight2 += 2 * ll( wi ) * wj;
   // //   }
