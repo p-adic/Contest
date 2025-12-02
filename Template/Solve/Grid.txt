@@ -7,9 +7,31 @@
   // grid_edge_i_minus = false; // 第１成分負（xy_axis?左:上）方向の許容性。
   // grid_edge_j_minus = false; // 第２成分負（xy_axis?下:左）方向の許容性。
   // walkable = '#'; // 床と壁を反転。
+  // xy_axis = true; // 右と上を正軸方向とする座標（非デフォルト）
+  // // (0,1)  -> U
+  // // (1,0)  -> R
+  // // (0,-1) -> D
+  // // (-1,0) -> L
+  // xy_axis = false; // 下と右を正軸方向とする座標（デフォルト）
+  // // (-1,0) -> U
+  // // (0,1)  -> R
+  // // (1,0)  -> D
+  // // (0,-1) -> L
+
+  // {i,j}へデコード: EnumHW( v )
+  // {i,j}をコード: EnumHW_inv( { i , j } );
+  // 方向の文字列：direction="URDL";
+  // (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h , false );
+  // v->wの方向番号を取得: DirectionNumberOnGrid( v , w , false );
+  // 文字cの方向番号を取得: DirectionNumberOnGrid( c );
+  // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
+  // 方向番号nの方向ベクトルを取得: DirectionVectorOnGrid( n , false );
+
   GridGraph graph{ EdgeOnGrid }; // 重みなし。
   // GridGraph graph{ WEdgeOnGrid }; // 重み付き。
-  // int D = 10;
+  
+  // /* ３次元化 */
+  // int D = 2;
   // auto EnumHWD = [&]( const int& v ){
   //   auto [i,j] = EnumHW( v / D );
   //   return T3<int>( i , j , v % D );
@@ -26,29 +48,49 @@
   //   }
   //   return answer;
   // };
+  // EnumerationGraph graph{ HW * D , EnumHWD , EnumHWD_inv , edge };
+
+  // /* ２次元imos法 O(HW+Q) */
+  // /* SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/ */
+  // TwoDimensionalDifferenceSequence tdds{ H , W };
+  // FOR( q , 0 , Q ){
+  //   auto& [h0,w0,h1,w1] = query[q];
+  //   tdds.RectangleAdd( h0 , w0 , h1 , w1 , 1 );
+  // }
+  // FOR( i , 0 , H ){
+  //   FOR( j , 0 , W ){
+  //     grid[i][j] = ".#"[tdds.Get( i , j ) > 0];
+  //   }
+  // }
 
   // /* （多点）幅優先探索 O(HW) */
   // /* Geometry/Graph/Algorithm/BreadthFirstSearch/ */
   // T2<int> external_point{-1,-1};
+  // /* 距離取得 */
   // vector<T2<int>> start_points = {{0,0}};
-  // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance(); // 距離取得
-  // // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent(); int cc_num = colour_ulim; FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } } // 連結成分取得
+  // BreadthFirstSearch bfs{ graph , external_point , start_points };
+  // vector<int> d = bfs.GetDistance();
+  // // /* 連結成分取得 */
+  // // BreadthFirstSearch bfs{ graph , external_point };
+  // // auto [colour,colour_inv,cc_num] = bfs.GetConnectedComponent();
+  // // FOR( i , 0 , H ){ FOR( j , 0 , W ){ grid[i][j] == walkable ? cc_num : --cc_num; } }
 
-  // xy_axis = true: 右と上を正軸方向とする座標（非デフォルト）
-  // (0,1)  -> U
-  // (1,0)  -> R
-  // (0,-1) -> D
-  // (-1,0) -> L
-  // xy_axis = false: 下と右を正軸方向とする座標（デフォルト）
-  // (-1,0) -> U
-  // (0,1)  -> R
-  // (1,0)  -> D
-  // (0,-1) -> L
-  // {i,j}へデコード: EnumHW( v )
-  // {i,j}をコード: EnumHW_inv( { i , j } );
-  // 方向の文字列：direction="URDL";
-  // (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h , false );
-  // v->wの方向番号を取得: DirectionNumberOnGrid( v , w , false );
-  // 文字cの方向番号を取得: DirectionNumberOnGrid( c );
-  // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
-  // 方向番号nの方向ベクトルを取得: DirectionVectorOnGrid( n , false );
+  // /* ２次元累積和 O(HW+Q) */
+  // /* SetTheory/DirectProduct/AffineSpace/CumulativeProduct/TwoDimensional/ */
+  // TwoDimensionalCumulativeSum<ll> tdcs{ grid };
+  // FOR( q , 0 , Q ){
+  //   auto& [h0,w0,h1,w1] = query[q];
+  //   COUT( tdcs.RectangleSum( h0 , w0 , h1 , w1 ) );
+  // }
+
+  // /* ２次元BIT O(HW+Q log H log W) */
+  // /* SetTheory/DirectProduct/AffineSpace/BIT/TwoDimensional/ */
+  // TwoDimensionalBIT<ll> bit{ H , W };
+  // FOR( q , 0 , Q ){
+  //   auto& [type,h0,w0,h1,w1] = query[q];
+  //   if( type == 1 ){
+  //     bit.RectangleAdd( h0 , w0 , h1 , w1 , 1 );
+  //   } else {
+  //     COUT( bit.RectangleSum( h0 , w0 , h1 , w1 ) );
+  //   }
+  // }
