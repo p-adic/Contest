@@ -1068,7 +1068,7 @@ AC( Maximisation )
 	     "被覆半径の最小化問題" ,
 	     "描画サイズ／個数の最大／最小化問題" ,
 	     "条件（方程式など）を満たす数の最大／最小化問題" ,
-	     "最小値の最大化問題" ,
+	     "最小値の最大化／最大値の最小化問題" ,
 	     "部分和の最小化問題" ,
 	     "部分和の差の最大／最小化問題" ,
 	     "2人ゲームの最終的な不変量の最大／最小化問題" ,
@@ -1854,12 +1854,19 @@ AC( SingleKnapsackCostfree )
 
 AC( SingleKnapsackCostfreeMultiValue )
 {
-  CERR( "選択できる価値全体に共通の性質を抽象化します。" );
+  CERR( "途中まで選択した時点で次以降に選択できる価値全体に共通の性質を抽象化します。" );
   ASK_NUMBER(
-             "これまでの価値総量をアフィン変換する" ,
+             "問題で最初に与えられた選択肢の部分集合から１つ選ぶ" ,
+             "これまでの価値総量をアフィン変換した値を次の項目の価値とする" ,
              "これ以降のいくつかの項目の価値を加算更新する"
              );
   if( num == num_temp++ ){
+    CERR( "部分集合を決定するデータをdとして" );
+    CERR( "dp[i][d] = i項目目まで選択を終えた時にデータがdである時の最大価値" );
+    CERR( "を管理する動的計画法を検討しましょう。" );
+    CERR( "漸化式はデータの遷移d->d'において可能な選択肢の中で価値の最大値v[d][d']を" );
+    CERR( "加算すれば良く、そのためにはv[d][d']も高速に計算できるようにすると良いです。" );
+  } else if( num == num_temp++ ){
     CERR( "- アフィン変換の一次係数が非負であれば、毎回の選択後の価値を最大にする" );
     CERR( "  貪欲法" );
     CERR( "- アフィン変換の一次係数が負になりえるのであれば、毎回の選択後の価値の" );
@@ -2582,8 +2589,23 @@ AC( MinimisationSolution )
 
 AC( MaximisationMinimum )
 {
-  CERR( "全てを-1倍することで最大値を演算とする総和の最小化問題に帰着させます。" );
-  CALL_AC( MinimisationSubsetSum );
+  CERR( "最小値の最大化は-1倍により最大値の最小化に帰着させます。" );
+  ASK_NUMBER(
+             "配列に成分ごとの操作を行った際の最大値の最小化" ,
+             "集合上の関数の部分集合における最大値の最小化" ,
+             "操作群の操作コストの最大値の最小化"
+             );
+  if( num == num_temp++ ){
+    CERR( "最大値の上界を固定して操作の可否を判定する二分探索により" );
+    CERR( "真偽判定問題に帰着させましょう。" );
+    CALL_AC( Decision );
+  } else if( num == num_temp++ ){
+    CERR( "最大値を演算とみなすことで、部分和の最小化問題とみなせます。" );
+    CALL_AC( MinimisationSubsetSum );
+  } else if( num == num_temp++ ){
+    CERR( "羃等重みに関する最短経路問題に帰着させましょう。" );
+    CALL_AC( MinimisationMovingCost );
+  }
 }
 
 AC( MinimisationSubsetSum )
@@ -2596,8 +2618,9 @@ AC( MinimisationSubsetSum )
     CERR( "最短経路問題に帰着させましょう。" );
     CALL_AC( MinimisationMovingCost );
   } else if( num == num_temp++ ){
-    CERR( "部分和を固定して部分集合の存在を判定する" );
-    CERR( "二分探索を検討しましょう。" );
+    CERR( "部分和を固定して部分集合の存在を判定する二分探索により" );
+    CERR( "真偽判定問題に帰着させましょう。" );
+    CALL_AC( Decision );
   }
 }
 
@@ -2780,6 +2803,8 @@ AC( Counting )
       CALL_AC( CountingPair );
     } else if( num == num_temp++ ){
       CALL_AC( CountingArray );
+    } else if( num == num_temp++ ){
+      CALL_AC( CountingPermutation );
     } else if( num == num_temp++ ){
       CALL_AC( CountingString );
     } else if( num == num_temp++ ){
@@ -3356,14 +3381,17 @@ AC( CountingGraph )
   ASK_NUMBER(
              "条件を満たす無向グラフの数え上げ問題" ,
              "条件を満たす有向グラフの数え上げ問題" ,
-	     "与えられた木の分割の数え上げ問題"
+	     "与えられた木の分割の数え上げ問題" ,
+	     "与えられたグラフの部分グラフの数え上げ問題"
              );
   if( num == num_temp++ ){
     CALL_AC( CountingUndirectedGraph );
   } else if( num == num_temp++ ){
     CALL_AC( CountingDirectedGraph );
-  } else {
+  } else if( num == num_temp++ ){
     CALL_AC( CountingPartitionOfTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingSubgraph );
   }
 }
 
@@ -3388,10 +3416,31 @@ AC( CountingDirectedGraph )
   CERR( "を検討しましょう。" );
 }
 
+AC( CountingSubgraph )
+{
+  ASK_NUMBER(
+             "誘導部分グラフの数え上げ問題" ,
+             "一般の部分グラフの数え上げ問題"
+             );
+  CERR( "- 辺数3の閉路の個数は各頂点の２辺全探策" );
+  if( num == num_temp++ ){
+    CERR( "- 辺数2のパスグラフの数え上げはsum_v binom(deg(v),2)から" );
+    CERR( "  辺数3の閉路の個数*3を引いた値" );
+    CERR( "- 木の辺数3のパスグラフの数え上げは" );
+    CERR( "  sum_u sum_{v in e[u]} (len(e[u])-1)*(len(e[v])-1)/2 " );
+  } else if( num == num_temp++ ){
+    CERR( "- 辺数Lの閉路の数え上げは深さ優先探索による長さL-1の経路全探策" );
+    CERR( "- 辺数Lの木の数え上げは深さ優先探索による長さLの経路全探策" );
+    CERR( "を検討しましょう。" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Path" );
+  }
+}
+
 AC( CountingSubset )
 {
   ASK_NUMBER(
              "要素を受け取る関数の部分和を固定した部分集合の数え上げ問題" ,
+             "同型類を固定した部分グラフの数え上げ問題" ,
              "その他の部分集合の数え上げ問題" ,
              "部分集合への分割の数え上げ問題"
              );
@@ -3851,6 +3900,7 @@ AC( Query )
 	     "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
 	     "3変数関数の計算クエリ問題（範囲更新なしf(A[i],x)の区間和計算など）" ,
 	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）" ,
+             "グラフのクエリ問題" ,
              "集合のクエリ問題" ,
              "連結リストのクエリ問題"
 	     );
@@ -3886,6 +3936,19 @@ AC( Query )
     CALL_AC( QueryTimeSeriesChange );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChange );
+  } else   if( num == num_temp++ ){
+    ASK_NUMBER(
+               "木クエリ（森クエリは木クエリに帰着）" ,
+               "グリッドクエリ" ,
+               "一般のグラフクエリ"
+               );
+    if( num == num_temp++ ){
+      CALL_AC( QueryTree );
+    } else if( num == num_temp++ ){
+      CALL_AC( QueryGrid );
+    } else if( num == num_temp++ ){
+      CALL_AC( QueryGraph );
+    }
   } else if( num == num_temp++ ){
     CALL_AC( QuerySet );
   } else if( num == num_temp++ ){
@@ -4202,14 +4265,21 @@ AC( QueryTree )
 
 AC( QueryGrid )
 {
-  CERR( "- 可換群構造に関する加算O(1)／全更新後の一点取得O(1)が必要ならば二次元階差数列" );
+  CERR( "- 可換群構造に関する矩形加算O(1)／全更新後の一点取得O(1)が必要ならば" );
+  CERR( "  二次元階差数列" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する加算O(1)／全更新なしの矩形取得O(1)が必要ならば二次元累積和" );
+  CERR( "- 可換群構造に関する矩形取得O(1)が必要ならば二次元累積和" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する加算O(1)／全更新後の矩形取得O(1)が必要ならば二次元階差数列と" );
-  CERR( "  二次元累積和の併用" );
+  CERR( "- 可換群構造に関する矩形加算O(1)／全更新後の矩形取得O(1)が必要ならば" );
+  CERR( "  二次元階差数列と二次元累積和の併用" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
+  CERR( "- 可換群構造に関する矩形加算O(log H log W)／矩形取得O(log H log W)が" );
+  CERR( "  必要ならば二次元BIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\TwoDimentioal" );
+  CERR( "- 矩形Max更新O(H√(W log W))／矩形取得O(H√(W log W))が必要ならば" );
+  CERR( "  一次元区間max更新平方分割の愚直並列による二次元化" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\IntervalSetMax" );
   CERR( "- 差分計算が高速に可能ならばMoのアルゴリズム" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
   CERR( "を検討しましょう。" );
@@ -4518,6 +4588,7 @@ AC( Decision )
 	     "到達可能性問題" ,
 	     "描画可能性問題" ,
 	     "存在判定問題" ,
+	     "操作／選択可能性問題" ,
 	     "充足可能性問題" ,
 	     "一致／同型性判定問題" ,
 	     "表示可能性問題"
@@ -4533,11 +4604,18 @@ AC( Decision )
   } else if( num == num_temp++ ){
     CALL_AC( DecisionExistence );
   } else if( num == num_temp++ ){
+    CALL_AC( DecisionChoosability );
+  } else if( num == num_temp++ ){
     CALL_AC( DecisionSatisfiability );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionCoincidence );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
+  }
+  ASK_YES_NO( "何らかの値が閾値以上／以下という条件下で選択の可否を判定する問題ですか？" );
+  if( reply == "y" ){
+    CERR( "可能な選択中でのその値の最大値／最小値を求め、閾値と比較しましょう。" );
+    CALL_AC( Maximisation );
   }
 }
 
@@ -4810,6 +4888,7 @@ AC( DecisionExistence )
 	     "動く範囲の狭い変数の組み合わせで表せる概念の存在" ,
 	     "経路の存在" ,
 	     "描画方法の存在" ,
+	     "配列や文字列の成分の書き換え方法の存在" ,
 	     "数やベクトルの表示方法の存在" ,
 	     "集合の分割方法の存在"
 	     );
@@ -4837,10 +4916,32 @@ AC( DecisionExistence )
   } else if( num == num_temp++ ){
     CALL_AC( DecisionDrawability );
   } else if( num == num_temp++ ){
+    CALL_AC( DecisionRewritingChoosability );
+  } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionPartition );
   }
+}
+
+AC( DecisionChoosability )
+{
+  ASK_NUMBER(
+             "遷移により点が目的地に到達できるかの判定" ,
+             "選択により配列／文字列が条件を満たせるかの判定"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( DecisionAccessibility );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionRewritingChoosability );
+  }
+}
+
+AC( DecisionRewritingChoosability )
+{
+  CERR( "配列／文字列の長さをNとし、" );
+  CERR( "dp[i] = i成分目までで打ち切った場合の可否を判定するために必要なデータ" );
+  CERR( "を管理する動的計画法を検討しましょう。" );
 }
 
 AC( DecisionSatisfiability )
