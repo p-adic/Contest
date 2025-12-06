@@ -104,7 +104,6 @@ AC( ExplicitExpressionSum )
                "二重和や二重積や積和の計算問題"
                );
     if( num == num_temp++ ){
-      CALL_AC( ExplicitExpressionSum );
       CALL_AC( ExplicitExpressionArraySum );
     } else if( num == num_temp++ ){
       CALL_AC( ExplicitExpressionDoubleSum );
@@ -114,25 +113,54 @@ AC( ExplicitExpressionSum )
 
 AC( ExplicitExpressionArraySum )
 {
-  ASK_NUMBER(
-             "１重和や１重積を複数回求める問題" ,
-	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
-	     "２つの配列の内積の計算問題" ,
-	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
-	     "配列を受け取る関数の配列をわたる総和の計算問題"
-	     );
-  if( num == num_temp++ ){
+  ASK_YES_NO( "１重和や１重積を複数回求める問題ですか？" );
+  if( reply == "y" ){
     CERR( "２重和や２重積を求める問題と同様に処理しましょう。" );
     CALL_AC( ExplicitExpressionDoubleSum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionOneArrayEntrySum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionInnerProduct );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionOneArraySubArraySum );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionArrayCombinatorial );
+  } else {
+    ASK_NUMBER(
+               "商の総和の計算問題" ,
+               "剰余の総和の計算問題" ,
+               "１つの配列の成分を受け取る関数の総和の計算問題" ,
+               "２つの配列の内積の計算問題" ,
+               "１つの配列の部分列を受け取る関数の総和の計算問題" ,
+               "配列を受け取る関数の配列をわたる総和の計算問題" ,
+               );
+    if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionQuotientSum );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionResidueSum );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionOneArrayEntrySum );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionInnerProduct );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionOneArraySubArraySum );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionArrayCombinatorial );
+    }
   }
+}
+
+AC( ExplicitExpressionQuotientSum )
+{
+  CERR( "- f(x)+g(x)*floor(ax+b/c)などの総和はfloor_sumと同様の再帰" );
+  CERR( "  \\Mathematics\\Combinatorial\\FloorSum" );
+  CERR( "- floor(c/(ax+b))などの総和は同じ値で纏め上げる平方分割" );
+  CERR( "  \\Mathematics\\Combinatorial\\FloorSum\\FloorRiemanZeta" );
+  CERR( "- a*floor(x/c)-b*floor(x/d)などが閾値を超える最小値は" );
+  CERR( "  floor(x/c)の差分が正の時にのみ達成できるのでx=cy（yは整数）" );
+  CERR( "  の形に帰着" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionResidueSum )
+{
+  CERR( "- sum_x c%xはc-floor(c/x)*xと表してfloor(c/x)が同じ値で纏め上げる" );
+  CERR( "  平方分割" );
+  CERR( "  \\Mathematics\\Combinatorial\\ResidueSum" );
+  CERR( "- sum_x x%cは(sum_x x)%cなので2cを法として等差数列の和の公式に帰着" );
+  CERR( "  \\Mathematics\\Arithmetic\\Iteration" );
 }
 
 AC( ExplicitExpressionOneArrayEntrySum )
@@ -233,42 +261,67 @@ AC( ExplicitExpressionArrayCombinatorial )
 
 AC( ExplicitExpressionDoubleSum )
 {
-  ASK_YES_NO( "商や剰余の総和の計算問題ですか？" );
-  if( reply == "y" ){
+  ASK_NUMBER(
+             "商の総和の計算問題" ,
+             "剰余の総和の計算問題" ,
+             "その他の総和の計算問題"
+             );
+  if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionDoubleSumQuotient );
-  } else {
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionDoubleSumResidue );
+  } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionDoubleSumNonQuotient );
   }
 }
 
 AC( ExplicitExpressionDoubleSumQuotient )
 {
-  CERR( "- f(x,y)=h(floor(g_1(x,y)/g_2(x,y)))の場合、分子か分母を固定して総和計算" );
-  CERR( "  - floor(x/y)の和は" );
-  CERR( "    - yを固定してxを動かすならばfloor_sum" );
-  CERR( "      \\Mathematics\\Combinatorial\\FloorSum" );
-  CERR( "    - xを固定してyを動かすならば平方分割" );
-  CERR( "      \\Mathematics\\Combinatorial\\FloorSum\\FloorRiemanZeta" );
-  CERR( "  - floor(a_i/b_j)の和は、b_jの重複を頻度表で管理して" );
-  CERR( "    b_jが無重複かつ単調である場合に帰着させ、" );
-  CERR( "    - iを固定してjを動かすならば答えをA[i]に格納するとして、" );
-  CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
-  CERR( "      A[i]に愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
-  CERR( "      floor(a_i/b_j)=vを満たすjの区間長*vをA[i]に一点加算" );
-  CERR( "    - jを固定してiを動かすならば答えをA[j]に格納するとして、" );
-  CERR( "      iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
-  CERR( "      A[j]たちに愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
-  CERR( "      floor(a_i/b_j)=vを満たすjの区間でAにvを区間加算" );
-  CERR( "    \\Mathematics\\Combinatorial\\FloorSum\\Parallel" );
-  CERR( "- f(x,y)=h(g_1(x,y)%g_2(x,y))の場合、" );
-  CERR( "  - xを固定してyを動かすx%yの和は平方分割" );
-  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
-  CERR( "  - a_i%b_jの和は" );
-  CERR( "    - iを固定してjを動かすならばa_i/b_jに帰着するか、または" );
-  CERR( "      エラトステネスの要領でAの約数であってBの成分であるものを前計算" );
-  CERR( "    - jを固定してiを動かすならばa_i/b_jに帰着" );
-  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum\\Parallel" );
-  CERR( "を検討しましょう。" );
+  CERR( "floor内部の分数の分子か分母を固定して一重総和計算に帰着させましょう。" );
+  ASK_NUMBER(
+             "分母か分子が一次式で与えられる問題" ,
+             "分母と分子が配列で与えられる問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionQuotientSum );
+  } else {
+    CERR( "sum_i sum_j floor(a_i/b_j)の形の計算問題は、b_jの重複を頻度表で管理して" );
+    CERR( "b_jが無重複かつ単調である場合に帰着させ、" );
+    CERR( "- iを固定してjを動かすならば答えをA[i]に格納するとして、" );
+    CERR( "  iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
+    CERR( "  A[i]に愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
+    CERR( "  floor(a_i/b_j)=vを満たすjの区間長*vをA[i]に一点加算" );
+    CERR( "- jを固定してiを動かすならば答えをA[j]に格納するとして、" );
+    CERR( "  iを走査してB_iをfloor(a_i/整数)の形で固定してb_j<=B_iの範囲では" );
+    CERR( "  A[j]たちに愚直に一点加算、b_j>B_iの範囲では各1<=v<floor(a_i/B)に対し" );
+    CERR( "  floor(a_i/b_j)=vを満たすjの区間でAにvを区間加算" );
+    CERR( "\\Mathematics\\Combinatorial\\FloorSum\\Parallel" );
+    CERR( "を検討しましょう。" );
+  }
+}
+
+AC( ExplicitExpressionDoubleSumResidue )
+{
+  CERR( "sum_x sum_y h(g_1(x)%g_2(y))はg_1(x)かg_2(y)の値を固定して" );
+  CERR( "一重総和計算に帰着させましょう。" );
+  ASK_NUMBER(
+             "分母か分子が一次式で与えられる問題" ,
+             "分母と分子が配列で与えられる問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionResidueSum );
+  } else {
+    CERR( "sum_{i=0}^{N-1} sum_{j=0}^{M-1} a_i%b_jは" );
+    CERR( "- O(min(N+M+(max_i a_i)log M,(M log M)+sum_i(sqrt(a_I log M))))" );
+    CERR( "  が間に合いそうならばiを固定するごとの計算" );
+    CERR( "  - floor(a_i/b_j)の値でjを纏め上げ" );
+    CERR( "  - b_jの頻度表を用いてエラトステネスの要領で" );
+    CERR( "    b_jの倍数を前計算しa_iに関する差分計算" );
+    CERR( "- O((M log M)+sum_i(sqrt(a_i log M))))" );
+    CERR( "  が間に合いそうならば分母を固定して商に帰着" );
+    CERR( "を検討しましょう。" );
+    CERR( "\\Mathematics\\Combinatorial\\ResidueSum\\Parallel" );
+  }
 }
 
 AC( ExplicitExpressionDoubleSumNonQuotient )
@@ -752,16 +805,27 @@ AC( ExplicitExpressionTotalAccess )
 
 AC( ExplicitExpressionProbability )
 {
-  // "部分集合の要素数の期待値ですか？"
-  // "グリッドの黒マスの個数の期待値ですか？"
-  // "転倒数の期待値ですか？"
-  // "単位時間に高々1回独立に起こる事象の起きた回数の期待値ですか？"
-  // "裏が出るまでのコイン投げ回数の期待値ですか？"
-  // "nを確率的に減らしてi以下にする試行回数の期待値ですか？"
-  // "操作／遷移回数の期待値ですか？"
-  // "N個の確率変数X_1,...,X_Nのj番目の値の期待値ですか？"
-  // "N個の確率変数X_1,...,X_Nの総和の二乗の期待値ですか？"
-  vector<bool> type{};
+  // "部分集合の要素数の期待値か否か"
+  CEXPR( int , subset_size , 0 );
+  // "グリッドの黒マスの個数の期待値か否か"
+  CEXPR( int , black_tile_size , subset_size + 1 );
+  // "転倒数の期待値か否か"
+  CEXPR( int , inversion_num , black_tile_size + 1 );
+  // "単位時間に高々1回独立に起こる事象の起きた回数の期待値か否か"
+  CEXPR( int , indep_event_count , inversion_num + 1 );
+  // "裏が出るまでのコイン投げ回数の期待値か否か"
+  CEXPR( int , coin_count , indep_event_count + 1 );
+  // "nを確率的に減らしてi以下にする試行回数の期待値か否か"
+  CEXPR( int , reduce_count , coin_count + 1 );
+  // "コンプガチャを達成するまでの回数の期待値か否か" ,
+  CEXPR( int , complete_collection_cost , reduce_count + 1 );
+  // "操作／遷移回数の期待値か否か"
+  CEXPR( int , operation_count , complete_collection_cost + 1 );
+  // "N個の確率変数X_1,...,X_Nのj番目の値の期待値か否か"
+  CEXPR( int , j_th_value , operation_count + 1 );
+  // "N個の確率変数X_1,...,X_Nの総和の二乗の期待値か否か"
+  CEXPR( int , sum_square , j_th_value + 1 );
+  vector<bool> type( sum_square + 1 );
   ASK_YES_NO( "期待値の計算問題ですか？" );
   if( reply == "y" ){
     ASK_NUMBER(
@@ -771,64 +835,74 @@ AC( ExplicitExpressionProbability )
                );
     if( num == num_temp++ ){
       ASK_YES_NO( "部分集合の要素数の期待値ですか？" );
-      type <<= reply == "y";
+      type[subset_size] = reply == "y";
       ASK_YES_NO( "グリッドの黒マスの個数の期待値ですか？" );
-      type <<= reply == "y";
+      type[black_tile_size] = reply == "y";
       ASK_YES_NO( "転倒数の期待値ですか？" );
-      type <<= reply == "y";
+      type[inversion_num] = reply == "y";
     } else if( num == num_temp++ ){
-      type.resize( 3 );
-      ASK_YES_NO( "単位時間に高々1回独立に起こる事象の起きた回数の期待値ですか？" );
-      type <<= reply == "y";
-      ASK_YES_NO( "裏が出るまでのコイン投げ回数の期待値ですか？" );
-      type <<= reply == "y";
-      ASK_YES_NO( "nを確率的に減らしてi以下にする試行回数の期待値ですか？" );
-      type <<= reply == "y";
-      if( type[3] || type[4] || type[5] ){
-        type <<= true;
+      ASK_NUMBER(
+              "単位時間に高々1回独立に起こる事象の起きた回数の期待値" ,
+              "裏が出るまでのコイン投げ回数の期待値" ,
+              "nを確率的に減らしてi以下にする試行回数の期待値" ,
+              "コンプガチャを達成するまでの回数の期待値" ,
+              "その他の操作／遷移回数の期待値" ,
+              "その他の回数の期待値"
+              );
+      if( num == num_temp++ ){
+        type[indep_event_count] = true;
+        type[operation_count] = true;
+      } else if( num == num_temp++ ){
+        type[coin_count] = true;
+        type[operation_count] = true;
+      } else if( num == num_temp++ ){
+        type[reduce_count] = true;
+        type[operation_count] = true;
+      } else if( num == num_temp++ ){
+        type[complete_collection_cost] = true;
+        type[operation_count] = true;
+      } else if( num == num_temp++ ){
+        type[operation_count] = true;
       } else {
-        ASK_YES_NO( "操作／遷移回数の期待値ですか？" );
-        type <<= reply == "y";
+        // 候補なし
       }
     } else if( num == num_temp++ ){
-      type.resize( 7 );
       ASK_YES_NO( "転倒数の期待値ですか？" );
-      type[2] = reply == "y";
+      type[inversion_num] = reply == "y";
       ASK_YES_NO( "N個の確率変数X_1,...,X_Nのj番目の値の期待値ですか？" );
-      type <<= reply == "y";
+      type[j_th_value] = reply == "y";
       ASK_YES_NO( "N個の確率変数X_1,...,X_Nの総和の二乗の期待値ですか？" );
-      type <<= reply == "y";
+      type[sum_square] = reply == "y";
     }
-    type.resize( 9 );
     CERR( "- 期待値計算は" );
     CERR( "  - 確率を用いた愚直な計算" );
     CERR( "  - 対象を和で表して線形性" );
-    if( type[0] || type[1] || type[2] ){
+    if( type[subset_size] || type[black_tile_size] || type[inversion_num] ){
       CERR( "    - 部分集合の要素数の期待値は各要素が部分集合に属す確率の和に帰着" );
     }
-    if( type[1] ){
+    if( type[black_tile_size] ){
       CERR( "      - グリッドのランダムな矩形塗り潰しの黒マスの個数は矩形に属す確率を" );
       CERR( "        矩形ごとに包除原理で足し引き" );
       CERR( "        - 矩形のサイズが固定ならば、ベルヌーイ数前計算による冪乗関数の" );
       CERR( "          総和を用いた明示式" );
       CERR( "          \\Mathematics\\Polynomial\\Cumulative\\GridStampCoveringExpectation" );
-      if( type[2] ){
+      if( type[inversion_num] ){
         CERR( "      - ランダムな順列Pの転倒数はP[i]>P[j]を満たす確率p(i,j)の総和" );
       }
     }
-    if( type[6] ){
-      CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
+    if( type[operation_count] ){
+      CERR( "  - 操作／遷移回数は期待値間の関係式を求め行列累乗やボスタン森法" );
       CERR( "    \\Mathematics\\LinearAlgebra" );
       CERR( "    \\Mathematics\\Polynomial\\BostanMori" );
     }
-    if( type[3] ){
+    if( type[indep_event_count] ){
       CERR( "    - 単位時間に高々1回独立に起こる事象の起きた回数の期待値は" );
       CERR( "      各時刻tごとに+1の起こる確率p(t)の総和" );
     }
-    if( type[4] ){
+    if( type[coin_count] ){
       CERR( "    - 裏が出るまでのコイン投げ回数の期待値は、n回以上表が出る確率p(n)の総和" );
     }
-    if( type[5] ){
+    if( type[reduce_count] ){
       CERR( "    - nを確率的に減らしてi以下にする試行回数の期待値E(n,i)は、" );
       CERR( "      - 各i<j<=nに対してnから1回でjに行く確率をP(n,j)として" );
       CERR( "        E(n,i)=sum_{i<j<=n} P(n,j)(1+(i<j?E(j,i):0)" );
@@ -854,13 +928,20 @@ AC( ExplicitExpressionProbability )
       CERR( "        #(f_n^{-1}(m)) E(m,i)の総和が累積和などを用いて" );
       CERR( "        nに関して高速な差分計算が可能" );
     }
-    if( type[7] ){
+    if( type[complete_collection_cost] ){
+      CERR( "    - コンプ条件の設定されたガチャの試行回数の期待値は、" );
+      CERR( "      適切に状態を定義して" );
+      CERR( "      dp[s] = 状態sからの試行回数の期待値" );
+      CERR( "      を管理するsに関する動的計画法（終了状態から逆順に計算）" );
+      CERR( "      Mathematics\\Analysis\\Probability\\ExpectedTrialCount" );
+    }
+    if( type[j_th_value] ){
       CERR( "  - N個の確率変数X_1,...,X_Nのj番目Y_jなら、Y_j<=yを#{i|X_i<=y}>=jに" );
       CERR( "    読み替えることで、X_iの累積密度関数F_iを用いてY_jの累積密度関数G_j(y)を" );
       CERR( "    prod_i(zF_i(y)+(1-F_i(y))のj次以上の係数和で表し、" );
       CERR( "    E[Y_j] = int_{R} y G_j'(y) dyを計算" );
     }
-    if( type[8] ){
+    if( type[sum_square] ){
       CERR( "  - N個の確率変数X_1,...,X_Nの総和の二乗なら二乗の総和と" );
       CERR( "    cross termに分解して期待値を計算" );
       CERR( "    \\Mathematics\\Analysis\\Probability\\Distribution" );
@@ -1054,6 +1135,7 @@ AC( Maximisation )
 	     "移動コストの最小化問題" ,
 	     "移動コストの最大化問題" ,
 	     "ナップサック問題" ,
+	     "明示式の最大／最小化問題" ,
 	     "配列上の関数に関する最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
 	     "固定長多変数関数の最大／最小化問題" ,
@@ -1080,6 +1162,9 @@ AC( Maximisation )
     CALL_AC( MaximisationMovingDistance );
   } else if( num == num_temp++ ){
     CALL_AC( Knapsack );
+  } else if( num == num_temp++ ){
+    CERR( "max/minを演算とする総乗の計算問題とみなします。" );
+    CALL_AC( ExplicitExpressionSum );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnArray );
   } else if( num == num_temp++ ){
