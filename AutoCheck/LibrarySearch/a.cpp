@@ -350,6 +350,9 @@ AC( ExplicitExpressionDoubleSumNonQuotient )
     CERR( "  - Y_j(f(a_i,b_{j+1})/f(a_i,b_j))の式変形による計算" );
   } else if( num == 2 || num == 5 ){
     CERR( "  - 順序多重集合{f(a_i,b_j)}_jをiに関して差分計算" );
+    CERR( "- Y = maxでmax_j f(a_i,b_j)が[0,R]値ならば、各r in [1,R]ごとに" );
+    CERR( "  r <= max_j f(a_i,b_j)を満たすiの個数g(r)を求めて" );
+    CERR( "  sum_{r=1}^{R} g(r)を計算" );
   }
   if( num == 0 ){
     CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそう" );
