@@ -3995,16 +3995,10 @@ AC( Query )
   if( num == num_temp++ ){
     ASK_NUMBER(
                "配列クエリ" ,
-               "木クエリ（森クエリは木クエリに帰着）" ,
-               "グリッドクエリ" ,
-               "一般のグラフクエリ"
+               "グラフクエリ"
                );
     if( num == num_temp++ ){
       CALL_AC( QueryArray );
-    } else if( num == num_temp++ ){
-      CALL_AC( QueryTree );
-    } else if( num == num_temp++ ){
-      CALL_AC( QueryGrid );
     } else if( num == num_temp++ ){
       CALL_AC( QueryGraph );
     }
@@ -4025,18 +4019,7 @@ AC( Query )
   } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChange );
   } else   if( num == num_temp++ ){
-    ASK_NUMBER(
-               "木クエリ（森クエリは木クエリに帰着）" ,
-               "グリッドクエリ" ,
-               "一般のグラフクエリ"
-               );
-    if( num == num_temp++ ){
-      CALL_AC( QueryTree );
-    } else if( num == num_temp++ ){
-      CALL_AC( QueryGrid );
-    } else if( num == num_temp++ ){
-      CALL_AC( QueryGraph );
-    }
+    CALL_AC( QueryGraph );
   } else if( num == num_temp++ ){
     CALL_AC( QuerySet );
   } else if( num == num_temp++ ){
@@ -4325,6 +4308,25 @@ AC( QueryArrayFinalSegmentSetFunctionApply )
   CERR( "区間取得を行うことで終切片代入時のc(A)の更新を高速に行えます。" );
 }
 
+AC( QueryGraph )
+{
+  ASK_NUMBER(
+             "木クエリ（森クエリは木クエリに帰着）" ,
+             "グリッドクエリ" ,
+             "一般のグラフクエリ"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( QueryTree );
+    CERR( "" );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryGrid );
+    CERR( "" );
+  } else if( num == num_temp++ ){
+    // 候補なし
+  }
+  CALL_AC( QueryGeneralGraph );
+}
+
 AC( QueryTree )
 {
   CERR( "木の部分集合の管理（追加／削除／部分木との共通部分の要素数取得）は各点に" );
@@ -4334,11 +4336,11 @@ AC( QueryTree )
   CERR( "- 木上の累積和で、可換群構造に関する部分木総和取得O(1)" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\Tree" );
   CERR( "- 全方位木DPで、モノイド構造に関する各部分木総乗取得O(N)" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
   CERR( "- ダブリングで、トポロジカルソートされた頂点番号未満の最近祖先取得O(log N)" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
   CERR( "- 重み付きLCAで、モノイド構造に関するパス総乗取得O(log N)" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree\\Weighted" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted" );
   CERR( "- HL分解するならば、" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\HLDecomposition" );
   CERR( "  - IntervalAddBITで、可換群構造に関する一点更新O(log N)" );
@@ -4373,28 +4375,34 @@ AC( QueryGrid )
   CERR( "を検討しましょう。" );
 }
 
-AC( QueryGraph )
+AC( QueryGeneralGraph )
 {
-  CERR( "グラフの頂点数をV、辺の本数をE、クエリ数をQと置きます。" );
-  CERR( "- 辺の永続的追加でO(V+(E+Q)α(V))が間に合いそうならばUnionFind" );
+  CERR( "以下グラフの頂点数をV、辺の本数をE、クエリ数をQと置きます。" );
+  CERR( "クエリを跨ぐ更新を「永続的」、１クエリごとにリセットされる更新を" );
+  CERR( "「一時的」と表現します。" );
+  CERR( "- 辺の永続的追加更新＋連結成分取得でO(V+(E+Q)α(V))が間に合いそう" );
+  CERR( "  ならばUnionFind" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
-  CERR( "- 辺の一時的追加でO(V+E)が間に合いそうならば幅優先探索で連結成分前計算" );
+  CERR( "- 辺の一時的追加更新＋連結成分取得でO(V+E+Q)が間に合いそうならば" );
+  CERR( "  幅優先探索で連結成分前計算" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-  CERR( "- 辺の永続的削除でO(V+Eα(V))が間に合いそうならばクエリ逆読みのUnionFind" );
+  CERR( "- 辺の永続的削除更新＋連結成分取得でO(V+(E+Q)α(V))が間に合いそう" );
+  CERR( "  ならばクエリ逆読みのUnionFind" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
-  CERR( "- 辺の一時的削除でO(V+E)が間に合いそうならばlowlinkや、" );
+  CERR( "- 辺の一時的削除更新＋連結成分取得でO(V+E+Q)が間に合いそうならば" );
   CERR( "  強連結成分分解＋トポロジカルソート＋出次数0の非終端頂点削除＋" );
-  CERR( "  入出次数1纏め上げ" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\StrongConnectedComponent\\HamiltonWalk" );
+  CERR( "  入出次数1纏め上げや、lowlink" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\StrongConnectedComponent\\HamiltonWalk" );
   CERR( "- 特定の辺を含む最小全域森取得でO((V+Q)log V + E log E)が間に合いそうならば" );
   CERR( "  全体に対する最小全域森をクラスカル法で前計算し重み付きLCAによる" );
   CERR( "  最大コスト辺計算" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree\\Weighted" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted" );
   CERR( "- 辺集合の彩色を変えた最小全域森取得でO(V + E log E + Qα(V))が間に合いそう" );
   CERR( "  ならば全体に対する辺のソートを前計算しクラスカル法の反復" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
+  CERR( "- クエリごとに１つの頂点を始点または終点とする辺全てにわたる更新か取得が" );
+  CERR( "  必要な場合、次数√E以下の点は愚直に処理しそうでない点のみ管理する高速化" );
   CERR( "を検討しましょう。" );  
 }
 
