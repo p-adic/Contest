@@ -1792,6 +1792,10 @@ AC( SingleKnapsackUnboundedChoice )
     CERR( "   「コストの総和がc以下の時の価値の最大値dp[c]」" );
     CERR( "    を管理するcに関する動的計画法" );
     CERR( "    \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice\\NegativeValue" );
+    CERR( "  - O(sum_i A_i * max_i C_i)が間に合いそうならば" );
+    CERR( "    単位価値辺りのコストが最小の項以外の項の選択回数に上限が" );
+    CERR( "    つくことを利用して上限付きの設定に帰着" );
+    CERR( "    \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice" );
     CERR( "  - コストが多次元ならば、コストベクトル(W_i)_iと直交する" );
     CERR( "    整数係数ベクトルを用いて変数決め打ち全探策" );
     CERR( "    参考：https://yukicoder.me/problems/no/2309/editorial" );
