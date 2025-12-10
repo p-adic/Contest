@@ -92,6 +92,10 @@ AC( ExplicitExpression )
 
 AC( ExplicitExpressionSum )
 {
+  ASK_YES_NO( "列の長さや操作の回数の総和ですか？" );
+  if( reply == "y" ){
+    CERR( "長さや回数を1の和として表し、多重総和に帰着させましょう。" );
+  }
   ASK_YES_NO( "総和や総乗を取る項数は指数オーダーですか？" );
   if( reply == "y" ){
     CERR( "- 総和や総乗を個数で平均化することで期待値計算に帰着" );
@@ -354,31 +358,46 @@ AC( ExplicitExpressionDoubleSumNonQuotient )
     CERR( "  r <= max_j f(a_i,b_j)を満たすiの個数g(r)を求めて" );
     CERR( "  sum_{r=1}^{R} g(r)を計算" );
   }
+  CERR( "を検討しましょう。" );
   if( num == 0 ){
-    CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそう" );
-    CERR( "  ならば、積和の和積化" );
-    CERR( "  X_i Y_j f(a_i,b_j) = sum_k((X_i g_k(a_i))(Y_j h_k(b_j)))" );
+    ASK_YES_NO( "f(x,y)=sum_k g_k(x) h_k(y)と表示できますか？" );
+    if( reply == "y" ){
+      CERR( "O(K(N+M))が間に合いそうならば、積和の和積化" );
+      CERR( "  X_i Y_j f(a_i,b_j) = sum_k((X_i g_k(a_i))(Y_j h_k(b_j)))" );
+      CERR( "を検討しましょう。" );
+    }
   }
   if( num == 2 ){
-    CERR( "- N=MかつX=Y=max（minの場合は-1倍）でf(a_i,b_j)の代わりに" );
-    CERR( "  min(f(a_i,b_j),f(a_j,b_i))などを考えるならば、f(a_i,b_j)<f(a_j,b_i)" );
-    CERR( "  の必要十分条件を求めてそれを満たすj全体の集合S_iを考え、" );
-    CERR( "  max_i max_{j in S_i} f(a_i,b_j)に帰着" );
-    CERR( "  - fが積や比ならf(a_i,b_j)<f(a_j,b_i)は比や積のソートに帰着" );
-    CERR( "  - S_iはiに関する差分計算" );
+    ASK_YES_NO( "N=MかつX=Y=max（minの場合は-1倍）でf(a_i,b_j)の代わりにmin(f(a_i,b_j),f(a_j,b_i))などを考えますか？" );
+    if( reply == "y" ){
+      CERR( "f(a_i,b_j)<f(a_j,b_i)の必要十分条件を求めてそれを満たすj全体" );
+      CERR( "の集合S_iを考え、max_i max_{j in S_i} f(a_i,b_j)に帰着" );
+      CERR( "- fが積や比ならf(a_i,b_j)<f(a_j,b_i)は比や積のソートに帰着" );
+      CERR( "- S_iはiに関する差分計算" );
+      CERR( "を検討しましょう。" );
+    }
   }
   if( num < 3 ){
-    CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
-    CERR( "  fの各点逆像による纏め上げをする分割統治法" );
-    CERR( "  X_i Y_j f(a_i,b_j)=X_z #f(a_,b_)^{-1}(z) z" );
-    CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
-    CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
-    CERR( "  X_i Y_j f(a_i,b_j)=X_{z>0} #f(a_,b_)^{-1}([z,∞))" );
-    CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
-    CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
-    CERR( "  X_i Y_j f(a_i,b_j)=X_v #(a_,b_)^{-1}(v) f(v)" );
+    ASK_YES_NO( "#im(f)が小さいですか？" );
+    if( reply == "y" ){
+      CERR( "- f(a_,b_)の各点逆像{(i,j)|f(a_i,b_j)=z}が計算しやすいならば" );
+      CERR( "  各点逆像による纏め上げをする分割統治法" );
+      CERR( "  X_i Y_j f(a_i,b_j)=X_z #f(a_,b_)^{-1}(z) \cdot z" );
+      if( num == 0 ){
+        CERR( "- fが非負でf(a_,b_)の終切片逆像{(i,j)|f(a_i,b_j)>=z}が" );
+        CERR( "  計算しやすいならば終切片逆像による纏め上げをする分割統治法" );
+        CERR( "  X_i Y_j f(a_i,b_j)=X_{z>0} #f(a_,b_)^{-1}([z,∞))" );
+      }
+      CERR( "を検討しましょう。" );
+    }
+    ASK_YES_NO( "#dom(f)が小さいですか？" );
+    if( reply == "y" ){
+      CERR( "(a_,b_)の各点逆像{(i,j)|(a_i,b_j)=v}が計算しやすいならば" );
+      CERR( "(a_,b_)の各点逆像による纏め上げをする分割統治法" );
+      CERR( "  X_i Y_j f(a_i,b_j)=X_v #(a_,b_)^{-1}(v) f(v)" );
+      CERR( "を検討しましょう。" );
+    }
   }
-  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionArray )
@@ -4413,10 +4432,10 @@ AC( QueryGeneralGraph )
 AC( QueryCounting )
 {
   ASK_NUMBER(
-             "条件を満たす部分列の数え上げ" ,
+             "部分列の数え上げ" ,
              "辞書順最大／最小の部分列の長さ計算" ,
              "最小元である成分数の数え上げ" ,
-             "関数の値である多重集合の要素の数え上げ" ,
+             "多重集合の要素の数え上げ" ,
              "操作回数の数え上げ"
              );
   if( num == num_temp++ ){
@@ -4435,10 +4454,14 @@ AC( QueryCounting )
     CALL_AC( QueryArrayMagmaMonoid );
   } else if( num == num_temp++ ){
     CERR( "配列を多重集合へ送る写像fが与えられているとします。" );
-    CERR( "配列Aの区間[l,r]のfによる像における要素iの数え上げは、" );
-    CERR( "区間の分割に関するfの再帰構造に注目し、" );
-    CERR( "データ構造で処理しましょう。" );
-    CALL_AC( QueryArray );
+    CERR( "区間I[q] subset [0,N)がクエリごとに与えられ、長さNの配列Aの" );
+    CERR( "区間I[q]のfによる像S[q]の要素数C[q]を求める問題を考えます。" );
+    CERR( "各i in [0,N)ごとにi in S[q]を満たすq全体の集合T[i]を求め、" );
+    CERR( "各q in T[i]に対しanswer[q]に1を加算することで計算を検討しましょう。" );
+    ASK_YES_NO( "区間の分割に関するfの再帰構造がデータ構造で処理できそうですか？" );
+    if( reply == "y" ){
+      CALL_AC( QueryArray );
+    }
   } else if( num == num_temp++ ){
     CERR( "- 操作回数が区間２つに分けた時に各区間の操作回数から" );
     CERR( "  復元できるならば、操作回数を管理するモノイドで区間取得" );
