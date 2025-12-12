@@ -50,8 +50,7 @@ AC( ExplicitExpression )
              "総和や総乗の計算問題" ,
 	     "固定長引数関数や格子点上の関数や配列の計算問題" ,
 	     "順列上の関数の計算問題" ,
-	     "木上の関数の計算問題" ,
-	     "木以外のグラフ上の関数の計算問題" ,
+	     "グラフ上の関数の計算問題" ,
 	     "序数の計算問題" ,
 	     "確率／期待値の計算問題" ,
 	     "操作回数の計算問題" ,
@@ -68,9 +67,7 @@ AC( ExplicitExpression )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionFunctionOnPermutation );
   } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionFunctionOnTree );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionFunctionOnNonTreeGraph );
+    CALL_AC( ExplicitExpressionFunctionOnGraph );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionOrder );
   } else if( num == num_temp++ ){
@@ -382,7 +379,7 @@ AC( ExplicitExpressionDoubleSumNonQuotient )
     if( reply == "y" ){
       CERR( "- f(a_,b_)の各点逆像{(i,j)|f(a_i,b_j)=z}が計算しやすいならば" );
       CERR( "  各点逆像による纏め上げをする分割統治法" );
-      CERR( "  X_i Y_j f(a_i,b_j)=X_z #f(a_,b_)^{-1}(z) \cdot z" );
+      CERR( "  X_i Y_j f(a_i,b_j)=X_z #f(a_,b_)^{-1}(z) cdot z" );
       if( num == 0 ){
         CERR( "- fが非負でf(a_,b_)の終切片逆像{(i,j)|f(a_i,b_j)>=z}が" );
         CERR( "  計算しやすいならば終切片逆像による纏め上げをする分割統治法" );
@@ -609,6 +606,18 @@ AC( ExplicitExpressionFunctionOnPermutation )
     CERR( "各i<jごとにそこで転倒が生じる順列の個数を計算し、その総和／期待値を" );
     CERR( "取りましょう。条件が良ければ、転倒が生じる順列の個数は転倒が生じるとは" );
     CERR( "限らない順列の個数の半分となります。" );
+  }
+}
+
+AC( ExplicitExpressionFunctionOnGraph )
+{
+  CERR( "次数d以上の頂点数のdを渡る総和は2Eです。従ってd以上の頂点を走査する" );
+  CERR( "処理を各dに対し行ってもO(E)回の処理となります。" );
+  ASK_YES_NO( "グラフは木に限りますか？" );
+  if( reply == "y" ){
+    CALL_AC( ExplicitExpressionFunctionOnTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionFunctionOnNonTreeGraph );
   }
 }
 

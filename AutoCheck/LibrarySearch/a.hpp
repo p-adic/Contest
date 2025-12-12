@@ -25,6 +25,7 @@ AC( ExplicitExpressionUnaryOther );
 AC( ExplicitExpressionMonotone );
 AC( ExplicitExpressionMultivariable );
 AC( ExplicitExpressionFunctionOnPermutation );
+AC( ExplicitExpressionFunctionOnGraph );
 AC( TreeWeightSum );
 AC( ExplicitExpressionFunctionOnTree );
 AC( ExplicitExpressionBitFunctionOnTree );
