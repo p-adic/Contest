@@ -1,4 +1,4 @@
 // - CoordinateCompressL: intから型変換可能な全順序の定義された型の左辺値 (1KB)
 //   SetTheory/Line/CoordinateCompress/LeftValue/
-// - CoordinateCompressL: ハッシュの定義された型の右辺値 (1KB)
+// - CoordinateCompressR: ハッシュの定義された型の右辺値 (1KB)
 //   SetTheory/Line/CoordinateCompress/RightValue/
