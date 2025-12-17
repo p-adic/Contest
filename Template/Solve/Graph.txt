@@ -1,7 +1,7 @@
   CIN( int , N , M );
   // CIN( int , N ); int M = N - 1;
   CIN_A( T2<int> , 0 , M , UV ); --UV;
-  // vector<T2<int>> UV( N );
+  // vector<T2<int>> UV( M );
   // Map<T2<int>,int> UV_inv{};
   vector<vector<int>> e( N );
   // vector<Set<int>> e( N );
@@ -21,7 +21,7 @@
   // /* ó‘Ô‚ğ1ŸŒ³•ª’Ç‰Á */
   // using T = T2<int>;
   // CIN( int , K );
-  // Set_HW( N , K );
+  // SET_HW( N , K );
   // auto edge = [&]( const T& v ){
   //   auto& [i,k] = v;
   //   vector<T> a{};

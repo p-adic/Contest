@@ -1,5 +1,5 @@
-  CIN( int , N , M , K );
-  // CIN( ll , N , M , K );
+  CIN( int , N , M );
+  // CIN( ll , K );
   // 以下、ライブラリは重複しうるので下に位置するライブラリを優先でC-x C-lする。
   
   // /* 素数列挙 O(N log log N) */
@@ -10,7 +10,7 @@
   // /* val_limit = 1e5 -> length = 9592           */
   // /* val_limit = 1e6 -> length = 78498          */
   // CEXPR( int , val_limit , 316 );
-  // HeapPrimeEnumeration<val_limit> pe{};
+  // static HeapPrimeEnumeration pe{ val_limit };
   // // constexpr PrimeEnumeration<val_limit> pe{};
   // // auto& length = pe.length();
 
@@ -18,7 +18,7 @@
   // /* Arithmetic/Divisor/Least/Heap/ */
   // /* Arithmetic/Divisor/Least/ (要高速化時) */
   // CEXPR( int , val_limit , 316 );
-  // HeapLeastDivisor<val_limit> ld{};
+  // static HeapLeastDivisor ld{ val_limit };
   // // constexpr LeastDivisor<val_limit> ld{};
 
   // /* 素因数分解 O(pe:√N/log N,ld:log N) */
@@ -37,12 +37,14 @@
   // /* 約数列挙 O(pe:√N/log N,ld:d(N)=N^{log 2/log log N}) */
   // /* Arithmetic/Divisor/Enumeration/ */
   // vector<int> div = EnumerateDivisor( pe , N ); Sort( div );
+  // // /* N以下の各iに対するiの約数列挙 */
   // // vector<vector<int>> div = TotalEnumerateDivisor( N ); // O(N log N)
 
   // /* オイラー関数  O(√N/log N)/O(log N) */
-  // /* Arithmetic/Mod/Function/Euler/" */
+  // /* Arithmetic/Mod/Function/Euler/ */
   // int euler = EulerFunction( pe , N );
-  // // vector<int> euler = TotalEulerFunction( pe , N ); // O(n_max log n_max)
+  // // /* N以下の各iに対するiのオイラー関数計算 */
+  // // vector<int> euler = TotalEulerFunction( pe , N ); // O(N log N)
 
   // /* 桁DP */
   // using T = MP;
@@ -69,3 +71,13 @@
   //   dp = { fltlt( dp[O] , d ) + feqlt( dp[I] , d ) , feqeq( dp[I] , d ) };
   // }
   // T a = dp[O] + dp[I];
+
+  // /* 再帰 */
+  // /* Function/Recursion/ */
+  // Recursion( int , f , const int& n ){
+  //   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
+  // };
+  // MemoRecursion( int , f , const int& n ){
+  //   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
+  // };
+
