@@ -4677,6 +4677,7 @@ AC( QuerySet )
 {
   ASK_NUMBER(
              "集合の一点更新（一要素更新／対称差）／比較" ,
+             "集合の一点更新（一要素更新／対称差）／帰属判定" ,
              "集合の範囲更新／範囲取得"
              );
   if( num == num_temp++ ){
@@ -4686,6 +4687,10 @@ AC( QuerySet )
     CERR( "- 固定要素の有無の反転による一点更新" );
     CERR( "- 対称差" );
     CERR( "ともに加算更新に対応するデータ構造との併用を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "bool値配列もsetも制約に合わずunordered_setの定数倍が厳しい場合、" );
+    CERR( "ハッシュの中央の数桁ごとに要素を管理して線形探索をしましょう。" );
+    CERR( "\\Utility\\Set\\LinearSearch" );
   } else if( num == num_temp++ ){
     CERR( "集合は{0,1}値配列、多重集合は非負整数値配列に翻訳し、" );
     CERR( "BITなどのデータ構造で処理しましょう。" );
