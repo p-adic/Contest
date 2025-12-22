@@ -232,6 +232,8 @@ US lld = __float128;
 /* VVV íİƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB*/
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/Local/a_Body.hpp"
+  US MP = DMod;
+  // US MP = Mod<P>;
 #else
 /* BinarySearch (2KB)*/
 CE bool reactive =
