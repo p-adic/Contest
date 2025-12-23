@@ -993,6 +993,16 @@ AC( ExplicitExpressionProbability )
   CERR( "  - 確率を保つ全射で簡単な事象に帰着" );
   CERR( "  - ベイズの定理" );
   CERR( "を検討しましょう。" );
+  ASK_YES_NO( "可換群上でN回以内のランダムな移動で目的地に到達する確率ですか？" );
+  if( reply == "y" ){
+    CERR( "N回以内の移動で到達する確率は、N以下の各非負整数iに対し" );
+    CERR( "ちょうどi回の移動で最初に到達する確率p(i)の総和です。" );
+    CERR( "従って(p(i))_iの母関数f(x)の累積和f(x)/(1-x)の計算に帰着されます。" );
+    CERR( "ちょうどi回の移動で元の位置戻る確率をq(i)、目的地にいる確率をr(i)回" );
+    CERR( "とすると(q(i))_iと(r(i))_iの母関数g(x)とh(x)はfg=hを満たすので、" );
+    CERR( "f(x)/(1-x)=h(x)/((1-x)g(x))の係数をボスタン森法で求めましょう。" );
+    CERR( "Mathematics\\Polynomial\\BostanMori" );
+  }
   ASK_YES_NO( "極限計算ですか？" );
   if( reply == "y" ){
     CALL_AC( ExplicitExpressionLimit );
@@ -3776,6 +3786,7 @@ AC( CountingPath )
 {
   ASK_NUMBER(
 	     "格子点上の経路の数え上げ" ,
+	     "可換群上の経路の数え上げ" ,
 	     "一般のグラフ上の経路の数え上げ" ,
 	     );
   if( num == num_temp++ ){
@@ -3791,6 +3802,14 @@ AC( CountingPath )
     CERR( "N×N格子で左下から右上まで対角線を跨がず最初に右へ行く最短経路の個数は" );
     CERR( "第Nカタラン数C(N)=(2N)!/((N+1)!N!)です。" );
     CALL_AC( CountingYoundDiagram );
+  } else if( num == num_temp++ ){
+    CERR( "高々N回の移動で目的地に到達して終了する経路数は、N以下の各非負整数iに対し" );
+    CERR( "ちょうどi回の移動で最初に到達する経路数p(i)の総和です。" );
+    CERR( "従って(p(i))_iの母関数f(x)の累積和f(x)/(1-x)の計算に帰着されます。" );
+    CERR( "ちょうどi回の移動で元の位置戻る経路数をq(i)、目的地にいる経路数をr(i)回" );
+    CERR( "とすると(q(i))_iと(r(i))_iの母関数g(x)とh(x)はfg=hを満たすので、" );
+    CERR( "f(x)/(1-x)=h(x)/((1-x)g(x))の係数をボスタン森法で求めましょう。" );
+    CERR( "Mathematics\\Polynomial\\BostanMori" );
   } else if( num == num_temp++ ){
     CERR( "ループの不能な有向グラフは整礎なので、各点pごとに" );
     CERR( "-「pが探索されたか」を表すbool値配列" );
@@ -4010,8 +4029,6 @@ AC( SolvingBinaryEquations )
 
 AC( Query )
 {
-  CERR( "区間取得クエリの区間が全体に限られる場合に解けるならば、" );
-  CERR( "配列をセグメント木の要領で2羃長に分解して解きましょう。" );
   ASK_NUMBER(
 	     "範囲更新／取得クエリ問題" ,
 	     "範囲更新／数え上げクエリ問題" ,
@@ -4024,6 +4041,9 @@ AC( Query )
              "集合のクエリ問題" ,
              "連結リストのクエリ問題"
 	     );
+  if( num < 4 ){
+    CALL_AC( QueryDecomposition );
+  }
   if( num == num_temp++ ){
     ASK_NUMBER(
                "配列クエリ" ,
@@ -4060,6 +4080,26 @@ AC( Query )
     CERR( "データ構造に乗せましょう。" );
     CALL_AC( QueryArray );
   }
+}
+
+AC( QueryDecomposition )
+{
+  ASK_YES_NO( "区間取得クエリの区間が全体に限られる場合に解けますか？" );
+  if( reply == "y" ){
+    CERR( "配列を" );
+    CERR( "- 平方分割" );
+    CERR( "- 配列をセグメント木の要領で2羃長に分解" );
+    CERR( "で小さい区間全体に帰着して解きましょう。" );
+  };
+  ASK_YES_NO( "更新クエリがない場合に解けますか？" );
+  if( reply == "y" ){
+    CERR( "クエリを平方分割し、" );
+    CERR( "- 分割の境目までは更新クエリを適用せずに記録して" );
+    CERR( "  更新クエリがない場合の取得クエリを計算し、" );
+    CERR( "  更新クエリがある場合とのズレを計算" );
+    CERR( "- 分割の境目では記録した更新クエリを全て適用し、記録をリセット" );
+    CERR( "で更新クエリがない場合に帰着させましょう。" );
+  };
 }
 
 AC( QueryArray )
