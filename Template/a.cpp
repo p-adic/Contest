@@ -170,7 +170,7 @@ using namespace std;
 #define PR1( A1 , ... ) A1
 #define PR2( A1 , A2 , ... ) A2
 #define PR3( A1 , A2 , A3 , ... ) A3
-#define FOR_( VAR , INITIAL , FINAL , UPPER , COMP , INCR ) for( decldecay_t( UPPER ) VAR = INITIAL ; VAR COMP FINAL ; VAR INCR )
+#define FOR_( VAR , INITIAL , FINAL , UPPER , COMP , INCR ) for( decldecay_t( UPPER ) VAR = INITIAL ; VAR COMP ( FINAL ) ; VAR INCR )
 #define FOR( VAR , INITIAL , ... ) FOR_( VAR , INITIAL , PR1( __VA_ARGS__ ) , PR1( __VA_ARGS__ ) , < , PR3( __VA_ARGS__ , += PR2( __VA_ARGS__ , ? ) , ++ ) )
 #define FOREQ( VAR , INITIAL , ... ) FOR_( VAR , INITIAL , PR1( __VA_ARGS__ ) , PR1( __VA_ARGS__ ) , <= , PR3( __VA_ARGS__ , += PR2( __VA_ARGS__ , ? ) , ++ ) )
 #define FOREQINV( VAR , INITIAL , ... ) FOR_( VAR , INITIAL , PR1( __VA_ARGS__ ) , INITIAL , + 1 > , PR3( __VA_ARGS__ , -= PR2( __VA_ARGS__ , ? ) , -- ) )
