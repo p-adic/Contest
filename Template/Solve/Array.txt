@@ -79,12 +79,13 @@
   // SqrtDecomposition X{ move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/IntervalAdd/ */
   // // IntervalAddSqrtDecomposition X{ move( X_pre ) };
+  // // /* モノイド */
+  // // AbstractMonoid monoid{[&](int t0,const int& t1){return move(t0<t1?t0=t1:t0);},0}; // 区間max更新を処理する場合
+  // // MultiplicativeMonoid<decldecay_t(X_pre[0])> monoid{1}; // 区間乗算更新を処理する場合
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/ */
-  // // MultiplicativeMonoid<decldecay_t(X_pre[0])> monoid{1}; // 非可換な区間乗算更新を処理する場合
-  // // DualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( X_pre ) };
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Comutative/ */
-  // // MultiplicativeMonoid<decldecay_t(X_pre[0])> monoid{1}; // 可換な区間乗算更新を処理する場合
-  // // CommutativeDualSqrtDecomposition X{ monoid , RegularRSet{ monoid } , move( X_pre ) };
+  // // DualSqrtDecomposition X{ RegularRSet( monoid ) , RegularRSet{ monoid } , move( X_pre ) };
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/ */
+  // // CommutativeDualSqrtDecomposition X{ RegularRSet( monoid ) , RegularRSet{ monoid } , move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/ */
   // // LazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP>{} , move( X_pre ) }; // 区間乗算更新と区間和取得を処理する場合
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/ */
