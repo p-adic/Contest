@@ -41,16 +41,15 @@ int exec_mode;
 #include "../../../Utility/String/Encode/a.hpp"
 
 #include "../../../Mathematics/Utility/BinarySearch/Debug/a.hpp"
-#include "../../../Mathematics/Utility/TwoPointerApproach/Debug/a.hpp"
 #include "../../../Mathematics/Algebra/Monoid/Group/Module/a.hpp"
 #include "../../../Mathematics/Geometry/Graph/Grid/a.hpp"
+#include "../../../Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/DynamicModulo/Debug/a.hpp"
 #include "../../../Mathematics/Combinatorial/Loop/a.hpp"
 #include "../../../Mathematics/Arithmetic/Iteration/a.hpp"
 #include "../../../Mathematics/Arithmetic/Sqrt/a.hpp"
 
 CEXPR( uint , P , 998244353 );
-using MP = DMod;
 
 #ifdef SAMPLE_CHECK
   static_assert( TO_CHAR( SAMPLE_CHECK )[0] != 'd'  );
