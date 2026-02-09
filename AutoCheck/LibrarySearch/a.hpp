@@ -159,6 +159,7 @@ AC( CountingMatchingSubString );
 AC( CountingShapedSubString );
 AC( CountingMatrix );
 AC( CountingGraph );
+AC( CountingTree );
 AC( CountingUndirectedGraph );
 AC( CountingDirectedGraph );
 AC( CountingSubgraph );

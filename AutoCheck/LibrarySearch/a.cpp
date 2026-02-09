@@ -3526,12 +3526,15 @@ AC( CountingMatrix )
 AC( CountingGraph )
 {
   ASK_NUMBER(
+             "付加構造付き木の数え上げ問題" ,
              "条件を満たす無向グラフの数え上げ問題" ,
              "条件を満たす有向グラフの数え上げ問題" ,
 	     "与えられた木の分割の数え上げ問題" ,
 	     "与えられたグラフの部分グラフの数え上げ問題"
              );
   if( num == num_temp++ ){
+    CALL_AC( CountingTree );
+  } else if( num == num_temp++ ){
     CALL_AC( CountingUndirectedGraph );
   } else if( num == num_temp++ ){
     CALL_AC( CountingDirectedGraph );
@@ -3542,14 +3545,38 @@ AC( CountingGraph )
   }
 }
 
+AC( CountingTree )
+{
+  ASK_NUMBER(
+             "ラベル付き木" ,
+             "二分木"
+             );
+  if( num == num_temp++ ){
+    CERR( "ラベル付き無向木はケーリーの公式N^{N-2}で計算できます。" );
+    CERR( "https://oeis.org/A000272" );
+    CERR( "その他の付加構造付きの数え上げは" );
+    CERR( "- 対称性に注目" );
+    CERR( "- プリューファーコードの亜種に注目" );
+    CERR( "などによりケーリーの公式から導出しましょう。" );
+    CERR( "- 根付きのラベル付き無向木やラベル付き有向木は" );
+    CERR( "  N^{N-1}" );
+    CERR( "- 長さLのラベル付き部分パスグラフの与えられたラベル付き無向木は" );
+    CERR( "  N^{N-L-1} * L" );
+    CERR( "- 長さLの部分パスグラフとラベル付き無向木の組は" );
+    CERR( "  ( L! / 2 ) * N^{N-L-1} * L" );
+  } else if( num == num_temp++ ){
+    CERR( "- 各ノードの枝に左右の区別があるNノードN+1葉の二分木は" );
+    CERR( "  第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
+    CERR( "  https://ja.wikipedia.org/wiki/カタラン数#カタラン数の意味" );  
+  }
+  CERR( "を検討しましょう。" );
+}
+
 AC( CountingUndirectedGraph )
 {
-  CERR( "- ラベル付き無向木はケーリーの公式N^{N-2}" );
-  CERR( "  https://oeis.org/A000272" );
-  CERR( "- 各ノードの枝に左右の区別があるNノードN+1葉の二分木や" );
-  CERR( "  円上の2N頂点に非交差かつ次数2な無向辺を張って得られる無向グラフは" );
+  CERR( "- 円上の2N頂点に非交差かつ次数2な無向辺を張って得られる無向グラフは" );
   CERR( "  第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
-  CERR( "  https://ja.wikipedia.org/wiki/カタラン数#カタラン数の意味" );
+  CERR( "  https://ja.wikipedia.org/wiki/カタラン数#カタラン数の意味" );  
   CERR( "- なもりグラフはサイクル（N!/(N-C)!）とそれ以外への分割（C^{N-C}）" );
   CERR( "を検討しましょう。" );
 }
