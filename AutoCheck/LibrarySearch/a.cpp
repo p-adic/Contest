@@ -627,6 +627,7 @@ AC( ExplicitExpressionFunctionOnTree )
 	     "最短経路長総和の計算問題" ,
 	     "木を受け取る関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
+             "木の非空部分集合の連結包の計算問題" ,
 	     "構文木の計算問題"
 	     );
   if( num == num_temp++ ){
@@ -647,6 +648,8 @@ AC( ExplicitExpressionFunctionOnTree )
     }
   } else if( num == num_temp++ ){
     CALL_AC( QueryTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionConnectedHullInTree );
   } else if( num == num_temp++ ){
     CERR( "構文解析は言語の再帰式に沿って再帰関数で実装しましょう。" );
     CERR( "例えば式Sを左から順に読み、" );
@@ -739,6 +742,14 @@ AC( ExplicitExpressionFunctionOnNonTreeGraph )
     CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
     CERR( "を検討しましょう。" );
   }
+}
+
+AC( ExplicitExpressionConnectedHullInTree )
+{
+  CERR( "非空部分集合Sの連結包はオイラーツアーでSの各点をcyclicに並べた時の" );
+  CERR( "隣接2項のパスの和集合です。" );
+  CERR( "それ自体が木なので、頂点数は辺長+1すなわちパス長総和/2+1です。" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\EulerTour" );
 }
 
 AC( ExplicitExpressionOrder )
@@ -2544,6 +2555,7 @@ AC( MinimisationOperationCost )
   ASK_NUMBER(
              "有向森の葉を削除して空にする問題" ,
              "数直線上の点群を移動させる問題" ,
+             "順列をswapでソートする問題" ,
              "その他の問題"
              );
   if( num == num_temp++ ){
@@ -2571,6 +2583,11 @@ AC( MinimisationOperationCost )
       CERR( "最近点問題に帰着させましょう。" );
       CALL_AC( NearestNeighbour );
     }
+  } else if( num == num_temp++ ){
+    CERR( "順列をswapでソートするのに必要な回数は" );
+    CERR( "(グラフの辺数) = (長さ)-(グラフの連結成分数)です。" );
+    CERR( "グラフの辺数の遷移を考えると、この回数が達成可能なのは" );
+    CERR( "グラフ上で隣接する2項をswapしていく場合のみだと分かります。" );
   } else if( num == num_temp++ ){
     ASK_YES_NO( "操作回数の上限は10^6以下ですか？" );
     if( reply == "y" ){
@@ -4401,8 +4418,14 @@ AC( QueryGraph )
 
 AC( QueryTree )
 {
-  CERR( "木の部分集合の管理（追加／削除／部分木との共通部分の要素数取得）は各点に" );
-  CERR( "0,1を乗せることで一点更新と部分木総和取得に帰着されます。" );
+  ASK_YES_NO( "木の部分集合の管理（追加／削除／部分木との共通部分の要素数取得）ですか？" );
+  if( reply == "y" ){
+    CERR( "各点に0,1を乗せることで一点更新と部分木総和取得に帰着されます。" );
+  }
+  ASK_YES_NO( "木の部分集合の連結包の管理ですか？" );
+  if( reply == "y" ){
+    CALL_AC( ExplicitExpressionConnectedHullInTree );
+  }
   CERR( "- 木上の階差数列で、可換群構造に関する部分木加算O(1)／全更新後の一点取得O(1)" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
   CERR( "- 木上の累積和で、可換群構造に関する部分木総和取得O(1)" );
@@ -4413,7 +4436,11 @@ AC( QueryTree )
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
   CERR( "- 重み付きLCAで、モノイド構造に関するパス総乗取得O(log N)" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted" );
-  CERR( "- HL分解するならば、" );
+  CERR( "- EulerTourとDisjointSparseTableにより前処理O(N log N)で" );
+  CERR( "  LCAや距離の計算O(1)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\LCA\\DST" );
+  CERR( "- EulerTourかHL分解で配列化して、" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\EulerTour" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\HLDecomposition" );
   CERR( "  - IntervalAddBITで、可換群構造に関する一点更新O(log N)" );
   CERR( "    部分木加算O(log N)／部分木総和取得O(log N)" );
@@ -4718,7 +4745,8 @@ AC( QuerySet )
   ASK_NUMBER(
              "集合の一点更新（一要素更新／対称差）／比較" ,
              "集合の一点更新（一要素更新／対称差）／帰属判定" ,
-             "集合の範囲更新／範囲取得"
+             "集合の範囲更新／範囲取得" ,
+             "配列の区間の像取得"
              );
   if( num == num_temp++ ){
     CERR( "ゾブリストハッシュ" );
@@ -4738,8 +4766,55 @@ AC( QuerySet )
     CERR( "昇順にmod Mでi番目の要素のみを集めた総和を求める際は" );
     CERR( "{mod Mで0番目の要素の総和,...,mod MでM-1番目の要素の総和,要素数}" );
     CERR( "を管理する非可換群に対応するデータ構造との併用を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "区間の像をsetやデータ構造で管理するMoのアルゴリズムを検討しましょう。" );
+    CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+    ASK_NUMBER(
+               "配列の始切片と区間逆像（ファイバー）の共通部分の最大／最小値取得" ,
+               "配列の区間と区間逆像（ファイバー）の共通部分の非空性判定" ,
+               "配列の区間の像と区間の包含判定" ,
+               "配列の区間におけるmex取得"
+               );
+    if( num == num_temp++ ){
+      CERR( "配列Aの始切片[0,R]と区間[l,r]の逆像の共通部分の最大値取得を考えます。" );
+      CERR( "最小値は-1倍で最大値に帰着させます。Rに関してクエリをソートし" );
+      CERR( "Aの区間[0,R]の像を{0,1}値でなくファイバーの最大値（ファイバーが空なら-1）" );
+      CERR( "により配列Bで管理し、Bの区間[l,r]における最大値を求めると良いです。" );
+      CERR( "- 一点最大値更新" );
+      CERR( "- 区間最大値取得（一点のファイバーなら一点取得）" );
+      CERR( "の可能なデータ構造でBを管理しましょう。" );
+      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
+    } else if( num == num_temp++ ){
+      CERR( "配列Aの区間[L,R]の像imA[L,R]と区間[l,r]の包含判定を考えます。" );
+      ASK_NUMBER(
+                 "imA[L,R]が[l,r]に含まれるか否かの判定" ,
+                 "imA[L,R]が[l,r]を含むか否かの判定" ,
+                 );
+      if( num == num_temp++ ){
+        CERR( "Aの区間最大値がr以下かつ区間最小値がl以上か否かを判定すれば良いです。" );
+        CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
+      } else if( num == num_temp++ ){
+        CERR( "Rに関してクエリをソートしAの区間[0,R]の像を{0,1}値でなく" );
+        CERR( "ファイバーの最大値（ファイバーが空なら-1）により配列Bで管理し、" );
+        CERR( "Bの区間[l,r]における最小値がL以上か否かを判定すると良いです。" );
+        CERR( "- 一点代入更新" );
+        CERR( "- 区間最小値取得（一点のファイバーなら一点取得）" );
+        CERR( "の可能なデータ構造でBを管理しましょう。" );
+        CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
+        CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
+      }
+    } else if( num == num_temp++ ){
+      CERR( "配列Aの区間[L,R]におけるmex計算は、Rに関してクエリをソートし" );
+      CERR( "Aの区間[0,R]の像を{0,1}値でなくファイバーの最大値（ファイバーが空なら-1）" );
+      CERR( "により配列Bで管理し、Bの区間[0,y]における最小値がL未満となる最小のyを" );
+      CERR( "始切片最小値取得の二分探索などで求めると良いです。" );
+      CERR( "- 一点代入更新" );
+      CERR( "- 始切片最小値取得" );
+      CERR( "の可能なデータ構造でBを管理しましょう。" );
+      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
+      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
+    }
   }
-  CALL_AC( QueryArray );
 }
 
 AC( Game )
