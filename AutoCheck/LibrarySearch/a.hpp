@@ -163,6 +163,7 @@ AC( CountingTree );
 AC( CountingUndirectedGraph );
 AC( CountingDirectedGraph );
 AC( CountingSubgraph );
+AC( CountingGraphColouring );
 AC( CountingSubset );
 AC( CountingPartition );
 AC( CountingPartitionOfArray );

@@ -2935,6 +2935,7 @@ AC( Counting )
                "文字列の数え上げ問題" ,
                "行列の数え上げ問題" ,
                "グラフの数え上げ問題" ,
+               "グラフの彩色の数え上げ問題" ,
                "部分集合の数え上げ問題" ,
                "分割の数え上げ問題" ,
                "写像の数え上げ問題" ,
@@ -2958,6 +2959,8 @@ AC( Counting )
       CALL_AC( CountingMatrix );
     } else if( num == num_temp++ ){
       CALL_AC( CountingGraph );
+    } else if( num == num_temp++ ){
+      CALL_AC( CountingGraphColouring );
     } else if( num == num_temp++ ){
       CALL_AC( CountingSubset );
     } else if( num == num_temp++ ){
@@ -3530,7 +3533,8 @@ AC( CountingGraph )
              "条件を満たす無向グラフの数え上げ問題" ,
              "条件を満たす有向グラフの数え上げ問題" ,
 	     "与えられた木の分割の数え上げ問題" ,
-	     "与えられたグラフの部分グラフの数え上げ問題"
+	     "与えられたグラフの部分グラフの数え上げ問題" ,
+             "与えられたグラフの彩色の数え上げ"
              );
   if( num == num_temp++ ){
     CALL_AC( CountingTree );
@@ -3542,6 +3546,8 @@ AC( CountingGraph )
     CALL_AC( CountingPartitionOfTree );
   } else if( num == num_temp++ ){
     CALL_AC( CountingSubgraph );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingGraphColouring );
   }
 }
 
@@ -3608,6 +3614,19 @@ AC( CountingSubgraph )
     CERR( "を検討しましょう。" );
     CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Path" );
   }
+}
+
+AC( CountingGraphColouring )
+{
+  CERR( "DAGの彩色の数え上げは端点から順に確定させていく動的計画法を" );
+  CERR( "検討しましょう。状態としては" );
+  CERR( "- 可能な数値そのもの" );
+  CERR( "- 残り容量（容量-コスト）" );
+  CERR( "などを検討しましょう。" );
+  CERR( "" );
+  CERR( "彩色に課された条件が複雑な場合、明次式に書き直してその正当性を" );
+  CERR( "彩色の構築に帰着させて考察しましょう。" );
+  CALL_AC( ConstructionColouring );
 }
 
 AC( CountingSubset )
@@ -5474,14 +5493,18 @@ AC( ConstructionEdge )
 
 AC( ConstructionColouring )
 {
-  ASK_NUMBER( "色ごとに分けた部分グラフの性質が指定された問題ですか？" );
+  ASK_YES_NO( "色ごとに分けた部分グラフの性質が指定された問題ですか？" );
   if( reply == "y" ){
     CERR( "グラフの構築に帰着させましょう。グラフの構築は" );
     CALL_AC( ConstructionEdge );
   } else {
-    CERR( "- 木や有向非輪状グラフの彩色は、端点から確定" );
-    CERR( "- 一般の彩色は、満たすべき条件をスコア付けして貪欲に決めていき、" );
+    CERR( "- 有向非輪状グラフの場合は、端点から確定" );
+    CERR( "  - 特に木の場合は、全体問題と部分問題が同じ問題であることに注目して" );
+    CERR( "    再帰的構築" );
+    CERR( "- 一般のグラフの場合は、満たすべき条件をスコア付けして貪欲に決めていき、" );
     CERR( "  その後で焼き鈍し法などで最適化するヒューリスティック解法" );
+    CERR( "- 条件が羃等モノイド演算で記述できる場合、単位元（演算に影響を与えない）" );
+    CERR( "  で初期化をして単位元の個数を管理しながら単位元の書き換え" );
     CERR( "を検討しましょう。" );
   }
 }
