@@ -22,9 +22,9 @@
 // - Sqrt: 平方根 (1KB)
 //   Arithmetic/Sqrt/
 //   - Truncated: 羃乗打ち切り,羃乗根,羃乗数判定,モノイド離散対数 (2KB)
-//     Arithmetic/Iteration/Truncated/xs
+//     Arithmetic/Iteration/Truncated/
 //   - DiscreteLgarithm: 羃剰余離散対数 (1KB)
-//     Arithmetic/Mod/Function/DiscreteLogaxrithm/xs
+//     Arithmetic/Mod/Function/DiscreteLogaxrithm/
 // - Mod: コンパイル時定数mod (10KB)
 //   Arithmetic/Mod/ConstexprModulo/
 //   - ShifedMod: K未満は維持する動的mod (6KB)
@@ -33,4 +33,7 @@
 //   Arithmetic/AdicExpansion/
 // - PartitionOfUnity: 中国剰余定理 (2KB)
 //   Arithmetic/Mod/Function/CRT/
-
+// - Truncated: 和打ち切り,積打ち切り (1KB)
+//   Arithmetic/Truncated
+//   - Iteration: 羃乗打ち切り,羃乗根,羃乗数判定,モノイド離散対数 (2KB)
+//     Arithmetic/Iteration/Truncated/
