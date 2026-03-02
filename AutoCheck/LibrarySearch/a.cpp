@@ -2914,7 +2914,7 @@ AC( MinimisationExpression )
 
 AC( Counting )
 {
-  ASK_YES_NO( "複数の条件を満たす項の数え上げ問題ですか？" );
+  ASK_YES_NO( "ベン図的に複数の条件を満たす項の数え上げ問題ですか？" );
   if( reply == "y" ){
     CERR( "条件P_1,...,P_rの真偽が固定されている場合、" );
     CERR( "条件をいくつか除いたり逆にしたりした場合を計算し、包除原理などで" );
@@ -2934,8 +2934,7 @@ AC( Counting )
                "順列の数え上げ問題" ,
                "文字列の数え上げ問題" ,
                "行列の数え上げ問題" ,
-               "グラフの数え上げ問題" ,
-               "グラフの彩色の数え上げ問題" ,
+               "グラフに関する数え上げ問題" ,
                "部分集合の数え上げ問題" ,
                "分割の数え上げ問題" ,
                "写像の数え上げ問題" ,
@@ -2959,8 +2958,6 @@ AC( Counting )
       CALL_AC( CountingMatrix );
     } else if( num == num_temp++ ){
       CALL_AC( CountingGraph );
-    } else if( num == num_temp++ ){
-      CALL_AC( CountingGraphColouring );
     } else if( num == num_temp++ ){
       CALL_AC( CountingSubset );
     } else if( num == num_temp++ ){
@@ -3534,6 +3531,7 @@ AC( CountingGraph )
              "条件を満たす有向グラフの数え上げ問題" ,
 	     "与えられた木の分割の数え上げ問題" ,
 	     "与えられたグラフの部分グラフの数え上げ問題" ,
+             "与えられたグラフの連結成分に関する数え上げ問題" ,
              "与えられたグラフの彩色の数え上げ"
              );
   if( num == num_temp++ ){
@@ -3546,6 +3544,8 @@ AC( CountingGraph )
     CALL_AC( CountingPartitionOfTree );
   } else if( num == num_temp++ ){
     CALL_AC( CountingSubgraph );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingGraphComponent );
   } else if( num == num_temp++ ){
     CALL_AC( CountingGraphColouring );
   }
@@ -3614,6 +3614,12 @@ AC( CountingSubgraph )
     CERR( "を検討しましょう。" );
     CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Path" );
   }
+}
+
+AC( CountingGraphComponent )
+{
+  CERR( "各種連結性判定アルゴリズムに帰着させましょう。" );
+  CALL_AC( DecisionConnectedness );
 }
 
 AC( CountingGraphColouring )
@@ -4882,7 +4888,7 @@ AC( Decision )
   CERR( "なるべくコメントを書くようにしましょう。" );
   ASK_NUMBER(
 	     "必勝性問題" ,
-	     "連結性問題" ,
+	     "各種連結性問題" ,
 	     "到達可能性問題" ,
 	     "描画可能性問題" ,
 	     "存在判定問題" ,
@@ -5043,6 +5049,8 @@ AC( DecisionConnectedness )
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
   CERR( "- 有向グラフの強連結性は深さ優先探索による強連結成分分解" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\StrongConnectedComponent" );
+  CERR( "- 無向グラフの橋（閉路の一部でない辺）や関節点の判定はLowLink" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\LowLink" );
   CERR( "- 無向グラフの高次ホモロジー計算は実数や適当な法での掃き出し法" );
   CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Mod" );
   CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Real" );
