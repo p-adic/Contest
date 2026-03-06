@@ -12,8 +12,6 @@
 
   // /* 置換 */
   // /* Combinatorial/Permutation/ */
-  // /* （順列とは限らない配列Pの）転倒数計算 O(N log N) */
-  // ll inv_num = InversionNumber( P );
   // /* 順列Pの巡回置換表示 O(N) */
   // vector<vector<int>> cyc_rep = CyclicPermutationRepresentation( P );
   // /* 順列Pの極小互換表示 O(N) */
@@ -28,6 +26,14 @@
   // ll a_count = LeastAdjacentSwapCount( P );
   // /* 順列Pの符号計算 O(N log N) */
   // int sign = Signature( P );
+  // /* Combinatorial/Permutation/InversionNumber/ */
+  // /* SetTheory/Line/CoordinateCompress/LeftValue/ */
+  // /* （順列とは限らない非負整数値配列Pの）転倒数計算 O(Max(P)+N log N) */
+  // /* Max(P)が大きい場合は座標圧縮を行う */
+  // // CoordinateCompress<int> cc{};
+  // // RUN( P , Pi ){ cc.Set( Pi ); }
+  // // auto [index,maxP] = cc.Get();
+  // ll inv_num = InversionNumber( P );
 
   // /* 対称群 */
   // /* unit     : ((),())    */
