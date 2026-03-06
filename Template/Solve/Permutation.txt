@@ -28,7 +28,7 @@
   // int sign = Signature( P );
   // /* Combinatorial/Permutation/InversionNumber/ */
   // /* SetTheory/Line/CoordinateCompress/LeftValue/ */
-  // /* （順列とは限らない非負整数値配列Pの）転倒数計算 O(Max(P)+N log N) */
+  // /* （順列とは限らない非負整数値配列Pの）転倒数計算 O(Max(P)+N log Max(P)) */
   // /* Max(P)が大きい場合は座標圧縮を行う */
   // // CoordinateCompress<int> cc{};
   // // RUN( P , Pi ){ cc.Set( Pi ); }
