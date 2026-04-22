@@ -51,7 +51,7 @@
 
 #ifdef REACTIVE
   #define LOCAL( ... ) __VA_ARGS__
-  #define RSET( A , ... ) A = __VA_ARGS__
+  #define RSET( A , ... ) A = __VA_ARGS__; WHAT( A )
 #endif
 
 #ifdef USE_GETLINE
@@ -111,7 +111,7 @@
   #define REPEAT_MAIN( BOUND )                                    \
     START_MAIN;                                                   \
       signal( SIGABRT , &AlertAbort );                              \
-      MP::SetModulo( P , true );                                    \
+      DMod::SetModulo( P , true );                                    \
       if constexpr( !submit_only ){                                 \
         AutoCheck( use_getline , sample_check , problem_order );    \
       }                                                             \
