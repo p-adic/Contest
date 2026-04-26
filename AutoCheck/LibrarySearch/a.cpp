@@ -2415,7 +2415,8 @@ AC( MaximisationOnTree )
 	     "木上の関数の特定の部分集合上での最大／最小値計算問題" ,
 	     "木の分割ごとに定まる値の最大／最小化問題" ,
 	     "木のパスの長さの最大化問題" ,
-	     "木の部分集合への最近傍探索問題"
+	     "木の部分集合への最近傍探索問題" ,
+	     "木の彩色のコスト最小化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryTree );
@@ -2425,6 +2426,8 @@ AC( MaximisationOnTree )
     CALL_AC( MaximisationLengthOfPathOnTree );
   } else if( num == num_temp++ ){
     CALL_AC( NearestNeighbourOnTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( MinimisationColouringTree );
   }
 }
 
@@ -2444,7 +2447,17 @@ AC( MaximisationLengthOfPathOnTree )
 AC( NearestNeighbourOnTree )
 {
   CERR( "幅優先探索の要領で、集合をふくらませていきながら境界を管理しましょう。" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\NearestNeighbour" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\NearestNeighbour" );
+}
+
+AC( MinimisationColouringTree )
+{
+  CERR( "頂点や辺を、その近傍の彩色状態で定まるコストで塗る時のコスト最小化は" );
+  CERR( "根を固定して各頂点vとその親または親へ向かう辺の彩色状態sに対し" );
+  CERR( "dp[v][s] = 状態sからvの部分木を塗る場合のコストの最小値" );
+  CERR( "を管理する木DPを検討しましょう。" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\RootingDP" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\RootingDP\\Recursion" );
 }
 
 AC( MaximisationStringMatching )
@@ -5490,13 +5503,27 @@ AC( ConstructionGraph )
 
 AC( ConstructionEdge )
 {
-  CERR( "- 2頂点が非連結なグラフの構築は、2頂点を隔てる壁の構築、例えば" );
-  CERR( "  - グリッドなら8方向移動で端を結ぶ壁の構築" );
-  CERR( "  - その他のグラフなら1頂点の近傍点を境界とする壁の構築" );
-  CERR( "- 木の構築は、" );
-  CERR( "  - 直線や二分木やウニなど、シンプルなものに制限した構築" );
-  CERR( "  - 二分木なら括弧列やグリッド上の対角線を跨がない経路の構築" );
-  CERR( "に帰着させましょう。" );
+  ASK_NUMBER(
+             "2頂点が非連結なグラフの構築" ,
+             "木の構築" ,
+             "ポテンシャル差を経路長に持つ重み付き（多重）グラフの構築"
+             );
+  if( num == num_temp++ ){
+    CERR( "2頂点を隔てる壁の構築、例えば" );
+    CERR( "- グリッドなら8方向移動で端を結ぶ壁の構築" );
+    CERR( "- その他のグラフなら1頂点の近傍点を境界とする壁の構築" );
+    CERR( "に帰着させましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "- 直線や二分木やウニなど、シンプルなものに制限した構築" );
+    CERR( "- 二分木なら括弧列やグリッド上の対角線を跨がない経路の構築" );
+    CERR( "に帰着させましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "- ポテンシャル0の頂点から別の頂点への、ポテンシャルを重みに持つ辺の追加" );
+    CERR( "- ポテンシャル順で隣接する2頂点間の、ポテンシャル差を重みに持つ辺の追加" );
+    CERR( "- ポテンシャルcの頂点から別の頂点への、その頂点から既に結ばれている辺の重み+c" );
+    CERR( "  を重みに持つ辺（経路長を変えない迂回路）の追加" );
+    CERR( "の組み合わせを検討しましょう。" );
+  }
 }
 
 AC( ConstructionColouring )

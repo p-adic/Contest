@@ -107,6 +107,7 @@ AC( MaximisationGraphValue );
 AC( MaximisationOnTree );
 AC( MaximisationLengthOfPathOnTree );
 AC( NearestNeighbourOnTree );
+AC( MinimisationColouringTree );
 AC( MaximisationStringMatching );
 AC( MaximisationPartition );
 AC( MinimisationPartitionOfArray );
