@@ -3085,13 +3085,16 @@ AC( CountingArray )
 AC( CountingArrayConditional )
 {
   ASK_NUMBER(
-	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
+             "総和が指定された配列の数え上げ問題" ,
+	     "配列を受け取る総和以外の関数の値が固定された配列の数え上げ問題" ,
 	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
 	     "辞書式順序などで固定長の部分列に上限が与えられた配列の数え上げ問題" ,
              "閉じたカッコ列やその亜種の数え上げ問題" ,
 	     "その他の関係式を満たす配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
+    CALL_AC( CountingDistribution );
+  } else if( num == num_temp++ ){
     CALL_AC( CountingArrayInverseImage );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArrayAdjacentRelation );
@@ -3101,6 +3104,56 @@ AC( CountingArrayConditional )
     CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArrayOtherRelation );
+  }
+}
+
+AC( CountingDistribution )
+{
+  ASK_YES_NO( "単調増大な配列に限りますか？" );
+  if( reply == "y" ){
+    CERR( "分割数の計算問題に他なりません。" );
+    CERR( "\\Mathematics\\Combinatorial\\PartitionNumber" );
+  } else {
+    CERR( "非負整数値配列の数え上げは0を削除することで正整数値配列の" );
+    CERR( "数え上げに帰着します。" );
+    CERR( "正整数値配列Aの長さをN、上限をM、総和をSと置きます。" );
+    CERR( "dp[i][s] = 長さi、総和sの場合の答え" );
+    CERR( "としてdp[N][S]を求めれば良く、そのためには" );
+    CERR( "f_i(X) = sum_{s=0}^{S} dp[i+1][s]X^s" );
+    CERR( "の満たす漸化式" );
+    CERR( "f_0(X) = 1" );
+    CERR( "f_{i+1}(X) = ( f_i(X) sum_{j=1}^{M} X^j ) mod X^{S+1}" );
+    CERR( "を解いて得られる" );
+    CERR( "f_N(X) = ( sum_{j=1}^{M} X^j )^N mod X^{S+1}" );
+    CERR( "= X^N ( sum_{j=0}^{M-1} X^j )^N mod X^{S+1}" );
+    CERR( "= X^N ( 1 - X^M )^N / ( 1 - X )^N mod X^{S+1}" );
+    CERR( "= X^N ( sum_{i=0}^{S/M} (-1)^i binom( N  , i ) X^{iM} )" );
+    CERR( "   * ( sum_{i=0}^{S} (-1)^i binom( -N , i ) X^i ) mod X^{S+1}" );
+    CERR( "= X^N ( sum_{i=0}^{S/M} (-1)^i binom( N , i ) X^{iM} )" );
+    CERR( "   * ( sum_{i=0}^{S} binom( N + i - 1 , N - 1 ) X^i ) mod X^{S+1}" );
+    CERR( "のS次係数" );
+    CERR( "sum_{i=0}^{(S-N)/M}" );
+    CERR( "(-1)^i binom( N , i ) * binom( S - iM - 1 , N - 1 )" );
+    CERR( "を求めれば良いです。" );
+    ASK_NUMBER(
+               "Nのみ指定されている場合" ,
+               "Mのみ指定されている場合" ,
+               "NとMが指定されている場合" ,
+               );
+    if( num == num_temp++ ){
+      CERR( "上式でM=Sとすればよく、答えは" );
+      CERR( "binom( S - 1 , N - 1 )" );
+      CERR( "（S個の整数の間の仕切りからN-1個を選ぶ方法）です。" );
+    } else if( num == num_temp++ ){
+      CERR( "上式でNを0からSまで動かした和を考えればよく、答えは" );
+      CERR( "sum_{N=0}^{S} sum_{i=0}^{(S-N)/M}" );
+      CERR( "(-1)^i binom( N , i ) * binom( S - iM - 1 , N - 1 )" );
+      CERR( "です。" );
+    } else if( num == num_temp++ ){
+      CERR( "- N>Sならば答えは0" );
+      CERR( "- N<=SかつO(S)が間に合うならば上式を愚直に計算" );
+      CERR( "を検討しましょう。" );
+    }
   }
 }
 
@@ -3677,14 +3730,17 @@ AC( CountingPartition )
   ASK_NUMBER(
              "配列の連続部分列への分割の数え上げ問題" ,
              "集合の部分集合への分割の数え上げ問題" ,
-             "木の部分木への分割の数え上げ問題"
+             "木の部分木への分割の数え上げ問題" ,
+             "与えられた整数を総和に持つ配列の数え上げ問題" ,
              );
   if( num == num_temp++ ){
-    AC( CountingPartitionOfArray );
+    CALL_AC( CountingPartitionOfArray );
   } else if( num == num_temp++ ){
-    AC( CountingPartitionOfSet );
+    CALL_AC( CountingPartitionOfSet );
   } else if( num == num_temp++ ){
-    AC( CountingPartitionOfTree );
+    CALL_AC( CountingPartitionOfTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingDistribution );
   }
 }
 

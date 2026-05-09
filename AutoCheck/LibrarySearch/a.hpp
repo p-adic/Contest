@@ -137,6 +137,7 @@ AC( CountingPair );
 AC( CountingExplicitExpression );
 AC( CountingArray );
 AC( CountingArrayConditional );
+AC( CountingDistribution );
 AC( CountingArrayInverseImage );
 AC( CountingArrayAdjacentRelation );
 AC( CountingArrayBounded );
