@@ -94,6 +94,7 @@ AC( MultipleKnapsackRestrictedMatching );
 AC( MultipleKnapsackFreeMatching );
 AC( MaximisationArrayFunction );
 AC( MaximisationArrayFunctionSubsequence );
+AC( MaximisationArrayFunctionBitOperation );
 AC( MaximisationArrayFunctionLinearCombination );
 AC( MaximisationArrayFunctionGeneralOperation );
 AC( MaximisationArrayLength );

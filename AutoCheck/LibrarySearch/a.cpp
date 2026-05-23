@@ -1599,10 +1599,13 @@ AC( MaximisationFunctionOnOneArray )
   CALL_AC( SortingArray );
   ASK_NUMBER(
              "Aの分割（部分和、区間和、補集合）に関する問題" ,
+             "Aの部分列を受け取る関数に代入した値の最大／最小化問題"
              "Aの変更後に配列を受け取る関数に代入した値の最大／最小化問題"
              );
   if( num == num_temp++ ){
     CALL_AC( MinimisationPartitionOfArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationArrayFunctionSubsequence );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationArrayFunction );
   }  
@@ -2026,17 +2029,22 @@ AC( SingleKnapsackCostfreeSingleValue )
 {
   ASK_YES_NO( "各項が独立に選択できる（選択方法に罰金や報酬がない）問題ですか？" );
   if( reply == "y" ){
-    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
-    CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
-    CERR( "  管理する動的計画法" );
-    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
-    CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
-    CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
-    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
-    CERR( "- 各始切片ごとに要素数Kの部分集合の価値の最大化をするとして" );
-    CERR( "  O(N log_2 K)が通りそうならば優先度付きキューでK番目までの要素管理" );
-    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\FixedSize" );
+    ASK_YES_NO( "価値がbit演算で与えられますか？" );
+    if( reply == "y" ){
+      CALL_AC( MaximisationArrayFunctionBitOperation );
+    } else {
+      CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
+      CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+      CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
+      CERR( "  管理する動的計画法" );
+      CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+      CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
+      CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
+      CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+      CERR( "- 各始切片ごとに要素数Kの部分集合の価値の最大化をするとして" );
+      CERR( "  O(N log_2 K)が通りそうならば優先度付きキューでK番目までの要素管理" );
+      CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\FixedSize" );
+    }
   } else {
     CERR( "報酬は全部得た上で、実際にはもらえない報酬を差し引く罰金形式に" );
     CERR( "翻訳し、その上で価値や依存関係や罰金を非負容量の有向辺に翻訳し、" );
@@ -2149,14 +2157,18 @@ AC( MaximisationArrayFunction )
   CERR( "操作可能な回数がNより小さい場合、操作されない成分が存在します。" );
   CERR( "操作されない成分を決め打って最大化しましょう。" );
   CERR( "" );
-  CERR( "Fの終域Mの有限順序半群構造(|,R)が" );
-  CERR( "(1) Rは<を含意しかつ<に関する最大元がRに関する最大元でもある。" );
-  CERR( "(2) 任意のm,n in Mに対しm = m|nまたはm R m|nである。" );
-  CERR( "(3) Fが|に関する総和関数である。" );
-  CERR( "(4) 配列のサイズNがRの最長昇鎖列長L以下ならば、Bの|に関する累積和が" );
-  CERR( "    Rに関して狭義単調増加するようにBを構成できる" );
-  CERR( "を満たすならば、N>=Lの場合に求める<に関する最大値が<に関する最大元と" );
-  CERR( "一致するので、N<Lの場合に帰着されます。" );
+  ASK_YES_NO( "Fは半群構造に関する総和ですか？" );
+  if( reply == "y" ){
+    CERR( "Fの終域Mの有限半順序半群構造(||,R)が" );
+    CERR( "(1) Fが半群構造||に関する総和関数である。" );
+    CERR( "(2) 半順序Rは<を含意しかつ<に関するMの最大元max(M)が" );
+    CERR( "     MのRに関する最大元でもある。" );
+    CERR( "(3) 任意のm,n in Mに対しm = m||nまたはm R (m||n)である。" );
+    CERR( "(4) (M,R)の最長昇鎖列長をLと置くと、Bの||に関する累積和が" );
+    CERR( "    Rに関して狭義単調増加するようにサイズLのBを構成できる" );
+    CERR( "を満たすならば、N>=Lの場合に求める<に関するF(B)の最大値が" );
+    CERR( "max(M)と一致します。従って後はN<Lの場合だけ考えれば良いです。" );
+  }
   ASK_NUMBER(
              "部分列を取り出す操作" ,
              "成分を成分の一次結合で置き換える操作" ,
@@ -2173,17 +2185,38 @@ AC( MaximisationArrayFunction )
 
 AC( MaximisationArrayFunctionSubsequence )
 {
-  CERR( "- 長さK固定の連続区間の最大値を求める問題ならば、スライド最大化" );
-  CERR( "  \\Mathematics\\Combinatorial\\SlidingMinimalisation" );
-  CERR( "- 始切片の要素数K固定の部分集合の総和の最大値を求める問題ならば、" );
-  CERR( "  優先度付きキューによるK番目までの集合管理" );
-  CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\FixedSize" );
-  CERR( "- 各長さの部分列においてソート後の隣接項の差がD以上となる個数の最小値を求める" );
-  CERR( "  問題ならば、全体をソートして隣接項の差がD以上の箇所で区切り、それらの長さを" );
-  CERR( "  ソートして大きい方から貪欲に選択" );
-  CERR( "を検討しましょう。" );
-  CERR( "" );
-  CALL_AC( MaximisationArrayFunctionGeneralOperation );
+  ASK_NUMBER(
+             "長さK固定の連続区間の最大値" ,
+             "始切片の要素数K固定の部分集合の総和の最大値" ,
+             "各長さの部分列においてソート後の隣接項の差がD以上となる個数の最小値" ,
+             "部分列のbit演算に関する最大値" ,
+             "その他の最大値"
+             );
+  if( num == num_temp++ ){
+    CERR( "スライド最大化" );
+    CERR( "\\Mathematics\\Combinatorial\\SlidingMinimalisation" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "優先度付きキューによるK番目までの集合管理" );
+    CERR( "\\Mathematics\\Combinatorial\\Knapsack\\Costfree\\FixedSize" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "全体をソートして隣接項の差がD以上の箇所で区切り、" );
+    CERR( "それらの長さをソートして大きい方から貪欲に選択を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationArrayFunctionBitOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationArrayFunctionGeneralOperation );
+  }
+}
+
+AC( MaximisationArrayFunctionBitOperation )
+{
+  CERR( "選択をすればするほどORは大きくなり、ANDは小さくなります。" );
+  CERR( "価値1と価値2が与えられて価値1のORが最大の場合の価値2のANDを" );
+  CERR( "最大化するには、高い桁から順に" );
+  CERR( "「価値2のその桁が1な項のみに絞っても価値1のORが最大値を達成できるか」" );
+  CERR( "を調べることで価値2のAND候補の上位桁を決定していきましょう。" );
 }
 
 AC( MaximisationArrayFunctionLinearCombination )
@@ -2199,7 +2232,8 @@ AC( MaximisationArrayFunctionLinearCombination )
 
 AC( MaximisationArrayFunctionGeneralOperation )
 {
-  CERR( "最大化すべき式のサブゴールfに表れる項xのうち決め打ちやすいものを探しましょう。" );
+  CERR( "最大化すべき式のサブゴールfに表れる項xのうち決め打ちやすいもの" );
+  CERR( "を探しましょう。" );
   CERR( "配列の長さをiで打ち切った時のxの候補数をX(i)、" );
   CERR( "配列の長さをiで打ち切ってxを決め打った時の配列の長さi+1でのxの候補数をdX(i)" );
   CERR( "と置きます。" );
@@ -3020,8 +3054,18 @@ AC( CountingNumber )
 	     "その他の条件"
              );
   if( num == num_temp++ ){
-    CERR( "数を十進法などで文字列とみなします。" );
-    CALL_AC( CountingArray );
+    ASK_YES_NO( "各桁の上限が与えられた非負整数の数え上げ問題ですか？" );
+    if( reply == "y" ){
+      CERR( "d桁目がb_d以下であるN以下の非負整数の数え上げ問題は" );
+      CERR( "そのような最大の整数nを階乗進法のように( b_d + 1 )たちを基数として" );
+      CERR( "解釈して得られる非負整数+1（0の寄与）に他なりません。" );
+      CERR( "特にb_dが定数bであるならば、nをb+1進法で解釈して得られる非負整数+1" );
+      CERR( "に他なりません。" );
+      CERR( "\\Mathematics\\Combinatorial\\DigitBound" );
+    } else {
+      CERR( "数を十進法などで文字列とみなします。" );
+      CALL_AC( CountingArray );
+    }
   } else if( num == num_temp++ ){
     CALL_AC( CountingExplicitExpression );
   } else {
