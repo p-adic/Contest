@@ -1271,7 +1271,8 @@ AC( MinimisationMovingCost )
 	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
 	     "多始点多終点組み分けコスト最小化（完全二部マッチング）問題" ,
 	     "多プレイヤーコスト総和最小化（最小費用流）問題" ,
-	     "最近点問題"
+	     "最近点問題" ,
+             "経路長mod Bが特定の値になるかの判定問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingMaze );
@@ -1329,6 +1330,8 @@ AC( MinimisationMovingCost )
     CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\MinimumCostFlow" );
   } else if( num == num_temp++ ){
     CALL_AC( NearestNeighbour );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionAccessibilityParity );
   }
   CERR( "" );
   CERR( "点の座標と最小化すべきコスト以外の数値xに変化がある場合、最小コスト移動に" );
@@ -2982,7 +2985,7 @@ AC( MinimisationExpression )
 
 AC( Counting )
 {
-  ASK_YES_NO( "ベン図的に複数の条件を満たす項の数え上げ問題ですか？" );
+  ASK_YES_NO( "ベン図的に高々20個程度の条件を満たす項の数え上げ問題ですか？" );
   if( reply == "y" ){
     CERR( "条件P_1,...,P_rの真偽が固定されている場合、" );
     CERR( "条件をいくつか除いたり逆にしたりした場合を計算し、包除原理などで" );
@@ -3796,6 +3799,7 @@ AC( CountingPartition )
              "配列の連続部分列への分割の数え上げ問題" ,
              "集合の部分集合への分割の数え上げ問題" ,
              "木の部分木への分割の数え上げ問題" ,
+             "グラフの連結部分集合への分割の数え上げ問題" ,
              "与えられた整数を総和に持つ配列の数え上げ問題" ,
              );
   if( num == num_temp++ ){
@@ -3804,6 +3808,8 @@ AC( CountingPartition )
     CALL_AC( CountingPartitionOfSet );
   } else if( num == num_temp++ ){
     CALL_AC( CountingPartitionOfTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingPartitionOfGraph );
   } else if( num == num_temp++ ){
     CALL_AC( CountingDistribution );
   }
@@ -3838,6 +3844,25 @@ AC( CountingPartitionOfTree )
   CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
   CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
   CERR( "を検討しましょう。" );
+}
+
+AC( CountingPartitionOfGraph )
+{
+  ASK_NUMBER(
+             "分割に指定のない数え上げ" ,
+             "分割後の各連結成分を色で塗り分ける数え上げ" ,
+             "グリッドで分割後の各連結成分が隣接する成分数が奇数個である場合分け" ,
+             );
+  if( num == num_temp++ ){
+    CERR( "好きに分割をしてその連結成分を取れば良いので" );
+    CERR( "各辺を消すか否かの選択の数え上げ2^Eに帰着されます。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingColouringComponent );
+  } else if( num == num_temp++ ){
+    CERR( "グリッドを2色で塗り分けて連結成分を取れば良いので、" );
+    CERR( "左上を白に固定して残りの各グリッドを白黒どちらで塗るかの" );
+    CERR( "数え上げ2^{HW-1}に帰着されます。" );
+  }
 }
 
 AC( CountingMap )
@@ -4025,11 +4050,14 @@ AC( CountingTiling )
 {
   ASK_NUMBER(
 	     "隣接成分と異なる色で塗り分ける問題" ,
+	     "連結部分集合に分割して隣接連結成分と異なる色で塗り分ける問題" ,
 	     "与えられた図形で描画可能になるように塗り分ける問題" ,
 	     "与えられた条件に従って塗り分け可能になるように図形で描画する問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingColouringDistinct );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingColouringComponent );
   } else if( num == num_temp++ ){
     CALL_AC( CountingColouringDrawable );
   } else if( num == num_temp++ ){
@@ -4051,6 +4079,13 @@ AC( CountingColouring )
   CERR( "  色の種類数が少ないならば、外周や頂点の図形群の塗り分けを固定することで" );
   CERR( "  一廻り小さい図形群に対する数え上げとの関係式を導出し、" );
   CERR( "  サイズに関する動的計画法" );
+}
+
+AC( CountingColouringComponent )
+{
+  CERR( "連結成分への分解を無視して好きな色で塗り分け、" );
+  CERR( "同じ色が隣接していたらそこを連結すれば良いです。" );
+  CERR( "従ってただの塗り分けの数え上げV^{色数}に帰着されます。" );
 }
 
 AC( CountingColouringDrawable )
@@ -5194,11 +5229,10 @@ AC( DecisionConnectedness )
 AC( DecisionAccessibility )
 {
   CERR( "移動の前後で変化しない値がある場合、その値が等しい点に絞って考えましょう。" );
-  CERR( "コストのパリティに制限がある場合は" );
-  CERR( "- 往復による±2調整" );
-  CERR( "- 奇閉路によるmod 2調整" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\ShortestCycle\\Odd" );
-  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "コストを何かで割った余りに制限がありますか？" );
+  if( reply == "y" ){
+    CALL_AC( DecisionAccessibilityParity );
+  }
   ASK_NUMBER(
 	     "矩形領域の到達可能性（迷路）問題" ,
 	     "グラフ上の到達可能性問題" ,
@@ -5248,6 +5282,31 @@ AC( DecisionAccessibility )
     CERR( "を検討しましょう。" );
   }
   CERR( "" );
+}
+
+AC( DecisionAccessibilityParity )
+{
+  ASK_YES_NO( "重み付き無向グラフですか？" );
+  if( reply == "y" ){
+    CERR( "法をBと置きます。" );
+    CERR( "BFSなどで始点を頂点とする全域木を１つ取り、始点から各頂点iへの木上の" );
+    CERR( "経路長mod Bをd[i]と置きます。" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
+    CERR( "重みwの各辺i->jに対応する閉路（以下特殊閉路）のコストd[i]+w+d[i]で" );
+    CERR( "コストの帳尻を合わせられるので、特殊閉路のコストとBのgcdで割った余り" );
+    CERR( "のみを考えればよいです。" );
+    CERR( "特に木の辺p->i（重みw）に対応する特殊閉路のコストd[p]+w+d[i]=2d[i]は" );
+    CERR( "mod gcdで0なので、任意の閉路は特殊閉路の重ね合わせとみなせ、" );
+    CERR( "そのコストはmod gcdで0です。" );
+    CERR( "以上よりd[i] mod gcdがポテンシャルとして機能し、任意の2頂点i,j間の経路長は" );
+    CERR( "mod gcdでd[i] - d[j]と等しく、逆にmod gcdでd[i] - d[j]に等しい" );
+    CERR( "B未満の非負整数は経路長mod Bと表せます。" );
+  } else {
+    CERR( "- 往復によるmod 2の調整" );
+    CERR( "- 奇閉路によるmod 2調整" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\ShortestCycle\\Odd" );
+    CERR( "を検討しましょう。" );
+  }
 }
 
 AC( DecisionDrawability )
