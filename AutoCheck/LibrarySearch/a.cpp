@@ -1280,12 +1280,33 @@ AC( MinimisationMovingCost )
     CERR( "を両方解くことで１始点多終点コスト最小化（迷路）問題に帰着されます。" );
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
-    CERR( "- 経由点の経由順序が指定されているならば、グラフの線形グラフに対する" );
-    CERR( "  分割統治ダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double\\Errand" );
-    CERR( "- 経由点の経由順序が指定されておらずかつ経由点が頂点全体ならば、HeldKarp法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HeldKarp" );
-    CERR( "を検討しましょう。" );
+    CERR( "経由点が色分けされていない問題は頂点番号で色分けをすることで、" );
+    CERR( "各経由点が色分けされているとし、その色のスタンプが配置されているとします。" );
+    ASK_NUMBER(
+               "スタンプを指定の色順で押す最短経路長" ,
+               "相異なるスタンプを指定の色順で押す最短経路長" ,
+               "指定された個数のスタンプを好きな順で押す最短経路長"
+               );
+    if( num == num_temp++ ){
+      CERR( "グラフの線形グラフに対する分割統治ダイクストラ法" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double\\Errand" );
+      CERR( "を検討しましょう。" );
+    } else if( num == num_temp++ ){
+      CERR( "指定の色順で色に重複がなければグラフの線形グラフに対する" );
+      CERR( "分割統治ダイクストラ法" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double\\Errand" );
+      CERR( "で解くことができます。例えば色Cのみが重複して二度現れるならば" );
+      CERR( "指定順で色Cが現れる最初の位置までを上記の方法で求め、" );
+      CERR( "次の色Cが現れるまでを始辺色分け可能ダイクストラ法" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Branched" );
+      CERR( "で求め、そこから指定順で上記の方法で求めれば良いです。" );
+      CERR( "２つのライブラリを併用するとファイルサイズが大きくなるので、" );
+      CERR( "グラフを１次元追加して後者のみを用いて解きましょう。" );
+    } else if( num == num_temp++ ){
+      CERR( "HeldKarp法" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\HeldKarp" );
+      CERR( "を検討しましょう。" );
+    }
   } else if( num == num_temp++ ){
     CERR( "- 最短経路の始点の特定が不要ならば、始点を１つ追加して元の始点へコスト0の" );
     CERR( "  有向辺を追加" );
