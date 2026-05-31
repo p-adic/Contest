@@ -32,6 +32,8 @@ AC( SampleAnalyser )
       use_memorised_sample = true;
       ifstream sample_count{ sample_path + problem_order + "/count.txt" };
       sample_count >> sample_repetition_num;
+      CERRNS( "サンプルの個数は" , sample_repetition_num , "個です。\n" );
+      CERR( "" );
     }
   }
   if( !use_memorised_sample ){
@@ -70,7 +72,7 @@ AC( SampleAnalyser )
         }
       }
       if( sample_num == 1 ){
-        CERRNS( "サンプルの個数は" , var , "個です。\n" );
+        CERRNS( "サンプル1の入力の個数は" , var , "個です。\n" );
         CERR( "" );
       }
       while( !ifs_output.eof() ){
