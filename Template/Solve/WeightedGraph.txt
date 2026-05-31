@@ -15,7 +15,7 @@
   // CIN_AA( weight_type , 0 , N , 0 , N , weight );
   // CEXPR( weight_type , infty , 1e18 ); vector weight( N , vector( N , infty ) ); FOR( i , 0 , N ){ weight[i][i] = 0; }
   FOR( m , 0 , M ){
-    auto& [u,v,w] = UVW[m];
+    auto& [u,v,w] = UVW[m]; --u; --v;
     // auto& [u,v] = UV[m]; auto& w = weight_enum[m];
     // CIN( int , u , v ); --u; --v;
     // CIN( ll , w );
@@ -45,18 +45,21 @@
   // auto edge = [&]( const T& v ){
   //   auto& [i,k] = v;
   //   vector<Pair<T,weight_type>> a{};
+  //   if( k + 1 < K ){
+  //     a <<= {T{i,k+1},0};
+  //   } else {
   //   RUN( e[i] , [j,w] ){
-  //     if( ){
-  //       a <<= {{j,k+1},w};
+  //     if( k + 1 < K && ){
+  //       a <<= {T{j,k+1},w};
   //     } else {
-  //       a <<= {{j,k},w};
+  //       a <<= {T{j,k},w};
   //     }
   //   }
   //   return a;
   // };
   // GridGraph graph{ edge };
 
-  // /* ダイクストラ法 O(min(V^2+E,(V+E)log E)) */
+  // /* ダイクストラ法 O(min(V^2+E,V+E log V)) */
   // /* Geometry/Graph/Algorithm/Dijkstra/ */
   // Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
   

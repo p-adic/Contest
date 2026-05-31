@@ -2,6 +2,16 @@
   // CIN( ll , K );
   // 以下、ライブラリは重複しうるので下に位置するライブラリを優先でC-x C-lする。
   
+  // /* 再帰 */
+  // /* Function/Recursion/ */
+  // Recursion( int , f , const int& n ){
+  //   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
+  // };
+  // MemoRecursion( int , f , const int& n ){
+  //   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
+  // };
+  // f.clear();
+
   // /* 素数列挙 O(N log log N) */
   // /* Arithmetic/Prime/Enumeration/Heap/ */
   // /* Arithmetic/Prime/Enumeration/ (要高速化時) */
@@ -72,12 +82,4 @@
   // }
   // T a = dp[O] + dp[I];
 
-  // /* 再帰 */
-  // /* Function/Recursion/ */
-  // Recursion( int , f , const int& n ){
-  //   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
-  // };
-  // MemoRecursion( int , f , const int& n ){
-  //   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
-  // };
 

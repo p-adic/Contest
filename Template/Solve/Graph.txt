@@ -25,8 +25,11 @@
   // auto edge = [&]( const T& v ){
   //   auto& [i,k] = v;
   //   vector<T> a{};
+  //   if( k + 1 < K ){
+  //     a <<= {i,k+1};
+  //   } else {
   //   RUN( e[i] , j ){
-  //     if( ){
+  //     if( k + 1 < K && ){
   //       a <<= {j,k+1};
   //     } else {
   //       a <<= {j,k};
@@ -42,7 +45,7 @@
   // T external_point = -1;
   // vector<T> start_points = {0};
   // BreadthFirstSearch bfs{ graph , external_point , start_points }; vector<int> d = bfs.GetDistance();
-  // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
+  // // BreadthFirstSearch bfs{ graph , external_point }; auto [colour,colour_inv,colour_ulim] = bfs.GetConnectedComponent();
 
   // /* –Ø‚Ì[‚³—Dæ’Tõ O(V) */
   // /* Geometry/Graph/Algorithm/DepthFirstSearch/Tree/ */
