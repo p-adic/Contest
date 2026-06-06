@@ -4277,7 +4277,8 @@ AC( Query )
 	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）" ,
              "グラフのクエリ問題" ,
              "集合のクエリ問題" ,
-             "連結リストのクエリ問題"
+             "連結リストのクエリ問題" ,
+             "Dequeのクエリ問題"
 	     );
   if( num < 4 ){
     CALL_AC( QueryDecomposition );
@@ -4317,6 +4318,8 @@ AC( Query )
     CERR( "その後あらためてクエリを処理します。挿入クエリを1加算に翻訳し、" );
     CERR( "データ構造に乗せましょう。" );
     CALL_AC( QueryArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryDeque );
   }
 }
 
@@ -4618,114 +4621,6 @@ AC( QueryArrayFinalSegmentSetFunctionApply )
   CERR( "区間取得を行うことで終切片代入時のc(A)の更新を高速に行えます。" );
 }
 
-AC( QueryGraph )
-{
-  ASK_NUMBER(
-             "木クエリ（森クエリは木クエリに帰着）" ,
-             "グリッドクエリ" ,
-             "一般のグラフクエリ"
-             );
-  if( num == num_temp++ ){
-    CALL_AC( QueryTree );
-    CERR( "" );
-  } else if( num == num_temp++ ){
-    CALL_AC( QueryGrid );
-    CERR( "" );
-  } else if( num == num_temp++ ){
-    // 候補なし
-  }
-  CALL_AC( QueryGeneralGraph );
-}
-
-AC( QueryTree )
-{
-  ASK_YES_NO( "木の部分集合の管理（追加／削除／部分木との共通部分の要素数取得）ですか？" );
-  if( reply == "y" ){
-    CERR( "各点に0,1を乗せることで一点更新と部分木総和取得に帰着されます。" );
-  }
-  ASK_YES_NO( "木の部分集合の連結包の管理ですか？" );
-  if( reply == "y" ){
-    CALL_AC( ExplicitExpressionConnectedHullInTree );
-  }
-  CERR( "- 木上の階差数列で、可換群構造に関する部分木加算O(1)／全更新後の一点取得O(1)" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
-  CERR( "- 木上の累積和で、可換群構造に関する部分木総和取得O(1)" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\Tree" );
-  CERR( "- 全方位木DPで、モノイド構造に関する各部分木総乗取得O(N)" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
-  CERR( "- ダブリングで、トポロジカルソートされた頂点番号未満の最近祖先取得O(log N)" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
-  CERR( "- 重み付きLCAで、モノイド構造に関するパス総乗取得O(log N)" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted" );
-  CERR( "- EulerTourとDisjointSparseTableにより前処理O(N log N)で" );
-  CERR( "  LCAや距離の計算O(1)" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\LCA\\DST" );
-  CERR( "- EulerTourかHL分解で配列化して、" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\EulerTour" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\HLDecomposition" );
-  CERR( "  - IntervalAddBITで、可換群構造に関する一点更新O(log N)" );
-  CERR( "    部分木加算O(log N)／部分木総和取得O(log N)" );
-  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\IntervalAdd" );
-  CERR( "  - IntervalMultiplyLazySqrtDecompositionで、モノイド構造に関する" );
-  CERR( "    一点更新O(√N log N)／部分木加算O(√N log N)" );
-  CERR( "    基点付きマグマの部分木作用O(√N log N)／部分木総乗取得O(√N log N)" );
-  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Lazy\\IntervalMultiply" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( QueryGrid )
-{
-  CERR( "- 可換群構造に関する矩形加算O(1)／全更新後の一点取得O(1)が必要ならば" );
-  CERR( "  二次元階差数列" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する矩形取得O(1)が必要ならば二次元累積和" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する矩形加算O(1)／全更新後の矩形取得O(1)が必要ならば" );
-  CERR( "  二次元階差数列と二次元累積和の併用" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する矩形加算O(log H log W)／矩形取得O(log H log W)が" );
-  CERR( "  必要ならば二次元BIT" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\TwoDimentioal" );
-  CERR( "- 矩形Max更新O(H√(W log W))／矩形取得O(H√(W log W))が必要ならば" );
-  CERR( "  一次元区間max更新平方分割の愚直並列による二次元化" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\IntervalSetMax" );
-  CERR( "- 差分計算が高速に可能ならばMoのアルゴリズム" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( QueryGeneralGraph )
-{
-  CERR( "以下グラフの頂点数をV、辺の本数をE、クエリ数をQと置きます。" );
-  CERR( "クエリを跨ぐ更新を「永続的」、１クエリごとにリセットされる更新を" );
-  CERR( "「一時的」と表現します。" );
-  CERR( "- 辺の永続的追加更新＋連結成分取得でO(V+(E+Q)α(V))が間に合いそう" );
-  CERR( "  ならばUnionFind" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
-  CERR( "- 辺の一時的追加更新＋連結成分取得でO(V+E+Q)が間に合いそうならば" );
-  CERR( "  幅優先探索で連結成分前計算" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-  CERR( "- 辺の永続的削除更新＋連結成分取得でO(V+(E+Q)α(V))が間に合いそう" );
-  CERR( "  ならばクエリ逆読みのUnionFind" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
-  CERR( "- 辺の一時的削除更新＋連結成分取得でO(V+E+Q)が間に合いそうならば" );
-  CERR( "  強連結成分分解＋トポロジカルソート＋出次数0の非終端頂点削除＋" );
-  CERR( "  入出次数1纏め上げや、lowlink" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\StrongConnectedComponent\\HamiltonWalk" );
-  CERR( "- 特定の辺を含む最小全域森取得でO((V+Q)log V + E log E)が間に合いそうならば" );
-  CERR( "  全体に対する最小全域森をクラスカル法で前計算し重み付きLCAによる" );
-  CERR( "  最大コスト辺計算" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted" );
-  CERR( "- 辺集合の彩色を変えた最小全域森取得でO(V + E log E + Qα(V))が間に合いそう" );
-  CERR( "  ならば全体に対する辺のソートを前計算しクラスカル法の反復" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
-  CERR( "- クエリごとに１つの頂点を始点または終点とする辺全てにわたる更新か取得が" );
-  CERR( "  必要な場合、次数√E以下の点は愚直に処理しそうでない点のみ管理する高速化" );
-  CERR( "を検討しましょう。" );  
-}
-
 AC( QueryCounting )
 {
   ASK_NUMBER(
@@ -4928,37 +4823,112 @@ AC( QueryTimeSeriesChangeDifference )
   CERR( "というイベントソートで処理しましょう。" );
 }
 
-AC( Simulation )
+AC( QueryGraph )
 {
-  CALL_AC( SimulateOperation );
-  ASK_YES_NO( "操作回数の計算問題ですか？" );
-  if( reply == "y" ){
-    CALL_AC( ReducingOperation );
-    CALL_AC( CountingOperation );
+  ASK_NUMBER(
+             "木クエリ（森クエリは木クエリに帰着）" ,
+             "グリッドクエリ" ,
+             "一般のグラフクエリ"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( QueryTree );
+    CERR( "" );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryGrid );
+    CERR( "" );
+  } else if( num == num_temp++ ){
+    // 候補なし
   }
+  CALL_AC( QueryGeneralGraph );
 }
 
-AC( SimulateOperation )
+AC( QueryTree )
 {
-  CERR( "まずは愚直なシミュレーションで間に合うか否かを判定し、" );
-  CERR( "間に合うならばそのまま実装しましょう。間に合わないならば、" );
-  CERR( "- 操作／遷移の纏め上げによる高速化" );
-  CERR( "- 序盤+周期性+最終ループ（途中までの可能性があるので最大１周期分見る）" );
-  CERR( "- 最終結果に影響するイベントのみを管理" );
-  CERR( "  - イベントを重複して解決するならば座標圧縮" );
-  CERR( "  - イベントを重複して解決しないならばsetやmapで管理して" );
-  CERR( "    イベント処理時に削除" );
-  CERR( "- 優先度付きキューなどによるイベントソート" );
-  CERR( "  - グリッド内のO(Q)個の縱線と横線の和集合の要素数は、x軸を小さい方から" );
-  CERR( "    走査してx軸方向の線分の本数をイベントソートで管理、y軸方向の和集合を" );
-  CERR( "    区間代入更新で管理" );
-  CERR( "  - 特にグリッド上の経路は線分の集まりとみなして処理可能" );
-  CERR( "- イベント群を区間更新クエリに翻訳して双対セグメント木などによる高速化" );
-  CERR( "- イベント群をモノイドに翻訳して繰り返し二乗法などによる高速化" );
-  CERR( "  - x -> max(bound,x+A_i)の遷移はx -> x+A_iの遷移との差を" );
-  CERR( "    累積和の累積maxに翻訳" );
-  CERR( "- 操作回数の計算は、何らかの数値に単調性があれば二分探索" );
+  ASK_YES_NO( "木の部分集合の管理（追加／削除／部分木との共通部分の要素数取得）ですか？" );
+  if( reply == "y" ){
+    CERR( "各点に0,1を乗せることで一点更新と部分木総和取得に帰着されます。" );
+  }
+  ASK_YES_NO( "木の部分集合の連結包の管理ですか？" );
+  if( reply == "y" ){
+    CALL_AC( ExplicitExpressionConnectedHullInTree );
+  }
+  CERR( "- 木上の階差数列で、可換群構造に関する部分木加算O(1)／全更新後の一点取得O(1)" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
+  CERR( "- 木上の累積和で、可換群構造に関する部分木総和取得O(1)" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\Tree" );
+  CERR( "- 全方位木DPで、モノイド構造に関する各部分木総乗取得O(N)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
+  CERR( "- ダブリングで、トポロジカルソートされた頂点番号未満の最近祖先取得O(log N)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
+  CERR( "- 重み付きLCAで、モノイド構造に関するパス総乗取得O(log N)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted" );
+  CERR( "- EulerTourとDisjointSparseTableにより前処理O(N log N)で" );
+  CERR( "  LCAや距離の計算O(1)" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\LCA\\DST" );
+  CERR( "- EulerTourかHL分解で配列化して、" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\EulerTour" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree\\HLDecomposition" );
+  CERR( "  - IntervalAddBITで、可換群構造に関する一点更新O(log N)" );
+  CERR( "    部分木加算O(log N)／部分木総和取得O(log N)" );
+  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\IntervalAdd" );
+  CERR( "  - IntervalMultiplyLazySqrtDecompositionで、モノイド構造に関する" );
+  CERR( "    一点更新O(√N log N)／部分木加算O(√N log N)" );
+  CERR( "    基点付きマグマの部分木作用O(√N log N)／部分木総乗取得O(√N log N)" );
+  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Lazy\\IntervalMultiply" );
   CERR( "を検討しましょう。" );
+}
+
+AC( QueryGrid )
+{
+  CERR( "- 可換群構造に関する矩形加算O(1)／全更新後の一点取得O(1)が必要ならば" );
+  CERR( "  二次元階差数列" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
+  CERR( "- 可換群構造に関する矩形取得O(1)が必要ならば二次元累積和" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
+  CERR( "- 可換群構造に関する矩形加算O(1)／全更新後の矩形取得O(1)が必要ならば" );
+  CERR( "  二次元階差数列と二次元累積和の併用" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
+  CERR( "- 可換群構造に関する矩形加算O(log H log W)／矩形取得O(log H log W)が" );
+  CERR( "  必要ならば二次元BIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\TwoDimentioal" );
+  CERR( "- 矩形Max更新O(H√(W log W))／矩形取得O(H√(W log W))が必要ならば" );
+  CERR( "  一次元区間max更新平方分割の愚直並列による二次元化" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\IntervalSetMax" );
+  CERR( "- 差分計算が高速に可能ならばMoのアルゴリズム" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryGeneralGraph )
+{
+  CERR( "以下グラフの頂点数をV、辺の本数をE、クエリ数をQと置きます。" );
+  CERR( "クエリを跨ぐ更新を「永続的」、１クエリごとにリセットされる更新を" );
+  CERR( "「一時的」と表現します。" );
+  CERR( "- 辺の永続的追加更新＋連結成分取得でO(V+(E+Q)α(V))が間に合いそう" );
+  CERR( "  ならばUnionFind" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
+  CERR( "- 辺の一時的追加更新＋連結成分取得でO(V+E+Q)が間に合いそうならば" );
+  CERR( "  幅優先探索で連結成分前計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
+  CERR( "- 辺の永続的削除更新＋連結成分取得でO(V+(E+Q)α(V))が間に合いそう" );
+  CERR( "  ならばクエリ逆読みのUnionFind" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
+  CERR( "- 辺の一時的削除更新＋連結成分取得でO(V+E+Q)が間に合いそうならば" );
+  CERR( "  強連結成分分解＋トポロジカルソート＋出次数0の非終端頂点削除＋" );
+  CERR( "  入出次数1纏め上げや、lowlink" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\StrongConnectedComponent\\HamiltonWalk" );
+  CERR( "- 特定の辺を含む最小全域森取得でO((V+Q)log V + E log E)が間に合いそうならば" );
+  CERR( "  全体に対する最小全域森をクラスカル法で前計算し重み付きLCAによる" );
+  CERR( "  最大コスト辺計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree\\Weighted" );
+  CERR( "- 辺集合の彩色を変えた最小全域森取得でO(V + E log E + Qα(V))が間に合いそう" );
+  CERR( "  ならば全体に対する辺のソートを前計算しクラスカル法の反復" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
+  CERR( "- クエリごとに１つの頂点を始点または終点とする辺全てにわたる更新か取得が" );
+  CERR( "  必要な場合、次数√E以下の点は愚直に処理しそうでない点のみ管理する高速化" );
+  CERR( "を検討しましょう。" );  
 }
 
 AC( QuerySet )
@@ -5036,6 +5006,51 @@ AC( QuerySet )
       CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
     }
   }
+}
+
+AC( QueryDeque )
+{
+  CERR( "deque Aのクエリ処理を考えます。" );
+  CERR( "- Aの巡回シフトはA.push_back(A.back())とA.pop_front()で処理します。" );
+  CERR( "  周期Nなので、N回以上の反復はNで割った余りだけ処理します。" );
+  CERR( "- Aの累積和は補正項Xと累積和-補正項に対応する数列Cの組で管理します。" );
+  CERR( "  - A.push_back(x)はC.push_back(C.back()+x)で処理します。" );
+  CERR( "  - A.pop_back()はC.pop_back()で処理します。" );
+  CERR( "  - A.push_front(x)はC.push_front(x-X)とX+=xで処理します。" );
+  CERR( "  - A.pop_front()はX-=A[0]とC.pop_front()で処理します。" );
+}
+
+AC( Simulation )
+{
+  CALL_AC( SimulateOperation );
+  ASK_YES_NO( "操作回数の計算問題ですか？" );
+  if( reply == "y" ){
+    CALL_AC( ReducingOperation );
+    CALL_AC( CountingOperation );
+  }
+}
+
+AC( SimulateOperation )
+{
+  CERR( "まずは愚直なシミュレーションで間に合うか否かを判定し、" );
+  CERR( "間に合うならばそのまま実装しましょう。間に合わないならば、" );
+  CERR( "- 操作／遷移の纏め上げによる高速化" );
+  CERR( "- 序盤+周期性+最終ループ（途中までの可能性があるので最大１周期分見る）" );
+  CERR( "- 最終結果に影響するイベントのみを管理" );
+  CERR( "  - イベントを重複して解決するならば座標圧縮" );
+  CERR( "  - イベントを重複して解決しないならばsetやmapで管理して" );
+  CERR( "    イベント処理時に削除" );
+  CERR( "- 優先度付きキューなどによるイベントソート" );
+  CERR( "  - グリッド内のO(Q)個の縱線と横線の和集合の要素数は、x軸を小さい方から" );
+  CERR( "    走査してx軸方向の線分の本数をイベントソートで管理、y軸方向の和集合を" );
+  CERR( "    区間代入更新で管理" );
+  CERR( "  - 特にグリッド上の経路は線分の集まりとみなして処理可能" );
+  CERR( "- イベント群を区間更新クエリに翻訳して双対セグメント木などによる高速化" );
+  CERR( "- イベント群をモノイドに翻訳して繰り返し二乗法などによる高速化" );
+  CERR( "  - x -> max(bound,x+A_i)の遷移はx -> x+A_iの遷移との差を" );
+  CERR( "    累積和の累積maxに翻訳" );
+  CERR( "- 操作回数の計算は、何らかの数値に単調性があれば二分探索" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( Game )
@@ -5286,27 +5301,27 @@ AC( DecisionAccessibility )
 
 AC( DecisionAccessibilityParity )
 {
-  ASK_YES_NO( "重み付き無向グラフですか？" );
+  CERR( "法をBと置きます。連結成分ごとに考えれば良いです。" );
+  ASK_YES_NO( "B=2ですか？" );
   if( reply == "y" ){
-    CERR( "法をBと置きます。" );
-    CERR( "BFSなどで始点を頂点とする全域木を１つ取り、始点から各頂点iへの木上の" );
-    CERR( "経路長mod Bをd[i]と置きます。" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-    CERR( "重みwの各辺i->jに対応する閉路（以下特殊閉路）のコストd[i]+w+d[i]で" );
-    CERR( "コストの帳尻を合わせられるので、特殊閉路のコストとBのgcdで割った余り" );
-    CERR( "のみを考えればよいです。" );
-    CERR( "特に木の辺p->i（重みw）に対応する特殊閉路のコストd[p]+w+d[i]=2d[i]は" );
-    CERR( "mod gcdで0なので、任意の閉路は特殊閉路の重ね合わせとみなせ、" );
-    CERR( "そのコストはmod gcdで0です。" );
-    CERR( "以上よりd[i] mod gcdがポテンシャルとして機能し、任意の2頂点i,j間の経路長は" );
-    CERR( "mod gcdでd[i] - d[j]と等しく、逆にmod gcdでd[i] - d[j]に等しい" );
-    CERR( "B未満の非負整数は経路長mod Bと表せます。" );
-  } else {
     CERR( "- 往復によるmod 2の調整" );
     CERR( "- 奇閉路によるmod 2調整" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\ShortestCycle\\Odd" );
     CERR( "を検討しましょう。" );
+    CERR( "" );
   }
+  CERR( "BFSなどで始点を頂点とする全域木を１つ取り、始点から各頂点iへの木上の" );
+  CERR( "経路長mod Bをd[i]と置きます。" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
+  CERR( "重みwの各辺i->jに対応する閉路（以下特殊閉路）のコストd[i]+w+d[i]で" );
+  CERR( "コストの帳尻を合わせられるので、特殊閉路のコストとBのgcdで割った余り" );
+  CERR( "のみを考えればよいです。" );
+  CERR( "特に木の辺p->i（重みw）に対応する特殊閉路のコストd[p]+w+d[i]=2d[i]は" );
+  CERR( "mod gcdで0なので、任意の閉路は特殊閉路の重ね合わせとみなせ、" );
+  CERR( "そのコストはmod gcdで0です。" );
+  CERR( "以上よりd[i] mod gcdがポテンシャルとして機能し、任意の2頂点i,j間の経路長は" );
+  CERR( "mod gcdでd[i] - d[j]と等しく、逆にmod gcdでd[i] - d[j]に等しい" );
+  CERR( "B未満の非負整数は経路長mod Bと表せます。" );
 }
 
 AC( DecisionDrawability )
