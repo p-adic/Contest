@@ -95,10 +95,16 @@ AC( ExplicitExpressionSum )
   }
   ASK_YES_NO( "総和や総乗を取る項数は指数オーダーですか？" );
   if( reply == "y" ){
-    CERR( "- 総和や総乗を個数で平均化することで期待値計算に帰着" );
-    CERR( "- 総和を0,1の和で表して確率計算に帰着" );
-    CERR( "を検討しましょう。" );
-    CALL_AC( ExplicitExpressionProbability );
+    ASK_YES_NO( "与えられた配列の部分列と一致する配列全体をわたるローリングハッシュの総和ですか？" );
+    if( reply == "y" ){
+      CERR( "部分列DPで総和を求めましょう。" );
+      CERR( "\\Mathematics\\Combinatorial\\Subsequence\\Distinct" );
+    } else {
+      CERR( "- 総和や総乗を個数で平均化することで期待値計算に帰着" );
+      CERR( "- 総和を0,1の和で表して確率計算に帰着" );
+      CERR( "を検討しましょう。" );
+      CALL_AC( ExplicitExpressionProbability );
+    }
   } else {
     ASK_NUMBER(
                "一重和や一重積の計算問題" ,
@@ -3373,7 +3379,7 @@ AC( CountingSubArray )
 	     "配列の成分を受け取る関数の部分和を固定した部分列の数え上げ問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の数え上げ問題" ,
 	     "配列のその他の関係式を満たす部分列の数え上げ問題" ,
-	     "配列の部分列から取得位置情報を落とした配列の数え上げ問題"
+	     "配列の部分列の種類（取得位置情報を落とした配列）の数え上げ問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingSumFixedSubArray );
@@ -3528,11 +3534,12 @@ AC( CountingGeneralRelationSubArray )
 AC( CountingSubArrayImageArray )
 {
   CERR( "入力で与えられる配列をAと置きます。" );
-  CERR( "配列として等しいAの部分列のうち辞書式順序最小のものを数え上げる" );
-  CERR( "部分列DPを検討しましょう。具体的には" );
-  CERR( "「末尾が第i成分由来で辞書順最小なAの部分列の個数dp[i]」" );
-  CERR( "「s=A[j]を満たすj<iの最大値last[i][s]」" );
-  CERR( "の２つを管理するiに関する動的計画法を検討しましょう。" );
+  CERR( "配列として等しいAの部分列のうち取得位置が辞書式順序で" );
+  CERR( "- 最小のものを数え上げる部分列DP" );
+  CERR( "  https://qiita.com/drken/items/a207e5ae3ea2cf17f4bd" );
+  CERR( "- 最大のものを数え上げる部分列DP" );
+  CERR( "  \\Mathematics\\Combinatorial\\Subsequence\\Distinct" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( CountingPermutation )
@@ -5544,6 +5551,10 @@ AC( Construction )
   CERR( "  - 入力に関して再帰的に構築する方法を探すために、入力制約より一般化したり" );
   CERR( "  （例えば多変数化して）逆に制約を追加したりして考察" );
   CERR( "を検討しましょう。" );
+  ASK_YES_NO( "構築すべきデータ群xの制約は、非自明な関数fを用いてf(x)の制約で表せますか？" );
+  if( reply == "y" ){
+    CERR( "f(x)の値たちを構築し、その結果からxを復元することを検討しましょう。" );
+  }
   ASK_NUMBER(
 	     "数やベクトルに関する構築" ,
 	     "配列や文字列に関する構築" ,
