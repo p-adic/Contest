@@ -36,7 +36,7 @@ int exec_mode;
 #include "../../../Mathematics/Utility/Vector/a.hpp"
 #include "../../../Mathematics/Utility/Set/Map/a.hpp"
 #include "../../../Utility/StdStream/__float128/a.hpp"
-#include "../../../Utility/StdStream/a.hpp"
+#include "../../../Utility/StdStream/Debug/a.hpp"
 #include "../../../Utility/String/a.hpp"
 #include "../../../Utility/String/Encode/a.hpp"
 
@@ -64,11 +64,3 @@ CEXPR( uint , P , 998244353 );
   const string input_path = "dummy.txt";
   const string output_path = "dummy.txt";
 #endif
-
-inline bool HasBr();
-template <typename T> inline bool HasBr( const T& s );
-inline bool HasBr( const char& c );
-template <size_t L> bool HasBr( const char ( &s )[L] );
-bool HasBr( const string& s );
-template <typename Arg0 , typename Arg1 , typename...Args> inline bool HasBr( const Arg0& arg0 , const Arg1& arg1 , const Args&... args );
-bool searched_br = true;
