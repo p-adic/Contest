@@ -1,19 +1,20 @@
-// ä½œå•ç”¨
-#include "a_Body.hpp"
-// stdstreamç³»ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ãŸã‚ã«includeé †ã‚’å¾Œã«ã™ã‚‹ã€‚
-#include "../Header.hpp"
+// c:/Users/user/Documents/Programming/Contest/ProblemCreation/a.cpp
 
-#include "../Random/a_Body.hpp"
+// ì–â—p
+#include "a_Body.hpp"
+// stdstreamŒn‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚Ì‚½‚ß‚Éinclude‡‚ğŒã‚É‚·‚éB
+#include "../Header.hpp"
 
 int main()
 {
-  const string directory_name = "å•é¡Œåã‚’ã“ã“ã«å…¥ã‚Œã‚‹";
-  COUT( "ã©ã‚Œã‚’é¸æŠã—ã¾ã™ã‹ï¼Ÿ" );
-  COUT( "0:" , directory_name , "ã®æƒ³å®šè§£ã‚’å®Ÿè¡Œã™ã‚‹ã€‚" );
-  COUT( "1:" , directory_name , "ã®ã‚µãƒ³ãƒ—ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ã€‚" );
-  COUT( "2:" , directory_name , "ã®ã‚µãƒ³ãƒ—ãƒ«ã‚’æ ¼ç´ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã™ã‚‹ã€‚" );
-  COUT( "3:" , directory_name , "ã®ã‚µãƒ³ãƒ—ãƒ«ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’å¤‰æ›´ã™ã‚‹ã€‚" );
-  CIN_ASSERT( branch , 0 , 3 );
+  const string directory_name = "–â‘è–¼";
+  COUT( "‚Ç‚ê‚ğ‘I‘ğ‚µ‚Ü‚·‚©H" );
+  COUT( "0:" , directory_name , "‚Ì‘z’è‰ğ‚ğÀs‚·‚éB" );
+  COUT( "1:" , directory_name , "‚ÌƒTƒ“ƒvƒ‹‚ğ¶¬‚·‚éB" );
+  COUT( "2:" , directory_name , "‚ÌƒTƒ“ƒvƒ‹‚ğŠi”[‚·‚éƒtƒ@ƒCƒ‹‚ğì¬‚·‚éB" );
+  COUT( "3:" , directory_name , "‚ÌƒTƒ“ƒvƒ‹‚ÌƒtƒH[ƒ}ƒbƒg‚ğ•ÏX‚·‚éB" );
+  COUT( "4: I—¹‚·‚éB" );
+  CIN_ASSERT( branch , 0 , 4 );
   int branch_temp = 0;
   if( branch == branch_temp++ ){
     ExecuteSolution( directory_name );
@@ -24,46 +25,49 @@ int main()
   } else if( branch == branch_temp++ ){
     RearrangeSamples( directory_name );
   }
-  QUIT;
+  return 0;
 }
 
 inline void Solve()
 {
-  // æƒ³å®šè§£ã‚’ã“ã“ã«å…¥ã‚Œã‚‹ã€‚
 }
-
 REPEAT_MAIN(1);
 
-void GenerateSamples_Body( ofstream& ofs_input_list )
+void GenerateSamples_Body( ofstream& ofs_input_list , const int& num )
 {
-  // ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ã‚³ãƒ¼ãƒ‰ã‚’ã“ã“ã«å…¥ã‚Œã‚‹ã€‚
 }
 
 void WriteInSamples_Body( VLArray<string>& file_prefix , VLArray<int>& file_num )
 {
   // VLArray<string> prefix{ "Chiisai_" , "Kyoukai_" , "Ookii_" };
-  VLArray<string> prefix{ "Chiisai_" , "Kyoukai_" , "Ookii_" , "Sugoi_" };
+  // VLArray<string> prefix{ "Chiisai_" , "Kyoukai_" , "Ookii_" , "Sugoi_" };
   // VLArray<string> prefix{ "Chiisai_" , "Kyoukai_" , "Ookii_" , "Sugoi_" , "Tester_" };
+  // VLArray<string> prefix{ "Chiisai_" , "Kyoukai_" , "Ookii_" , "Tester_" };
   // VLArray<string> prefix{ "Chiisai_" , "Ookii_" };
   // VLArray<string> prefix{ "Chiisai_" , "Ookii_" , "Sugoi_" };
   // VLArray<string> prefix{ "Chiisai_" , "Ookii_" , "Sugoi_" , "evil_" };
-  // VLArray<string> prefix{ "Sampuru_" };
-  VLArray<int> num{ 10 , 5 , 5 , 8 };
+  VLArray<string> prefix{ "Sampuru_" };
+  // VLArray<string> prefix{ "Chiisai_" , "Ookii_" , "Tester_" };
+  // VLArray<string> prefix{ "test" };
+  VLArray<int> num{};
   file_prefix = prefix;
   file_num = num;
   return;
 }
 
-// å‡ºåŠ›ä¸€è¦§ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹å ´åˆã€ãã‚Œã‚’å‰Šé™¤ã—ãªã„ã¨æ­£ã—ããƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿ãŒã§ããªã„ã“ã¨ã«æ³¨æ„ã€‚
+// o—Íˆê——ƒtƒ@ƒCƒ‹‚ª‚ ‚éê‡A‚»‚ê‚ğíœ‚µ‚È‚¢‚Æ³‚µ‚­ƒtƒ@ƒCƒ‹‘‚«‚İ‚ª‚Å‚«‚È‚¢‚±‚Æ‚É’ˆÓB
 void RearrangeSamples_Body( ifstream& ifs_input_list , ofstream& ofs_input_list )
 {
-  REPEAT( 28 ){
-    // ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¤‰æ›´ã‚³ãƒ¼ãƒ‰ã‚’ã“ã“ã«å…¥ã‚Œã‚‹ã€‚
+  REPEAT( 20 ){
+    // ƒtƒH[ƒ}ƒbƒg•ÏXƒR[ƒh‚ğ‚±‚±‚É“ü‚ê‚éB
+    IFS( int , N );
+    OFS( N + 1 );
     OFS( "" );
   }
-  IFS( string , check_redundant );
-  assert( check_redundant == "" );
-  assert( ! ifs_input_list );
-  cout << "æ›¸ãè¾¼ã¿ãŒå®Œäº†ã—ã¾ã—ãŸã€‚" << endl;
+  string check_redundant = "";
+  while( ifs_input_list >> check_redundant ){
+    assert( check_redundant == "" );
+  }
+  cout << "‘‚«‚İ‚ªŠ®—¹‚µ‚Ü‚µ‚½B" << endl;
   return;
 }
