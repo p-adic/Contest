@@ -31,7 +31,7 @@
   // GridGraph graph{ WEdgeOnGrid }; // 重み付き。
   
   // /* ３次元化 */
-  // int D = 2;
+  // int D = 2 , HWD = HW * D;
   // auto EnumHWD = [&]( const int& v ){
   //   auto [i,j] = EnumHW( v / D );
   //   return T3<int>( i , j , v % D );
@@ -48,7 +48,7 @@
   //   }
   //   return answer;
   // };
-  // EnumerationGraph graph{ HW * D , EnumHWD , EnumHWD_inv , edge };
+  // EnumerationGraph graph{ HWD , EnumHWD , EnumHWD_inv , edge };
 
   // /* ２次元imos法 O(HW+Q) */
   // /* SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/ */

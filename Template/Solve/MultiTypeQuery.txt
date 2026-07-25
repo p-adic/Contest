@@ -14,6 +14,7 @@
   //   return move( u0 );
   // };
   // U unit{};
+  // // AbstractMonoid G{ op , unit };
   // auto inv = [&]( const U& u ){
   //   return -u;
   // };
@@ -32,7 +33,7 @@
 
   // /* フェニック木 O(N)/O(log N) */
   // /* SetTheory/DirectProduct/AffineSpace/BIT/ */
-  // BIT bit{ X_pre };
+  // BIT X{ X_pre };
   // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/ */
   // // IntervalAddBIT X{ X_pre };
   // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/ */
@@ -63,16 +64,17 @@
   // // DualSqrtDecomposition X{ RegularRSet( monoid ) , RegularRSet{ monoid } , move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/ */
   // // CommutativeDualSqrtDecomposition X{ RegularRSet( monoid ) , RegularRSet{ monoid } , move( X_pre ) };
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/ */
-  // // LazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP>{} , move( X_pre ) }; // 区間乗算更新と区間和取得を処理する場合
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/ */
-  // // IntervalMultiplyLazySqrtDecomposition X{ RegularRSet{ MultiplicativeMonoid<MP>{ 1 ) } , Module<MP,MP>{} , move( X_pre ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
-  // // GeometricProgressionMinDualSqrtDecomposition X{ Module<int,int>{} , int( 1e9 ) , {1,-1} , move( X_pre ) }; // 区間一次式min更新と一点取得を処理する場合
+ // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/ */
+  // // LazySqrtDecomposition X{ MultiplicativeMonoid<decltype(X_pre[0])>{ 1 } , BiModule<decltype(X_pre[0]),int,decltype(X_pre[0])>{} , move( X_pre ) }; // decltype(X_pre[0])とintによるdecltype(X_pre[0])への区間乗算更新とMPでの区間和取得を処理する場合
+  // // LazySqrtDecomposition X{ AdditiveMonoid<int>{} , AbstractBiModule{ 0 , [&](int u,const int& r,int u){ return move( u ); } , [&](const int& r,int u){ return move( u += r ); } , MinSemilattice{ decltype(X_pre[0])( 1e9 ) } } , move( X_pre ) }; // intの加法によるdecltype(X_pre[0])への区間加算更新と区間min取得
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/ */
+  // // IntervalMultiplyLazySqrtDecomposition X{ MultiplicativeMonoid<decltype(X_pre[0])>{ 1 } , Module<decltype(X_pre[0]),decltype(X_pre[0])>{} , move( X_pre ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
+  // // GeometricProgressionMinDualSqrtDecomposition X{ Module<int,decltype(X_pre[0])>{} , decltype(X_pre[0])( 1e9 ) , {1,-1} , move( X_pre ) }; // 区間一次式min更新と一点取得を処理する場合
   // // /* Algebra/Monoid/Group/DirectSum/ */
   // // int index = -1 , dim = 26;
   // // DirectSumGroup dsg{ group , index , dim }; // 自由加群
   // // AbstractSqrtDecomposition X{ dsg , N };
-  // // FOR( i , 0 , N ){ X.Set( i , dsg.Wrap( A[i] ) ); }
+  // // FOR( i , 0 , N ){ X.Set( i , dsg.Wrap( X_pre[i] ) ); }
 
   // vector<vector<ll>> query( Q );
   FOR( q , 0 , Q ){

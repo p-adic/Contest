@@ -36,6 +36,7 @@
   //   return move( u0 );
   // };
   // U unit{};
+  // // AbstractMonoid G{ op , unit };
   // auto inv = [&]( const U& u ){
   //   return -u;
   // };
@@ -61,7 +62,7 @@
 
   // /* フェニック木 O(N)/O(log N) */
   // /* SetTheory/DirectProduct/AffineSpace/BIT/ */
-  // BIT bit{ X_pre };
+  // BIT X{ X_pre };
   // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/ */
   // // IntervalAddBIT X{ X_pre };
   // // /* SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/ */
@@ -86,10 +87,11 @@
   // // DualSqrtDecomposition X{ RegularRSet( monoid ) , RegularRSet{ monoid } , move( X_pre ) };
   // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/ */
   // // CommutativeDualSqrtDecomposition X{ RegularRSet( monoid ) , RegularRSet{ monoid } , move( X_pre ) };
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/ */
-  // // LazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP>{} , move( X_pre ) }; // 区間乗算更新と区間和取得を処理する場合
-  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Lazy/IntervalMultiply/ */
-  // // IntervalMultiplyLazySqrtDecomposition X{ RegularRSet{ MultiplicativeMonoid<MP>{ 1 ) } , Module<MP,MP>{} , move( X_pre ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/ */
+  // // LazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , BiModule<MP,int,MP>{} , move( X_pre ) }; // MPとintによるMPへの区間乗算更新とMPでの区間和取得を処理する場合
+  // // LazySqrtDecomposition lsd{ AdditiveMonoid<int>{} , AbstractModule{ 0 , [&](const int& r,int u){ return move( u += r ); } , MinSemilattice{ int( 1e9 ) } } , move( W ) }; // intの加法によるintへの区間加算更新と区間min取得
+  // // /* SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/ */
+  // // IntervalMultiplyLazySqrtDecomposition X{ MultiplicativeMonoid<MP>{ 1 } , Module<MP,MP>{} , move( X_pre ) }; // 区間乗算更新と区間加算更新と区間和取得を処理する場合
   // // GeometricProgressionMinDualSqrtDecomposition X{ Module<int,int>{} , int( 1e9 ) , {1,-1} , move( a ) }; // 区間一次式min更新と一点取得を処理する場合
   // // /* Algebra/Monoid/Group/DirectSum/ */
   // // int index = -1 , dim = 26;
