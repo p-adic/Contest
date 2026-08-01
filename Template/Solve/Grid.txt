@@ -149,15 +149,15 @@
   //   }
   // }
 
-  // /* [‚³—Dæ’Tõ‚É‚æ‚é–¢“’B“_–K–âƒQ[ƒ€ O(3^HW) */
+  // /* ’Pƒ˜H‚Ì[‚³—Dæ’Tõ O(3^HW) */
   // /* Function/Recursion/ */
   // Recursion( int , dfs , const int& i , const int& j ){
-  //   bool b = false;
+  //   bool win = false;
   //   RUN( EdgeOnGrid( {i,j} ) , [ni,nj] ){
   //     grid[i][j] = '#';
-  //     b |= !f( ni , nj );
+  //     win |= !f( ni , nj );
   //     grid[i][j] = '.';
   //   }
-  //   return b;
+  //   return win;
   // };
 
