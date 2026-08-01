@@ -1801,14 +1801,13 @@ AC( KnapsackInterval )
     CERR( "属すべき点の両側で始切片和と終切片和の最小値の総和を求め全体の総和から" );
     CERR( "引けばよいので、始切片和の始切片最小値と終切片和の終切片最小値を" );
     CERR( "前計算しましょう。" );
+    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\Interval\\UnboundedValueSum\\Segmentwise" );
+    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\Interval\\UnboundedValueSum\\MaxIntervalSum" );
   } else if( num == num_temp++ ){
     CERR( "尺取り法で区間を伸ばし両端の更新値を用いて最大値を管理しましょう。" );
     CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
   } else if( num == num_temp++ ){
-    CERR( "区間和最大化は、区間の右端を固定した最大値を管理する動的計画法" );
-    CERR( "を検討しましょう。" );
-    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree" );
-    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree\\UnboundedValueSum" );
+    CALL_AC( MaximisationIntervalSum ):
   } else if( num == num_temp++ ){
     CALL_AC( KnapsackIntervalSumAbsoluteSum );
   }
@@ -2620,11 +2619,13 @@ AC( MinimisationPartitionOfArray )
 AC( MaximisationIntervalSum )
 {
   CERR( "max_{[l,r]} sum(A[l,r])" );
-  CERR( "= max_i (max_l sum(A[l,i)) + A[i] + max_r sum(A(i,r]))" );
-  CERR( "= max_i (max_{l<=i}(sum(A[l,N))-sum(A[i,N))) + A[i]" );
+  CERR( "= max_i (max_l sum(A[l,i)) + A_i + max_r sum(A(i,r]))" );
+  CERR( "= max_i (max_{l<=i}(sum(A[l,N))-sum(A[i,N))) + A_i" );
   CERR( "              + max_{i<=r}(sum(A[0,r])-sum(A[0,i])))" );
   CERR( "です。これは左右から切片和の累積maxを前計算することで求めることが可能です。" );
-  CERR( "\\Mathematics\\Combinatorial\\MaxIntervalSum" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\Interval\\UnboundedValueSum\\MaxIntervalSum" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval\\Costfree\\UnboundedValueSum" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\Interval\\UnboundedValueSum\\MaxIntervalSum" );
 }
 
 AC( MinimisationPartitionOfSet )
