@@ -1221,7 +1221,11 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( Knapsack );
   } else if( num == num_temp++ ){
-    CERR( "max/minを演算とする総乗の計算問題とみなします。" );
+    ASK_YES_NO( "max/minの入れ子ですか？" );
+    if( reply == "y" ){
+      CALL_AC( MinMaxRelaxation );
+    }
+    CERR( "以下max/minを演算とする総乗の計算問題とみなします。" );
     CALL_AC( ExplicitExpressionSum );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnArray );
@@ -1651,14 +1655,20 @@ AC( SortingArray )
 AC( MaximisationFunctionOnMultipleArray )
 {
   ASK_NUMBER(
-             "A_0の部分和とA_1の補部分和の最大／最小化問題" ,
+             "A_0の部分和とA_1の補部分和の和の最大／最小化問題" ,
+             "A_0とA_1の区間長の等しい区間和の和の最大／最小化問題" ,
              "A_iの部分和と関数f_iの積のiをわたる総和の最大／最小化問題" ,
              "各iごとにj_iを１つ選んで得られる(A_{j_i,i})_iの価値最大化問題" ,
              "max_i max_j f(a_i,b_j)などの計算問題" ,
+             "A_0の区間和とA_1の区間和の比の最大化問題" ,
              "その他の問題"
              );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnTwoArray );
+  } else if( num == num_temp++ ){
+    CERR( "非負値ならばいずれか一方の区間が極大な場合に制限してよいです。" );
+    CERR( "A_0の区間の中心点を固定してA_1の極大区間を全探策し、" );
+    CERR( "A_1の区間の中心点を固定してA_0の極大区間を全探策しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "与えられる配列の個数をM個とし、積順序に関して順序保存である関数" );
     CERR( "f_0,f_1,...:N^{M-1}->Nが与えられ、" );
@@ -1677,6 +1687,12 @@ AC( MaximisationFunctionOnMultipleArray )
     CALL_AC( SingleKnapsackCostfreeMultiValue );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionDoubleSumNonQuotient );
+  } else if( num == num_temp++ ){
+    CERR( "各成分が正の時、max (A_0[l,r]/A_1[l,r])は" );
+    CERR( "forall [l,r], A_0[l,r]/A_1[l,r] <= Rすなわち" );
+    CERR( "forall [l,r], A_0[l,r] - A_1[l,r] * R <= 0を満たす非負実数Rの最小値です。" );
+    CERR( "Rを決め打つ二分探索でA_0 - A_1 * Rの区間和の最大値を求める" );
+    CERR( "問題に帰着させましょう。" );
   } else if( num == num_temp++ ){
     CERR( "A_0,A_1,...を結合して１つの配列とみなします。" );
     CALL_AC( MaximisationFunctionOnOneArray );
@@ -2175,6 +2191,15 @@ AC( MultipleKnapsackFreeMatching )
   CERR( "を検討しましょう。" );
 }
 
+AC( MinMaxRelaxation )
+{
+  CERR( "min_{x in X}(max_{y in Y} f(x,y))の計算問題は" );
+  CERR( "exists x in X, max_{y in Y} f(x,y) <= rを満たすrの最小値、" );
+  CERR( "max_{x in X}(min_{y in Y} f(x,y))の計算問題は" );
+  CERR( "exists x in X, max_{y in Y} f(x,y) >= rを満たすrの最大値として" );
+  CERR( "求めましょう。" );
+}
+
 AC( MaximisationArrayFunction )
 {
   CERR( "配列を受け取る関数Fが与えられているとします。与えられた配列Aに" );
@@ -2569,6 +2594,7 @@ AC( MinimisationPartitionOfArray )
   CERR( "dp[i] = 「[0,i)の分割Pをわたるf(P)の最大値」" );
   CERR( "を管理するiに関する動的計画法を検討しましょう。" );
   ASK_NUMBER(
+             "Aの区間和の最大化問題" ,
              "Aの部分和の最大化問題" ,
              "f circ Aの部分和とg circ Aの補部分和の和の最大化問題" ,
              "Aの部分和と補部分和の差の最大／最小化問題" ,
@@ -2576,6 +2602,8 @@ AC( MinimisationPartitionOfArray )
              "Aの区間への分割全体をわたる区間和の絶対和の最大化問題"
              );
   if( num == num_temp++ ){
+    CALL_AC( MaximisationIntervalSum );
+  } else if( num == num_temp++ ){
     CALL_AC( Knapsack );
   } else if( num == num_temp++ ){
     CERR( "f circ AをA_0、g circ AをA_1と置きます。" );
@@ -2587,6 +2615,16 @@ AC( MinimisationPartitionOfArray )
   } else if( num == num_temp++ ){
     CALL_AC( KnapsackIntervalSumAbsoluteSum );
   }
+}
+
+AC( MaximisationIntervalSum )
+{
+  CERR( "max_{[l,r]} sum(A[l,r])" );
+  CERR( "= max_i (max_l sum(A[l,i)) + A[i] + max_r sum(A(i,r]))" );
+  CERR( "= max_i (max_{l<=i}(sum(A[l,N))-sum(A[i,N))) + A[i]" );
+  CERR( "              + max_{i<=r}(sum(A[0,r])-sum(A[0,i])))" );
+  CERR( "です。これは左右から切片和の累積maxを前計算することで求めることが可能です。" );
+  CERR( "\\Mathematics\\Combinatorial\\MaxIntervalSum" );
 }
 
 AC( MinimisationPartitionOfSet )
@@ -3160,7 +3198,8 @@ AC( CountingArrayConditional )
 {
   ASK_NUMBER(
              "総和が指定された配列の数え上げ問題" ,
-	     "配列を受け取る総和以外の関数の値が固定された配列の数え上げ問題" ,
+             "2値ベクトルとの内積が指定された配列の数え上げ問題" ,
+	     "配列を受け取るその他の関数の値が固定された配列の数え上げ問題" ,
 	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
 	     "辞書式順序などで固定長の部分列に上限が与えられた配列の数え上げ問題" ,
              "閉じたカッコ列やその亜種の数え上げ問題" ,
@@ -3168,6 +3207,8 @@ AC( CountingArrayConditional )
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingDistribution );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingInnerProductInverseImage );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArrayInverseImage );
   } else if( num == num_temp++ ){
@@ -3229,6 +3270,16 @@ AC( CountingDistribution )
       CERR( "を検討しましょう。" );
     }
   }
+}
+
+AC( CountingInnerProductInverseImage )
+{
+  CERR( "内積の係数の2値w0,w1がw0|w1かつw0<w1を満たすとし、" );
+  CERR( "w0倍する項をm0個、w1倍する項をm1個とします。" );
+  CERR( "m0個の項うち最後の１つ以外はw1/w0で割った切り上げ商のw0倍と不足分に" );
+  CERR( "分割することでw1倍する項m0+m1-1個と[0,w1/w0)値の項と残りに帰着させ、" );
+  CERR( "切り上げ商の衝突の寄与を加算しましょう。" );
+  CERR( "\\Mathematics\\Combinatorial\\Combination\\Weighted" );
 }
 
 AC( CountingArrayInverseImage )
@@ -5188,18 +5239,30 @@ AC( DecisionContinuingGame )
   if( reply == "y" ){
     CERR( "グランディ数や必勝状態判定は再帰で計算しましょう" );
   } else {
-    ASK_YES_NO( "状態数が少ない場合は状態遷移の全探策が自動化できそうですか？" );
+    ASK_YES_NO( "グラフ上で交互に未到達点へ移動するゲームですか？" );
     if( reply == "y" ){
-      CERR( "整礎構造を探して順序数の小さい順に実験をし、" );
-      CERR( "OEISを用いてグランディ数や必勝状態判定を推測しましょう。" );
-      CERR( "\\Mathematics\\Game" );
-      CERR( "https://oeis.org/?language=japanese" );
+      ASK_YES_NO( "グリッドグラフですか？" );
+      if( reply == "y" ){
+        CERR( "数手の考察で勝敗が決まる可能性があるので、まずは小さいケースを" );
+        CERR( "考察しましょう。" );
+      }
+      CERR( "頂点数が少なかったり、未到達点への辺の本数がほとんどの局面で１本以下である" );
+      CERR( "場合は到達点をbool値配列で管理してそれを参照する再帰関数を用いた" );
+      CERR( "深さ優先探索で勝敗を決定しましょう。" );
     } else {
-      CERR( "手計算での実験だと考察漏れが生じやすいのでグランディ数や必勝状態判定を" );
-      CERR( "以外の考察を優先しましょう。" );
+      ASK_YES_NO( "状態数が少ない場合は状態遷移の全探策が自動化できそうですか？" );
+      if( reply == "y" ){
+        CERR( "整礎構造を探して順序数の小さい順に実験をし、" );
+        CERR( "OEISを用いてグランディ数や必勝状態判定を推測しましょう。" );
+        CERR( "\\Mathematics\\Game" );
+        CERR( "https://oeis.org/?language=japanese" );
+      } else {
+        CERR( "手計算での実験だと考察漏れが生じやすいのでグランディ数や必勝状態判定" );
+        CERR( "以外の考察を優先しましょう。" );
+      }
     }
   }
-  CERR( "良い不変量を探し、不変量を変えないような応酬が可能な" );
+  CERR( "まずは良い不変量を探し、不変量を変えないような応酬が可能な" );
   CERR( "操作を無視することで不変量の推移ゲームに帰着させましょう。" );
   ASK_NUMBER(
              "状態がモノイドをなし状態に値を加算するゲーム" ,
@@ -5496,6 +5559,9 @@ AC( DecisionCoincidence )
   CERR( "- 配列の並び換えによる一致判定は" );
   CERR( "  - 各前処理O(長さlog長さ)が間に合いそうならばソートからの文字列一致判定に帰着" );
   CERR( "  - 各前処理O(長さlog文字種類数)が間に合いそうならば多重集合の一致判定に帰着" );
+  CERR( "  - 並び換えに制限がある場合は小さいケースで制限がない場合に一致する文字列を" );
+  CERR( "    全探策しBFSで同値類に分け、辞書順最小の元を代表元に選ぶ実験を行い" );
+  CERR( "    不変量の推定" );
   CERR( "- グラフの同型性判定は十分多くの不変量（例えば|V|+|E|個くらい）を" );
   CERR( "  GNNで畳み込み" );
   CERR( "  - 同型の構成は畳み込んだ頂点の不変量をソートして最小要素を対応させ、" );
