@@ -47,7 +47,7 @@
   //   vector<Pair<T,weight_type>> a{};
   //   if( k + 1 < K ){
   //     a <<= {T{i,k+1},0};
-  //   } else {
+  //   }
   //   RUN( e[i] , [j,w] ){
   //     if( k + 1 < K && ){
   //       a <<= {T{j,k+1},w};

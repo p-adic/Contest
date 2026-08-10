@@ -21,13 +21,14 @@
   // /* ó‘Ô‚ğ1ŸŒ³•ª’Ç‰Á */
   // using T = T2<int>;
   // CIN( int , K );
+  // // int K = 2;
   // SET_HW( N , K );
   // auto edge = [&]( const T& v ){
   //   auto& [i,k] = v;
   //   vector<T> a{};
   //   if( k + 1 < K ){
   //     a <<= {i,k+1};
-  //   } else {
+  //   }
   //   RUN( e[i] , j ){
   //     if( k + 1 < K && ){
   //       a <<= {j,k+1};
