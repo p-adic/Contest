@@ -1380,9 +1380,18 @@ AC( MinimisationSolvingMazeBoundedChoice )
   } else {
     ASK_YES_NO( "C=1かつ一終点ですか？" );
     if( reply == "y" ){
-      CERR( "(V,E_0)に対し始点と終点からの一始点多終点最短経路問題を解き、" );
-      CERR( "各2点間をE_1で結んだ時の最短経路を2重ループやそのデータ構造高速化で" );
-      CERR( "計算することで合計使用回数制限のない問題に帰着できます。" );
+      ASK_YES_NO( "E_1にはコストがf(u)+g(v)と表せる辺が{u,v}ごとにありますか？" );
+      CERR( "(V,E_0)に対し始点と終点からの一始点多終点最短経路長d0,d1を求め、" );
+      if( reply == "y" ){
+        CERR( "min_{u,v} d0[u] + f(u) + g(v) + d1[v]" );
+        CERR( "= ( min_u d0[u] + f(u) ) + ( min_v g(v) + d1[v] )" );
+        CERR( "を計算しましょう。" );
+      } else {
+        CERR( "各頂点u,vをE_1のみで結んだ時の最短経路長d[u][v]を2重ループやその" );
+        CERR( "データ構造高速化で計算し、" );
+        CERR( "min_{u,v} d0[u] + d[u][v] + d1[v]" );
+        CERR( "を計算しましょう。" );
+      }
       CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdges );
     } else {
       CERR( "(V,E_0)に対し多始点多終点最短経路問題を解き、各2点間を１回だけE_1で" );
@@ -1498,6 +1507,29 @@ AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotentNonNegative )
 
 AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
 {
+  ASK_YES_NO( "コストがf(u)+g(v)と表せる辺が{u,v}ごとにありますか？" );
+  if( reply == "y" ){
+    CERR( "その辺を除去したグラフGを考えます。" );
+    CERR( "Gに超頂点pを追加し、各頂点uに対し重さf(u)の有向辺u->pと重さg(u)の有向辺p->u" );
+    CERR( "を追加して辺数の少ない最短経路問題に帰着させましょう。" );
+  }
+  ASK_YES_NO( "操作前後で不変な値（総和や白黒の個数差mod2など）がありますか？" );
+  if( reply == "y" ){
+    CERR( "操作を何らかの零化問題に翻訳しましょう。" );
+    CERR( "- なるべくコストを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
+    CERR( "  よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着" );
+    CERR( "- 例えば経路を摂動する方法であってコストが大きくならないものを特定し、" );
+    CERR( "  摂動可能でない経路のみに絞ることでEを削減" );
+    CERR( "を検討しましょう。" );
+  }
+  ASK_YES_NO( "半順序集合上の操作ですか？" );
+  if( reply == "y" ){
+    CERR( "到達可能領域Aの形状から最小コストの上界を計算" );
+    CERR( "- 各p in Aに対しpの始切片がAに含まれるならば、最小コストの上界として" );
+    CERR( "  終点の上界に登ってから降りる経路のコストを計算" );
+    CERR( "- 最小コストの上界が実際に最小であるかを、損をしない変形などで確認" );
+    CERR( "を検討しましょう。" );
+  }
   CERR( "- 各操作をデータ構造に翻訳することでシンプルな最小化問題に帰着" );
   CERR( "  - 区間加算ならば、階差数列の２点加算に翻訳" );
   CERR( "  - 部分木の白黒反転ならば、木上の階差数列の１点更新に翻訳" );
@@ -1510,17 +1542,7 @@ AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
   CERR( "    どの成分を操作するかに対応する部分集合の探索問題。" );
   CERR( "  - 例えば区間選択の代わりに始切片選択のみで済むならば、" );
   CERR( "    どの始切片を操作するかに対応する部分集合の探索問題。" );
-  CERR( "- 操作前後で不変な値（総和や白黒の個数差mod2など）があれば、" );
-  CERR( "  操作を何らかの零化問題に翻訳。" );
-  CERR( "  - なるべくコストを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
-  CERR( "    よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着" );
-  CERR( "  - 例えば経路を摂動する方法であってコストが大きくならないものを特定し、" );
-  CERR( "    摂動可能でない経路のみに絞ることでEを削減" );
-  CERR( "- 半順序集合上の操作ならば、到達可能領域Aの形状から最小コストの上界を計算" );
-  CERR( "  - 各p in Aに対しpの始切片がAに含まれるならば、最小コストの上界として" );
-  CERR( "    終点の上界に登ってから降りる経路のコストを計算" );
-  CERR( "  - 最小コストの上界が実際に最小であるかを、損をしない変形などで確認" );
-  CERR( "検討しましょう。" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( NearestNeighbour )
@@ -1807,7 +1829,7 @@ AC( KnapsackInterval )
     CERR( "尺取り法で区間を伸ばし両端の更新値を用いて最大値を管理しましょう。" );
     CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
   } else if( num == num_temp++ ){
-    CALL_AC( MaximisationIntervalSum ):
+    CALL_AC( MaximisationIntervalSum );
   } else if( num == num_temp++ ){
     CALL_AC( KnapsackIntervalSumAbsoluteSum );
   }
@@ -4808,20 +4830,29 @@ AC( QueryTwoAryFunction )
 
 AC( QueryTimeSeriesChange )
 {
-  CERR( "時系列更新が配列の一点更新で与えられる場合は更新イベントがO(Q)個しかないので、" );
-  CERR( "各成分ごとに変化時刻で区切った区間をセグメント木の要領で管理することで" );
-  CERR( "O(Q)個のノードに合計O((N+Q)log Q)個の区間を分割統治することが可能です。" );
+  ASK_YES_NO( "時系列更新が配列の一点代入更新で与えられますか？" );
+  if( reply == "y" ){
+    CERR( "セグメント木の要領で時刻の区間O(Q log Q)個を木Tのノードに管理します。" );
+    CERR( "各iごとにA[i]の変化時刻で[0,Q)を区間に区切り、各区間IごとにIに含まれる" );
+    CERR( "Tの極大ノードそれぞれに{i,A[i]のIでの値}を格納します。" );
+    CERR( "これで合計O((N+Q)log Q)個のデータが格納されます。" );
+    CERR( "すると時刻qを固定するごとに、qにおけるAの値が{q}を含むTのノードO(log Q)個に" );
+    CERR( "分割されて管理されています。各ノードごとに取得クエリを分割統治しましょう。" );
+  }
   ASK_NUMBER(
 	     "maxによる時系列更新" ,
 	     "加算による時系列更新" ,
-	     "差の絶対値による時系列更新"
+	     "差の絶対値による時系列更新" ,
+             "swapによる時系列更新"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChangeMax );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChangeAddition );
-  } else {
+  } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChangeDifference );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryTimeSeriesChangeSwap );
   }
 }
 
@@ -4880,6 +4911,17 @@ AC( QueryTimeSeriesChangeDifference )
   CERR( "(A[i],i)のイベントではB[i]とC[i]を-1倍に置き換えることで更新し、" );
   CERR( "(t[q],q)のイベントではB[i]+C[i]*tの区間和をq個目のクエリへの回答とする、" );
   CERR( "というイベントソートで処理しましょう。" );
+}
+
+AC( QueryTimeSeriesChangeSwap )
+{
+  CERR( "swapによる更新は右からの互換の合成に翻訳されます。" );
+  CERR( "配列を初期配列Aと順列Pの合成に分けて管理しPの時系列更新に帰着します。" );
+  CERR( "合成する互換をs_0,s_1,...として、s_qが周期pを持つならば合成s_0...s_{Q-1}は" );
+  CERR( "(s_0...s_{P-1})^{Q/p} s_0...s_{Q%p-1}となるので、x成分は" );
+  CERR( "A[(s_0...s_{P-1})^{Q/p}[s_0...s_{Q%p-1}[x]]]と取得できます。" );
+  CERR( "Q%p-1昇順に取得クエリをソートすればs_0...s_{Q%p-1}は差分計算で、" );
+  CERR( "(s_0...s_{P-1})^{Q/p}はダブリングで計算できます。" );
 }
 
 AC( QueryGraph )

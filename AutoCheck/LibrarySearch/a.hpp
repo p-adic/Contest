@@ -226,6 +226,7 @@ AC( QueryTimeSeriesTotalChangeMax );
 AC( QueryTimeSeriesRangeChangeMax );
 AC( QueryTimeSeriesChangeAddition );
 AC( QueryTimeSeriesChangeDifference );
+AC( QueryTimeSeriesChangeSwap );
 AC( QueryGraph );
 AC( QueryTree );
 AC( QueryGrid );
