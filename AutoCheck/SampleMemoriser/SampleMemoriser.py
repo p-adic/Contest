@@ -1,7 +1,3 @@
-#wait = True
-wait = False
-contest_num = "534"
-
 import datetime
 now = datetime.datetime.now()
 year = now.year
@@ -16,31 +12,39 @@ two_byte_message.close()
 import requests
 from bs4 import BeautifulSoup
 contest_list_page_url = "https://yukicoder.me/contests"
-if wait:
-	contest_list_page = BeautifulSoup(requests.get(contest_list_page_url).text,'html.parser')
-	for a_tag in contest_list_page.find_all("a"):
-		temp = str(a_tag)
-		if temp[:19] != "<a href=\"/contests/":continue
-		temp = temp.split('"')[1].split('/')[-1]
-		if temp == "calendar":continue
-		contest_num = temp
-		break
-	for td_tag in contest_list_page.find_all("td"):
-		temp = td_tag.text.split()
-		if len(temp) < 1 or temp[0] != date:continue
-		assert len(temp) == 5 , temp
-		temp = temp[2].split(':')
-		assert len(temp) == 3
-		start_hour = int(temp[0])
-		start_minute = int(temp[1])
-		start_second = int(temp[2][:2])
-		break
-	contest_num_log = open("contest_num_log.txt",'w')
-	contest_num_log.write(contest_num + "\n")
-	contest_num_log.close()
-	print(message_list[0],contest_num,message_list[1],str(start_hour),message_list[2],str(start_minute),message_list[3],str(start_second),message_list[4])
-else:
-	assert(contest_num is not None)
+contest_list_page = BeautifulSoup(requests.get(contest_list_page_url).text,'html.parser')
+for a_tag in contest_list_page.find_all("a"):
+	temp = str(a_tag)
+	if temp[:19] != "<a href=\"/contests/":continue
+	temp = temp.split('"')[1].split('/')[-1]
+	if temp == "calendar":continue
+	contest_num = temp
+	break
+for td_tag in contest_list_page.find_all("td"):
+	temp = td_tag.text.split()
+	if len(temp) < 1 or temp[0] != date:continue
+	assert len(temp) == 5 , temp
+	temp = temp[2].split(':')
+	assert len(temp) == 3
+	start_hour = int(temp[0])
+	start_minute = int(temp[1])
+	start_second = int(temp[2][:2])
+	break
+print(message_list[0],contest_num,message_list[1],str(start_hour),message_list[2],str(start_minute),message_list[3],str(start_second),message_list[4])
+
+print(message_list[0],contest_num,message_list[6])
+reply=input()
+while reply!="y" and reply!="n":
+	print(message_list[7])
+	reply=input()
+wait=reply=="y"
+if not wait:
+	print(message_list[8])
+	contest_num=input()
+
+contest_num_log = open("contest_num_log.txt",'w')
+contest_num_log.write(contest_num + "\n")
+contest_num_log.close()
 
 init = True
 while wait:
@@ -49,9 +53,9 @@ while wait:
 	elif init:
 		init = False
 		print(message_list[5],str(now.hour),message_list[2],str(now.minute),message_list[3],str(now.second),message_list[4])
-		print(message_list[6],str(start_hour),message_list[2],str(start_minute),message_list[3],str(start_second + 5),message_list[4])
+		print(message_list[9],str(start_hour),message_list[2],str(start_minute),message_list[3],str(start_second + 5),message_list[4])
 
-print("https://yukicoder.me/contests/" + contest_num,message_list[6])
+print("https://yukicoder.me/contests/" + contest_num,message_list[9])
 contest_table_page_url = contest_list_page_url + "/" + contest_num + "/table"
 contest_table_page = BeautifulSoup(requests.get(contest_table_page_url).text,'html.parser')
 problem_order_list = []
@@ -75,19 +79,19 @@ for a_tag in contest_table_page.find_all("a"):
 		output_file = open("Sample/" + problem_order + "/output/sample" + str(count)[1:] + ".txt",'w')
 		registered &= len(temp) == 3
 		if len(temp) < 3:
-			print(problem_order,message_list[7],str(count%100),message_list[8])
-			register_err.write(problem_order+message_list[7]+str(count%100)+message_list[8]+"\n")
+			print(problem_order,message_list[10],str(count%100),message_list[11])
+			register_err.write(problem_order+message_list[10]+str(count%100)+message_list[11]+"\n")
 		else:
 			if len(temp) != 3:
-				print(problem_order,message_list[7],str(count%100),message_list[9])
-				register_err.write(problem_order+message_list[7]+str(count%100)+message_list[9]+"\n")
+				print(problem_order,message_list[10],str(count%100),message_list[12])
+				register_err.write(problem_order+message_list[10]+str(count%100)+message_list[12]+"\n")
 			for i,file in zip([1,2],[input_file,output_file]):
 				temp[i] = temp[i].split("</pre>")[0]
 				temp[i] = temp[i].split("<code>")[-1]
 				temp[i] = temp[i].split("</code>")[0]
 				for br in ["<br>","</br>","<br/>"]:temp[i] = "\n".join(temp[i].split(br))
 				if temp[i] and temp[i][0] == '\n':temp[i] = temp[i][1:]
-				if temp[i][-1] != '\n':temp[i] += '\n'
+				if temp[i] and temp[i][-1] != '\n':temp[i] += '\n'
 				file.write(temp[i])
 				file.close()
 		count_list += [str(count)[1:]+'\n']
@@ -96,15 +100,15 @@ for a_tag in contest_table_page.find_all("a"):
 	for valid_count in count_list:count_file.write(valid_count)
 	count_file.close()
 	if registered:register_log.write(problem_order+'\n')
-	print(problem_order,message_list[10],len(count_list),message_list[11])
+	print(problem_order,message_list[13],len(count_list),message_list[14])
 problem_order_file = open("Sample/problem_order.txt",'w')
 problem_order_file.write(str(len(problem_order_list)) + '\n')
 for valid_problem_order in problem_order_list:problem_order_file.write(valid_problem_order)
 problem_order_file.close()
 register_log.close()
 register_err.close()
-print(message_list[12])
+print(message_list[15])
 while True:
-	print(message_list[13])
+	print(message_list[16])
 	finish = input()
 	if finish == "y":break
