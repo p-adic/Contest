@@ -2578,11 +2578,11 @@ AC( MaximisationStringMatching )
   CERR( "  - 前または後ろから順に場合分けをしてO(N)で処理できるか" );
   CERR( "  - 可能な代入方法を絞り込んでO(N)種類に落せるか" );
   CERR( "- 比較回数が多い場合、ローリングハッシュ" );
-  CERR( "  \\Utility\\String\\RollingHash" );
+  CERR( "  \\Mathematics\\Utility\\String\\RollingHash" );
   CERR( "- 部分回文の最長化をする場合、尺取り法による前計算" );
-  CERR( "  \\Utility\\String\\Palindrome" );
+  CERR( "  \\Mathematics\\Utility\\String\\Palindrome" );
   CERR( "- マッチングする部分文字列の最長化をする場合、Zアルゴリズム" );
-  CERR( "  \\Utility\\String\\Z-Algorithm" );
+  CERR( "  \\Mathematics\\Utility\\String\\Z-Algorithm" );
   CERR( "- マッチングする文字数の最大化をする場合、文字の種類分の{0,1}値配列に" );
   CERR( "  分けて内積の最大化（添え字を反転させて適当な法での畳み込み）" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod" );
@@ -3066,8 +3066,8 @@ AC( Counting )
     CALL_AC( QueryCounting );
   } else {
     ASK_NUMBER(
-               "数（配列の添字）の数え上げ問題" ,
-               "組（行列の添字）の数え上げ問題" ,
+               "数や配列の添字の数え上げ問題" ,
+               "組や行列の添字の数え上げ問題" ,
                "配列の数え上げ問題" ,
                "順列の数え上げ問題" ,
                "文字列の数え上げ問題" ,
@@ -3138,10 +3138,10 @@ AC( Counting )
 
 AC( CountingNumber )
 {
-  CERR( "何らかの条件を満たす数の数え上げ問題を考えます。" );
   ASK_NUMBER(
-	     "各桁の数字に関する条件" ,
-	     "それ以外の固定長変数関数の値に関する条件" ,
+	     "数の各桁の数字に関する条件" ,
+	     "それ以外の固定長変数関数の代入値に関する条件" ,
+	     "文字列の配列の添字に関する条件" ,
 	     "その他の条件"
              );
   if( num == num_temp++ ){
@@ -3159,6 +3159,12 @@ AC( CountingNumber )
     }
   } else if( num == num_temp++ ){
     CALL_AC( CountingExplicitExpression );
+  } else if( num == num_temp++ ){
+    CERR( "- 連続部分文字列の一致に関する条件はローリングハッシュの頻度表" );
+    CERR( "  \\Mathematics\\Utility\\String\\RollingHash" );
+    CERR( "- 接頭辞／接尾辞に関する条件はTrie木" );
+    CERR( "  \\Mathematics\\SetTheory\\Trie" );
+    CERR( "を検討しましょう。" );
   } else {
     CERR( "条件P(n)を満たすN以下の非負整数nの数え上げは、関数f(n) = P(n)?1:0などの" );
     CERR( "総和の計算問題に帰着されます。" );
@@ -3683,11 +3689,11 @@ AC( CountingMatchingSubString )
   CERR( "  \\Utility\\String\\Z-Algorithm" );
   CERR( "- 回文である部分文字列の数え上げ問題は" );
   CERR( "  - O(N^2)が通りそうならば、尺取り法による前計算" );
-  CERR( "    \\Utility\\String\\Palindrome" );
+  CERR( "    \\Mathematics\\Utility\\String\\Palindrome" );
   CERR( "  - O(N^2)が通らなさそうならば、Manacherのアルゴリズムや" );
   CERR( "    ローリングハッシュで前計算" );
   CERR( "    https://snuke.hatenablog.com/entry/2014/12/02/235837" );
-  CERR( "    \\Utility\\String\\RollingHash" );
+  CERR( "    \\Mathematics\\Utility\\String\\RollingHash" );
   CERR( "を検討しましょう。" );
 }
 
@@ -4775,44 +4781,58 @@ AC( QuerySubsequenceSum )
   
 AC( QueryString )
 {
-  CERR( "文字列の一点更新（一文字更新）／結合／比較はローリングハッシュ" );
-  CERR( "\\Utility\\String\\RollingHash" );
-  CERR( "でコード化し、追加で更新クエリ／取得クエリを" );
-  CERR( "- 左端からの連続部分文字列も管理する場合の一点更新は文字列の累積コードを" );
-  CERR( "  区間加算BITに乗せて終切片加算と始切片和取得（O(log N)/O(log N)）で処理" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\IntervalAdd" );
-  CERR( "- 連続部分文字列も管理する場合、" );
-  CERR( "  - ハッシュと公比の冪乗は可換群" );
-  CERR( "  - コードは非可換群" );
-  CERR( "  を用いることに注意して" );
-  CERR( "  - 一点更新のみが必要ならば" );
-  CERR( "    - 文字列の各文字のハッシュと公比の冪乗の積を" );
-  CERR( "      - BITに乗せて一点更新と区間和取得（O(log N)/O(log N)）" );
-  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT" );
-  CERR( "      - セグメント木に乗せて一点更新と区間和取得（O(log N)/O(log N)）" );
-  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
-  CERR( "      - 平方分割に乗せて一点更新と区間和取得（O(1)/O(N^{1/2})）" );
-  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition" );
-  CERR( "      で処理" );
-  CERR( "    - 文字列の各文字のコードを" );
-  CERR( "      - セグメント木に乗せて一点更新と区間積取得（O(log N)/O(log N)）" );
-  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
-  CERR( "      - モノイド平方分割に乗せて一点更新と区間積取得（O(1)/O(N^{1/2})）" );
-  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Monoid" );
-  CERR( "      で処理" );
-  CERR( "  - 区間代入更新も必要ならば文字列の各文字のコードを" );
-  CERR( "    - 遅延セグメント木に乗せて区間代入更新と区間積取得（O(log N)/O(log N)）" );
-  CERR( "    - 区間代入モノイド平方分割に乗せて区間代入更新と区間積取得（O(N^{1/2})/O(N^{1/2})）" );
-  CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Monoid\\IntervalSet" );
-  CERR( "    で処理" );
-  CERR( "  - 区間シフト（a->b->c->）更新も必要ならば" );
-  CERR( "    - 1の原始26乗根を持つ法でローリングハッシュ" );
-  CERR( "      \\Utility\\String\\RollingHash\\Shift\\Bimodule" );
-  CERR( "    - 比較したい２つの文字列の各成分のずれ情報を1<<26未満の非負整数のbit積で管理" );
-  CERR( "    をした上で区間作用と区間積取得" );
-  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\LazyEvaluation" );
-  CERR( "    で処理" );
-  CERR( "を検討しましょう。" );
+  ASK_NUMBER(
+             "左端からの連続部分文字列の比較" ,
+             "連続部分文字列の比較" ,
+             "連続部分文字列の最長共通接頭辞の取得"
+             );
+  if( num <= 1 ){
+    CERR( "ローリングハッシュ" );
+    CERR( "\\Mathematics\\Utility\\String\\RollingHash" );
+    CERR( "でコード化しましょう。" );
+    if( num == num_temp++ ){
+      CERR( "文字列の累積コードを区間加算BITに乗せて終切片加算と始切片和取得" );
+      CERR( "（O(log N)/O(log N)）で処理" );
+      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\IntervalAdd" );
+    } else if( num == num_temp++ ){
+      CERR( "- ハッシュと公比の冪乗は可換群" );
+      CERR( "- コードは非可換群" );
+      CERR( "を用いることに注意して" );
+      CERR( "- 一点更新のみが必要ならば" );
+      CERR( "  - 文字列の各文字のハッシュと公比の冪乗の積を" );
+      CERR( "    - BITに乗せて一点更新と区間和取得（O(log N)/O(log N)）" );
+      CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT" );
+      CERR( "    - セグメント木に乗せて一点更新と区間和取得（O(log N)/O(log N)）" );
+      CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
+      CERR( "    - 平方分割に乗せて一点更新と区間和取得（O(1)/O(N^{1/2})）" );
+      CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition" );
+      CERR( "    で処理" );
+      CERR( "  - 文字列の各文字のコードを" );
+      CERR( "    - セグメント木に乗せて一点更新と区間積取得（O(log N)/O(log N)）" );
+      CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
+      CERR( "    - モノイド平方分割に乗せて一点更新と区間積取得（O(1)/O(N^{1/2})）" );
+      CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Monoid" );
+      CERR( "    で処理" );
+      CERR( "- 区間代入更新も必要ならば文字列の各文字のコードを" );
+      CERR( "  - 遅延セグメント木に乗せて区間代入更新と区間積取得（O(log N)/O(log N)）" );
+      CERR( "  - 区間代入モノイド平方分割に乗せて区間代入更新と区間積取得（O(N^{1/2})/O(N^{1/2})）" );
+      CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Monoid\\IntervalSet" );
+      CERR( "  で処理" );
+      CERR( "- 区間シフト（a->b->c->）更新も必要ならば" );
+      CERR( "  - 1の原始26乗根を持つ法でローリングハッシュ" );
+      CERR( "    \\Mathematics\\Utility\\String\\RollingHash\\Shift\\Bimodule" );
+      CERR( "  - 比較したい２つの文字列の各成分のずれ情報を1<<26未満の非負整数のbit積で管理" );
+      CERR( "  をした上で区間作用と区間積取得" );
+      CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\LazyEvaluation" );
+      CERR( "  で処理" );
+    }
+    CERR( "を検討しましょう。" );
+  } else {
+    CERR( "同じ位置の文字同士の" );
+    CERR( "- 比較のbool値" );
+    CERR( "- 差のint値" );
+    CERR( "の配列をデータ構造で管理しましょう。" );
+  }
 }
 
 AC( QueryTwoAryFunction )
@@ -5555,12 +5575,15 @@ AC( DecisionChoosability )
 {
   ASK_NUMBER(
              "遷移により点が目的地に到達できるかの判定" ,
-             "選択により配列／文字列が条件を満たせるかの判定"
+             "操作の選択により配列／文字列が条件を満たせるかの判定" ,
+             "条件を満たす成分を指定個数選択できるかの判定"
              );
   if( num == num_temp++ ){
     CALL_AC( DecisionAccessibility );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionRewritingChoosability );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionSatisfactoryChoosability );
   }
 }
 
@@ -5569,6 +5592,12 @@ AC( DecisionRewritingChoosability )
   CERR( "配列／文字列の長さをNとし、" );
   CERR( "dp[i] = i成分目までで打ち切った場合の可否を判定するために必要なデータ" );
   CERR( "を管理する動的計画法を検討しましょう。" );
+}
+
+AC( DecisionSatisfactoryChoosability )
+{
+  CERR( "条件を満たす成分数を数え上げましょう。" );
+  CALL_AC( CountingNumber );
 }
 
 AC( DecisionSatisfiability )
@@ -5593,11 +5622,11 @@ AC( DecisionSatisfiability )
 AC( DecisionCoincidence )
 {
   CERR( "- 文字列の一致判定はローリングハッシュ" );
-  CERR( "  \\Utility\\String\\RollingHash" );
+  CERR( "  \\Mathematics\\Utility\\String\\RollingHash" );
   CERR( "- 部分文字列との一致判定はZアルゴリズム" );
-  CERR( "  \\Utility\\String\\Z-Algorithm" );
+  CERR( "  \\Mathematics\\Utility\\String\\Z-Algorithm" );
   CERR( "- 集合の一致判定はゾブリストハッシュ" );
-  CERR( "  \\Utility\\Set\\ZobristHash" );
+  CERR( "  \\Mathematics\\Utility\\Set\\ZobristHash" );
   CERR( "- 多重集合の一致判定は重複度とpairにして集合の一致判定に帰着" );
   CERR( "- 配列の並び換えによる一致判定は" );
   CERR( "  - 各前処理O(長さlog長さ)が間に合いそうならばソートからの文字列一致判定に帰着" );

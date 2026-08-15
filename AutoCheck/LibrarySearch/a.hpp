@@ -253,6 +253,7 @@ AC( DecisionSatisfiability );
 AC( DecisionExistence );
 AC( DecisionChoosability );
 AC( DecisionRewritingChoosability );
+AC( DecisionSatisfactoryChoosability );
 AC( DecisionCoincidence );
 AC( DecisionPresentability );
 AC( Construction );
