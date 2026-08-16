@@ -13,6 +13,7 @@ AC( ExplicitExpressionOneArrayEntrySum );
 AC( ExplicitExpressionInnerProduct );
 AC( ExplicitExpressionOneArraySubArraySum );
 AC( ExplicitExpressionArrayCombinatorial );
+AC( ExplicitExpressionDigitConditionSum );
 AC( ExplicitExpressionDoubleSum );
 AC( ExplicitExpressionDoubleSumQuotient );
 AC( ExplicitExpressionDoubleSumResidue );

@@ -93,7 +93,7 @@ AC( ExplicitExpressionSum )
   if( reply == "y" ){
     CERR( "長さや回数を1の和として表し、多重総和に帰着させましょう。" );
   }
-  ASK_YES_NO( "総和や総乗を取る項数は指数オーダーですか？" );
+  ASK_YES_NO( "総和や総乗を取る項数は何かの部分列全体などですか？" );
   if( reply == "y" ){
     ASK_YES_NO( "与えられた配列の部分列と一致する配列全体をわたるローリングハッシュの総和ですか？" );
     if( reply == "y" ){
@@ -132,6 +132,7 @@ AC( ExplicitExpressionArraySum )
                "２つの配列の内積の計算問題" ,
                "１つの配列の部分列を受け取る関数の総和の計算問題" ,
                "配列を受け取る関数の配列をわたる総和の計算問題" ,
+               "連続するD桁のいずれかが条件を満たす整数であってi以上の最小値f(i)の総和の計算問題"
                );
     if( num == num_temp++ ){
       CALL_AC( ExplicitExpressionQuotientSum );
@@ -145,6 +146,8 @@ AC( ExplicitExpressionArraySum )
       CALL_AC( ExplicitExpressionOneArraySubArraySum );
     } else if( num == num_temp++ ){
       CALL_AC( ExplicitExpressionArrayCombinatorial );
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionDigitConditionSum );
     }
   }
 }
@@ -264,6 +267,13 @@ AC( ExplicitExpressionArrayCombinatorial )
   CERR( "  https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
   CERR( "  https://ladywingclover.hatenablog.com/entry/2022/11/24/084524" );
   CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionDigitConditionSum )
+{
+  CERR( "1の位を含むD桁が条件を満たすか否かで場合分けして" );
+  CERR( "10で割った商に帰着させましょう。" );
+  CERR( "\\Mathematics\\Combinatorial\\DigitCondition" );
 }
 
 AC( ExplicitExpressionDoubleSum )
@@ -3145,15 +3155,21 @@ AC( CountingNumber )
 	     "その他の条件"
              );
   if( num == num_temp++ ){
-    ASK_YES_NO( "各桁の上限が与えられた非負整数の数え上げ問題ですか？" );
-    if( reply == "y" ){
+    ASK_NUMBER(
+               "各桁の上限が与えられた非負整数の数え上げ問題" ,
+               "いずれかの連続するD桁が与えられた条件を満たす非負整数の数え上げ問題" ,
+               "その他の問題"
+               );
+    if( num == num_temp++ ){
       CERR( "d桁目がb_d以下であるN以下の非負整数の数え上げ問題は" );
       CERR( "そのような最大の整数nを階乗進法のように( b_d + 1 )たちを基数として" );
       CERR( "解釈して得られる非負整数+1（0の寄与）に他なりません。" );
       CERR( "特にb_dが定数bであるならば、nをb+1進法で解釈して得られる非負整数+1" );
       CERR( "に他なりません。" );
       CERR( "\\Mathematics\\Combinatorial\\DigitBound" );
-    } else {
+    } else if( num == num_temp++ ){
+      CALL_AC( ExplicitExpressionDigitConditionSum );
+    } else if( num == num_temp++ ){
       CERR( "数を十進法などで文字列とみなします。" );
       CALL_AC( CountingArray );
     }
