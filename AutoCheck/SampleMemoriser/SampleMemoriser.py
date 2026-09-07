@@ -1,3 +1,4 @@
+#python -m pdb SampleMemoriser.py
 import datetime
 now = datetime.datetime.now()
 year = now.year
@@ -20,24 +21,27 @@ for a_tag in contest_list_page.find_all("a"):
 	if temp == "calendar":continue
 	contest_num = temp
 	break
+start_hour = -1
 for td_tag in contest_list_page.find_all("td"):
 	temp = td_tag.text.split()
-	if len(temp) < 1 or temp[0] != date:continue
-	assert len(temp) == 5 , temp
+	if len(temp) != 5 or temp[0] != date:continue
 	temp = temp[2].split(':')
 	assert len(temp) == 3
 	start_hour = int(temp[0])
 	start_minute = int(temp[1])
 	start_second = int(temp[2][:2])
 	break
-print(message_list[0],contest_num,message_list[1],str(start_hour),message_list[2],str(start_minute),message_list[3],str(start_second),message_list[4])
+if start_hour == -1:
+	wait = False
+else:
+	print(message_list[0],contest_num,message_list[1],str(start_hour),message_list[2],str(start_minute),message_list[3],str(start_second),message_list[4])
 
-print(message_list[0],contest_num,message_list[6])
-reply=input()
-while reply!="y" and reply!="n":
-	print(message_list[7])
+	print(message_list[0],contest_num,message_list[6])
 	reply=input()
-wait=reply=="y"
+	while reply!="y" and reply!="n":
+		print(message_list[7])
+		reply=input()
+	wait=reply=="y"
 if not wait:
 	print(message_list[8])
 	contest_num=input()
