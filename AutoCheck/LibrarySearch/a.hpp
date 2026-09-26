@@ -64,6 +64,7 @@ AC( MaximisationFunctionOnOneArray );
 AC( SortingArray );
 AC( MaximisationFunctionOnMultipleArray );
 AC( MaximisationFunctionOnTwoArray );
+AC( MaximisationMultipleArrayFunction );
 AC( Knapsack );
 AC( KnapsackInitialSegment );
 AC( KnapsackInitialSegmentSingleKnapsack );

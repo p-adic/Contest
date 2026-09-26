@@ -1754,7 +1754,7 @@ AC( MaximisationFunctionOnMultipleArray )
     CERR( "Rを決め打つ二分探索でA_0 - A_1 * Rの区間和の最大値を求める" );
     CERR( "問題に帰着させましょう。" );
   } else if( num == num_temp++ ){
-    CERR( "A_0,A_1,...を結合して１つの配列とみなします。" );
+    CALL_AC( MaximisationMultipleArrayFunction );
     CALL_AC( MaximisationFunctionOnOneArray );
   }
 }
@@ -1767,6 +1767,22 @@ AC( MaximisationFunctionOnTwoArray )
   CERR( "- Sの要素数がKで固定ならば、A_0[i]-A_1[i]を大きい順にK個" );
   CERR( "  足したものとA_1の総和の和" );
   CERR( "が求める最大値です" );
+}
+
+AC( MaximisationMultipleArrayFunction )
+{
+  ASK_YES_NO( "それらの配列に操作を行ってから最大化しますか？" );
+  CERR( "それらの配列を何らかの方法で１つの配列につなげ、１つの配列に" );
+  CERR( "帰着させましょう。" );
+  CERR( "- 単純な結合(A_0[0],...,A_0[N-1],A_1[0],...,A_1[M-1],...)" );
+  CERR( "- 長さが同じ場合は交互の挿入(A_0[0],A_1[0],...,A_0[N-1],A_1[N-1],...)" );
+  if( reply == "y" ){
+    CERR( "- 操作結果に部分的にしか依存しない結合方法" );
+    CERR( "  - swap(A_0[i],A_1[i])なら(max(A_0[0],A_1[0]),min(A_0[0],A_1[0]),...)など)" );
+    CERR( "  - A_0[i]--,A_1[i]++なら(A_0[0]+A_1[0],A_0[0]-A_1[0]...)など)" );
+    CERR( "操作不変でない結合をする場合、操作を結合後の１つの列への操作に" );
+    CERR( "翻訳しましょう。" );
+  }
 }
 
 AC( Knapsack )
@@ -2404,18 +2420,31 @@ AC( MaximisationArrayFunctionGeneralOperation )
 
 AC( MaximisationArrayLength )
 {
-  CERR( "配列のサイズをN、配列の各成分の下界の要素数の総和をE、順序集合の要素数をCと置きます。" );
-  CERR( "- 全順序でO(N log_2 N)が間に合いそうならば、条件を満たす部分列の長さの最大値を" );
-  CERR( "  インデックスに持つBITを用いて、それらの部分列の末尾である項を記録" );
-  CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence" );
-  CERR( "- 疎な半順序でO(E log_2 N)が間に合いそうならば、条件を満たす部分列の末尾を" );
-  CERR( "  インデックスに持つ連想配列を用いて、それら部分列の長さの最大値を記録" );
-  CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence\\Subwalk" );
-  CERR( "- O(N + C^2 N^{1/2})が間に合いそうならば、順序集合の各要素c < dに対する" );
-  CERR( "  「始端の値がc、終端の値がd以下である単調増加部分列の長さ」を管理する" );
-  CERR( "  C次上半行列を載せたモノイド平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
-  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "複数の配列A_0,A_1,...それぞれから部分列を選んで長さの和を最大化しますか？" );
+  if( reply == "y" ){
+    CALL_AC( MaximisationMultipleArrayFunction );
+  }
+  CERR( "配列のサイズをN、配列の各成分の下界の要素数の総和をE、順序集合の要素数を" );
+  CERR( "Cと置きます。" );
+  ASK_YES_NO( "排他的な単調増加部分列の長さの和の最大化ですか？" );
+  if( reply == "y" ){
+    CERR( "Greeneの定理" );
+    CERR( "https://mathoverflow.net/questions/124633/generalizations-of-greenes-theorem-for-the-robinson-schensted-correspondence" );
+    CERR( "でRobinsonSchenstedKnuth対応の上位列の長さの和に帰着させましょう。" );
+    CERR( "\\Mathematics\\Combinatorial\\IncreasingSequence\\IncreasingSubsequence\\Disjoint" );
+  } else {
+    CERR( "- 全順序でO(N log_2 N)が間に合いそうならば、条件を満たす部分列の長さの最大値を" );
+    CERR( "  インデックスに持つBITを用いて、それらの部分列の末尾である項を記録" );
+    CERR( "  \\Mathematics\\Combinatorial\\IncreasingSequence\\IncreasingSubsequence" );
+    CERR( "- 疎な半順序でO(E log_2 N)が間に合いそうならば、条件を満たす部分列の末尾を" );
+    CERR( "  インデックスに持つ連想配列を用いて、それら部分列の長さの最大値を記録" );
+    CERR( "  \\Mathematics\\Combinatorial\\IncreasingSequence\\Subwalk" );
+    CERR( "- O(N + C^2 N^{1/2})が間に合いそうならば、順序集合の各要素c < dに対する" );
+    CERR( "  「始端の値がc、終端の値がd以下である単調増加部分列の長さ」を管理する" );
+    CERR( "  C次上半行列を載せたモノイド平方分割" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
+    CERR( "を検討しましょう。" );
+  }
 }
 
 AC( MaximisationFunctionOnAffineSpace )
