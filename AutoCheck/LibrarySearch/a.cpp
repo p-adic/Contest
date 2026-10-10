@@ -1319,7 +1319,7 @@ AC( MinimisationMovingCost )
 	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
 	     "多始点多終点組み分けコスト最小化（完全二部マッチング）問題" ,
 	     "多プレイヤーコスト総和最小化（最小費用流）問題" ,
-	     "最近点問題" ,
+	     "最近点問題（アフィン空間内の点群との距離の最小化問題）" ,
              "経路長mod Bが特定の値になるかの判定問題"
 	     );
   if( num == num_temp++ ){
@@ -1585,20 +1585,52 @@ AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
 
 AC( NearestNeighbour )
 {
-  CERR( "D次元ユークリッド空間内のN点を考えます。" );
-  CERR( "- L^p距離に関する最近点対問題でかつexpected O(N log N)が間に合いそうならば" );
-  CERR( "  kd木や空間を細分する分割統治でマージ時に枝刈り" );
-  CERR( "  https://people.csail.mit.edu/indyk/6.838-old/handouts/lec17.pdf" );
-  CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance\\ANN" );
-  CERR( "- D=1で１点から点群への距離の最小化問題でかつO(log N)が間に合いそうならば" );
-  CERR( "  set上の２分探索" );
-  CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance" );
-  CERR( "- D=1で点群から点群への距離の最小化問題でかつO(N log N)が間に合いそうならば" );
-  CERR( "  ソートして左右から踏査" );
-  CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance" );
-  CERR( "- D=2でx軸上の点群から点群へのL^1距離の最小化問題でかつO(N log N)が" );
-  CERR( "  間に合いそうならばx座標でソートして左右から累積min計算" );
-  CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance\\L1" );
+  ASK_NUMBER(
+             "特定の１点と点群の距離の最小値" ,
+             "不特定の１点と点群の距離の最大値の最小値（１点中心の被覆半径の最小化）" ,
+             "点群と点群の距離の最小値" ,
+             "不特定の点群と点群の距離の最大値の最小値（多点中心の被覆半径の最小化）" ,
+             );
+  if( num < 2 ){
+    CERR( "D次元ユークリッド空間内のN点を考えます。" );
+  } else {
+    CERR( "D次元ユークリッド空間内のN0点とN1点を考えます。" );
+    CERR( "N = max( N0 , N1 )と置きます。" );
+  }
+  if( num == 0 || num == 2 ){
+    CERR( "- L^p距離でかつexpected O(N log N)が間に合いそうならば" );
+    CERR( "  kd木や空間を細分する分割統治でマージ時に枝刈り" );
+    CERR( "  https://people.csail.mit.edu/indyk/6.838-old/handouts/lec17.pdf" );
+    CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance\\ANN" );
+  }
+  if( num == 0 ){
+    CERR( "- D=1でかつO(log N)が間に合いそうならば" );
+    CERR( "  set上の２分探索" );
+    CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance" );
+  }
+  if( num == 1 ){
+    CERR( "- D=1でかつO(N)が間に合いそうならば" );
+    CERR( "  ソートして両端の距離の1/2を計算" );
+    CERR( "- L^∞距離でかつO(ND)が間に合いそうならば" );
+    CERR( "  成分ごとに1次元の問題を解いて最大値を計算" );
+    CERR( "- L^1距離でかつO(ND)が間に合いそうならば" );
+    CERR( "  45度回転しL^∞距離に帰着" );
+  }
+  if( num == 2 ){
+    CERR( "- D=1でかつO(N log N)が間に合いそうならば" );
+    CERR( "  両点群を合わせてソートして左右から踏査" );
+    CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance" );
+    CERR( "- D=2でx軸上の点群から点群へのL^1距離の最小化問題でかつO(N log N)が" );
+    CERR( "  間に合いそうならばx座標でソートして左右から累積min計算" );
+    CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance\\L1" );
+  }
+  if( num == 3 ){
+    CERR( "- D=1でかつO((N1 log N1)+N1^{N0-1})が間に合いそうならば" );
+    CERR( "  被覆される点群の像をソートしてカバー範囲（添字の排他的範囲）を全探索" );
+    CERR( "- N0=2でかつO(2^D N log 半径上界)が間に合いそうならば" );
+    CERR( "  被覆半径dを決め打ち、被覆される点群の各成分の両端を2点のどちらが" );
+    CERR( "  被覆するかの全探索で被覆判定問題を解く二分探索" );
+  }
   CERR( "- ハイブリッド距離ならば距離の変化点で場合分けをして、それぞれに対する" );
   CERR( "  最小化問題に帰着" );
   CERR( "- グラフにより与えられる距離で経路上に（N点の外にあるかもしれない）経由点群" );
@@ -1898,8 +1930,9 @@ AC( KnapsackIntervalSumAbsoluteSum )
 
 AC( KnapsackBoundedIntervalLength )
 {
-  CERR( "Iの各連結成分の長さの上限がLであるとします。選択する項目の価値総和の最大化は" );
-  CERR( "選択しない価値総和の最小化に帰着されるので、N未満の各iに対し、" );
+  CERR( "Iの各連結成分の長さの上限がLであるとします。" );
+  CERR( "選択する項目の価値総和の最大化は選択しない価値総和の最小化に帰着されるので、" );
+  CERR( "N未満の各iに対し、" );
   CERR( "dp[i] = 「[0,i)で選択しない項目の価値総和の最小値」" );
   CERR( "と定め、漸化式" );
   CERR( "dp[i+L] = (min_{j=i}^{i+L-1} dp[j]) + A[i+L]" );
@@ -1908,6 +1941,9 @@ AC( KnapsackBoundedIntervalLength )
   CERR( "  区間min取得" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
   CERR( "- O(N log L)が間に合いそうならば、map<値,個数>による直近L個の管理" );
+  CERR( "- O(N)が間に合いそうならば、スライド最小化" );
+  CERR( "  \\Mathematics\\Combinatorial\\SlidingMinimalisation" );
+  CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\BoundedConnectedComponent" );
   CERR( "で高速化することでiに関する動的計画法を処理しましょう。" );
 }
 
@@ -2811,6 +2847,7 @@ AC( MinimisationOperationCost )
              "有向森の葉を削除して空にする問題" ,
              "数直線上の点群を移動させる問題" ,
              "順列をswapでソートする問題" ,
+             "複数の敵を単体攻撃と範囲攻撃で倒す問題" ,
              "その他の問題"
              );
   if( num == num_temp++ ){
@@ -2843,6 +2880,20 @@ AC( MinimisationOperationCost )
     CERR( "(グラフの辺数) = (長さ)-(グラフの連結成分数)です。" );
     CERR( "グラフの辺数の遷移を考えると、この回数が達成可能なのは" );
     CERR( "グラフ上で隣接する2項をswapしていく場合のみだと分かります。" );
+  } else if( num == num_temp++ ){
+    CERR( "範囲攻撃の回数sを決め打った時の最小回数f(s)を立式しましょう。" );
+    ASK_YES_NO( "範囲攻撃は全体攻撃ですか？" );
+    if( reply == "y" ){
+      CERR( "HPでソートし、単体攻撃のダメージD>=敵の個数に帰着させることで、" );
+      CERR( "0<=s<Dに絞っても損をしません。すると敵をHP%Dで類別し、" );
+      CERR( "sよりその値が大きい敵の数でf(s)を表せるので、sの小さい順に差分計算で" );
+      CERR( "f(s)を求めていき最小値を計算しましょう。" );
+      CERR( "\\Mathematics\\Combinatorial\\SingleAreaOptimisation" );
+    } else {
+      CERR( "- f(s)にうまく単調性や凸性を見出し、sを二分探索や三分探索" );
+      CERR( "- ターン数tを決め打ってf(s)<=tの解sの有無を判定し、tを二分探索" );
+      CERR( "を検討しましょう。" );
+    }
   } else if( num == num_temp++ ){
     ASK_YES_NO( "操作回数の上限は10^6以下ですか？" );
     if( reply == "y" ){
@@ -3108,18 +3159,34 @@ AC( MaximisationGame )
 
 AC( MaximisationGameWellFoundedTotalDifference )
 {
-  CERR( "数列や多重集合から成分や要素である項を交互に削除していき、項iを" );
+  ASK_NUMBER(
+             "得点の定まった項を削除していくゲーム" ,
+             "辺に得点の定まったグラフの頂点を削除していくゲーム"
+             );
+  if( num ==num_temp++ ){
+    CERR( "数列や多重集合から成分や要素である項を交互に削除していき、項iを" );
+  } else {
+    CERR( "頂点iの得点をiから伸びる辺の得点の総和に翻訳します。" );
+    CERR( "ルール次第で本来の得点差より２倍になることに注意しましょう。" );
+  }
   CERR( "先行が削除した場合は先行にA[i]点、後行が削除した場合は後行にB[i]点" );
   CERR( "が与えられるとし、先行の総得点をX、後行の総得点をYと置きます。" );
-  CERR( "- 先行がX-Yの最大化を、後行がX-Yの最小化を目指す問題ならば、" );
-  CERR( "  双方がA[i]+B[i]の大きい順に貪欲に選ぶ場合が双方の最善です。" );
-  CERR( "- 先行がX-Yの最小化を、後行がX-Yの最大化を目指す問題ならば、" );
-  CERR( "  双方がA[i]+B[i]の小さい順に貪欲に選ぶ場合が双方の最善です。" );
-  CERR( "- 先行がX+Yの最大化を、後行がX+Yの最小化を目指す問題ならば、" );
-  CERR( "  双方がA[i]-B[i]の大きい順に貪欲に選ぶ場合が双方の最善です。" );
-  CERR( "- 先行がX+Yの最小化を、後行がX+Yの最大化を目指す問題ならば、" );
-  CERR( "  双方がA[i]-B[i]の小さい順に貪欲に選ぶ場合が双方の最善です。" );
-  CERR( "これに従って配列の和／差をソートして実際に操作を実行しましょう。" );
+  ASK_NUMBER(
+             "先行がX-Yの最大化を、後行がX-Yの最小化を目指す問題" ,
+             "先行がX-Yの最小化を、後行がX-Yの最大化を目指す問題" ,
+             "先行がX+Yの最大化を、後行がX+Yの最小化を目指す問題" ,
+             "先行がX+Yの最小化を、後行がX+Yの最大化を目指す問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "双方がA[i]+B[i]の大きい順に貪欲に選ぶ場合が双方の最善です。" );
+  } else if( num == num_temp++ ){
+    CERR( "双方がA[i]+B[i]の小さい順に貪欲に選ぶ場合が双方の最善です。" );
+  } else if( num == num_temp++ ){
+    CERR( "双方がA[i]-B[i]の大きい順に貪欲に選ぶ場合が双方の最善です。" );
+  } else if( num == num_temp++ ){
+    CERR( "双方がA[i]-B[i]の小さい順に貪欲に選ぶ場合が双方の最善です。" );
+  }
+  CERR( "配列の和／差をソートして実際に操作を実行しましょう。" );
 }
 
 AC( MaximisationGameWellFoundedEachDifference )
@@ -5418,14 +5485,15 @@ AC( DecisionContinuingGame )
     if( reply == "y" ){
       CERR( "文字列は文字を数に変換して数列に置き換えます。" );
       CALL_AC( InterpretingSequenceOperation );
-      ASK_YES_NO( "1成分を更新したり末尾追加したりするだけですか？" );
-      if( reply == "y" ){
-        CERR( "1成分ごとのゲーム和に分解しましょう。" );
-      }
     }
   }
-  CERR( "ゲームの和に分解できるならばグランディ数を計算、できないならば必勝状態判定" );
-  CERR( "をする方針で考察します。" );
+  ASK_YES_NO( "ゲームの和に分解できますか？" );
+  if( reply == "y" ){
+    CERR( "グランディ数を考察しましょう。" );
+  } else {
+    CERR( "必勝状態判定をする方針で考察します。難しい場合は小さい入力でグランディ数を" );
+    CERR( "愚直に実験し、ニム和以外の演算で表せないか検討します。" );
+  }
   ASK_YES_NO( "状態数や遷移回数上限が10^6程度ですか？" );
   if( reply == "y" ){
     CERR( "グランディ数や必勝状態判定は再帰で計算しましょう" );
