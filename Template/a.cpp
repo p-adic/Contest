@@ -103,6 +103,7 @@ IN VO RandomTest( const int& test_case_num )
 // SqrtDecomposition ../Contest/Template/Library/SqrtDecomposition.txt
 // UnionFind ../Contest/Template/Library/UnionFind.txt
 
+
 /* AAA èÌê›Ç≈Ç»Ç¢ÉâÉCÉuÉâÉäÇÕà»è„Ç…ë}ì¸Ç∑ÇÈÅB*/
 
 #define INCLUDE_SUB
@@ -140,7 +141,7 @@ IN VO RandomTest( const int& test_case_num )
   #define COUT_A( I , N , A ) CoutArray( cout , I , N , A ) << ENDL
   #define CERR_A( I , N , A ) 
   #define WHAT( ... ) 
-  #define TLE( CONDITION ) if( !( CONDITION ) ){ cerr << "TLE" << endl; ll TLE_VAR = 1; while( TLE_VAR != 0 ){ ( TLE_VAR += 2 ) %= int( 1e9 ); } cerr << TLE_VAR << endl; }
+  #define TLE( CONDITION ) if( !( CONDITION ) ){ cerr << "TLE" << endl; ll TLE_VAR = 1; while( TLE_VAR % 2 != 0 ){ ( TLE_VAR += 2 ) %= int( 1e9 ); } cerr << TLE_VAR << endl; }
   #define MLE( CONDITION ) if( !( CONDITION ) ){ cerr << "MLE" << endl; vector<vector<ll>> MLE_VAR{}; REPEAT( 1e6 ){ MLE_VAR.push_back( vector<ll>( 1e6 ) ); } cerr << MLE_VAR << endl; }
   #define OLE( CONDITION ) if( !( CONDITION ) ){ cerr << "OLE" << endl; REPEAT( 1e8 ){ COUT( "OLE" ); } }
 #endif
@@ -343,7 +344,7 @@ TE <int NUM> uint COantsForDMods<NUM>::g_M = P;TE <int NUM> uint COantsForDMods<
 
 #define SFINAE_FOR_DMOD enable_if_t<is_COructible_v<uint,decay_t<T>>>*
 #define DC_OF_CM_FOR_DMOD(OPR)IN bool OP OPR(CO DMods<NUM>& n)CO NE
-#define DC_OF_AR_FOR_DMOD(OPR,EX)IN DMods<NUM> OP OPR(DMods<NUM> n)CO EX;
+#define DC_OF_AR_FOR_DMOD(OPR,EX)IN DMods<NUM> OP OPR(DMods<NUM> n)CO EX
 #define DF_OF_CM_FOR_DMOD(OPR)TE <int NUM> IN bool DMods<NUM>::OP OPR(CO DMods<NUM>& n)CO NE{RE m_n OPR n.m_n;}
 #define DF_OF_AR_FOR_DMOD(OPR,EX,LEFT,OPR2)TE <int NUM> IN DMods<NUM> DMods<NUM>::OP OPR(DMods<NUM> n)CO EX{RE MO(LEFT OPR2 ## = *TH);}TE <int NUM,TY T,SFINAE_FOR_DMOD = nullptr> IN DMods<NUM> OP OPR(T n0,CO DMods<NUM>& n1)EX{RE MO(DMods<NUM>(MO(n0))OPR ## = n1);}
 TE <int NUM>CL DMods{PU:uint m_n;IN DMods()NE;IN DMods(CO DMods<NUM>& n)NE;IN DMods(DMods<NUM>&& n)NE;TE <TY T,SFINAE_FOR_DMOD = nullptr> IN DMods(T n)NE;IN DMods<NUM>& OP=(DMods<NUM> n)NE;IN DMods<NUM>& OP+=(CO DMods<NUM>& n)NE;IN DMods<NUM>& OP-=(CO DMods<NUM>& n)NE;IN DMods<NUM>& OP*=(CO DMods<NUM>& n)NE;IN DMods<NUM>& OP/=(DMods<NUM> n);IN DMods<NUM>& OP^=(ll EX);IN DMods<NUM>& OP<<=(ll n);IN DMods<NUM>& OP>>=(ll n);IN DMods<NUM>& OP++()NE;IN DMods<NUM> OP++(int)NE;IN DMods<NUM>& OP--()NE;IN DMods<NUM> OP--(int)NE;DC_OF_CM_FOR_DMOD(==);DC_OF_CM_FOR_DMOD(!=);DC_OF_CM_FOR_DMOD(<);DC_OF_CM_FOR_DMOD(<=);DC_OF_CM_FOR_DMOD(>);DC_OF_CM_FOR_DMOD(>=);DC_OF_AR_FOR_DMOD(+,NE);DC_OF_AR_FOR_DMOD(-,NE);DC_OF_AR_FOR_DMOD(*,NE);DC_OF_AR_FOR_DMOD(/,);IN DMods<NUM> OP^(ll EX)CO;IN DMods<NUM> OP<<(ll n)CO;IN DMods<NUM> OP>>(ll n)CO;IN DMods<NUM> OP-()CO NE;IN VO swap(DMods<NUM>& n)NE;IN CRUI RP()CO NE;ST IN DMods<NUM> DeRP(uint n)NE;ST IN CO DMods<NUM>& Factorial(CRL n);ST IN CO DMods<NUM>& FactorialInverse(CRL n);ST IN DMods<NUM> Combination(CRL n,CRL i);ST IN CO DMods<NUM>& zero()NE;ST IN CO DMods<NUM>& one()NE;ST IN CRUI GetModulo()NE;ST IN VO SetModulo(CRUI M,CO bool& M_is_prime = false)NE;IN DMods<NUM>& SignInvert()NE;IN DMods<NUM>& Invert();IN DMods<NUM>& PPW(ll EX)NE;IN DMods<NUM>& NNPW(ll EX)NE;ST IN CO DMods<NUM>& Inverse(CRI n);ST IN CO DMods<NUM>& TwoPower(CRI n);ST IN CO DMods<NUM>& TwoPowerInverse(CRI n);US COants = COantsForDMods<NUM>;};
