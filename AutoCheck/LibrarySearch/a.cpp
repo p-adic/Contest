@@ -6014,6 +6014,17 @@ AC( ConstructionVector )
 
 AC( ConstructionInitialisation )
 {
+  ASK_YES_NO( "bit演算に関する条件が課されていますか？" );
+  if( reply == "y" ){
+    ASK_YES_NO( "0,...,N-1の順列の構築ですか？" );
+    CERR( "N-1の最上位bitをE bit目とします。" );
+    if( reply == "y" ){
+      CERR( "- 2^E未満の順列と2^E以上N未満の順列（E bit目を無視すればN-2^E未満の順列）" );
+      CERR( "  に分けて構築する再帰を検討しましょう。" );
+    } else {
+      CERR( "- E bit目を無視して構築し、E bit目を調整する再帰を検討しましょう。" );
+    }
+  }
   CERR( "- 条件を無視し、成分に適当な順番で値を書き込みましょう。" );
   CERR( "  その場合に条件がどう崩れるかを確認し、微調整しましょう。" );
   CERR( "- 特定の形状を持つ領域全てが同じ分布条件を満たす必要がある場合、" );
