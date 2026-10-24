@@ -61,13 +61,48 @@
 
   // /* ダイクストラ法 O(min(V^2+E,V+E log V)) */
   // /* Geometry/Graph/Algorithm/Dijkstra/ */
-  // Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
-  
+  // Dijkstra dijk{ graph };
+  // // /* Algebra/Monoid/Semilattice/ */
+  // // AbstractDijkstra dijk{ graph , MaxSemilattice<ll>{0} , infty };
+  // vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
+
+  // /* 素集合データ構造 O(V+Eα(V)) */
+  // /* Geometry/Graph/Algorithm/UnionFindForest/ */
+  // UnionFindForest uff{ N };
+  // vector<int> merge( N , 1 ); // 各連結成分のサイズを根の添え字に格納
+  // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
+  // // vector<int> merge( N );
+  // // FOR( i , 0 , N ){
+  // //   auto ri = uff.RootOfNode( i );
+  // //   merge[ri]++;
+  // // }
+  // auto [index,index_inv] = IndexSort( weight_enum );
+  // vector<Tuple<int,int,int>> query( Q );
+  // FOR( q , 0 , Q ){
+  //   CIN( int , w , i ); --i;
+  //   query[q] = {w,i,q};
+  // }
+  // Sort( query );
+  // vector<int> a( Q );
+  // int m = 0;
+  // RUN( query , [w,i,q] ){
+  //   while( m < M && weight_enum[index[m]] <= w ){
+  //     auto& [i,j,w] = UVW[m];
+  //     auto ri = uff.RootOfNode( i ) , rj = uff.RootOfNode( j );
+  //     if( ri != rj ){
+  //       int wi = merge[ri] , wj = merge[rj];
+  //       uff.Graft( ri , rj );
+  //       merge[ri] = merge[rj] = wi + wj;
+  //     }
+  //   }
+  //   a[q] = merge[i];
+  // }
+
+
   // /* 最小全域森 O(Eα(V+log E)) */
   // /* Geometry/Graph/Algorithm/UnionFindForest/Kruscal/ */
   // /* chosen_edge_num={選択された辺の番号全体} */
   // /* cc_size=連結成分数 */
-  // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
   // auto [chosen_edge_num,cc_size] = Kruscal( graph , UV );
   // ll sum = 0; RUN( chosen_edge_num , m ){ sum += weight_enum[m]; }  
 
