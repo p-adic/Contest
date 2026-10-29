@@ -230,6 +230,9 @@ US ld = long double;
 US lld = __float128;
 
 /* VVV 常設ライブラリは以下に挿入する。*/
+CEXPR(uint,P,998244353);
+#define RP Represent
+#define DeRP Derepresent
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/Local/a_Body.hpp"
   US MP = DMod;
@@ -330,12 +333,8 @@ TE <TY E>CL GridGraph:PU EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<i
 IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}TE <TY E> IN GridGraph<E>::GridGraph(E e):EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>(HW,EnumHW,EnumHW_inv,MO(e)){AS(HW >> 31 == 0 && H * W == HW);}VE<T2<int>> EdgeOnGrid(CO T2<int>& v){VE<T2<int>> AN{};auto&[i,j]= v;if(grid[i][j]== walkable){for(int di = -1;di <= 1;di++){CO int ni = i + di;if(0 <= ni && ni < H){for(int dj = -1;dj <= 1;dj++){CO int nj = j + dj;if(grid_edge[di+1][dj+1]&& 0 <= nj && nj < W && grid[ni][nj]== walkable){AN <<={ni,nj};}}}}}RE AN;}VE<Pair<T2<int>,ll>> WEdgeOnGrid(CO T2<int>& v){VE<Pair<T2<int>,ll>> AN{};auto&[i,j]= v;if(grid[i][j]== walkable){for(int di = -1;di <= 1;di++){CO int ni = i + di;if(0 <= ni && ni < H){for(int dj = -1;dj <= 1;dj++){CO int nj = j + dj;if(grid_edge[di+1][dj+1]&& 0 <= nj && nj < W && grid[ni][nj]== walkable){AN <<={{ni,nj},1};}}}}}RE AN;}IN VO SetWallStringOnGrid(){grid.resize(H);for(int i = 0;i < H;i++){SET(grid[i]);AS(int(grid[i].SZ())== W);}}IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h,CO bool& xy_axis = false){RE xy_axis?i < k?1:i > k?3:j < h?0:j > h?2:-1:i < k?2:i > k?0:j < h?1:j > h?3:-1;}IN int DirectionNumberOnGrid(CO T2<int>& v,CO T2<int>& w,CO bool& xy_axis = false){auto&[i,j]= v;auto&[k,h]= w;RE DirectionNumberOnGrid(i,j,k,h);}IN int DirectionNumberOnGrid(CRI v,CRI w,CO bool& xy_axis = false){RE DirectionNumberOnGrid(EnumHW(v),EnumHW(w));}IN int DirectionNumberOnGrid(CO char& c){RE c == 'U'?0:c == 'R'?1:c == 'D'?2:c == 'L'?3:-1;}IN int ReverseDirectionNumberOnGrid(CRI n){AS(0 <= n && n < 4);RE n ^ 2;}IN T2<int> DirectionVEOnGrid(CO char& c,CO bool& xy_axis = false){CO int n = DirectionNumberOnGrid(c);AS(n != -1);RE T2<int>{xy_axis?n == 1?1:n == 3?-1:0:n == 0?-1:n == 2?1:0,xy_axis?n == 0?1:n == 2?-1:0:n == 1?1:n == 3?-1:0};}
 
 /* DynamicModulo (9KB)*/
-CEXPR(uint,P,998244353);
 // SetModulo( M , M_is_prime = false );
 // M_is_primeがtrueの時はinverseの計算がメモ化再帰される。
-#define RP Represent
-#define DeRP Derepresent
-
 TE <TY INT1,TY INT2> CE INT1 Residue(INT1 n,CO INT2& M)NE{RE MO(n < 0?((((++n)*= -1)%= M)*= -1)+= M - 1:n < M?n:n %= M);}
 TE <TY INT> IN INT ModularInverse(CO INT& base,ll c){AS(base > 0);ll a[2]={0,1 % base};INT b[2]={base,INT((c %= base)< 0?c += base:c)};WH(b[1]!= 0){CO INT q = b[0]/ b[1];(a[0]-= q * a[1]% base)< 0?a[0]+= base:a[0];b[0]-= q * b[1];swap(a[0],a[1]);swap(b[0],b[1]);}AS(b[0]== 1 &&(a[0]* c - 1)% base == 0);RE a[0];}
 
