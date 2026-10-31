@@ -8,17 +8,17 @@
 AC( LibrarySearch )
 {
   ASK_NUMBER(
-	     "明示式の計算問題" ,
-	     "最大／最小化問題" ,
-	     "数え上げ問題" ,
-	     "求解問題" ,
-	     "クエリ処理問題" ,
+             "明示式の計算問題" ,
+             "最大／最小化問題" ,
+             "数え上げ問題" ,
+             "求解問題" ,
+             "クエリ処理問題" ,
              "シミュレーション問題" ,
-	     "ゲーム問題" ,
-	     "真偽判定問題" ,
-	     "構築問題" ,
-	     "質問による推定"
-	     );
+             "ゲーム問題" ,
+             "真偽判定問題" ,
+             "構築問題" ,
+             "質問による推定"
+             );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpression );
   } else if( num == num_temp++ ){
@@ -48,18 +48,18 @@ AC( ExplicitExpression )
 {
   ASK_NUMBER(
              "総和や総乗の計算問題" ,
-	     "固定長引数関数や格子点上の関数や配列の計算問題" ,
-	     "順列上の関数の計算問題" ,
-	     "グラフ上の関数の計算問題" ,
-	     "序数の計算問題" ,
-	     "確率／期待値の計算問題" ,
-	     "操作回数の計算問題" ,
-	     "時系列変化後の状態計算問題" ,
-	     "始／終切片和や畳み込みの計算問題" ,
-	     "面積の計算問題" ,
-	     "極限の計算問題" ,
+             "固定長引数関数や格子点上の関数や配列の計算問題" ,
+             "順列上の関数の計算問題" ,
+             "グラフ上の関数の計算問題" ,
+             "序数の計算問題" ,
+             "確率／期待値の計算問題" ,
+             "操作回数の計算問題" ,
+             "時系列変化後の状態計算問題" ,
+             "始／終切片和や畳み込みの計算問題" ,
+             "面積の計算問題" ,
+             "極限の計算問題" ,
              "その他の数論的関数の計算問題"
-	     );
+             );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionSum );
   } else if( num == num_temp++ ){
@@ -416,13 +416,13 @@ AC( ExplicitExpressionDoubleSumNonQuotient )
 AC( ExplicitExpressionArray )
 {
   ASK_NUMBER(
-	     "線形漸化式の計算問題" ,
-	     "非線形漸化式の計算問題" ,
-	     "１変数関数の反復合成の計算問題" ,
-	     "bit関数と他の関数の合成の計算問題" ,
-	     "その他の１変数関数／配列の計算問題" ,
+             "線形漸化式の計算問題" ,
+             "非線形漸化式の計算問題" ,
+             "１変数関数の反復合成の計算問題" ,
+             "bit関数と他の関数の合成の計算問題" ,
+             "その他の１変数関数／配列の計算問題" ,
              "その他の多変数関数／配列を受け取る関数の計算問題" ,
-	     );
+             );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnaryLinearRecursion );
   } else if( num == num_temp++ ){
@@ -497,9 +497,9 @@ AC( ExplicitExpressionBitwiseFunction )
   CERR( "- (M,*)が群である場合のbit関数f:N->(M,*)と逆元の合成" );
   CERR( "などがbit準同型です。" );
   ASK_NUMBER(
-	     "(Z,+)へのbit準同型" ,
-	     "(Z,*)へのbit準同型の線形和"
-	     );
+             "(Z,+)へのbit準同型" ,
+             "(Z,*)へのbit準同型の線形和"
+             );
   if( num == num_temp++ ){
     CERR( "ノード数nの根付き木上の関数tと引数2のbit演算otimesに対し、" );
     CERR( "多引数化otimes:N^n->Nとbit準同型f:N->(Z,+)の合成に" );
@@ -597,9 +597,9 @@ AC( ExplicitExpressionMultivariable )
 AC( ExplicitExpressionFunctionOnPermutation )
 {
   ASK_NUMBER(
-	     "１つの順列に関する値の計算問題" ,
-	     "順列を受け取る関数の総和の計算問題"
-	     );
+             "１つの順列に関する値の計算問題" ,
+             "順列を受け取る関数の総和の計算問題"
+             );
   if( num == num_temp++ ){
     CERR( "- 符号そのものの計算問題は" );
     CERR( "  - O(N log_2 N)やO(N^2)が間に合いそうなら転倒数の計算" );
@@ -640,12 +640,12 @@ AC( ExplicitExpressionFunctionOnGraph )
 AC( ExplicitExpressionFunctionOnTree )
 {
   ASK_NUMBER(
-	     "最短経路長総和の計算問題" ,
-	     "木を受け取る関数の計算問題" ,
-	     "木上の関数の総和の計算問題" ,
+             "最短経路長総和の計算問題" ,
+             "木を受け取る関数の計算問題" ,
+             "木上の関数の総和の計算問題" ,
              "木の非空部分集合の連結包の計算問題" ,
-	     "構文木の計算問題"
-	     );
+             "構文木の計算問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( TreeWeightSum );
   } else if( num == num_temp++ ){
@@ -719,11 +719,11 @@ AC( FunctionOnTree )
 AC( ExplicitExpressionFunctionOnNonTreeGraph )
 {
   ASK_NUMBER(
-	     "ホモロジー群の計算問題" ,
-	     "最短経路長総和の計算問題" ,
-	     "ハッシュの計算問題" ,
+             "ホモロジー群の計算問題" ,
+             "最短経路長総和の計算問題" ,
+             "ハッシュの計算問題" ,
              "その他の計算問題"
-	     );
+             );
   if( num == num_temp++ ){
     CERR( "- 体係数ならば、掃き出し法により階数を計算しましょう。" );
     CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\Modint" );
@@ -771,17 +771,17 @@ AC( ExplicitExpressionConnectedHullInTree )
 AC( ExplicitExpressionOrder )
 {
   ASK_NUMBER(
-	     "与えられた順序集合に関する問題" ,
-	     "順序集合を更新する問題" ,
+             "与えられた順序集合に関する問題" ,
+             "順序集合を更新する問題" ,
              "与えられた01列の辞書順最小の部分列の計算問題"
-	     );
+             );
   if( num == num_temp++ ){
     CERR( "多重集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
     ASK_NUMBER(
-	       "与えられた要素sに対しs=a[i]を満たすiを求める問題" ,
-	       "与えられたiに対するa[i]を求める問題" ,
-	       "与えられたiに対するa[0],...,a[i]を全て求める問題"
-	       );
+               "与えられた要素sに対しs=a[i]を満たすiを求める問題" ,
+               "与えられたiに対するa[i]を求める問題" ,
+               "与えられたiに対するa[0],...,a[i]を全て求める問題"
+               );
     if( num == num_temp++ ){
       CALL_AC( ExplicitExpressionOrderOfElement );
     } else if( num == num_temp++ ){
@@ -900,13 +900,13 @@ AC( ExplicitExpressionProbability )
       type[inversion_num] = reply == "y";
     } else if( num == num_temp++ ){
       ASK_NUMBER(
-              "単位時間に高々1回独立に起こる事象の起きた回数の期待値" ,
-              "裏が出るまでのコイン投げ回数の期待値" ,
-              "nを確率的に減らしてi以下にする試行回数の期待値" ,
-              "コンプガチャを達成するまでの回数の期待値" ,
-              "その他の操作／遷移回数の期待値" ,
-              "その他の回数の期待値"
-              );
+                 "単位時間に高々1回独立に起こる事象の起きた回数の期待値" ,
+                 "裏が出るまでのコイン投げ回数の期待値" ,
+                 "nを確率的に減らしてi以下にする試行回数の期待値" ,
+                 "コンプガチャを達成するまでの回数の期待値" ,
+                 "その他の操作／遷移回数の期待値" ,
+                 "その他の回数の期待値"
+                 );
       if( num == num_temp++ ){
         type[indep_event_count] = true;
         type[operation_count] = true;
@@ -1129,11 +1129,11 @@ AC( ExplicitExpressionTimeSeriesChange )
 AC( ExplicitExpressionConvolution )
 {
   ASK_NUMBER(
-	     "多項式に関する計算" ,
-	     "cup/capに関する計算"
-	     "gcd/lcmに関する計算"
-	     "その他のjoin半束上の計算"
-	     );
+             "多項式に関する計算" ,
+             "cup/capに関する計算"
+             "gcd/lcmに関する計算"
+             "その他のjoin半束上の計算"
+             );
   if( num == num_temp++ ){
     CERR( "- 次数の大きな多項式と小さな多項式の積は愚直乗算" );
     CERR( "  Mathematics\\Polynomial\\a.hpp" );
@@ -1222,30 +1222,30 @@ AC( ExplicitExpressionArithmetic )
 AC( Maximisation )
 {
   ASK_NUMBER(
-	     "移動コストの最小化問題" ,
-	     "移動コストの最大化問題" ,
-	     "ナップサック問題" ,
-	     "明示式の最大／最小化問題" ,
-	     "配列上の関数に関する最大／最小化問題" ,
-	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
-	     "固定長多変数関数の最大／最小化問題" ,
-	     "集合やグラフの部分集合に関する最大／最小化問題" ,
-	     "グラフの経路に関する最大／最小化問題" ,
-	     "木に関する最大／最小化問題" ,
-	     "文字列のマッチングに関する最大／最長化問題" ,
+             "移動コストの最小化問題" ,
+             "移動コストの最大化問題" ,
+             "ナップサック問題" ,
+             "明示式の最大／最小化問題" ,
+             "配列上の関数に関する最大／最小化問題" ,
+             "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
+             "固定長多変数関数の最大／最小化問題" ,
+             "集合やグラフの部分集合に関する最大／最小化問題" ,
+             "グラフの経路に関する最大／最小化問題" ,
+             "木に関する最大／最小化問題" ,
+             "文字列／配列のマッチングに関する最大／最長化問題" ,
              "分割に関する最大／最小化問題" ,
-	     "確率／期待値の最大化問題" ,
-	     "必要操作回数／コストの最小化問題" ,
-	     "操作継続回数の最大化問題" ,
-	     "被覆半径の最小化問題" ,
-	     "描画サイズ／個数の最大／最小化問題" ,
-	     "条件（方程式など）を満たす数の最大／最小化問題" ,
-	     "最小値の最大化／最大値の最小化問題" ,
-	     "部分和の最小化問題" ,
-	     "部分和の差の最大／最小化問題" ,
-	     "2人ゲームの最終的な不変量の最大／最小化問題" ,
+             "確率／期待値の最大化問題" ,
+             "必要操作回数／コストの最小化問題" ,
+             "操作継続回数の最大化問題" ,
+             "被覆半径の最小化問題" ,
+             "描画サイズ／個数の最大／最小化問題" ,
+             "条件（方程式など）を満たす数の最大／最小化問題" ,
+             "最小値の最大化／最大値の最小化問題" ,
+             "部分和の最小化問題" ,
+             "部分和の差の最大／最小化問題" ,
+             "2人ゲームの最終的な不変量の最大／最小化問題" ,
              "演算による表示長の最小化問題"
-	     );
+             );
   if( num == num_temp++ ){
     CALL_AC( MinimisationMovingCost );
   } else if( num == num_temp++ ){
@@ -1272,7 +1272,7 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnAffineSpace );
   } else if( num == num_temp++ ){
-    CALL_AC( MaximisationSubsetSize );
+    CALL_AC( MaximisationSubsetValue );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationGraph );
   } else if( num == num_temp++ ){
@@ -1312,16 +1312,16 @@ AC( MinimisationMovingCost )
   CERR( "１始点多終点コスト最小化を単に複数回繰り返す多始点多終点コスト最小化は" );
   CERR( "１始点多終点コスト最小化を選択してください。" );
   ASK_NUMBER(
-	     "１始点多終点コスト最小化（迷路）問題" ,
-	     "１始点多中間点１終点コスト最小化（水の採取運搬）問題" ,
-	     "１始点多経由点多終点コスト最小化（スタンプラリー）問題" ,
-	     "多始点１終点コスト最小化（競争）問題" ,
-	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
-	     "多始点多終点組み分けコスト最小化（完全二部マッチング）問題" ,
-	     "多プレイヤーコスト総和最小化（最小費用流）問題" ,
-	     "最近点問題（アフィン空間内の点群との距離の最小化問題）" ,
+             "１始点多終点コスト最小化（迷路）問題" ,
+             "１始点多中間点１終点コスト最小化（水の採取運搬）問題" ,
+             "１始点多経由点多終点コスト最小化（スタンプラリー）問題" ,
+             "多始点１終点コスト最小化（競争）問題" ,
+             "多始点多終点コスト最大値最小化（開被覆）問題" ,
+             "多始点多終点組み分けコスト最小化（完全二部マッチング）問題" ,
+             "多プレイヤーコスト総和最小化（最小費用流）問題" ,
+             "最近点問題（アフィン空間内の点群との距離の最小化問題）" ,
              "経路長mod Bが特定の値になるかの判定問題"
-	     );
+             );
   if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
@@ -1641,10 +1641,10 @@ AC( NearestNeighbour )
 AC( MaximisationMovingDistance )
 {
   ASK_NUMBER(
-	     "１始点多終点距離最長化（最遠点探索）問題" ,
-	     "多始点多終点距離最長化（最長歩道探索）問題" ,
+             "１始点多終点距離最長化（最遠点探索）問題" ,
+             "多始点多終点距離最長化（最長歩道探索）問題" ,
              "最遠点問題"
-	     );
+             );
   if( num == num_temp++ ){
     CALL_AC( MaximisationMovingDistanceSingleStart );
   } else if( num == num_temp++ ){
@@ -1698,10 +1698,10 @@ AC( MaximisationMovingDistanceSingleStart )
 AC( MaximisationFunctionOnArray )
 {
   ASK_NUMBER(
-	     "問題文または入力で与えられる１個の配列Aに関する問題" ,
-	     "問題文または入力で与えられる複数の配列A_0,A_1,...に関する問題" ,
-	     "条件を満たす任意の配列に関する問題"
-	     );
+             "問題文または入力で与えられる１個の配列Aに関する問題" ,
+             "問題文または入力で与えられる複数の配列A_0,A_1,...に関する問題" ,
+             "条件を満たす任意の配列に関する問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnOneArray );
   } else if( num == num_temp++ ){
@@ -1829,11 +1829,11 @@ AC( Knapsack )
   CERR( "コストの総和上限Cとします。コストの半順序モノイドにおけるC以下の元" );
   CERR( "全体の集合の要素数を|C|と置きます。" );
   ASK_NUMBER(
-	     "Iを始切片に限る場合" ,
-	     "そうでなくIを区間に限る場合" ,
-	     "そうでなくIの連結成分長に上限がある場合" ,
-	     "そうでない場合"
-	     );
+             "Iを始切片に限る場合" ,
+             "そうでなくIを区間に限る場合" ,
+             "そうでなくIの連結成分長に上限がある場合" ,
+             "そうでない場合"
+             );
   if( num == num_temp++ ){
     CALL_AC( KnapsackInitialSegment );
   } else if( num == num_temp++ ){
@@ -1982,9 +1982,9 @@ AC( SingleKnapsackMultipleChoice )
     } else {
       ASK_YES_NO( "コストがありますか？" );
       if( reply == "y" ){
-	CALL_AC( SingleKnapsackBoundedChoiceUnstableCost );
+        CALL_AC( SingleKnapsackBoundedChoiceUnstableCost );
       } else {
-	CALL_AC( SingleKnapsackBoundedChoiceCostfree );
+        CALL_AC( SingleKnapsackBoundedChoiceCostfree );
       }
     }
   }
@@ -2161,7 +2161,8 @@ AC( SingleKnapsackCostfree )
 
 AC( SingleKnapsackCostfreeMultiValue )
 {
-  CERR( "途中まで選択した時点で次以降に選択できる価値全体に共通の性質を抽象化します。" );
+  CERR( "途中まで選択した時点で次以降に選択できる価値全体に共通の性質を" );
+  CERR( "抽象化します。" );
   ASK_NUMBER(
              "問題で最初に与えられた選択肢の部分集合から１つ選ぶ" ,
              "これまでの価値総量をアフィン変換した値を次の項目の価値とする" ,
@@ -2171,8 +2172,9 @@ AC( SingleKnapsackCostfreeMultiValue )
     CERR( "部分集合を決定するデータをdとして" );
     CERR( "dp[i][d] = i項目目まで選択を終えた時にデータがdである時の最大価値" );
     CERR( "を管理する動的計画法を検討しましょう。" );
-    CERR( "漸化式はデータの遷移d->d'において可能な選択肢の中で価値の最大値v[d][d']を" );
-    CERR( "加算すれば良く、そのためにはv[d][d']も高速に計算できるようにすると良いです。" );
+    CERR( "漸化式はデータの遷移d->d'において可能な選択肢の中で価値の" );
+    CERR( "最大値v[d][d']を加算すれば良く、そのためにはv[d][d']も高速に" );
+    CERR( "計算できるようにすると良いです。" );
   } else if( num == num_temp++ ){
     CERR( "- アフィン変換の一次係数が非負であれば、毎回の選択後の価値を最大にする" );
     CERR( "  貪欲法" );
@@ -2486,12 +2488,12 @@ AC( MaximisationArrayLength )
 AC( MaximisationFunctionOnAffineSpace )
 {
   ASK_NUMBER(
-	     "１変数関数の最小／最大化問題" ,
-	     "１変数関数の族の最小／最大値計算" ,
-	     "２変数関数の１次元への制限で得られる１変数関数の最小／最大化問題" ,
-	     "距離の最小／最大化問題" ,
-	     "被覆半径の最小化問題"
-	     );
+             "１変数関数の最小／最大化問題" ,
+             "１変数関数の族の最小／最大値計算" ,
+             "２変数関数の１次元への制限で得られる１変数関数の最小／最大化問題" ,
+             "距離の最小／最大化問題" ,
+             "被覆半径の最小化問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( ConvexProduct );
     ASK_YES_NO( "凸関数のmax/minですか？" );
@@ -2535,56 +2537,55 @@ AC( MaximisationFunctionOnAffineSpace )
   CERR( "複数のパラメータを決定すべき場合は、サブゴールの式の値を決め打ちましょう。" );
 }
 
-AC( MaximisationSubsetSize )
+AC( MaximisationSubsetValue )
 {
-  ASK_NUMBER(
-             "最大二部マッチング" ,
-             "非空有限集合族の選択関数の像の最大化" ,
-	     "その他の部分集合の価値最大化／コスト最初化問題" ,
-	     "部分集合への分割に関する最小化問題"
-	     );
-  if( num == num_temp++ ){
-    CALL_AC( MaximumBipartite );
-  } else if( num == num_temp++ ){
-    CERR( "選択関数を添字集合から和集合への写像とみなすことで" );
-    CERR( "最大二部マッチングに帰着されます。" );
-    CERR( "" );
-    CALL_AC( MaximumBipartite );
-  } else if( num == num_temp++ ){
-    ASK_YES_NO( "コストと価値の両方がありますか？" );
-    if( reply == "y" ){
-      CERR( "選択方法に制限付きのナップサック問題を考えましょう。" );
-      CALL_AC( SingleKnapsackUnordered );
-    } else {
-      CERR( "コストは-1倍して価値とみなし、価値のみがある問題を考えます。" );
-      ASK_YES_NO( "各要素の価値は1ですか？" );
-      if( reply == "y" ){
-        CALL_AC( SubsetExhusiveSearch );
-        CERR( "- 半順序集合の極大鎖ならば、後続関数を定義してその逆像を辺とする" );
-        CERR( "  非輪状有向グラフを構築し、極大元からの最長歩道計算" );
-        CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\LongestWalk\\a.hpp" );
-        CERR( "- 半順序集合の極大反鎖ならば、" );
-        CERR( "  - 鎖への極小な分割のサイズを求めてDilworthの定理" );
-        CERR( "    （あくまで個数のみの特定で、証明に基く帰納的構築は遅い）" );
-        CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
-          CERR( "  - トポロジカルソートされているならば、始切片としてNに埋め込み、" );
-          CERR( "    半順序と整合的な後続関数S:N->Nを定義して、Sの値が元の集合に入らない" );
-          CERR( "    要素全体の集合をSの単調性を用いて二分探索で計算" );
-          CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
-          CERR( "  \\Mathematics\\Combinatorial\\IntervalScheduling\\a.hpp" );
-          CERR( "- 同値関係の独立系の最大化（完全代表系の計算）ならば、深さ１の幅優先探索や" );
-          CERR( "  による連結成分計算" );
-          CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\QuotientSet" );
-          CERR( "を検討しましょう。" );
-          CERR( "" );
-          CERR( "もしくはコストなしのナップサック問題を考えましょう。" );
-      } else {
-        CERR( "コストなしのナップサック問題を考えましょう。" );
-      }
-      CALL_AC( SingleKnapsackCostfree );
+  ASK_YES_NO( "半順序集合のハッセ図以外のグラフの部分集合ですか？" );
+  if( reply == "y" ){
+    ASK_NUMBER(
+               "最大二部マッチング" ,
+               "最小／最大全域無向森" ,
+               "無向辺の有向化の終点削除を繰り返した時の始点価値総和最大化"
+               );
+    if( num == num_temp++ ){
+      CALL_AC( MaximumBipartite );
+    } else if( num == num_temp++ ){
+      CERR( "最大全域無向森は重みを-1倍して最小全域無向森に帰着させます。" );
+      CERR( "最小全域無向森はKruscal法で求めましょう。" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
+    } else if( num == num_temp++ ){
+      CERR( "選択した有向辺は部分有向森をなすので、有向辺に始点の価値を" );
+      CERR( "与えた時の最大部分有向森を求めましょう。" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal\\MaximumDirectedSubforest" );
     }
   } else {
-    CALL_AC( MinimisationPartitionOfSet );
+    ASK_NUMBER(
+               "非空有限集合族の選択関数の像の最大化" ,
+               "その他の部分集合の価値最大化／コスト最初化問題" ,
+               "部分集合への分割に関する最小化問題"
+               );
+    if( num == num_temp++ ){
+      CERR( "選択関数を添字集合から和集合への写像とみなすことで" );
+      CERR( "最大二部マッチングに帰着されます。" );
+      CERR( "" );
+      CALL_AC( MaximumBipartite );
+    } else if( num == num_temp++ ){
+      ASK_YES_NO( "コストと価値の両方がありますか？" );
+      if( reply == "y" ){
+        CERR( "選択方法に制限付きのナップサック問題を考えましょう。" );
+        CALL_AC( SingleKnapsackUnordered );
+      } else {
+        CERR( "コストは-1倍して価値とみなし、価値のみがある問題を考えます。" );
+        ASK_YES_NO( "各要素の価値は1ですか？" );
+        if( reply == "y" ){
+          CALL_AC( MaximisationSubsetSize );
+        } else {
+          CERR( "コストなしのナップサック問題を考えましょう。" );
+        }
+        CALL_AC( SingleKnapsackCostfree );
+      }
+    } else {
+      CALL_AC( MinimisationPartitionOfSet );
+    }
   }
 }
 
@@ -2600,13 +2601,36 @@ AC( MaximumBipartite )
   CERR( "を検討しましょう。" );
 }
 
-AC( SubsetExhusiveSearch )
+AC( SubsetExhausiveSearch )
 {
   CERR( "与えられた集合のサイズをNと置きます。" );
   CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
   CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
+}
+
+AC( MaximisationSubsetSize )
+{
+  CALL_AC( SubsetExhausiveSearch );
+  CERR( "- 半順序集合の極大鎖ならば、後続関数を定義してその逆像を辺とする" );
+  CERR( "  非輪状有向グラフを構築し、極大元からの最長歩道計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\LongestWalk\\a.hpp" );
+  CERR( "- 半順序集合の極大反鎖ならば、" );
+  CERR( "  - 鎖への極小な分割のサイズを求めてDilworthの定理" );
+  CERR( "    （あくまで個数のみの特定で、証明に基く帰納的構築は遅い）" );
+  CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
+  CERR( "  - トポロジカルソートされているならば、始切片としてNに埋め込み、" );
+  CERR( "    半順序と整合的な後続関数S:N->Nを定義して、Sの値が元の集合に入らない" );
+  CERR( "    要素全体の集合をSの単調性を用いて二分探索で計算" );
+  CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
+  CERR( "  \\Mathematics\\Combinatorial\\IntervalScheduling\\a.hpp" );
+  CERR( "- 同値関係の独立系の最大化（完全代表系の計算）ならば、深さ１の幅優先探索や" );
+  CERR( "  による連結成分計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\QuotientSet" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "もしくはコストなしのナップサック問題を考えましょう。" );
 }
 
 AC( MinimisationGraph )
@@ -2626,9 +2650,9 @@ AC( MinimisationGraph )
 AC( MinimisationGraphCost )
 {
   ASK_NUMBER(
-	     "全域森のコスト最小化問題" ,
-	     "パスのコスト最小化問題"
-	     );
+             "全域森のコスト最小化問題" ,
+             "パスのコスト最小化問題"
+             );
   if( num == num_temp++ ){
     CERR( "クラスカル法" );
     CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
@@ -2642,9 +2666,9 @@ AC( MinimisationGraphCost )
 AC( MaximisationGraphValue )
 {
   ASK_NUMBER(
-	     "辺の価値最大化問題" ,
-	     "頂点の価値最大化問題"
-	     );
+             "辺の価値最大化問題" ,
+             "頂点の価値最大化問題"
+             );
   if( num == num_temp++ ){
     CERR( "価値を-1倍したコストを考えることで辺のコスト最小化問題に帰着されます。" );
     CALL_AC( MinimisationGraphCost );
@@ -2671,12 +2695,12 @@ AC( MaximisationGraphValue )
 AC( MaximisationOnTree )
 {
   ASK_NUMBER(
-	     "木上の関数の特定の部分集合上での最大／最小値計算問題" ,
-	     "木の分割ごとに定まる値の最大／最小化問題" ,
-	     "木のパスの長さの最大化問題" ,
-	     "木の部分集合への最近傍探索問題" ,
-	     "木の彩色のコスト最小化問題"
-	     );
+             "木上の関数の特定の部分集合上での最大／最小値計算問題" ,
+             "木の分割ごとに定まる値の最大／最小化問題" ,
+             "木のパスの長さの最大化問題" ,
+             "木の部分集合への最近傍探索問題" ,
+             "木の彩色のコスト最小化問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( QueryTree );
   } else if( num == num_temp++ ){
@@ -2721,22 +2745,44 @@ AC( MinimisationColouringTree )
 
 AC( MaximisationStringMatching )
 {
-  CERR( "基本的には丁寧にループを回して解きましょう。" );
-  CERR( "- 比較対象が少ない場合、前または後ろから順に探索（貪欲法／動的計画法）" );
-  CERR( "- ワイルドカードを含む場合、" );
-  CERR( "  - 前または後ろから順に場合分けをしてO(N)で処理できるか" );
-  CERR( "  - 可能な代入方法を絞り込んでO(N)種類に落せるか" );
-  CERR( "- 比較回数が多い場合、ローリングハッシュ" );
-  CERR( "  \\Mathematics\\Utility\\String\\RollingHash" );
-  CERR( "- 部分回文の最長化をする場合、尺取り法による前計算" );
-  CERR( "  \\Mathematics\\Utility\\String\\Palindrome" );
-  CERR( "- マッチングする部分文字列の最長化をする場合、Zアルゴリズム" );
-  CERR( "  \\Mathematics\\Utility\\String\\Z-Algorithm" );
-  CERR( "- マッチングする文字数の最大化をする場合、文字の種類分の{0,1}値配列に" );
-  CERR( "  分けて内積の最大化（添え字を反転させて適当な法での畳み込み）" );
-  CERR( "  \\Mathematics\\Arithmetic\\Mod" );
-  CERR( "  \\Mathematics\\Polynomial" );
-  CERR( "を検討しましょう。" );
+  ASK_NUMBER(
+             "部分列そのものの一致を条件に最長化する問題" ,
+             "部分列の増減の一致を条件に最長化する問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "基本的には丁寧にループを回して解きましょう。" );
+    CERR( "- 比較対象が少ない場合、前または後ろから順に探索（貪欲法／動的計画法）" );
+    CERR( "- ワイルドカードを含む場合、" );
+    CERR( "  - 前または後ろから順に場合分けをしてO(N)で処理できるか" );
+    CERR( "  - 可能な代入方法を絞り込んでO(N)種類に落せるか" );
+    CERR( "- 比較回数が多い場合、ローリングハッシュ" );
+    CERR( "  \\Mathematics\\Utility\\String\\RollingHash" );
+    CERR( "- 部分回文の最長化をする場合、尺取り法による前計算" );
+    CERR( "  \\Mathematics\\Utility\\String\\Palindrome" );
+    CERR( "- マッチングする部分文字列の最長化をする場合、Zアルゴリズム" );
+    CERR( "  \\Mathematics\\Utility\\String\\Z-Algorithm" );
+    CERR( "- マッチングする文字数の最大化をする場合、文字の種類分の{0,1}値配列に" );
+    CERR( "  分けて内積の最大化（添え字を反転させて適当な法での畳み込み）" );
+    CERR( "  \\Mathematics\\Arithmetic\\Mod" );
+    CERR( "  \\Mathematics\\Polynomial" );
+    CERR( "を検討しましょう。" );
+  } else {
+    ASK_YES_NO( "増減の形が問題で固定されていますか？" );
+    if( reply == "y" ){
+      CERR( "各列ごとにその増減をする最長部分列を動的計画法で求め、" );
+      CERR( "それらの長さの最小値を計算しましょう。" );
+      CERR( "\\Mathematics\\Combinatorial\\LongestSubsequence\\ZigZagSubsequence" );
+    } else {
+      CERR( "長さN,Mの配列A,Bの部分列を考えます。" );
+      CERR( "dp[i][j] = A[i],B[j]が末尾である場合の長さの最大値" );
+      CERR( "を管理する動的計画法でO(N^2 M^2)で解くことが可能です。" );
+      CERR( "また各iごとにdp[i]をBの値をkeyとする区間最大値BITで管理し、" );
+      CERR( "jを昇順に走査しながら毎回dp[-][j]をAの値をkeyとする区間最大値BITで" );
+      CERR( "dp配列の更新を高速化することでO(NM log max(P \frown Q))で" );
+      CERR( "解くことも可能です。" );
+      CERR( "https://yukicoder.me/problems/no/3782/editorial" );
+    }
+  }
 }
 
 AC( MaximisationPartition )
@@ -3064,9 +3110,9 @@ AC( MaximisationMinimum )
 AC( MinimisationSubsetSum )
 {
   ASK_NUMBER(
-	     "グラフの辺集合E上の関数の部分和の最小化問題" ,
-	     "一般の集合上の関数の部分和の最小化問題"
-	     );
+             "グラフの辺集合E上の関数の部分和の最小化問題" ,
+             "一般の集合上の関数の部分和の最小化問題"
+             );
   if( num == num_temp++ ){
     CERR( "最短経路問題に帰着させましょう。" );
     CALL_AC( MinimisationMovingCost );
@@ -3325,10 +3371,10 @@ AC( Counting )
 AC( CountingNumber )
 {
   ASK_NUMBER(
-	     "数の各桁の数字に関する条件" ,
-	     "それ以外の固定長変数関数の代入値に関する条件" ,
-	     "文字列の配列の添字に関する条件" ,
-	     "その他の条件"
+             "数の各桁の数字に関する条件" ,
+             "それ以外の固定長変数関数の代入値に関する条件" ,
+             "文字列の配列の添字に関する条件" ,
+             "その他の条件"
              );
   if( num == num_temp++ ){
     ASK_NUMBER(
@@ -3420,12 +3466,12 @@ AC( CountingArrayConditional )
   ASK_NUMBER(
              "総和が指定された配列の数え上げ問題" ,
              "2値ベクトルとの内積が指定された配列の数え上げ問題" ,
-	     "配列を受け取るその他の関数の値が固定された配列の数え上げ問題" ,
-	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
-	     "辞書式順序などで固定長の部分列に上限が与えられた配列の数え上げ問題" ,
+             "配列を受け取るその他の関数の値が固定された配列の数え上げ問題" ,
+             "隣接成分間関係式を満たす配列の数え上げ問題" ,
+             "辞書式順序などで固定長の部分列に上限が与えられた配列の数え上げ問題" ,
              "閉じたカッコ列やその亜種の数え上げ問題" ,
-	     "その他の関係式を満たす配列の数え上げ問題"
-	     );
+             "その他の関係式を満たす配列の数え上げ問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( CountingDistribution );
   } else if( num == num_temp++ ){
@@ -3648,11 +3694,11 @@ AC( CountingArrayOtherRelation )
 AC( CountingSubArray )
 {
   ASK_NUMBER(
-	     "配列の成分を受け取る関数の部分和を固定した部分列の数え上げ問題" ,
-	     "配列の隣接成分間関係式を満たす部分列の数え上げ問題" ,
-	     "配列のその他の関係式を満たす部分列の数え上げ問題" ,
-	     "配列の部分列の種類（取得位置情報を落とした配列）の数え上げ問題"
-	     );
+             "配列の成分を受け取る関数の部分和を固定した部分列の数え上げ問題" ,
+             "配列の隣接成分間関係式を満たす部分列の数え上げ問題" ,
+             "配列のその他の関係式を満たす部分列の数え上げ問題" ,
+             "配列の部分列の種類（取得位置情報を落とした配列）の数え上げ問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( CountingSumFixedSubArray );
   } else if( num == num_temp++ ){
@@ -3673,10 +3719,10 @@ AC( CountingSumFixedSubArray )
   CERR( "- その他の条件" );
   CERR( "を満たすものの数え上げを考えます。" );
   ASK_NUMBER(
-	     "Iにコスト制約がある場合" ,
-	     "Iが連続部分列に限られる場合" ,
-	     "Iに追加の制約がない場合"
-	     );
+             "Iにコスト制約がある場合" ,
+             "Iが連続部分列に限られる場合" ,
+             "Iに追加の制約がない場合"
+             );
   if( num == num_temp++ ){
     CERR( "O(2^N)が通りそうならば価値とコストを次数とする愚直な２変数多項式乗算" );
     CERR( "  \\Mathematics\\Polynomial\\Multivariable" );
@@ -3700,10 +3746,10 @@ AC( CountingSumFixedSubArray )
 AC( CountingRestrictedSubArray )
 {
   ASK_NUMBER(
-	     "連続部分列の数え上げ問題" ,
-	     "連続とは限らない部分列の数え上げ問題" ,
-	     "部分順列（部分列の並び換え）の数え上げ問題"
-	     );
+             "連続部分列の数え上げ問題" ,
+             "連続とは限らない部分列の数え上げ問題" ,
+             "部分順列（部分列の並び換え）の数え上げ問題"
+             );
   CERR( "長さNの配列Aと、L+n<=N+1を満たす整数n,Lと" );
   CERR( "- 整数iに関する条件Q(i)" );
   CERR( "- 各0<=l<Lに対するn-tuple(b_0,...,b_{n-1})に関する条件R_l(b_0,...,b_{n-1})" );
@@ -3842,8 +3888,8 @@ AC( CountingPermutation )
 AC( CountingString )
 {
   ASK_NUMBER(
-	     "条件を満たす文字列の数え上げ問題" ,
-	     "与えられた文字列の部分文字列の数え上げ問題"
+             "条件を満たす文字列の数え上げ問題" ,
+             "与えられた文字列の部分文字列の数え上げ問題"
              );
   if( num == num_temp++ ){
     CALL_AC( CountingStringConditional );
@@ -3861,10 +3907,10 @@ AC( CountingStringConditional )
 AC( CountingSubString )
 {
   ASK_NUMBER(
-	     "部分文字列から取得位置情報を落とした文字列全体の数え上げ問題" ,
-	     "文字列一致に関する性質を満たす部分文字列の数え上げ問題" ,
-	     "文字配置に関する性質を満たす部分文字列の数え上げ問題"
-	     );
+             "部分文字列から取得位置情報を落とした文字列全体の数え上げ問題" ,
+             "文字列一致に関する性質を満たす部分文字列の数え上げ問題" ,
+             "文字配置に関する性質を満たす部分文字列の数え上げ問題"
+             );
   if( num == num_temp++ ){
     CERR( "文字列を文字の配列とみなすことで、配列の問題に帰着させることができます。" );
     CALL_AC( CountingSubArrayImageArray );
@@ -3942,8 +3988,8 @@ AC( CountingGraph )
              "付加構造付き木の数え上げ問題" ,
              "条件を満たす無向グラフの数え上げ問題" ,
              "条件を満たす有向グラフの数え上げ問題" ,
-	     "与えられた木の分割の数え上げ問題" ,
-	     "与えられたグラフの部分グラフの数え上げ問題" ,
+             "与えられた木の分割の数え上げ問題" ,
+             "与えられたグラフの部分グラフの数え上げ問題" ,
              "与えられたグラフの連結成分に関する数え上げ問題" ,
              "与えられたグラフの彩色の数え上げ"
              );
@@ -4060,7 +4106,7 @@ AC( CountingSubset )
     CERR( "要素に番号を振り、集合を配列とみなして部分和問題に帰着させましょう。" );
     CALL_AC( CountingSumFixedSubArray );
   } else if( num == num_temp++ ){
-    AC( SubsetExhusiveSearch );
+    AC( SubsetExhausiveSearch );
     CERR( "- bit演算についての条件が課された[0,2^N)の部分集合や" );
     CERR( "  集合演算についての条件が課された[0,N)の部分集合の族は、" );
     CERR( "  bit／要素ごとに分けて考察" );
@@ -4162,9 +4208,9 @@ AC( CountingStrategy )
   CERR( "なるべく簡単な操作に同値変形しましょう。" );
   CALL_AC( InterpretingSequenceOperation );
   ASK_NUMBER(
-	     "不可逆な操作列の数え上げ問題" ,
-	     "操作する対象全体の集合の数え上げ問題" ,
-	     );
+             "不可逆な操作列の数え上げ問題" ,
+             "操作する対象全体の集合の数え上げ問題" ,
+             );
   if( num == num_temp++ ){
     CERR( "不可逆な操作は整礎半順序集合上の遷移とみなせます。" );
     CERR( "- １つの始点からの移動を考える場合は" );
@@ -4292,10 +4338,10 @@ AC( InterpretingGeneralSequenceOperation )
 AC( CountingPath )
 {
   ASK_NUMBER(
-	     "格子点上の経路の数え上げ" ,
-	     "可換群上の経路の数え上げ" ,
-	     "一般のグラフ上の経路の数え上げ" ,
-	     );
+             "格子点上の経路の数え上げ" ,
+             "可換群上の経路の数え上げ" ,
+             "一般のグラフ上の経路の数え上げ" ,
+             );
   if( num == num_temp++ ){
     CERR( "始点から各点への経路数に関する漸化式を立式しましょう。" );
     CERR( "例えばパスカルの三角形上の経路数は、そのままパスカルの三角形で与えられます。" );
@@ -4328,11 +4374,11 @@ AC( CountingPath )
 AC( CountingTiling )
 {
   ASK_NUMBER(
-	     "隣接成分と異なる色で塗り分ける問題" ,
-	     "連結部分集合に分割して隣接連結成分と異なる色で塗り分ける問題" ,
-	     "与えられた図形で描画可能になるように塗り分ける問題" ,
-	     "与えられた条件に従って塗り分け可能になるように図形で描画する問題"
-	     );
+             "隣接成分と異なる色で塗り分ける問題" ,
+             "連結部分集合に分割して隣接連結成分と異なる色で塗り分ける問題" ,
+             "与えられた図形で描画可能になるように塗り分ける問題" ,
+             "与えられた条件に従って塗り分け可能になるように図形で描画する問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( CountingColouringDistinct );
   } else if( num == num_temp++ ){
@@ -4483,11 +4529,11 @@ AC( CountingPlainParenthesisSequence )
 AC( Solving )
 {
   ASK_NUMBER(
-	     "１つの方程式f(x,y,...) = c" ,
-	     "M個の方程式f(x[a[i]],C^{d[i]}x[b[i]]) = c[i]" ,
-	     "M個の方程式sum_{j=a[i]}^{b[i]} C^{j-a[i]} x[j] = c[i]" ,
-	     "その他の方程式"
-	     );
+             "１つの方程式f(x,y,...) = c" ,
+             "M個の方程式f(x[a[i]],C^{d[i]}x[b[i]]) = c[i]" ,
+             "M個の方程式sum_{j=a[i]}^{b[i]} C^{j-a[i]} x[j] = c[i]" ,
+             "その他の方程式"
+             );
   if( num == num_temp++ ){
     CERR( "- 楕円型の不定方程式ならば、" );
     CERR( "  - 有界な領域を全探策" );
@@ -4547,18 +4593,18 @@ AC( SolvingBinaryEquations )
 AC( Query )
 {
   ASK_NUMBER(
-	     "範囲更新／取得クエリ問題" ,
-	     "範囲更新／数え上げクエリ問題" ,
-	     "範囲更新／区間の部分列をわたる総和クエリ問題" ,
-	     "範囲更新／部分列比較クエリ問題" ,
-	     "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
-	     "3変数関数の計算クエリ問題（範囲更新なしf(A[i],x)の区間和計算など）" ,
-	     "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）" ,
+             "範囲更新／取得クエリ問題" ,
+             "範囲更新／数え上げクエリ問題" ,
+             "範囲更新／区間の部分列をわたる総和クエリ問題" ,
+             "範囲更新／部分列比較クエリ問題" ,
+             "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
+             "3変数関数の計算クエリ問題（範囲更新なしf(A[i],x)の区間和計算など）" ,
+             "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）" ,
              "グラフのクエリ問題" ,
              "集合のクエリ問題" ,
              "連結リストのクエリ問題" ,
              "Dequeのクエリ問題"
-	     );
+             );
   if( num < 4 ){
     CALL_AC( QueryDecomposition );
   }
@@ -4628,23 +4674,23 @@ AC( QueryArray )
   CERR( "区間取得クエリを２つの区間のデータから計算し、必要なデータを特定して" );
   CERR( "それらの演算を計算しましょう。" );
   ASK_NUMBER(
-	     "可換群構造+を使う問題" ,
-	     "全順序構造<=を使う問題" ,
-	     "可換羃等モノイド構造∨を使う問題" ,
-	     "モノイド構造*を使う問題" ,
-	     "非結合的マグマ構造*を使う問題" ,
-	     "集合へのマグマ作用(*,\\cdot)を使う問題" ,
-	     "集合への可換マグマ作用(*,\\cdot)を使う問題" ,
-	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
-	     "序数を扱う問題" ,
-	     "区間の像の要素数を扱う問題" ,
-	     "区間と逆像の共通部分の要素数を扱う問題" ,
-	     "取得クエリの区間幅に制限のある問題" ,
-	     "2引数関数による区間max／min更新を使う問題" ,
-	     "距離関数と定数の和による区間min更新を使う問題" ,
-	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
+             "可換群構造+を使う問題" ,
+             "全順序構造<=を使う問題" ,
+             "可換羃等モノイド構造∨を使う問題" ,
+             "モノイド構造*を使う問題" ,
+             "非結合的マグマ構造*を使う問題" ,
+             "集合へのマグマ作用(*,\\cdot)を使う問題" ,
+             "集合への可換マグマ作用(*,\\cdot)を使う問題" ,
+             "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
+             "序数を扱う問題" ,
+             "区間の像の要素数を扱う問題" ,
+             "区間と逆像の共通部分の要素数を扱う問題" ,
+             "取得クエリの区間幅に制限のある問題" ,
+             "2引数関数による区間max／min更新を使う問題" ,
+             "距離関数と定数の和による区間min更新を使う問題" ,
+             "定数とのmaxを取った値の区間演算取得を使う問題" ,
              "終切片代入更新と末尾挿入と関数適用の総和を扱う問題"
-	     );
+             );
   if( num == num_temp++ ){
     CALL_AC( QueryArrayAbelianGroup );
   } else if( num == num_temp++ ){
@@ -5052,11 +5098,11 @@ AC( QueryTimeSeriesChange )
     CERR( "分割されて管理されています。各ノードごとに取得クエリを分割統治しましょう。" );
   }
   ASK_NUMBER(
-	     "maxによる時系列更新" ,
-	     "加算による時系列更新" ,
-	     "差の絶対値による時系列更新" ,
+             "maxによる時系列更新" ,
+             "加算による時系列更新" ,
+             "差の絶対値による時系列更新" ,
              "swapによる時系列更新"
-	     );
+             );
   if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChangeMax );
   } else if( num == num_temp++ ){
@@ -5071,9 +5117,9 @@ AC( QueryTimeSeriesChange )
 AC( QueryTimeSeriesChangeMax )
 {
   ASK_NUMBER(
-	     "全体max更新／区間和取得" ,
-	     "範囲max更新／一点取得"
-	     );
+             "全体max更新／区間和取得" ,
+             "範囲max更新／一点取得"
+             );
   if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesTotalChangeMax );
   } else {
@@ -5369,9 +5415,9 @@ AC( SimulateOperation )
 AC( Game )
 {
   ASK_NUMBER(
-	     "勝敗を決める2人ゲーム" ,
-	     "最終局面での不変量の最大化と最小化を先行と後行が目指す2人ゲーム"
-	     );
+             "勝敗を決める2人ゲーム" ,
+             "最終局面での不変量の最大化と最小化を先行と後行が目指す2人ゲーム"
+             );
   if( num == num_temp++ ){
     CALL_AC( DecisionGame );
   } else if( num == num_temp++ ){
@@ -5384,17 +5430,18 @@ AC( Decision )
   CERR( "場合分けの複雑な問題は証明の概略をコメントしないとバグを倦めやすいです。" );
   CERR( "なるべくコメントを書くようにしましょう。" );
   ASK_NUMBER(
-	     "必勝性問題" ,
-	     "各種連結性問題" ,
-	     "到達可能性問題" ,
-	     "描画可能性問題" ,
-	     "存在判定問題" ,
-	     "操作／選択可能性問題" ,
-	     "充足可能性問題" ,
-	     "一致／同型性判定問題" ,
+             "必勝性問題" ,
+             "各種連結性問題" ,
+             "到達可能性問題" ,
+             "描画可能性問題" ,
+             "存在判定問題" ,
+             "操作／選択可能性問題" ,
+             "充足可能性問題" ,
+             "一致／同型性判定問題" ,
              "部分列判定問題",
-	     "表示可能性問題"
-	     );
+             "表示可能性問題" ,
+             "大小比較問題"
+             );
   if( num == num_temp++ ){
     CALL_AC( DecisionGame );
   } else if( num == num_temp++ ){
@@ -5415,11 +5462,15 @@ AC( Decision )
     CALL_AC( DecisionSubsequence );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionOrder );
   }
-  ASK_YES_NO( "何らかの値が閾値以上／以下という条件下で選択の可否を判定する問題ですか？" );
-  if( reply == "y" ){
-    CERR( "可能な選択中でのその値の最大値／最小値を求め、閾値と比較しましょう。" );
-    CALL_AC( Maximisation );
+  if( num != 0 && num != 7 && num != 8 && num != 10 ){
+    ASK_YES_NO( "何らかの値が閾値以上／以下という条件下で選択の可否を判定する問題ですか？" );
+    if( reply == "y" ){
+      CERR( "可能な選択中でのその値の最大値／最小値を求め、閾値と比較しましょう。" );
+      CALL_AC( Maximisation );
+    }
   }
 }
 
@@ -5429,11 +5480,11 @@ AC( DecisionGame )
   CERR( "プレイヤーAが着手mを行うと必敗となることが分かっているならば、" );
   CERR( "別のプレイヤーBが着手mを避け続けることでAの必敗となることがあります。" );
   ASK_NUMBER(
-	     "操作の継続を目指すゲーム" ,
-	     "最終局面での不変量の偶奇を指定するゲーム" ,
-	     "最終局面での不変量が与えられた定数以上か否かを競うゲーム" ,
-	     "得点の大小を競うゲーム"
-	     );
+             "操作の継続を目指すゲーム" ,
+             "最終局面での不変量の偶奇を指定するゲーム" ,
+             "最終局面での不変量が与えられた定数以上か否かを競うゲーム" ,
+             "得点の大小を競うゲーム"
+             );
   if( num == num_temp++ ){
     CALL_AC( DecisionContinuingGame );
     CALL_AC( DecisionContinuingGameCheck );
@@ -5578,10 +5629,10 @@ AC( DecisionAccessibility )
     CALL_AC( DecisionAccessibilityParity );
   }
   ASK_NUMBER(
-	     "矩形領域の到達可能性（迷路）問題" ,
-	     "グラフ上の到達可能性問題" ,
-	     "全頂点訪問可能性問題"
-	     );
+             "矩形領域の到達可能性（迷路）問題" ,
+             "グラフ上の到達可能性問題" ,
+             "全頂点訪問可能性問題"
+             );
   if( num == num_temp++ ){
     CERR( "迷路の攻略可能性は" );
     CERR( "- スタートとゴールが同一の弧状連結成分に属すこと" );
@@ -5659,10 +5710,10 @@ AC( DecisionDrawability )
   ASK_YES_NO( "図形を置く際に重なりを許しますか？" );
   if( reply == "y" ){
     ASK_NUMBER(
-	       "平行移動のみを除いて単一の図形を置く問題" ,
-	       "平行移動とサイズ変更のみを除いて単一の図形を置く問題" ,
-	       "複数種類の同一サイズの図形を許して置く問題"
-	       );
+               "平行移動のみを除いて単一の図形を置く問題" ,
+               "平行移動とサイズ変更のみを除いて単一の図形を置く問題" ,
+               "複数種類の同一サイズの図形を許して置く問題"
+               );
     if( num == num_temp++ ){
       CALL_AC( DecisionDrawabilityUnique );
     } else if( num == num_temp++ ){
@@ -5731,17 +5782,17 @@ AC( DecisionImageCoincidence )
 AC( DecisionExistence )
 {
   ASK_NUMBER(
-	     "数の方程式の解の存在" ,
-	     "F_2上の方程式の解の存在" ,
-	     "単純な条件を満たす数や配列や文字列の存在" ,
-	     "単純な条件を満たす行列の存在" ,
-	     "動く範囲の狭い変数の組み合わせで表せる概念の存在" ,
-	     "経路の存在" ,
-	     "描画方法の存在" ,
-	     "配列や文字列の成分の書き換え方法の存在" ,
-	     "数やベクトルの表示方法の存在" ,
-	     "集合の分割方法の存在"
-	     );
+             "数の方程式の解の存在" ,
+             "F_2上の方程式の解の存在" ,
+             "単純な条件を満たす数や配列や文字列の存在" ,
+             "単純な条件を満たす行列の存在" ,
+             "動く範囲の狭い変数の組み合わせで表せる概念の存在" ,
+             "経路の存在" ,
+             "描画方法の存在" ,
+             "配列や文字列の成分の書き換え方法の存在" ,
+             "数やベクトルの表示方法の存在" ,
+             "集合の分割方法の存在"
+             );
   if( num == num_temp++ ){
     CALL_AC( Solving );
     CERR( "" );
@@ -5806,9 +5857,9 @@ AC( DecisionSatisfactoryChoosability )
 AC( DecisionSatisfiability )
 {
   ASK_NUMBER(
-	     "命題論理の充足性判定問題" ,
-	     "二部グラフの充足可能性問題"
-	     );
+             "命題論理の充足性判定問題" ,
+             "二部グラフの充足可能性問題"
+             );
   if( num == num_temp++ ){
     CERR( "各命題変数の真理値を頂点とするグラフを考え連結性判定に帰着させて" );
     CALL_AC( DecisionConnectedness );
@@ -5862,9 +5913,9 @@ AC( DecisionSubsequence )
 AC( DecisionPresentability )
 {
   ASK_NUMBER(
-	     "単一の演算による表示可能性（生成部分マグマ問題）" ,
-	     "複数の演算による表示可能性（テンパズル問題）"
-	     );
+             "単一の演算による表示可能性（生成部分マグマ問題）" ,
+             "複数の演算による表示可能性（テンパズル問題）"
+             );
   if( num == num_temp++ ){
     ASK_NUMBER(
                "自然数の加法" ,
@@ -5879,13 +5930,13 @@ AC( DecisionPresentability )
       CERR( "  うまく端数を揃えて解を構成できるかもしれません。" );
     }
     if( num == 0 ){
-    CERR( "- 数を素数の和で表すならば、Klove数列で必要な素数の個数を見積りましょう。" );
-    CERR( "  Mathematics\\Arithmetic\\Prime\\KloveSequence\\a.hpp" );
-    CERR( "- 数を多角数の和で表すならば、二平方定理などを参考にしましょう。" );
-    CERR( "  https://ja.wikipedia.org/wiki/二個の平方数の和#素数についての証明" );
-    CERR( "  https://ja.wikipedia.org/wiki/三個の平方数の和#証明" );
-    CERR( "  https://ja.wikipedia.org/wiki/四平方定理#ラグランジュの四平方定理の証明" );
-    CERR( "  https://ja.wikipedia.org/wiki/多角数定理#証明" );
+      CERR( "- 数を素数の和で表すならば、Klove数列で必要な素数の個数を見積りましょう。" );
+      CERR( "  Mathematics\\Arithmetic\\Prime\\KloveSequence\\a.hpp" );
+      CERR( "- 数を多角数の和で表すならば、二平方定理などを参考にしましょう。" );
+      CERR( "  https://ja.wikipedia.org/wiki/二個の平方数の和#素数についての証明" );
+      CERR( "  https://ja.wikipedia.org/wiki/三個の平方数の和#証明" );
+      CERR( "  https://ja.wikipedia.org/wiki/四平方定理#ラグランジュの四平方定理の証明" );
+      CERR( "  https://ja.wikipedia.org/wiki/多角数定理#証明" );
     } else if( num == 1 ){
       CERR( "- 数をXORで表すならば、" );
       CERR( "  - 一般の数を表すならば拡大係数行列の簡約化" );
@@ -5899,17 +5950,48 @@ AC( DecisionPresentability )
       CERR( "  {0,1,...,D-1}の被覆を全探策" );
     }
   } else if( num == num_temp++ ){
-    CERR( "- 左結合的に関数／演算を処理する場合は" );
-    CERR( "  「第i成分／文字までで打ち切った時に表現できるもの全体の集合dp[i]」" );
-    CERR( "  を管理するiに関する動的計画法" );
-    CERR( "- 結合順が指定されている場合はBNFを直接用いた再帰で構文解析をして" );
-    CERR( "  「第iノードまでで打ち切った時に表現できるもの全体の集合dp[i]」" );
-    CERR( "  を管理するiに関する木DP" );
-    CERR( "- 関数／演算の適用方法にも選択がある場合は2項を選んで適用させた" );
-    CERR( "  結果得られる数／文字列の再帰的な全探策" );
+    ASK_NUMBER(
+               "成分の並びは固定で結合順が指定されている問題" ,
+               "成分の並びや結合順が自由な問題" ,
+               );
+    if( num == num_temp++ ){
+      ASK_YES_NO( "結合順は左結合的ですか？" );
+      if( reply == "y" ){
+        CERR( "- 「第i成分／文字までで打ち切った時に表現できるもの全体の集合dp[i]」" );
+        CERR( "  を管理するiに関する動的計画法" );
+      }
+      CERR( "- BNFを直接用いた再帰で構文解析をして" );
+      CERR( "  「第iノードまでで打ち切った時に表現できるもの全体の集合dp[i]」" );
+      CERR( "  を管理するiに関する木DP" );
+    }
+  } else if( num == num_temp++ ){
+    CERR( "- 2項を選んで適用させた結果得られる数／文字列の再帰的な全探策" );
+    CERR( "- 特定の1項を移項し、残りの項で右辺を構築可能か判定する次元削減" );
   }
   CERR( "を検討しましょう。" );
   CALL_AC( MinimisationExpression );
+}
+
+AC( DecisionOrder )
+{
+  ASK_NUMBER(
+             "B進法の各桁が与えられた２数の大小比較" ,
+             "負係数も許すB進法の各桁が与えられた２数の大小比較" ,
+             "X_{n+1}->X_n+...+X_0、Y_n->Y_0という変換後のX,Yの直積順序比較"
+             );
+  if( num == num_temp++ ){
+    CERR( "leading zeroを埋めて文字列として（辞書式順序で）大小しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "差のB進展開を上の桁から求め、その正負で判定しましょう。" );
+    CERR( "\\Mathematics\\Arithmetic\\AdicExpansion\\Sparse" );
+  } else if( num == num_temp++ ){
+    CERR( "Xの全体加算値を表す変数restを0で初期化し、n>0の大きい順に" );
+    CERR( "- X_n+rest<=Y_nならば残余Y_n-X_n-restをY_0に加算" );
+    CERR( "- X_n+rest>Y_nならば不足分X_n+rest-Y_nをrestに加算" );
+    CERR( "と処理してX_0+restとY_0の比較をしましょう。" );
+    CERR( "ただしYの総和が不変なので、rest*nがYの総和を超えた時点で" );
+    CERR( "最終的なX_0+rest>Y_0が確定し、オーバーフローを避けられます。" );
+  }
 }
 
 AC( Construction )
@@ -5921,17 +6003,17 @@ AC( Construction )
   CERR( "  （例えば多変数化して）逆に制約を追加したりして考察" );
   CERR( "を検討しましょう。" );
   ASK_NUMBER(
-	     "数やベクトルに関する構築" ,
-	     "配列や文字列に関する構築" ,
-	     "順列に関する構築" ,
-	     "行列／グリッドに関する構築" ,
-	     "写像の構築" ,
+             "数やベクトルに関する構築" ,
+             "配列や文字列に関する構築" ,
+             "順列に関する構築" ,
+             "行列／グリッドに関する構築" ,
+             "写像の構築" ,
              "グラフに関する構築" ,
-	     "戦略の構築" ,
+             "戦略の構築" ,
              "集合に関する構築" ,
              "タイリングの構築" ,
-	     "ソースコードの構築"
-	     );
+             "ソースコードの構築"
+             );
   if( num == num_temp++ ){
     CALL_AC( ConstructionNumber );
   } else if( num == num_temp++ ){
@@ -5977,8 +6059,8 @@ AC( Construction )
 AC( ConstructionNumber )
 {
   ASK_NUMBER(
-	     "数や固定長ベクトルの表示方法の構築" ,
-	     "方程式の解の構築" ,
+             "数や固定長ベクトルの表示方法の構築" ,
+             "方程式の解の構築" ,
              "位取り記法表示が何らかの性質を持つ数の構築" ,
              "成分の分布に関する条件を満たすベクトルの構築"
              );
@@ -6034,8 +6116,8 @@ AC( ConstructionInitialisation )
 AC( ConstructionArray )
 {
   ASK_NUMBER(
-	     "条件を満たす配列や文字列の構築" ,
-	     "与えられた配列や文字列の条件を満たす部分列の構築"
+             "条件を満たす配列や文字列の構築" ,
+             "与えられた配列や文字列の条件を満たす部分列の構築"
              );
   if( num == num_temp++ ){
     CALL_AC( ConstructionVector );
@@ -6146,10 +6228,10 @@ AC( ConstructionMap )
 AC( ConstructionGraph )
 {
   ASK_NUMBER(
-	     "グラフの構築" ,
-	     "彩色の構築" ,
-	     "グラフ上の操作の構築"
-	     );
+             "グラフの構築" ,
+             "彩色の構築" ,
+             "グラフ上の操作の構築"
+             );
   if( num == num_temp++ ){
     CALL_AC( ConstructionEdge );
   } else if( num == num_temp++ ){
@@ -6205,10 +6287,10 @@ AC( ConstructionColouring )
 AC( ConstructionOperationOnGraph )
 {
   ASK_NUMBER(
-	     "最短経路の構築" ,
-	     "最長経路の構築" ,
-	     "グリッドやユークリッド空間内での操作の構築"
-	     );
+             "最短経路の構築" ,
+             "最長経路の構築" ,
+             "グリッドやユークリッド空間内での操作の構築"
+             );
   if( num == num_temp++ ){
     CERR( "最短経路探索アルゴリズムで経路復元をしましょう。" );
     CALL_AC( MinimisationMovingCost );
@@ -6230,8 +6312,8 @@ AC( ConstructionOperationOnGraph )
 AC( ConstructionStrategy )
 {
   ASK_NUMBER(
-	     "必勝戦略の構築" ,
-	     "最大化戦略の構築"
+             "必勝戦略の構築" ,
+             "最大化戦略の構築"
              );
   if( num == num_temp++ ){
     CALL_AC( DecisionGame );
@@ -6253,8 +6335,8 @@ AC( ConstructionMaximisation )
 AC( ConstructionSet )
 {
   ASK_NUMBER(
-	     "与えられた二部グラフの部分集合の構築" ,
-	     "与えられた集合の分割方法の構築"
+             "与えられた二部グラフの部分集合の構築" ,
+             "与えられた集合の分割方法の構築"
              );
   if( num == num_temp++ ){
     CALL_AC( ConstructionSubset );
