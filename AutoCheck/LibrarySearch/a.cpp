@@ -5843,6 +5843,25 @@ AC( DecisionChoosability )
 
 AC( DecisionRewritingChoosability )
 {
+  ASK_YES_NO( "２つの可逆かつ可換な操作から１つを選ぶ試行の反復ですか？" );
+  if( reply == "y" ){
+    CERR( "片方の操作を毎回選ぶことを決め打った上で、そこからどの選択を変えるかを" );
+    CERR( "考えていきましょう。" );
+  }
+  ASK_YES_NO( "各操作では複数の成分が同時に変更されますか？" );
+  if( reply == "y" ){
+    ASK_YES_NO( "１回の操作で大半の成分が変更を受けますか？" );
+    if( reply == "y" ){
+      CERR( "- 全体の変更+少数の変更への分解" );
+      CERR( "- ２つの近い操作を組み合わせて少数の変更の実現" );
+      CERR( "を検討しましょう。" );
+    }
+    ASK_YES_NO( "i成分目とi+1成分目の一方のみを変更する操作が高々１つですか？" );
+    if( reply == "y" ){
+      CERR( "iの小さい順にその操作を行うか否かを確定させていきましょう。" );
+    }
+  }
+  CERR( "" );
   CERR( "配列／文字列の長さをNとし、" );
   CERR( "dp[i] = i成分目までで打ち切った場合の可否を判定するために必要なデータ" );
   CERR( "を管理する動的計画法を検討しましょう。" );
@@ -5875,29 +5894,46 @@ AC( DecisionSatisfiability )
 
 AC( DecisionCoincidence )
 {
-  CERR( "- 文字列の一致判定はローリングハッシュ" );
-  CERR( "  \\Mathematics\\Utility\\String\\RollingHash" );
-  CERR( "- 部分文字列との一致判定はZアルゴリズム" );
-  CERR( "  \\Mathematics\\Utility\\String\\Z-Algorithm" );
-  CERR( "- 集合の一致判定はゾブリストハッシュ" );
-  CERR( "  \\Mathematics\\Utility\\Set\\ZobristHash" );
-  CERR( "- 多重集合の一致判定は重複度とpairにして集合の一致判定に帰着" );
-  CERR( "- 配列の並び換えによる一致判定は" );
-  CERR( "  - 各前処理O(長さlog長さ)が間に合いそうならばソートからの" );
-  CERR( "    文字列一致判定に帰着" );
-  CERR( "  - 各前処理O(長さlog文字種類数)が間に合いそうならば多重集合の" );
-  CERR( "    一致判定に帰着" );
-  CERR( "  - 並び換えに制限がある場合は小さいケースで制限がない場合に一致する" );
-  CERR( "    文字列を全探策しBFSで同値類に分け、辞書順最小の元を代表元に選ぶ" );
-  CERR( "    実験を行い不変量の推定" );
-  CERR( "- グラフの同型性判定は十分多くの不変量（例えば|V|+|E|個くらい）を" );
-  CERR( "  GNNで畳み込み" );
-  CERR( "  - 同型の構成は畳み込んだ頂点の不変量をソートして最小要素を対応させ、" );
-  CERR( "    選んだ頂点の情報を伝播させてループ。お誕生日攻撃回避で法を大きく。" );
-  CERR( "  - 根付き木の場合は葉から順に畳み込むと根に十分大きな不変量が得られる。" );
-  CERR( "    https://hcpc-hokudai.github.io/archive/rupc/2017/rupc2017_F.pdf" );
-  CERR( "  - 木の場合は根を全探策して根付き木に帰着。中心など個数の少ない点に" );
-  CERR( "    根を絞る。" );
+  ASK_NUMBER(
+             "文字列の一致判定" ,
+             "部分文字列との一致判定" ,
+             "集合の一致判定" ,
+             "多重集合の一致判定" ,
+             "配列の並び換えによる一致判定" ,
+             "グラフの同型性判定"
+              );
+  if( num == num_temp++ ){
+    CERR( "ローリングハッシュ" );
+    CERR( "\\Mathematics\\Utility\\String\\RollingHash" );
+  } else if( num == num_temp++ ){
+  CERR( "Zアルゴリズム" );
+  CERR( "\\Mathematics\\Utility\\String\\Z-Algorithm" );
+  } else if( num == num_temp++ ){
+  CERR( "ゾブリストハッシュ" );
+  CERR( "\\Mathematics\\Utility\\Set\\ZobristHash" );
+  } else if( num == num_temp++ ){
+  CERR( "重複度とpairにして集合の一致判定に帰着" );
+  } else if( num == num_temp++ ){
+    ASK_YES_NO( "並び換えに制限がありますか？" );
+    CERR( "- 各前処理O(長さlog長さ)が間に合いそうならばソートからの" );
+    CERR( "  文字列一致判定に帰着" );
+    CERR( "- 各前処理O(長さlog文字種類数)が間に合いそうならば多重集合の" );
+    CERR( "  一致判定に帰着" );
+    if( reply == "y" ){
+      CERR( "- 制限された並び換えの不変量の特定" );
+      CERR( "  - 一般の並び換えでは保たれない不変量（転倒数、符号、etc）から探索" );
+      CERR( "  - 小さいケースで制限がない場合に一致する文字列を全探策しBFSで" );
+      CERR( "  同値類に分け、辞書順最小の元を代表元に選ぶ実験による推定" );
+    }
+  } else if( num == num_temp++ ){
+    CERR( "十分多くの不変量（例えば|V|+|E|個くらい）をGNNで畳み込み" );
+    CERR( "- 同型の構成は畳み込んだ頂点の不変量をソートして最小要素を対応させ、" );
+    CERR( "  選んだ頂点の情報を伝播させてループ。お誕生日攻撃回避で法を大きく。" );
+    CERR( "- 根付き木の場合は葉から順に畳み込むと根に十分大きな不変量が得られる。" );
+    CERR( "  https://hcpc-hokudai.github.io/archive/rupc/2017/rupc2017_F.pdf" );
+    CERR( "- 木の場合は根を全探策して根付き木に帰着。中心など個数の少ない点に" );
+    CERR( "  根を絞る。" );
+  }
   CERR( "を検討しましょう。" );
 }
 
