@@ -4597,8 +4597,8 @@ AC( Query )
              "範囲更新／数え上げクエリ問題" ,
              "範囲更新／区間の部分列をわたる総和クエリ問題" ,
              "範囲更新／部分列比較クエリ問題" ,
-             "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
-             "3変数関数の計算クエリ問題（範囲更新なしf(A[i],x)の区間和計算など）" ,
+             "範囲更新なし区間取得クエリ問題" ,
+             "範囲更新なし矩形取得クエリ問題" ,
              "時系列変化のクエリ問題（時刻に関する配列値関数の区間取得など）" ,
              "グラフのクエリ問題" ,
              "集合のクエリ問題" ,
@@ -4625,13 +4625,14 @@ AC( Query )
   } else if( num == num_temp++ ){
     CALL_AC( QueryString );
   } else if( num == num_temp++ ){
-    CALL_AC( QueryTwoAryFunction );
+    ASK_YES_NO( "２変数関数の１変数を止めたもう１変数に関する区間取得ですか？" );
+    if( reply == "y" ){
+      CALL_AC( QueryThreeAryFunction );
+    } else {
+      CALL_AC( QueryTwoAryFunction );
+    }
   } else if( num == num_temp++ ){
-    CERR( "各クエリで区間[l,r]とパラメータtが与えられ、２変数関数fを用いて" );
-    CERR( "sum(i=l;i<=r;i++) f(A[i],t)と表される値を答えるとします。" );
-    CERR( "g(t) = (f(A[i],t))_iと定めることで時系列変化に帰着されます。" );
-    CERR( "" );
-    CALL_AC( QueryTimeSeriesChange );
+    CALL_AC( QueryRectangleFunction );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTimeSeriesChange );
   } else   if( num == num_temp++ ){
@@ -5073,16 +5074,36 @@ AC( QueryString )
   }
 }
 
+AC( QueryThreeAryFunction )
+{
+  CERR( "各クエリで区間[l,r]とパラメータtが与えられ、２変数関数fを用いて" );
+  CERR( "sum(i=l;i<=r;i++) f(A[i],t)と表される値を答えるとします。" );
+  CERR( "g(t) = (f(A[i],t))_iと定めることで時系列変化に帰着されます。" );
+  CERR( "" );
+  CALL_AC( QueryTimeSeriesChange );
+}
+
 AC( QueryTwoAryFunction )
 {
-  CERR( "区間取得は" );
-  CERR( "- 始切片取得の差で表す" );
+  CERR( "区間取得を" );
+  CERR( "- 始切片取得の差で表示" );
   CERR( "- 中間で分割してマージ" );
-  CERR( "に翻訳しましょう。" );
+  CERR( "で代数構造に翻訳し、" );
   CERR( "- 可換群に値を持つ配列の範囲取得は累積積" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct" );
   CERR( "- 片側差分がO(1)で計算できる2変数関数の計算はMoのアルゴリズム" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+  CERR( "- 区間内の隣接関係に従って決まる値の取得は区間内部、頂点に" );
+  CERR( "  分割し、それぞれを前計算＋データ構造で高速化" );
+  CERR( "を検討しましょう。それ以外にも範囲更新可能なデータ構造も検討しましょう。" );
+}
+
+AC( QueryRectangleFunction )
+{
+  CERR( "- 可換群に値を持つ配列の範囲取得は累積積" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimensional" );
+  CERR( "- 矩形内の隣接関係に従って決まる値の取得は矩形内部、辺、頂点に" );
+  CERR( "  分割し、それぞれを前計算＋データ構造で高速化" );
   CERR( "を検討しましょう。それ以外にも範囲更新可能なデータ構造も検討しましょう。" );
 }
 
