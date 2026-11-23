@@ -132,6 +132,15 @@ IN VO RandomTest( const int& test_case_num )
     #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE VAR( N0 + I0 , VE<LL>( N1 + I1 ) ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
     #define FINISH_MAIN SET_ASSERT( test_case_num , 1 , test_case_num_bound ); } REPEAT( test_case_num ){ Solve(); } }
   #endif
+  #ifdef REACTIVE
+    #define LOCAL( ... ) 
+    #define RSET( A , ... ) SET( A )
+    #define RCIN( LL , A , ... ) LL A; RSET( A , __VA_ARGS__ )
+    #define ENDL endl
+  #else
+    #define ENDL "\n"
+    #define OLE( CONDITION ) if( !( CONDITION ) ){ cerr << "OLE" << endl; REPEAT( 1e8 ){ COUT( "OLE" ); } }
+  #endif
   #define SET_ASSERT( A , MIN , MAX ) SET( A ); ASSERT( A , MIN , MAX )
   #define SOLVE_ONLY 
   #define COUT( ... ) VariadicCout( cout , __VA_ARGS__ ) << ENDL
@@ -143,17 +152,6 @@ IN VO RandomTest( const int& test_case_num )
   #define WHAT( ... ) 
   #define TLE( CONDITION ) if( !( CONDITION ) ){ cerr << "TLE" << endl; ll TLE_VAR = 1; while( TLE_VAR % 2 != 0 ){ ( TLE_VAR += 2 ) %= int( 1e9 ); } cerr << TLE_VAR << endl; }
   #define MLE( CONDITION ) if( !( CONDITION ) ){ cerr << "MLE" << endl; vector<vector<ll>> MLE_VAR{}; REPEAT( 1e6 ){ MLE_VAR.push_back( vector<ll>( 1e6 ) ); } cerr << MLE_VAR << endl; }
-  #define OLE( CONDITION ) if( !( CONDITION ) ){ cerr << "OLE" << endl; REPEAT( 1e8 ){ COUT( "OLE" ); } }
-#endif
-#ifdef REACTIVE
-  #ifndef DEBUG
-    #define LOCAL( ... ) 
-    #define RSET( A , ... ) SET( A )
-  #endif
-  #define RCIN( LL , A , ... ) LL A; RSET( A , __VA_ARGS__ )
-  #define ENDL endl
-#else
-  #define ENDL "\n"
 #endif
 #include <bits/stdc++.h>
 using namespace std;
@@ -358,12 +356,10 @@ US MP = DMod;
 
 /* Iteration (3KB) */
 #define SPECIALSATION_OF_AR_PROGRESSION_SUM(TYPE)TE <> IN TYPE ArithmeticProgressionSum(CO TYPE& l,CO TYPE& r,CO TYPE& d){RE SpecialisedArithmeticProgressionSum(l,r,d);}
- TE <TY T,TY U,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(T t,CO V<U>& f,OPR opr){for(auto& u:f){t = opr(MO(t),u);}RE MO(t);}TE <TY T,TY U,TE <TY...> TY V> IN T Sum(CO V<U>& f){RE LeftConnectiveProd(T{},f,[](T t0,CO U& u1){RE MO(t0 += u1);});}TE <TY T,TY U,TE <TY...> TY V> IN T Prod(CO V<U>& f){RE LeftConnectiveProd(T{1},f,[](T t0,CO U& u1){RE MO(t0 *= u1);});}TE <TY T> IN T& SetMax(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMax(T& t0,CO U& u1,CO Args&... args){RE SetMax(t0 < u1?t0 = u1:t0,args...);}TE <TY T> IN T& SetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMin(T& t0,CO U& u1,CO Args&... args){RE SetMin(u1 < t0?t0 = u1:t0,args...);}TE <TY T> IN T& ExtendedSetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& ExtendedSetMin(T& t0,CO U& u1,CO Args&... args){RE ExtendedSetMin(u1 >= 0 &&(t0 < 0 || u1 < t0)?t0 = u1:t0,args...);}TE <TY T> IN CO T& Max(CO VE<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TE <TY...> TY SET> IN CO T& Max(CO SET<T>& f){RE *--f.EN();}TE <TY T,TY U,TY...Args> IN T Max(T t0,CO U& t1,CO Args&... args){RE MO(SetMax(t0,t1,args...));}TE <TY T> IN CO T& Min(CO VE<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TE <TY...> TY SET> IN CO T& Min(CO SET<T>& f){RE *f.BE();}TE <TY T,TY U,TY...Args> IN T Min(T t0,CO U& t1,CO Args&... args){RE MO(SetMin(t0,t1,args...));}TE <TY T,TY UINT>T Power(CO T& t,CO UINT& EX,T init = 1){RE EX > 1?Power(t * t,EX >> 1,MO(EX & 1?init *= t:init)):MO(EX > 0?init *= t:(AS(EX == 0),init));}TE <TY T> IN T PowerMemorisation(CO T& t,CRI EX){AS(EX >= 0);ST Map<T,VE<T>> memory{};auto& AN = memory[t];if(AN.empty()){AN.push_back(1);}WH(int(AN.SZ())<= EX){AN.push_back(AN.back()* t);}RE AN[EX];}TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d = 1){RE(l + r)*((r - l)/ d + 1)/ 2;}TE <TY INT> IN INT SpecialisedArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d){AS(l - 1 <= r);CO INT c =(r - l)/ d;RE l - 1 == r?0:(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}
-SPECIALSATION_OF_AR_PROGRESSION_SUM(int);
-SPECIALSATION_OF_AR_PROGRESSION_SUM(uint);
+ TE <TY T,TY U,TE <TY...> TY V,TY OPR> T LeftConnectiveProd(T t,CO V<U>& f,OPR opr){for(auto& u:f){t = opr(MO(t),u);}RE MO(t);}TE <TY T,TY U,TE <TY...> TY V> IN T Sum(CO V<U>& f){RE LeftConnectiveProd(T{},f,[](T t0,CO U& u1){RE MO(t0 += u1);});}TE <TY T,TY U,TE <TY...> TY V> IN T Prod(CO V<U>& f){RE LeftConnectiveProd(T{1},f,[](T t0,CO U& u1){RE MO(t0 *= u1);});}TE <TY T> IN T& SetMax(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMax(T& t0,CO U& u1,CO Args&... args){RE SetMax(t0 < u1?t0 = u1:t0,args...);}TE <TY T> IN T& SetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& SetMin(T& t0,CO U& u1,CO Args&... args){RE SetMin(u1 < t0?t0 = u1:t0,args...);}TE <TY T> IN T& ExtendedSetMin(T& t){RE t;}TE <TY T,TY U,TY... Args> IN T& ExtendedSetMin(T& t0,CO U& u1,CO Args&... args){RE ExtendedSetMin(u1 >= 0 &&(t0 < 0 || u1 < t0)?t0 = u1:t0,args...);}TE <TY T> IN CO T& Max(CO VE<T>& f){RE *max_element(f.BE(),f.EN());}TE <TY T,TE <TY...> TY SET> IN CO T& Max(CO SET<T>& f){RE *--f.EN();}TE <TY T,TY U,TY...Args> IN T Max(T t0,CO U& t1,CO Args&... args){RE MO(SetMax(t0,t1,args...));}TE <TY T> IN CO T& Min(CO VE<T>& f){RE *min_element(f.BE(),f.EN());}TE <TY T,TE <TY...> TY SET> IN CO T& Min(CO SET<T>& f){RE *f.BE();}TE <TY T,TY U,TY...Args> IN T Min(T t0,CO U& t1,CO Args&... args){RE MO(SetMin(t0,t1,args...));}TE <TY T,TY UINT>T Power(CO T& t,CO UINT& EX,T init = 1){RE EX > 1?Power(t * t,EX >> 1,MO(EX & 1?init *= t:init)):MO(EX > 0?init *= t:(AS(EX == 0),init));}TE <TY T> IN T PowerMemorisation(CO T& t,CRI EX){AS(EX >= 0);ST Map<T,VE<T>> memory{};auto& AN = memory[t];if(AN.empty()){AN.push_back(1);}WH(int(AN.SZ())<= EX){AN.push_back(AN.back()* t);}RE AN[EX];}TE <TY RET,TY INT> IN RET ArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d){RE(l + r)* RET{(r - l)/ d + 1}/ 2;}TE <TY INT> IN INT SpecialisedArithmeticProgressionSum(CO INT& l,CO INT& r,CO INT& d){AS(l - 1 <= r &&(r - l)% d == 0);CO INT c =(r - l)/ d;RE l - 1 == r?0:(c & 1)== 0?(c + 1)*(l + d *(c >> 1)):((c + 1)>> 1)*((l << 1)+ d * c);}
 SPECIALSATION_OF_AR_PROGRESSION_SUM(ll);
 SPECIALSATION_OF_AR_PROGRESSION_SUM(ull);
-TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& r){RE ArithmeticProgressionSum(INT{},r);}TE <TY INT> IN INT SquareSum(CO INT& r){RE r *(r + 1)*(2 * r + 1)/ 6;}TE <TY T,TY UINT> IN T GeometricProgressionSum(T rate,UINT EX_max,CO T& init = 1){T ratem = rate - 1;RE ratem == 0?init * ++EX_max:(Power(MO(rate),MO(++EX_max))- 1)/ MO(ratem)* init;}TE <TY T,TY UINT>T GeometricProgressionLinearCombinationSum(VE<T> rate,VE<UINT> EX_max,CO VE<T>& init){CO int SZ = init.SZ();AS(int(rate.SZ())== SZ && int(EX_max.SZ())== SZ);T AN{};for(int i = 0;i < SZ;i++){AN += GeometricProgressionSum(MO(rate[i]),MO(EX_max[i]),init[i]);}RE AN;}
+TE <TY INT> IN INT ArithmeticProgressionSum(CO INT& r){RE ArithmeticProgressionSum<INT>(INT{},r);}TE <TY INT> IN INT SquareSum(CO INT& r){RE r *(r + 1)*(2 * r + 1)/ 6;}TE <TY T,TY UINT> IN T GeometricProgressionSum(T rate,UINT EX_max,CO T& init = 1){T ratem = rate - 1;RE ratem == 0?init * ++EX_max:(Power(MO(rate),MO(++EX_max))- 1)/ MO(ratem)* init;}TE <TY T,TY UINT>T GeometricProgressionLinearCombinationSum(VE<T> rate,VE<UINT> EX_max,CO VE<T>& init){CO int SZ = init.SZ();AS(int(rate.SZ())== SZ && int(EX_max.SZ())== SZ);T AN{};for(int i = 0;i < SZ;i++){AN += GeometricProgressionSum(MO(rate[i]),MO(EX_max[i]),init[i]);}RE AN;}
 
 /* Sqrt (1KB) */
 TE <TY INT>INT RoundDownSqrt(CO INT& n){ST_AS(is_same_v<INT,int> || is_same_v<INT,uint> || is_same_v<INT,ll> || is_same_v<INT,ull>);AS(n >= 0);if(n <= 1){RE n;}CE INT r_max = is_same_v<INT,int>?46341:is_same_v<INT,uint>?65536:is_same_v<INT,ll>?3037000500:4294967296;INT l = 1,r = min(r_max,n);WH(l < r - 1){CO INT m =(l + r)>> 1;(m <= n / m?l:r)= m;}RE l;}TE <TY INT>INT RoundUpSqrt(CO INT& n){ST_AS(is_same_v<INT,int> || is_same_v<INT,uint> || is_same_v<INT,ll> || is_same_v<INT,ull>);AS(n >= 0);if(n <= 2){RE n;}CE INT r_max = is_same_v<INT,int>?46341:is_same_v<INT,uint>?65536:is_same_v<INT,ll>?3037000500:4294967296;CO INT nm = n - 1;INT l = 1,r = min(r_max,n);WH(l + 1 < r){CO INT m =(l + r)>> 1;(m <= nm / m?l:r)= m;}RE r;}TE <TY INT> bool IsSquare(CO INT& n){CO INT r = RoundDownSqrt(n);RE n == r * r;}
